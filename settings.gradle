@@ -1,0 +1,3 @@
+rootProject.name='Family Planning'
+include ':app'
+include ':familyplanningmodule'
