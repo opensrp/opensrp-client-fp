@@ -1,4 +1,4 @@
-package org.smartregister.sample.fb;
+package org.smartregister.sample.fp;
 
 import org.junit.Test;
 
