@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("org.smartregister.sample.fb", appContext.getPackageName());
+        assertEquals("org.smartregister.sample.fp", appContext.getPackageName());
     }
 }
