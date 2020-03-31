@@ -1,6 +1,4 @@
-package org.smartregister.fp.login.ui;
-
-import androidx.appcompat.app.AppCompatActivity;
+package org.smartregister.fp.features.login.view;
 
 import android.os.Bundle;
 
