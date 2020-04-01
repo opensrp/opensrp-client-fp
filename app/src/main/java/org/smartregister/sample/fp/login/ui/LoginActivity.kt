@@ -8,13 +8,9 @@ import org.smartregister.view.activity.BaseLoginActivity
 import org.smartregister.view.contract.BaseLoginContract
 
 class LoginActivity : BaseLoginActivity(), BaseLoginContract.View {
-    override fun goToHome(isLogin: Boolean) {
+    override fun goToHome(remote: Boolean) {
         // go to main page after success full login
-        if (isLogin) {
 
-            Toast.makeText(this, "Successfully login", Toast.LENGTH_LONG).show()
-        } else
-            Toast.makeText(this, "Error", Toast.LENGTH_LONG).show()
     }
 
     override fun getContentView(): Int {
