@@ -1,8 +1,3 @@
 <resources>
-    <string name="app_version">Version 1.2.14 (built on 25 March 2020)</string>
-    <string name="username">Enter username</string>
-    <string name="password">Enter password</string>
-    <string name="family_planning_module">Family Planning Module</string>
-    <string name="show_password_text">Show password</string>
-    <string name="login_text">Log In</string>
+
 </resources>

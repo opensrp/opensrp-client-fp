@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Family Planning</string>
+    <string name="app_name">Family Planning Module</string>
+    <string name="app_version">App version: %1$s (built on %2$s)</string>
+    <string name="username">Enter username</string>
+    <string name="password">Enter password</string>
+    <string name="family_planning_module">Family Planning Module</string>
+    <string name="show_password_text">Show password</string>
+    <string name="login_text">Log In</string>
 </resources>
