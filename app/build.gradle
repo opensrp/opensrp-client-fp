@@ -37,11 +37,11 @@ android {
             minifyEnabled false
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            resValue "string", 'opensrp_url', '"https://anc-preview.smartregister.org/opensrp/"'
+            resValue "string", 'opensrp_url', "https://who-fp-stage.smartregister.org/opensrp/"
             buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '250'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '100'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '1'
-            buildConfigField "int", "DATABASE_VERSION", '2'
+            buildConfigField "int", "DATABASE_VERSION", '1'
             buildConfigField "long", "MAX_SERVER_TIME_DIFFERENCE", "1800000l"
             buildConfigField "boolean", "TIME_CHECK", "true"
             buildConfigField "int", "DATA_SYNC_DURATION_MINUTES", '15'
@@ -53,11 +53,11 @@ android {
         }
 
         debug {
-            resValue "string", 'opensrp_url', '"https://anc-stage.smartregister.org/opensrp/"'
+            resValue "string", 'opensrp_url', "https://who-fp-stage.smartregister.org/opensrp/"
             buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '250'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '100'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '2'
-            buildConfigField "int", "DATABASE_VERSION", '2'
+            buildConfigField "int", "DATABASE_VERSION", '1'
             buildConfigField "long", "MAX_SERVER_TIME_DIFFERENCE", "1800000l"
             buildConfigField "boolean", "TIME_CHECK", "false"
             buildConfigField "int", "DATA_SYNC_DURATION_MINUTES", '15'

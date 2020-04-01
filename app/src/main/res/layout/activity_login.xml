@@ -26,9 +26,9 @@
             <ImageView
                 android:id="@+id/login_logo"
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/login_image_margin_top"
                 android:layout_height="@dimen/login_logo_height"
                 android:layout_gravity="center"
+                android:layout_marginTop="@dimen/login_image_margin_top"
                 android:layout_weight="1"
                 android:contentDescription="logo"
                 android:scaleType="centerInside"
@@ -36,23 +36,23 @@
 
             <TextView
                 android:id="@+id/login_title_text_view"
+                style="@style/familyPlanningModu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/login_text_build_margin"
                 android:layout_marginBottom="5dp"
                 android:gravity="center_horizontal"
-                style="@style/familyPlanningModu"
                 android:text="@string/family_planning_module"
                 android:typeface="sans" />
 
             <TextView
                 android:id="@+id/login_build_text_view"
+                style="@style/version1214Buil"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/version1214Buil"
                 android:layout_marginBottom="5dp"
                 android:gravity="center_horizontal"
-                android:text="@string/app_version"/>
+                android:text="@string/app_version" />
 
         </LinearLayout>
 
@@ -75,14 +75,15 @@
                 android:background="@drawable/rounded_corner_edit_text"
                 android:cursorVisible="true"
                 android:ems="10"
+                android:fontFamily="@font/roboto_medium"
                 android:hint="@string/username"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:lines="1"
                 android:paddingStart="10dp"
+                android:text="demo"
                 android:textColor="#666666"
                 android:textColorHint="#bfbfbf"
-                android:fontFamily="@font/roboto_medium"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/login_edit_text_textSize"
                 android:typeface="sans" />
@@ -97,14 +98,15 @@
                 android:background="@drawable/rounded_corner_edit_text"
                 android:cursorVisible="true"
                 android:ems="10"
+                android:fontFamily="@font/roboto_medium"
                 android:hint="@string/password"
                 android:imeActionId="@integer/login"
                 android:inputType="textPassword"
                 android:lines="1"
                 android:paddingStart="10dp"
+                android:text="Amani123"
                 android:textColor="#666666"
                 android:textColorHint="#bfbfbf"
-                android:fontFamily="@font/roboto_medium"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/login_edit_text_textSize"
                 android:typeface="sans" />
@@ -122,8 +124,8 @@
                     android:layout_marginStart="3dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="5dp"
-                    android:padding="4dp"
-                    android:button="@drawable/white_checkbox_bg_selector"/>
+                    android:button="@drawable/white_checkbox_bg_selector"
+                    android:padding="4dp" />
 
                 <TextView
                     android:id="@+id/login_show_password_text_view"
@@ -144,17 +146,17 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:layout_weight="8"
+                android:background="@drawable/login_button"
                 android:ems="10"
+                android:fontFamily="@font/roboto_regular"
                 android:shadowColor="#ffffff"
                 android:shadowDx="0"
                 android:shadowDy="1"
                 android:shadowRadius="0.5"
-                android:background="@drawable/login_button"
-                android:fontFamily="@font/roboto_regular"
                 android:text="@string/login_text"
                 android:textAllCaps="true"
                 android:textColor="#FF626262"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
         </LinearLayout>
         <!-- Bottom section -->
         <LinearLayout
