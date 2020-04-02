@@ -46,7 +46,7 @@ public class FPLibrary {
     private int databaseVersion;
 //    private ActivityConfiguration activityConfiguration;
 
-    private FPLibrary(@NonNull Context context, int dbVersion, /*@NonNull ActivityConfiguration activityConfiguration,*/ @Nullable SubscriberInfoIndex subscriberInfoIndex) {
+    private FPLibrary(@NonNull Context context, int dbVersion/*, @NonNull ActivityConfiguration activityConfiguration, @Nullable SubscriberInfoIndex subscriberInfoIndex*/) {
         this.context = context;
         this.subscriberInfoIndex = subscriberInfoIndex;
         this.databaseVersion = dbVersion;
@@ -62,23 +62,23 @@ public class FPLibrary {
     }
 
 
-    public static void init(@NonNull Context context, int dbVersion) {
-        init(context, dbVersion/*, new ActivityConfiguration()*/);
+   /* public static void init(@NonNull Context context, int dbVersion) {
+        init(context, dbVersion, new ActivityConfiguration());
     }
 
-    /*public static void init(@NonNull Context context, int dbVersion, @NonNull ActivityConfiguration activityConfiguration) {
+    public static void init(@NonNull Context context, int dbVersion, @NonNull ActivityConfiguration activityConfiguration) {
         init(context, dbVersion, activityConfiguration, null);
     }*/
 
-    /*public static void init(@NonNull Context context, int dbVersion, @NonNull ActivityConfiguration activityConfiguration, @Nullable SubscriberInfoIndex subscriberInfoIndex) {
+    public static void init(@NonNull Context context, int dbVersion/*, @NonNull ActivityConfiguration activityConfiguration, @Nullable SubscriberInfoIndex subscriberInfoIndex*/) {
         if (instance == null) {
-            instance = new FPLibrary(context, dbVersion, activityConfiguration, subscriberInfoIndex);
+            instance = new FPLibrary(context, dbVersion/*, activityConfiguration, subscriberInfoIndex*/);
         }
-    }*/
-
-    public static void init(@NonNull Context context, int dbVersion, @Nullable SubscriberInfoIndex subscriberInfoIndex) {
-        init(context, dbVersion/*, new ActivityConfiguration()*/, subscriberInfoIndex);
     }
+
+   /* public static void init(@NonNull Context context, int dbVersion, @Nullable SubscriberInfoIndex subscriberInfoIndex) {
+        init(context, dbVersion*//*, new ActivityConfiguration()*//*, subscriberInfoIndex);
+    }*/
 
     public static JsonSpecHelper getJsonSpecHelper() {
         return getInstance().jsonSpecHelper;
