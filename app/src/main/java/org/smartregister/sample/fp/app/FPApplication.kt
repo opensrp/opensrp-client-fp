@@ -8,9 +8,13 @@ import org.smartregister.fp.FPLibrary
 import org.smartregister.sample.fp.BuildConfig.BUILD_TIMESTAMP
 import org.smartregister.sample.fp.BuildConfig.DATABASE_VERSION
 import org.smartregister.sample.fp.login.job.FPJobCreator
+import org.smartregister.sample.fp.repository.FPRepository
+import org.smartregister.util.Log
 import org.smartregister.view.activity.DrishtiApplication
 
 class FPApplication : DrishtiApplication() {
+
+    private var mPassword: String? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -25,9 +29,31 @@ class FPApplication : DrishtiApplication() {
         ConfigurableViewsLibrary.init(context)
 
         //init Job Manager
-
-        //init Job Manager
         JobManager.create(this).addJobCreator(FPJobCreator())
+    }
+
+
+    override fun getRepository(): Repository? {
+        try {
+            if (repository == null) {
+                repository = FPRepository(getInstance()?.applicationContext, context)
+            }
+        } catch (e: UnsatisfiedLinkError) {
+            Log.logError("Error on getRepository: $e")
+        }
+        return repository
+    }
+
+    override fun getPassword(): String? {
+        if (mPassword == null) {
+            val username: String? = getContext()?.userService()?.allSharedPreferences?.fetchRegisteredANM()
+            mPassword = getContext()?.userService()?.getGroupId(username)
+        }
+        return mPassword
+    }
+
+    fun getContext(): Context? {
+        return context
     }
 
     override fun logoutCurrentUser() {

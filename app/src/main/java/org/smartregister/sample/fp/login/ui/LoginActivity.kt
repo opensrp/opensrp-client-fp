@@ -14,9 +14,13 @@ import org.smartregister.view.contract.BaseLoginContract
 class LoginActivity : BaseLoginActivity(), BaseLoginContract.View {
     override fun goToHome(remoteLogin: Boolean) {
         // go to main page after success full login
-        if (remoteLogin){
+        if (remoteLogin) {
             Utils.startAsyncTask(SaveTeamLocationsTask(), null)
-            //  start you activity here
+            //  start your activity here
+
+        } else {
+            Toast.makeText(this, "Successfully Local Login", Toast.LENGTH_LONG).show()
+            // start your activity here
         }
 
         if (mLoginPresenter.isServerSettingsSet) {
