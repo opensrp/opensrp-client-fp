@@ -20,6 +20,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="org.smartregister.fp.features.home.view.HomeRegisterActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/FPAppTheme.NoActionBar" />
+
+        <activity
+            android:name="org.smartregister.fp.common.view.SiteCharacteristicsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/FPAppTheme.NoActionBar" />
+
+        <activity
+            android:name="org.smartregister.fp.common.view.SiteCharacteristicsEnterActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/FPAppTheme.NoActionBar" />
+
+        <activity
+            android:name="org.smartregister.fp.common.view.SiteCharacteristicsExitActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/FPAppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

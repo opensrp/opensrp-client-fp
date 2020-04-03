@@ -9,7 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AncAppTheme.AppBarOverlay">
+        android:theme="@style/FPAppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/library_toolbar"
@@ -18,7 +18,7 @@
             android:background="@color/customAppThemeBlue"
             app:contentInsetLeft="10dp"
             app:contentInsetStart="10dp"
-            app:popupTheme="@style/AncAppTheme.PopupOverlay">
+            app:popupTheme="@style/FPAppTheme.PopupOverlay">
 
             <include layout="@layout/toolbar_previous_contacts_content" />
 

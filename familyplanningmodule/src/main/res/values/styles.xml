@@ -11,7 +11,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AncAppTheme.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="FPAppTheme.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primaryDark</item>
@@ -26,9 +26,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AncAppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="FPAppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AncAppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="FPAppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="FPDialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorPrimary">@color/primary</item>
@@ -36,7 +36,7 @@
         <item name="colorAccent">@color/accent</item>
     </style>
 
-    <style name="AncFullScreenDialog" parent="FPDialog">
+    <style name="FPFullScreenDialog" parent="FPDialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:padding">0dp</item>
         <item name="android:windowBackground">@color/primaryDark</item>
@@ -48,7 +48,7 @@
         <item name="colorControlActivated">@android:color/black</item>
     </style>
 
-    <style name="AncAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="FPAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primaryDark</item>
         <item name="colorAccent">@color/accent</item>

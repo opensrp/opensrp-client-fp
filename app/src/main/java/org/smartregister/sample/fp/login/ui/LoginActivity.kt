@@ -16,18 +16,9 @@ class LoginActivity : BaseLoginActivity(), BaseLoginContract.View {
         // go to main page after success full login
         if (remoteLogin) {
             Utils.startAsyncTask(SaveTeamLocationsTask(), null)
-            //  start your activity here
-
-        } else {
-            Toast.makeText(this, "Successfully Local Login", Toast.LENGTH_LONG).show()
-            // start your activity here
         }
 
-        if (mLoginPresenter.isServerSettingsSet) {
-            gotToHomeRegister(remoteLogin)
-        } else {
-            goToSiteCharacteristics(remoteLogin)
-        }
+        gotToHomeRegister(remoteLogin)
 
         finish()
     }

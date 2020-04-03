@@ -73,7 +73,7 @@ public abstract class BaseCharacteristicsActivity extends BaseActivity
 
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(this, R.style.AncAlertDialog);
+            builder = new AlertDialog.Builder(this, R.style.FPAlertDialog);
         } else {
             builder = new AlertDialog.Builder(this);
         }
