@@ -5,7 +5,6 @@ import org.smartregister.BuildConfig
 import org.smartregister.Context
 import org.smartregister.CoreLibrary
 import org.smartregister.configurableviews.ConfigurableViewsLibrary
-import org.smartregister.fp.FPLibrary
 import org.smartregister.repository.Repository
 import org.smartregister.sample.fp.login.job.FPJobCreator
 import org.smartregister.sample.fp.repository.FPRepository
