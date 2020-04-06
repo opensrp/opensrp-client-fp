@@ -4,7 +4,6 @@ import com.evernote.android.job.JobManager
 import org.smartregister.Context
 import org.smartregister.CoreLibrary
 import org.smartregister.configurableviews.ConfigurableViewsLibrary
-import org.smartregister.fp.FPLibrary
 import org.smartregister.repository.Repository
 import org.smartregister.sample.fp.BuildConfig.BUILD_TIMESTAMP
 import org.smartregister.sample.fp.BuildConfig.DATABASE_VERSION
