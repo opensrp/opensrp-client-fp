@@ -1,4 +1,4 @@
-package org.smartregister.sample.fp.login.job
+package org.smartregister.sample.fp.job
 
 import com.evernote.android.job.Job
 import com.evernote.android.job.JobCreator

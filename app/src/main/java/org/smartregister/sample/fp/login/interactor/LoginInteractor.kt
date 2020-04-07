@@ -28,12 +28,4 @@ class LoginInteractor(loginPresenter: BaseLoginContract.Presenter?) : BaseLoginI
                         getFlexValue(BuildConfig.CLIENT_SETTINGS_SYNC_MINUTES))
     }
 
-    override fun scheduleJobsImmediately() {
-        super.scheduleJobsImmediately()
-    }
-
-    override fun processServerSettings(loginResponse: LoginResponse) {
-        super.processServerSettings(loginResponse)
-        //        AncLibrary.getInstance().populateGlobalSettings();
-    }
 }

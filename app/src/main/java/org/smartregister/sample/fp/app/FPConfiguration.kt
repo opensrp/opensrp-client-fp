@@ -5,7 +5,7 @@ import org.smartregister.SyncFilter
 import org.smartregister.repository.AllSharedPreferences
 import org.smartregister.sample.fp.BuildConfig
 
-class AncSyncConfiguration : SyncConfiguration() {
+class FPConfiguration : SyncConfiguration() {
     override fun getSyncMaxRetries(): Int {
         return BuildConfig.MAX_SYNC_RETRIES
     }
@@ -29,6 +29,10 @@ class AncSyncConfiguration : SyncConfiguration() {
         return BuildConfig.OPENMRS_UNIQUE_ID_BATCH_SIZE
     }
 
+    override fun getSynchronizedLocationTags(): MutableList<String> {
+        return ArrayList()
+    }
+
     override fun getUniqueIdInitialBatchSize(): Int {
         return BuildConfig.OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE
     }
@@ -39,6 +43,10 @@ class AncSyncConfiguration : SyncConfiguration() {
 
     override fun getEncryptionParam(): SyncFilter {
         return SyncFilter.TEAM
+    }
+
+    override fun getTopAllowedLocationLevel(): String {
+        return ""
     }
 
     override fun updateClientDetailsTable(): Boolean {

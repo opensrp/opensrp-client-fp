@@ -21,9 +21,9 @@ import org.smartregister.sample.fp.login.ui.LoginActivity
 import org.smartregister.view.contract.BaseLoginContract
 import java.lang.ref.WeakReference
 
-class LoginPresenter(loginView: LoginActivity) : BaseLoginPresenter(), BaseLoginContract.Presenter {
+class LoginPresenter(loginView: BaseLoginContract.View?) : BaseLoginPresenter(), BaseLoginContract.Presenter {
 
-    private val TAG = LoginPresenter::class.java.canonicalName
+    private val TAG = LoginPresenter::class.java.simpleName
 
     init {
         mLoginView = WeakReference(loginView)
@@ -52,7 +52,7 @@ class LoginPresenter(loginView: LoginActivity) : BaseLoginPresenter(), BaseLogin
                 val gradientDrawable = GradientDrawable()
                 gradientDrawable.shape = GradientDrawable.RECTANGLE
                 gradientDrawable.orientation = GradientDrawable.Orientation.valueOf(background.orientation)
-                gradientDrawable.setColors(intArrayOf(Color.parseColor(background.startColor), Color.parseColor(background.endColor)))
+                gradientDrawable.colors = intArrayOf(Color.parseColor(background.startColor), Color.parseColor(background.endColor))
                 loginLayout.background = gradientDrawable
             }
             if (metadata.logoUrl != null) {
@@ -63,7 +63,7 @@ class LoginPresenter(loginView: LoginActivity) : BaseLoginPresenter(), BaseLogin
                         ?.bitmap
             }
         } catch (e: Exception) {
-            Log.d(TAG, e.message)
+            Log.d(TAG, e.message.toString())
         }
     }
 

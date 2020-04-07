@@ -6,12 +6,12 @@ import org.smartregister.Context
 import org.smartregister.CoreLibrary
 import org.smartregister.configurableviews.ConfigurableViewsLibrary
 import org.smartregister.repository.Repository
-import org.smartregister.sample.fp.login.job.FPJobCreator
+import org.smartregister.sample.fp.job.FPJobCreator
 import org.smartregister.sample.fp.repository.FPRepository
 import org.smartregister.util.Log
 import org.smartregister.view.activity.DrishtiApplication
 
-class FPApplication : DrishtiApplication() {
+open class FPApplication : DrishtiApplication() {
 
     private var mPassword: String? = null
 
@@ -23,8 +23,7 @@ class FPApplication : DrishtiApplication() {
         context.updateApplicationContext(applicationContext)
 
         //Initialize Modules
-        CoreLibrary.init(context, AncSyncConfiguration(), BuildConfig.BUILD_TIMESTAMP)
-//        FPLibrary.init(context, org.smartregister.sample.fp.BuildConfig.DATABASE_VERSION/*, EventBusException()*/)
+        CoreLibrary.init(context, FPConfiguration(), BuildConfig.BUILD_TIMESTAMP)
         ConfigurableViewsLibrary.init(context)
 
         //init Job Manager
