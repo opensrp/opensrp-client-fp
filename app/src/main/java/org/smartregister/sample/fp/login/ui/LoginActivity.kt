@@ -22,7 +22,10 @@ class LoginActivity : BaseLoginActivity(), BaseLoginContract.View {
     override fun goToHome(remote: Boolean) {
         // go to main page after success full login
         gotToHomeRegister(remote)
-        Toast.makeText(this, "Success", Toast.LENGTH_LONG).show()
+        if (remote)
+            Toast.makeText(this, "Remote Login Success", Toast.LENGTH_LONG).show()
+        else
+            Toast.makeText(this, "Local Login Success", Toast.LENGTH_LONG).show()
     }
 
     private fun gotToHomeRegister(remote: Boolean) {
