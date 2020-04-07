@@ -103,7 +103,6 @@
                 android:inputType="textPassword"
                 android:lines="1"
                 android:paddingStart="10dp"
-                android:text="Amani123"
                 android:textColor="#666666"
                 android:textColorHint="#bfbfbf"
                 android:textCursorDrawable="@null"
