@@ -5,6 +5,7 @@ import org.smartregister.Context
 import org.smartregister.CoreLibrary
 import org.smartregister.configurableviews.ConfigurableViewsLibrary
 import org.smartregister.fp.FPLibrary
+import org.smartregister.receiver.SyncStatusBroadcastReceiver
 import org.smartregister.repository.Repository
 import org.smartregister.sample.fp.BuildConfig.BUILD_TIMESTAMP
 import org.smartregister.sample.fp.BuildConfig.DATABASE_VERSION
@@ -28,6 +29,7 @@ class FPApplication : DrishtiApplication() {
         CoreLibrary.init(context, FPSyncConfiguration(), BUILD_TIMESTAMP)
         FPLibrary.init(context, DATABASE_VERSION)
         ConfigurableViewsLibrary.init(context)
+        SyncStatusBroadcastReceiver.init(this)
 
         //init Job Manager
         JobManager.create(this).addJobCreator(FPJobCreator())

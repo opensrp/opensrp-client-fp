@@ -44,6 +44,8 @@ class HomeRegisterActivity : BaseRegisterActivity(), RegisterContract.View {
         createAttentionFlagsAlertDialog()
     }
 
+
+
     override fun getRegisterFragment() = HomeRegisterFragment()
 
     override fun startFormActivity(formName: String?, entityId: String?, metaData: String?) {
@@ -65,11 +67,11 @@ class HomeRegisterActivity : BaseRegisterActivity(), RegisterContract.View {
     }
 
     override fun initializePresenter() {
-
+        presenter = RegisterPresenter(this)
     }
 
     override fun getViewIdentifiers(): MutableList<String> {
-        return mutableListOf()
+        return Arrays.asList(ConstantsUtils.ConfigurationUtils.HOME_REGISTER)
     }
 
     override fun startRegistration() {
