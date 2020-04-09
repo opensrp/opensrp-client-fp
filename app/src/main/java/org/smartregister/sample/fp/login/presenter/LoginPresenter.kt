@@ -17,7 +17,6 @@ import org.smartregister.login.model.BaseLoginModel
 import org.smartregister.login.presenter.BaseLoginPresenter
 import org.smartregister.sample.fp.R
 import org.smartregister.sample.fp.login.interactor.LoginInteractor
-import org.smartregister.sample.fp.login.ui.LoginActivity
 import org.smartregister.view.contract.BaseLoginContract
 import java.lang.ref.WeakReference
 
