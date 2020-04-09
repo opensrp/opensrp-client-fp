@@ -107,4 +107,6 @@
     <color name="sunset_orange">#FF554E</color>
     <color name="curious_blue">#1E81BD</color>
     <color name="snow">#fafafa</color>
+    <color name="light_gray">#D2D2D2</color>
+    <color name="translucent_very_light_gray">#D2D2D2</color>
 </resources>

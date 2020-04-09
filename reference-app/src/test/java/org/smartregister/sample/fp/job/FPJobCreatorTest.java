@@ -15,7 +15,7 @@ import org.smartregister.sample.fp.base.BaseUnitTest;
 /**
  * Created by ndegwamartin on 07/09/2018.
  */
-public class AncJobCreatorTest extends BaseUnitTest {
+public class FPJobCreatorTest extends BaseUnitTest {
 
     private FPJobCreator jobCreator;
 
