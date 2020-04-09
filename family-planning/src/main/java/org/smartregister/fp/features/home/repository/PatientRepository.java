@@ -27,7 +27,7 @@ public class PatientRepository extends BaseRepository {
     private static final String[] projection =
             new String[]{DBConstantsUtils.KeyUtils.FIRST_NAME, DBConstantsUtils.KeyUtils.LAST_NAME, DBConstantsUtils.KeyUtils.DOB,
                     DBConstantsUtils.KeyUtils.DOB_UNKNOWN, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.PHONE_NUMBER, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.ALT_NAME,
-                    getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.ALT_PHONE_NUMBER, getRegisterQueryProvider().getDemographicTable() + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, DBConstantsUtils.KeyUtils.ANC_ID,
+                    getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.ALT_PHONE_NUMBER, getRegisterQueryProvider().getDemographicTable() + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, DBConstantsUtils.KeyUtils.FP_ID,
                     getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.REMINDERS, DBConstantsUtils.KeyUtils.HOME_ADDRESS, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.EDD,
                     getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.CONTACT_STATUS, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS,
                     getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.NEXT_CONTACT, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE,
@@ -52,7 +52,7 @@ public class PatientRepository extends BaseRepository {
                         cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.FIRST_NAME)));
                 detailsMap
                         .put(DBConstantsUtils.KeyUtils.LAST_NAME, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.LAST_NAME)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.ANC_ID, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.ANC_ID)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.FP_ID, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.FP_ID)));
                 detailsMap.put(DBConstantsUtils.KeyUtils.DOB, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.DOB)));
                 detailsMap.put(DBConstantsUtils.KeyUtils.DOB_UNKNOWN,
                         cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.DOB_UNKNOWN)));

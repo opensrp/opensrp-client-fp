@@ -5,7 +5,10 @@ import android.database.Cursor
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
 import androidx.recyclerview.widget.RecyclerView
@@ -72,11 +75,11 @@ open class HomeRegisterFragment : BaseRegisterFragment(), RegisterFragmentContra
         }
     }
 
-    override fun setupViews(view: View?) {
+    override fun setupViews(view: View) {
         super.setupViews(view)
+
         //Do not show filter button at the moment until all filters are implemented
-        //Do not show filter button at the moment until all filters are implemented
-        val filterSortRelativeLayout = view!!.findViewById<RelativeLayout>(R.id.filter_sort_layout)
+        val filterSortRelativeLayout = view.findViewById<RelativeLayout>(R.id.filter_sort_layout)
         if (filterSortRelativeLayout != null) {
             filterSortRelativeLayout.visibility = View.GONE
         }
@@ -85,16 +88,15 @@ open class HomeRegisterFragment : BaseRegisterFragment(), RegisterFragmentContra
         filterText?.setOnClickListener(registerActionHandler)
 
         // Due Button
-
-        // Due Button
         val contactButton = view.findViewById<View>(R.id.due_button)
         contactButton?.setOnClickListener(registerActionHandler)
 
         //Risk view
+        //val attentionFlag = view.findViewById<View>(R.id.risk)
+        //attentionFlag?.setOnClickListener(registerActionHandler)
 
-        //Risk view
-        val attentionFlag = view.findViewById<View>(R.id.risk)
-        attentionFlag?.setOnClickListener(registerActionHandler)
+        view.findViewById<TextView>(R.id.due_only_text_view).setOnClickListener(registerActionHandler)
+        view.findViewById<ImageView>(R.id.popup_menu).setOnClickListener(registerActionHandler)
     }
 
     override fun getMainCondition(): String {
@@ -102,11 +104,11 @@ open class HomeRegisterFragment : BaseRegisterFragment(), RegisterFragmentContra
     }
 
     override fun getDefaultSortQuery(): String {
-        return DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH.toString() + " DESC"
+        return DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH + " DESC"
     }
 
     override fun startRegistration() {
-        (activity as HomeRegisterActivity?)?.startFormActivity(ConstantsUtils.JsonFormUtils.ANC_REGISTER, null, null)
+        (activity as HomeRegisterActivity?)?.startFormActivity(ConstantsUtils.JsonFormUtils.FP_REGISTER, null, null)
     }
 
     override fun onViewClicked(view: View) {
@@ -115,23 +117,35 @@ open class HomeRegisterFragment : BaseRegisterFragment(), RegisterFragmentContra
         }
 
         val baseHomeRegisterActivity: HomeRegisterActivity? = activity as HomeRegisterActivity?
-        val pc = view.tag as CommonPersonObjectClient
+        val pc = view.tag as CommonPersonObjectClient?
 
         if (view.tag != null && view.getTag(R.id.VIEW_ID) === CLICK_VIEW_NORMAL) {
-            Utils.navigateToProfile(activity, pc.columnmaps as HashMap<String?, String?>)
+            Utils.navigateToProfile(activity, pc?.columnmaps as HashMap<String?, String?>)
         } else if (view.tag != null && view.getTag(R.id.VIEW_ID) === CLICK_VIEW_ALERT_STATUS) {
             if (Integer.valueOf(view.getTag(R.id.GESTATION_AGE).toString()) >= ConstantsUtils.DELIVERY_DATE_WEEKS) {
                 baseHomeRegisterActivity?.showRecordBirthPopUp(view.tag as CommonPersonObjectClient)
             } else {
-                val baseEntityId: String = Utils.getValue(pc.columnmaps, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, false)
+                val baseEntityId: String = Utils.getValue(pc?.columnmaps, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, false)
                 if (StringUtils.isNotBlank(baseEntityId)) {
-                    Utils.proceedToContact(baseEntityId, pc.columnmaps as HashMap<String?, String?>, activity)
+                    Utils.proceedToContact(baseEntityId, pc?.columnmaps as HashMap<String?, String?>, activity)
                 }
             }
         } else if (view.tag != null && view.getTag(R.id.VIEW_ID) === CLICK_VIEW_ATTENTION_FLAG) {
             AttentionFlagsTask(baseHomeRegisterActivity, pc).execute()
         } else if (view.id == R.id.filter_text_view) {
             baseHomeRegisterActivity?.switchToFragment(BaseRegisterActivity.SORT_FILTER_POSITION)
+        }
+        else if (view.id == R.id.due_only_text_view) {
+
+        }
+        else if (view.id == R.id.popup_menu) {
+            val popupMenu = PopupMenu(activity, view)
+            popupMenu.menuInflater.inflate(R.menu.home_main_menu, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener { item ->
+                true
+            }
+
+            popupMenu.show()
         }
     }
 
@@ -212,12 +226,13 @@ open class HomeRegisterFragment : BaseRegisterFragment(), RegisterFragmentContra
         var query = ""
         try {
             return if (isValidFilterForFts(commonRepository())) {
-                var sql: String? = FPLibrary.getInstance().getRegisterQueryProvider().getObjectIdsQuery(mainCondition, filters).toString() + if (StringUtils.isBlank(defaultSortQuery)) "" else " order by $defaultSortQuery"
+                var sql: String? = FPLibrary.getInstance().getRegisterQueryProvider().getObjectIdsQuery(mainCondition, filters) + if (StringUtils.isBlank(defaultSortQuery)) "" else " order by $defaultSortQuery"
                 sql = registerQueryBuilder.addlimitandOffset(sql, clientAdapter.getCurrentlimit(), clientAdapter.getCurrentoffset())
-                val ids = commonRepository().findSearchIds(sql)
-                query = FPLibrary.getInstance().getRegisterQueryProvider().mainRegisterQuery().toString() + " where _id IN (%s) " + if (StringUtils.isBlank(defaultSortQuery)) "" else " order by $defaultSortQuery"
-                val joinedIds = "'" + StringUtils.join(ids, "','") + "'"
-                query.replace("%s", joinedIds)
+                //val ids = commonRepository().findSearchIds(sql)
+                query = FPLibrary.getInstance().getRegisterQueryProvider().mainRegisterQuery().toString() + "  order by $defaultSortQuery"
+                //val joinedIds = "'" + StringUtils.join(ids, "','") + "'"
+                //query.replace("%s", joinedIds)
+                query
             } else {
                 if (!TextUtils.isEmpty(filters) && TextUtils.isEmpty(Sortqueries)) {
                     registerQueryBuilder.addCondition(filters)

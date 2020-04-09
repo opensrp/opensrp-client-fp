@@ -7,32 +7,23 @@
         "fields": [
           {
             "field": "eventType",
-            "field_value": "ANC Close",
+            "field_value": "FP Close",
             "closes_case": [
               "ec_client"
             ]
           },
           {
             "field": "eventType",
-            "field_value": "ANC Registration",
+            "field_value": "FP Registration",
             "creates_case": [
-              "ec_client",
-              "ec_mother_details"
+              "ec_client"
             ]
           },
           {
             "field": "eventType",
-            "field_value": "Update ANC Registration",
+            "field_value": "Update FP Registration",
             "creates_case": [
-              "ec_client",
-              "ec_mother_details"
-            ]
-          },
-          {
-            "field": "eventType",
-            "field_value": "Visit",
-            "creates_case": [
-              "ec_mother_details"
+              "ec_client"
             ]
           }
         ]

@@ -61,35 +61,35 @@
         },
         {
           "column_name": "date_removed",
-          "type": "Client",
+          "type": "Event",
           "json_mapping": {
             "field": "attributes.date_removed"
           }
         },
         {
           "column_name": "registration_date",
-          "type": "Client",
+          "type": "Event",
           "json_mapping": {
             "field": "attributes.registration_date"
           }
         },
         {
           "column_name": "referral",
-          "type": "Client",
+          "type": "Event",
           "json_mapping": {
             "field": "attributes.referral"
           }
         },
         {
           "column_name": "referred_by",
-          "type": "Client",
+          "type": "Event",
           "json_mapping": {
             "field": "attributes.referred_by"
           }
         },
         {
           "column_name": "client_id_note",
-          "type": "Client",
+          "type": "Event",
           "json_mapping": {
             "field": "attributes.client_id_note"
           }
@@ -131,35 +131,35 @@
         },
         {
           "column_name": "gender",
-          "type": "Client",
+          "type": "Event",
           "json_mapping": {
             "field": "attributes.gender"
           }
         },
         {
           "column_name": "gender_type_method",
-          "type": "Client",
+          "type": "Event",
           "json_mapping": {
             "field": "attributes.gender_type_method"
           }
         },
         {
           "column_name": "method_gender_type",
-          "type": "Client",
+          "type": "Event",
           "json_mapping": {
             "field": "attributes.method_gender_type"
           }
         },
         {
           "column_name": "marital_status",
-          "type": "Client",
+          "type": "Event",
           "json_mapping": {
             "field": "attributes.marital_status"
           }
         },
         {
           "column_name": "admin_area",
-          "type": "Client",
+          "type": "Event",
           "json_mapping": {
             "field": "attributes.admin_area"
           }
@@ -180,14 +180,14 @@
         },
         {
           "column_name": "comm_consent",
-          "type": "Client",
+          "type": "Event",
           "json_mapping": {
             "field": "attributes.comm_consent"
           }
         },
         {
           "column_name": "reminder_message",
-          "type": "Client",
+          "type": "Event",
           "json_mapping": {
             "field": "attributes.reminder_message"
           }

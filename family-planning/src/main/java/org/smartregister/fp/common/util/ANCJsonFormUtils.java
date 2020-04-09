@@ -108,7 +108,7 @@ public class ANCJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         String entityId = id;
         form.getJSONObject(METADATA).put(ANCJsonFormUtils.ENCOUNTER_LOCATION, currentLocationId);
 
-        if (ConstantsUtils.JsonFormUtils.ANC_REGISTER.equals(formName)) {
+        if (ConstantsUtils.JsonFormUtils.FP_REGISTER.equals(formName)) {
             if (StringUtils.isNotBlank(entityId)) {
                 entityId = entityId.replace("-", "");
             }
@@ -364,7 +364,7 @@ public class ANCJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
     public static String getAutoPopulatedJsonEditRegisterFormString(Context context, Map<String, String> womanClient) {
         try {
-            JSONObject form = FormUtils.getInstance(context).getFormJson(ConstantsUtils.JsonFormUtils.ANC_REGISTER);
+            JSONObject form = FormUtils.getInstance(context).getFormJson(ConstantsUtils.JsonFormUtils.FP_REGISTER);
             LocationPickerView lpv = createLocationPickerView(context);
             if (lpv != null) {
                 lpv.init();
@@ -381,7 +381,7 @@ public class ANCJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
                 metadata.put(ANCJsonFormUtils.ENCOUNTER_LOCATION, lastLocationId);
 
-                form.put(ConstantsUtils.CURRENT_OPENSRP_ID, womanClient.get(DBConstantsUtils.KeyUtils.ANC_ID).replace("-", ""));
+                form.put(ConstantsUtils.CURRENT_OPENSRP_ID, womanClient.get(DBConstantsUtils.KeyUtils.FP_ID).replace("-", ""));
 
                 //inject opensrp id into the form
                 JSONObject stepOne = form.getJSONObject(ANCJsonFormUtils.STEP1);
@@ -480,7 +480,7 @@ public class ANCJsonFormUtils extends org.smartregister.util.JsonFormUtils {
             formatEdd(womanClient, jsonObject, DBConstantsUtils.KeyUtils.EDD);
 
         } else if (jsonObject.getString(ANCJsonFormUtils.KEY).equalsIgnoreCase(ConstantsUtils.JsonFormKeyUtils.ANC_ID)) {
-            jsonObject.put(ANCJsonFormUtils.VALUE, womanClient.get(DBConstantsUtils.KeyUtils.ANC_ID).replace("-", ""));
+            jsonObject.put(ANCJsonFormUtils.VALUE, womanClient.get(DBConstantsUtils.KeyUtils.FP_ID).replace("-", ""));
 
         } else if (womanClient.containsKey(jsonObject.getString(ANCJsonFormUtils.KEY))) {
             jsonObject.put(ANCJsonFormUtils.READ_ONLY, false);

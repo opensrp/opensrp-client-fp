@@ -31,7 +31,7 @@ object DBConstantsUtils {
         const val DOB_UNKNOWN = "dob_unknown"
         const val EDD = "edd"
         const val GENDER = "gender"
-        const val ANC_ID = "register_id"
+        const val FP_ID = "client_id"
         const val LAST_INTERACTED_WITH = "last_interacted_with"
         const val DATE_REMOVED = "date_removed"
         const val PHONE_NUMBER = "phone_number"

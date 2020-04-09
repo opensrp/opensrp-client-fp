@@ -2,7 +2,6 @@ package org.smartregister.fp.common.provider;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.vijay.jsonwizard.views.CustomTextView;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
 import org.smartregister.commonregistry.CommonPersonObject;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
@@ -129,14 +127,14 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         String lastName = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.LAST_NAME, true);
         String patientName = Utils.getName(firstName, lastName);
 
-        fillValue(viewHolder.patientName, WordUtils.capitalize(patientName));
+
 
         String dobString = Utils.getDuration(Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.DOB, false));
         dobString = dobString.contains("y") ? dobString.substring(0, dobString.indexOf("y")) : dobString;
-        fillValue((viewHolder.age), String.format(context.getString(R.string.age_text), dobString));
+        //fillValue((viewHolder.age), String.format(context.getString(R.string.age_text), dobString));
+        fillValue(viewHolder.patientName, WordUtils.capitalize(patientName) + ", " + dobString);
 
-
-        String edd = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.EDD, false);
+        /*String edd = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.EDD, false);
 
         if (StringUtils.isNotBlank(edd)) {
             fillValue((viewHolder.ga),
@@ -145,7 +143,7 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         } else {
 
             fillValue((viewHolder.ga), "");
-        }
+        }*/
 
         View patient = viewHolder.patientColumn;
         attachPatientOnclickListener(patient, client);
@@ -154,7 +152,7 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         View dueButton = viewHolder.dueButton;
         attachAlertButtonOnclickListener(dueButton, client);
 
-
+        /*
         String redFlagCountRaw = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.RED_FLAG_COUNT, false);
         String yellowFlagCountRaw = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT, false);
 
@@ -173,12 +171,12 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
             attachRiskLayoutOnclickListener(riskLayout, client);
         } else {
             riskLayout.setVisibility(View.GONE);
-        }
+        }*/
     }
 
     private void populateIdentifierColumn(CommonPersonObjectClient pc, RegisterViewHolder viewHolder) {
-        String ancId = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.ANC_ID, false);
-        fillValue(viewHolder.ancId, String.format(context.getString(R.string.anc_id_text), ancId));
+        String fpId = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.FP_ID, false);
+        fillValue(viewHolder.ancId, String.format(context.getString(R.string.anc_id_text), fpId));
     }
 
     private void populateLastColumn(CommonPersonObjectClient pc, RegisterViewHolder viewHolder) {
@@ -186,10 +184,8 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
             CommonPersonObject commonPersonObject = commonRepository.findByBaseEntityId(pc.entityId());
             if (commonPersonObject != null) {
                 viewHolder.sync.setVisibility(View.GONE);
-                ButtonAlertStatus buttonAlertStatus =
-                        Utils.getButtonAlertStatus(pc.getColumnmaps(), context, false);
-                Utils.processButtonAlertStatus(context, viewHolder.dueButton, viewHolder.contactDoneTodayButton,
-                        buttonAlertStatus);
+                ButtonAlertStatus buttonAlertStatus = Utils.getButtonAlertStatus(pc.getColumnmaps(), context, false);
+                Utils.processButtonAlertStatus(context, viewHolder.dueButton, viewHolder.contactDoneTodayButton, buttonAlertStatus);
 
             } else {
                 viewHolder.dueButton.setVisibility(View.GONE);
@@ -251,8 +247,8 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
             age = itemView.findViewById(R.id.age);
             ga = itemView.findViewById(R.id.ga);
             period = itemView.findViewById(R.id.period);
-            ancId = itemView.findViewById(R.id.anc_id);
-            risk = itemView.findViewById(R.id.risk);
+            ancId = itemView.findViewById(R.id.fp_id);
+            //risk = itemView.findViewById(R.id.risk);
             dueButton = itemView.findViewById(R.id.due_button);
             sync = itemView.findViewById(R.id.sync);
             patientColumn = itemView.findViewById(R.id.patient_column);

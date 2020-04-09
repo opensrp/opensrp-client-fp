@@ -16,8 +16,8 @@ class RegisterQueryProvider {
             strFilters = String.format(" where " + getDemographicTable() + "." + CommonFtsObject.phraseColumn + " MATCH '*%s*'", filters)
         }
 
-        return "select " + getDemographicTable() + "." + CommonFtsObject.idColumn + " from " + CommonFtsObject.searchTableName(getDemographicTable()) + " " + getDemographicTable() + "  " +
-                "join " + getDetailsTable() + " on " + getDemographicTable() + "." + CommonFtsObject.idColumn + " =  " + getDetailsTable() + "." + "id " + strMainCondition + strFilters
+        return "select " + getDemographicTable() + "." + CommonFtsObject.idColumn + " from " + getDemographicTable() + "  " +
+                strMainCondition + strFilters
     }
 
     private fun getMainCondition(mainCondition: String): String {
@@ -46,27 +46,22 @@ class RegisterQueryProvider {
             strFilters = String.format(" where " + CommonFtsObject.searchTableName(getDemographicTable()) + "." + CommonFtsObject.phraseColumn + " MATCH '*%s*'", filters)
         }
         val strMainCondition = getMainCondition(mainCondition!!)
-        return "select count(" + getDemographicTable() + "." + CommonFtsObject.idColumn + ") from " + CommonFtsObject.searchTableName(getDemographicTable()) + " " + getDemographicTable() + "  " +
-                "join " + getDetailsTable() + " on " + getDemographicTable() + "." + CommonFtsObject.idColumn + " =  " + getDetailsTable() + "." + "id " + strMainCondition + strFilters
+        return "select count(" + getDemographicTable() + "." + CommonFtsObject.idColumn + ") from "+ getDemographicTable() + "  " +
+                strMainCondition + strFilters
     }
 
     fun mainRegisterQuery(): String? {
         val queryBuilder = SmartRegisterQueryBuilder()
         queryBuilder.SelectInitiateMainTable(getDemographicTable(), mainColumns())
-        queryBuilder.customJoin(" join " + getDetailsTable()
-                + " on " + getDemographicTable() + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + "= " + getDetailsTable() + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " ")
+        /*queryBuilder.customJoin(" join " + getDetailsTable()
+                + " on " + getDemographicTable() + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + "= " + getDetailsTable() + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " ")*/
         return queryBuilder.selectquery
     }
 
     fun mainColumns(): Array<String>? {
         return arrayOf(getDemographicTable() + "." + DBConstantsUtils.KeyUtils.RELATIONAL_ID, getDemographicTable() + "." + DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH,
                 getDemographicTable() + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, getDemographicTable() + "." + DBConstantsUtils.KeyUtils.FIRST_NAME,
-                getDemographicTable() + "." + DBConstantsUtils.KeyUtils.LAST_NAME, getDemographicTable() + "." + DBConstantsUtils.KeyUtils.ANC_ID,
-                getDemographicTable() + "." + DBConstantsUtils.KeyUtils.DOB, getDetailsTable() + "." + DBConstantsUtils.KeyUtils.PHONE_NUMBER,
-                getDetailsTable() + "." + DBConstantsUtils.KeyUtils.ALT_NAME, getDemographicTable() + "." + DBConstantsUtils.KeyUtils.DATE_REMOVED,
-                getDetailsTable() + "." + DBConstantsUtils.KeyUtils.EDD, getDetailsTable() + "." + DBConstantsUtils.KeyUtils.RED_FLAG_COUNT,
-                getDetailsTable() + "." + DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT, getDetailsTable() + "." + DBConstantsUtils.KeyUtils.CONTACT_STATUS,
-                getDetailsTable() + "." + DBConstantsUtils.KeyUtils.NEXT_CONTACT, getDetailsTable() + "." + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE,
-                getDetailsTable() + "." + DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE)
+                getDemographicTable() + "." + DBConstantsUtils.KeyUtils.LAST_NAME, getDemographicTable() + "." + DBConstantsUtils.KeyUtils.FP_ID,
+                getDemographicTable() + "." + DBConstantsUtils.KeyUtils.DOB, getDemographicTable() + "." + DBConstantsUtils.KeyUtils.DATE_REMOVED)
     }
 }

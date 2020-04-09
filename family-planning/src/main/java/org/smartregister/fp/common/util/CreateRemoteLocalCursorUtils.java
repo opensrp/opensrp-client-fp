@@ -22,7 +22,7 @@ public class CreateRemoteLocalCursorUtils {
         firstName = cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.FIRST_NAME));
         lastName = cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.LAST_NAME));
         dob = cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.DOB));
-        ancId = cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.ANC_ID));
+        ancId = cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.FP_ID));
         phoneNumber = cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.PHONE_NUMBER));
         altName = cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.ALT_NAME));
     }

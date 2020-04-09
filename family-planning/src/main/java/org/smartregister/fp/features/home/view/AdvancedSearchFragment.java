@@ -488,7 +488,7 @@ public class AdvancedSearchFragment extends HomeRegisterFragment
         });
 
 
-        ancId = view.findViewById(R.id.anc_id);
+        ancId = view.findViewById(R.id.fp_id);
         ancId.addTextChangedListener(advancedSearchTextwatcher);
 
         firstName = view.findViewById(R.id.first_name);

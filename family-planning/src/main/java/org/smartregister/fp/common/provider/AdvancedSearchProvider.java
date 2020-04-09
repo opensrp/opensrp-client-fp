@@ -181,7 +181,7 @@ public class AdvancedSearchProvider implements RecyclerViewProvider<AdvancedSear
     }
 
     private void populateIdentifierColumn(CommonPersonObjectClient pc, AdvancedSearchViewHolder viewHolder) {
-        String ancId = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.ANC_ID, false);
+        String ancId = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.FP_ID, false);
         fillValue(viewHolder.ancId, String.format(context.getString(R.string.anc_id_text), ancId));
     }
 
@@ -248,8 +248,8 @@ public class AdvancedSearchProvider implements RecyclerViewProvider<AdvancedSear
             patientName = itemView.findViewById(R.id.patient_name);
             age = itemView.findViewById(R.id.age);
             ga = itemView.findViewById(R.id.ga);
-            ancId = itemView.findViewById(R.id.anc_id);
-            risk = itemView.findViewById(R.id.risk);
+            ancId = itemView.findViewById(R.id.fp_id);
+            //risk = itemView.findViewById(R.id.risk);
             profile = itemView.findViewById(R.id.profile);
             sync = itemView.findViewById(R.id.sync);
 
