@@ -11,7 +11,7 @@
         android:color="#D2D2D2">
     </stroke>
     <solid
-        android:color="#f4f4f4">
+        android:color="@color/white_smoke">
     </solid>
     <padding
         android:left="12dp"

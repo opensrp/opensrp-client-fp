@@ -18,6 +18,7 @@
     <string name="id">ID</string>
     <string name="patient_location">Location: %1$s</string>
     <string name="dose_given_date">Dose %1$s given %2$s</string>
+    <string name="patient_name">Patient Name</string>
 
 
     <string name="unauthorized">Please check the credentials</string>

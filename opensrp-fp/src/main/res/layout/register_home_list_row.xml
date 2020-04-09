@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:padding="2dp"
-            android:text="Patient Name"
+            android:text="@string/patient_name"
             android:textColor="@color/black_text_color"
             android:textSize="18sp"
             android:textStyle="bold"
