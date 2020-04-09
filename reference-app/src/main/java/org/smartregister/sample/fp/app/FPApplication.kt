@@ -11,6 +11,8 @@ import org.smartregister.sample.fp.job.FPJobCreator
 import org.smartregister.sample.fp.repository.FPRepository
 import org.smartregister.util.Log
 import org.smartregister.view.activity.DrishtiApplication
+import timber.log.Timber
+import timber.log.Timber.DebugTree
 
 open class FPApplication : DrishtiApplication() {
 
@@ -40,6 +42,9 @@ open class FPApplication : DrishtiApplication() {
                     .withLogLevel(android.util.Log.VERBOSE)
                     .build(this, BuildConfig.FLURRY_API_KEY)
         }
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
+        }
     }
 
 
@@ -49,7 +54,7 @@ open class FPApplication : DrishtiApplication() {
                 repository = FPRepository(getInstance()?.applicationContext, context)
             }
         } catch (e: UnsatisfiedLinkError) {
-            Log.logError("Error on getRepository: $e")
+            Timber.e("Error on getRepository: $e")
         }
         return repository
     }

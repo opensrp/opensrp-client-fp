@@ -2,21 +2,21 @@
 <resources>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <!--<item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccent</item>-->
     </style>
 
     <style name="familyPlanningModu">
         <item name="android:fontFamily">@font/roboto_medium</item>
-        <item name="android:textColor">#ffffff</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">28sp</item>
         <item name="android:lineSpacingMultiplier">1.21</item>
     </style>
 
     <style name="version1214Buil">
         <item name="android:fontFamily">@font/roboto_regular</item>
-        <item name="android:textColor">#FF99D3EE</item>
+        <item name="android:textColor">@color/cornflower</item>
         <item name="android:textSize">16sp</item>
         <item name="android:lineSpacingMultiplier">1.19</item>
     </style>

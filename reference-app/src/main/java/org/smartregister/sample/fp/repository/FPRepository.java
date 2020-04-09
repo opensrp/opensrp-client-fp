@@ -17,8 +17,8 @@ import org.smartregister.view.activity.DrishtiApplication;
 import timber.log.Timber;
 
 public class FPRepository extends Repository {
-    protected SQLiteDatabase readableDatabase;
-    protected SQLiteDatabase writableDatabase;
+    protected SQLiteDatabase mReadableDatabase;
+    protected SQLiteDatabase mWritableDatabase;
 
     public FPRepository(Context context, org.smartregister.Context openSRPContext) {
         super(context, AllConstants.DATABASE_NAME, BuildConfig.DATABASE_VERSION, openSRPContext.session(),
@@ -67,25 +67,25 @@ public class FPRepository extends Repository {
 
     @Override
     public synchronized SQLiteDatabase getWritableDatabase(String password) {
-        if (writableDatabase == null || !writableDatabase.isOpen()) {
-            if (writableDatabase != null) {
-                writableDatabase.close();
+        if (mWritableDatabase == null || !mWritableDatabase.isOpen()) {
+            if (mWritableDatabase != null) {
+                mWritableDatabase.close();
             }
-            writableDatabase = super.getWritableDatabase(password);
+            mWritableDatabase = super.getWritableDatabase(password);
         }
-        return writableDatabase;
+        return mWritableDatabase;
     }
 
     @Override
     public synchronized SQLiteDatabase getReadableDatabase(String password) {
         try {
-            if (readableDatabase == null || !readableDatabase.isOpen()) {
-                if (readableDatabase != null) {
-                    readableDatabase.close();
+            if (mReadableDatabase == null || !mReadableDatabase.isOpen()) {
+                if (mReadableDatabase != null) {
+                    mReadableDatabase.close();
                 }
-                readableDatabase = super.getReadableDatabase(password);
+                mReadableDatabase = super.getReadableDatabase(password);
             }
-            return readableDatabase;
+            return mReadableDatabase;
         } catch (Exception e) {
             Timber.e(e, "Database Error");
             return null;
@@ -95,12 +95,12 @@ public class FPRepository extends Repository {
 
     @Override
     public synchronized void close() {
-        if (readableDatabase != null) {
-            readableDatabase.close();
+        if (mReadableDatabase != null) {
+            mReadableDatabase.close();
         }
 
-        if (writableDatabase != null) {
-            writableDatabase.close();
+        if (mWritableDatabase != null) {
+            mWritableDatabase.close();
         }
         super.close();
     }
