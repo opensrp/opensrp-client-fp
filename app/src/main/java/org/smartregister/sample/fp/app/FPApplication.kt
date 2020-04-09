@@ -1,11 +1,12 @@
 package org.smartregister.sample.fp.app
 
 import com.evernote.android.job.JobManager
-import org.smartregister.BuildConfig
+import com.flurry.android.FlurryAgent
 import org.smartregister.Context
 import org.smartregister.CoreLibrary
 import org.smartregister.configurableviews.ConfigurableViewsLibrary
 import org.smartregister.repository.Repository
+import org.smartregister.sample.fp.BuildConfig
 import org.smartregister.sample.fp.job.FPJobCreator
 import org.smartregister.sample.fp.repository.FPRepository
 import org.smartregister.util.Log
@@ -28,6 +29,17 @@ open class FPApplication : DrishtiApplication() {
 
         //init Job Manager
         JobManager.create(this).addJobCreator(FPJobCreator())
+        //Only integrate Flurry Analytics for  production. Remove negation to test in debug
+
+        //Only integrate Flurry Analytics for  production. Remove negation to test in debug
+        if (!BuildConfig.DEBUG) {
+            FlurryAgent.Builder()
+                    .withLogEnabled(true)
+                    .withCaptureUncaughtExceptions(true)
+                    .withContinueSessionMillis(10000)
+                    .withLogLevel(android.util.Log.VERBOSE)
+                    .build(this, BuildConfig.FLURRY_API_KEY)
+        }
     }
 
 

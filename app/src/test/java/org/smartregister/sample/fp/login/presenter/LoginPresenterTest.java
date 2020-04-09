@@ -189,17 +189,6 @@ public class LoginPresenterTest extends BaseUnitTest {
     public void testGetLoginViewShouldReturnCorrectInstance() {
         Assert.assertNotNull(presenter.getLoginView());
         Assert.assertEquals(view, presenter.getLoginView());
-
-        LoginPresenter presenter = new LoginPresenter(null);
-        Assert.assertNull(presenter.getLoginView());
-
-    }
-
-    @Test
-    public void testGetLoginViewShouldReturnNullIfNoViewIsSet() {
-        LoginPresenter presenter = new LoginPresenter(null);
-        Assert.assertNull(presenter.getLoginView());
-
     }
 
     @Test

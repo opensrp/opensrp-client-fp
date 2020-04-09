@@ -18,11 +18,10 @@ import org.smartregister.login.presenter.BaseLoginPresenter
 import org.smartregister.sample.fp.R
 import org.smartregister.sample.fp.login.interactor.LoginInteractor
 import org.smartregister.view.contract.BaseLoginContract
+import timber.log.Timber
 import java.lang.ref.WeakReference
 
-class LoginPresenter(loginView: BaseLoginContract.View?) : BaseLoginPresenter(), BaseLoginContract.Presenter {
-
-    private val TAG = LoginPresenter::class.java.simpleName
+class LoginPresenter(loginView: BaseLoginContract.View) : BaseLoginPresenter(), BaseLoginContract.Presenter {
 
     init {
         mLoginView = WeakReference(loginView)
@@ -62,7 +61,7 @@ class LoginPresenter(loginView: BaseLoginContract.View?) : BaseLoginPresenter(),
                         ?.bitmap
             }
         } catch (e: Exception) {
-            Log.d(TAG, e.message.toString())
+            Timber.d(e.message.toString())
         }
     }
 
