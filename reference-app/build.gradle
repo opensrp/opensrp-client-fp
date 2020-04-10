@@ -82,6 +82,12 @@ android {
             signingConfig signingConfigs.release
         }
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [eventBusIndex: 'org.smartregister.sample.fp.FPEventBusIndex']
+            }
+        }
+
         if (project.rootProject.file("local.properties").exists()) {
             Properties properties = new Properties()
             properties.load(project.rootProject.file("local.properties").newDataInputStream())
@@ -218,7 +224,7 @@ tasks.withType(Test) {
 dependencies {
     def powerMockVersion = '2.0.4'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':family-planning')
+    implementation project(':opensrp-fp')
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

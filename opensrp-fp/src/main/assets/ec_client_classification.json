@@ -1,0 +1,33 @@
+{
+  "case_classification_rules": [
+    {
+      "comment": "Patient: This rule checks whether a given case belongs to register and creates or updates it if it don't exist",
+      "rule": {
+        "type": "event",
+        "fields": [
+          {
+            "field": "eventType",
+            "field_value": "FP Close",
+            "closes_case": [
+              "ec_client"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "FP Registration",
+            "creates_case": [
+              "ec_client"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Update FP Registration",
+            "creates_case": [
+              "ec_client"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
