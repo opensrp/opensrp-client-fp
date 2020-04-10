@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.configurableviews.ConfigurableViewsLibrary;
-import org.smartregister.fp.FPLibrary;
+import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.util.ANCJsonFormUtils;
 import org.smartregister.fp.common.util.Utils;
 import org.smartregister.fp.features.home.contract.RegisterContract;

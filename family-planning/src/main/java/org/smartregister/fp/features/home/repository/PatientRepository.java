@@ -6,8 +6,8 @@ import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import org.apache.commons.lang3.StringUtils;
-import org.smartregister.fp.FPLibrary;
 import org.smartregister.fp.common.domain.WomanDetail;
+import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.Utils;
 import org.smartregister.repository.BaseRepository;

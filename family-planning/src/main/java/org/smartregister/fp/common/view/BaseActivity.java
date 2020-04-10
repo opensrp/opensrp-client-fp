@@ -6,9 +6,9 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.smartregister.fp.FPLibrary;
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.contact.SiteCharacteristicsContract;
+import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.util.ANCJsonFormUtils;
 import org.smartregister.fp.common.util.ConstantsUtils;
 

@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import org.json.JSONObject;
-import org.smartregister.fp.FPLibrary;
+import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.repository.AllSharedPreferences;
 
 public class SiteCharacteristicsFormUtils {

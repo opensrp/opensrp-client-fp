@@ -3,7 +3,7 @@ package org.smartregister.fp.features.home.interactor
 import org.apache.commons.lang3.StringUtils
 import org.smartregister.DristhiConfiguration
 import org.smartregister.domain.Response
-import org.smartregister.fp.FPLibrary
+import org.smartregister.fp.common.library.FPLibrary
 import org.smartregister.fp.common.util.AppExecutors
 import org.smartregister.fp.features.home.contract.AdvancedSearchContract
 import org.smartregister.service.HTTPAgent

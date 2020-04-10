@@ -20,12 +20,12 @@ import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter
 import org.smartregister.cursoradapter.RecyclerViewProvider
 import org.smartregister.cursoradapter.SmartRegisterQueryBuilder
 import org.smartregister.domain.FetchStatus
-import org.smartregister.fp.FPLibrary
 import org.smartregister.fp.R
 import org.smartregister.fp.common.cursor.AdvancedMatrixCursor
 import org.smartregister.fp.common.event.SyncEvent
 import org.smartregister.fp.common.fragment.NoMatchDialogFragment
 import org.smartregister.fp.common.helper.DBQueryHelper
+import org.smartregister.fp.common.library.FPLibrary
 import org.smartregister.fp.common.provider.RegisterProvider
 import org.smartregister.fp.common.task.AttentionFlagsTask
 import org.smartregister.fp.common.util.ConstantsUtils

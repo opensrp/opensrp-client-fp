@@ -22,12 +22,12 @@ import org.smartregister.AllConstants
 import org.smartregister.commonregistry.CommonPersonObjectClient
 import org.smartregister.configurableviews.ConfigurableViewsLibrary
 import org.smartregister.domain.FetchStatus
-import org.smartregister.fp.FPLibrary
 import org.smartregister.fp.R
 import org.smartregister.fp.common.domain.AttentionFlag
 import org.smartregister.fp.common.domain.Contact
 import org.smartregister.fp.common.event.PatientRemovedEvent
 import org.smartregister.fp.common.event.ShowProgressDialogEvent
+import org.smartregister.fp.common.library.FPLibrary
 import org.smartregister.fp.common.util.*
 import org.smartregister.fp.features.home.contract.RegisterContract
 import org.smartregister.fp.features.home.presenter.RegisterPresenter

@@ -15,8 +15,8 @@ import org.jeasy.rules.api.Facts;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.smartregister.fp.FPLibrary;
 import org.smartregister.fp.common.domain.Contact;
+import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.PartialContact;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package org.smartregister.fp;
+package org.smartregister.fp.common.library;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
