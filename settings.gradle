@@ -1,2 +1,2 @@
 include ':reference-app'
-include ':family-planning'
+include ':opensrp-fp'
