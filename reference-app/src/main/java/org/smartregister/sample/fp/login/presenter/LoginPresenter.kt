@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.android.volley.toolbox.ImageLoader
 import org.smartregister.configurableviews.model.LoginConfiguration
 import org.smartregister.configurableviews.model.ViewConfiguration
-import org.smartregister.fp.FPLibrary
+import org.smartregister.fp.common.library.FPLibrary
 import org.smartregister.fp.common.util.ConstantsUtils
 import org.smartregister.fp.common.util.ImageLoaderRequestUtils
 import org.smartregister.login.model.BaseLoginModel

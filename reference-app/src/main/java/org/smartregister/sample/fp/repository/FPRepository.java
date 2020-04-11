@@ -16,6 +16,10 @@ import org.smartregister.view.activity.DrishtiApplication;
 
 import timber.log.Timber;
 
+/**
+ * Created by ndegwamartin on 09/04/2018.
+ */
+
 public class FPRepository extends Repository {
     protected SQLiteDatabase mReadableDatabase;
     protected SQLiteDatabase mWritableDatabase;
@@ -106,3 +110,4 @@ public class FPRepository extends Repository {
     }
 
 }
+

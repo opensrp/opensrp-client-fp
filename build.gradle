@@ -12,7 +12,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.3'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
         classpath 'com.palantir:jacoco-coverage:0.4.0'
         classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.11.0"
         classpath 'com.google.gms:google-services:4.3.3'
@@ -63,7 +63,6 @@ project.ext.preDexLibs = !project.hasProperty('disablePreDex')
 
 subprojects {
     group = 'org.smartregister'
-
     ext.androidToolsBuildGradle = '3.6.2'
     ext.androidBuildToolsVersion = '29.0.2'
     ext.androidMinSdkVersion = 18

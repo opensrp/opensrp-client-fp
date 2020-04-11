@@ -12,6 +12,7 @@ buildscript {
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android' // apply kotlin android plugin
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'jacoco'
 
@@ -66,6 +67,11 @@ android {
 
         if (properties != null && properties.containsKey("store.file") && properties.containsKey("store.password") && properties.containsKey("key.password")) {
             signingConfig signingConfigs.release
+        } 
+		javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [eventBusIndex: 'org.smartregister.fp.FPEventBusIndex']
+            }
         }
     }
 
@@ -119,7 +125,6 @@ tasks.withType(Test) {
 dependencies {
     def powerMockVersion = '2.0.4'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation 'com.android.support:appcompat-v7:29.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.android.support:support-compat:29.0.0'
@@ -156,8 +161,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'cardview-v7'
         exclude group: 'com.android.support', module: 'support-v4'
     }
+
     implementation group: 'org.apache.commons', name: 'commons-text', version: '1.8'
-    annotationProcessor 'com.jakewharton:butterknife:10.2.0'
+    kapt 'com.jakewharton:butterknife:10.2.0'
     implementation 'net.zetetic:android-database-sqlcipher:4.2.0@aar'
     implementation 'commons-validator:commons-validator:1.6'
     /*implementation('com.crashlytics.sdk.android:crashlytics:2.9.3@aar') {
@@ -165,7 +171,7 @@ dependencies {
     }*/
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.greenrobot:eventbus:3.1.1'
-    annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.1.1'
+    kapt 'org.greenrobot:eventbus-annotation-processor:3.1.1'
     implementation 'com.google.guava:guava:24.1-jre'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     // Because RxAndroid releases are few and far between, it is recommended you also
