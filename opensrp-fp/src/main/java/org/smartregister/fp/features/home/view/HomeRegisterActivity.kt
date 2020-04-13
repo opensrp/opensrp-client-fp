@@ -3,13 +3,13 @@ package org.smartregister.fp.features.home.view
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import com.google.android.gms.vision.barcode.Barcode
 import com.vijay.jsonwizard.activities.JsonFormActivity
@@ -64,13 +64,31 @@ open class HomeRegisterActivity : BaseRegisterActivity(), RegisterContract.View 
 
             bottomNavigationView.menu.findItem(R.id.action_clients).setIcon(R.drawable.ic_icon_nav_clients)
 
-            bottomNavigationView.menu.add(R.string.action_mec_wheel).setIcon(R.drawable.ic_icon_nav_mec_wheel)
+            bottomNavigationView.menu.add(Menu.NONE, R.string.action_mec_wheel, Menu.NONE, R.string.action_mec_wheel).setIcon(R.drawable.ic_icon_nav_mec_wheel)
 
             // remove unused menu
             bottomNavigationView.menu.removeItem(R.id.action_search)
             bottomNavigationView.menu.removeItem(R.id.action_library)
 
-            val bottomNavigationListener = BottomNavigationListener(this)
+            val bottomNavigationListener: BottomNavigationListener = object : BottomNavigationListener(this) {
+                override fun onNavigationItemSelected(@NonNull item: MenuItem): Boolean {
+                    return if (item.itemId == R.string.action_mec_wheel) {
+                        val pkgName = "com.who.mecwheel"
+                        var intent = packageManager.getLaunchIntentForPackage(pkgName)
+                        if (intent == null) {
+                            intent = try {
+                                Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$pkgName"))
+                            } catch (ex: java.lang.Exception) {
+                                Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$pkgName"))
+                            }
+                        }
+                        startActivity(intent)
+                        false
+                    } else {
+                        super.onNavigationItemSelected(item)
+                    }
+                }
+            }
             bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavigationListener)
         }
     }
