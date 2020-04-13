@@ -1,5 +1,6 @@
 package org.smartregister.sample.fp.app
 
+import android.content.Intent
 import com.evernote.android.job.JobManager
 import org.smartregister.Context
 import org.smartregister.CoreLibrary
@@ -15,6 +16,7 @@ import org.smartregister.sample.fp.BuildConfig.BUILD_TIMESTAMP
 import org.smartregister.sample.fp.BuildConfig.DATABASE_VERSION
 import org.smartregister.sample.fp.R
 import org.smartregister.sample.fp.login.job.FPJobCreator
+import org.smartregister.sample.fp.login.ui.LoginActivity
 import org.smartregister.sample.fp.repository.FPRepository
 import org.smartregister.sync.DrishtiSyncScheduler
 import org.smartregister.util.Log
@@ -110,7 +112,13 @@ class FPApplication : DrishtiApplication(), TimeChangedBroadcastReceiver.OnTimeC
     }
 
     override fun logoutCurrentUser() {
-
+        val intent = Intent(applicationContext, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.addCategory(Intent.CATEGORY_HOME)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        applicationContext.startActivity(intent)
+        context.userService().logoutSession()
     }
 
     companion object {

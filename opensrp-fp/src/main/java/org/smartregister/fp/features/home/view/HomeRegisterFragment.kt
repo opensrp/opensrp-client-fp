@@ -37,12 +37,16 @@ import org.smartregister.job.SyncServiceJob
 import org.smartregister.job.SyncSettingsServiceJob
 import org.smartregister.receiver.SyncStatusBroadcastReceiver
 import org.smartregister.view.activity.BaseRegisterActivity
+import org.smartregister.view.activity.DrishtiApplication
 import org.smartregister.view.fragment.BaseRegisterFragment
 import org.smartregister.view.fragment.SecuredNativeSmartRegisterFragment
 import timber.log.Timber
+import java.text.SimpleDateFormat
 import java.util.*
 
 open class HomeRegisterFragment : BaseRegisterFragment(), RegisterFragmentContract.View, SyncStatusBroadcastReceiver.SyncStatusListener {
+
+    private var popupMenu: PopupMenu? = null
 
     companion object {
         const val CLICK_VIEW_NORMAL = "click_view_normal"
@@ -141,22 +145,24 @@ open class HomeRegisterFragment : BaseRegisterFragment(), RegisterFragmentContra
 
         }
         else if (view.id == R.id.popup_menu) {
-            val popupMenu = PopupMenu(activity, view)
-            popupMenu.menuInflater.inflate(R.menu.home_main_menu, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener { item ->
-                when(item.itemId) {
-                    R.id.btn_sync -> {
-                        SyncServiceJob.scheduleJobImmediately(SyncServiceJob.TAG)
-                        SyncSettingsServiceJob.scheduleJobImmediately(SyncSettingsServiceJob.TAG)
+            if(popupMenu == null) {
+                popupMenu = PopupMenu(activity, view)
+                popupMenu?.menuInflater?.inflate(R.menu.home_main_menu, popupMenu?.menu)
+                popupMenu?.menu?.findItem(R.id.btn_logout)?.title = "Logout as ${org.smartregister.util.Utils.getPrefferedName()}"
+                popupMenu?.setOnMenuItemClickListener { item ->
+                    when(item.itemId) {
+                        R.id.btn_sync -> {
+                            SyncServiceJob.scheduleJobImmediately(SyncServiceJob.TAG)
+                            SyncSettingsServiceJob.scheduleJobImmediately(SyncSettingsServiceJob.TAG)
+                        }
+                        R.id.btn_logout -> {
+                            DrishtiApplication.getInstance().logoutCurrentUser()
+                        }
                     }
-                    R.id.btn_logout -> {
-
-                    }
+                    true
                 }
-                true
             }
-
-            popupMenu.show()
+            popupMenu?.show()
         }
     }
 
@@ -205,7 +211,6 @@ open class HomeRegisterFragment : BaseRegisterFragment(), RegisterFragmentContra
             Timber.e(e)
         }
     }
-
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
         val matrixCursor = (presenter as RegisterFragmentPresenter).matrixCursor
@@ -258,5 +263,18 @@ open class HomeRegisterFragment : BaseRegisterFragment(), RegisterFragmentContra
             Timber.e(e)
         }
         return query
+    }
+
+    override fun onLoaderReset(loader: Loader<Cursor>) {
+        // block super call due to the bug
+        //super.onLoaderReset(loader)
+    }
+
+    override fun onSyncComplete(fetchStatus: FetchStatus?) {
+        super.onSyncComplete(fetchStatus)
+        if (fetchStatus == FetchStatus.fetched || fetchStatus == FetchStatus.nothingFetched) {
+
+        }
+        popupMenu?.menu?.findItem(R.id.btn_sync)?.title = String.format(getString(R.string.last_synced), SimpleDateFormat("hh:mm a", Utils.getDefaultLocale()).format(Date()), SimpleDateFormat("MMM dd", Utils.getDefaultLocale()).format(Date()))
     }
 }
