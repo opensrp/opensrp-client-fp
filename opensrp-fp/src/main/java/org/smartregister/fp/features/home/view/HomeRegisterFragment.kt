@@ -33,6 +33,8 @@ import org.smartregister.fp.common.util.DBConstantsUtils
 import org.smartregister.fp.common.util.Utils
 import org.smartregister.fp.features.home.contract.RegisterFragmentContract
 import org.smartregister.fp.features.home.presenter.RegisterFragmentPresenter
+import org.smartregister.job.SyncServiceJob
+import org.smartregister.job.SyncSettingsServiceJob
 import org.smartregister.receiver.SyncStatusBroadcastReceiver
 import org.smartregister.view.activity.BaseRegisterActivity
 import org.smartregister.view.fragment.BaseRegisterFragment
@@ -142,6 +144,15 @@ open class HomeRegisterFragment : BaseRegisterFragment(), RegisterFragmentContra
             val popupMenu = PopupMenu(activity, view)
             popupMenu.menuInflater.inflate(R.menu.home_main_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener { item ->
+                when(item.itemId) {
+                    R.id.btn_sync -> {
+                        SyncServiceJob.scheduleJobImmediately(SyncServiceJob.TAG)
+                        SyncSettingsServiceJob.scheduleJobImmediately(SyncSettingsServiceJob.TAG)
+                    }
+                    R.id.btn_logout -> {
+
+                    }
+                }
                 true
             }
 
