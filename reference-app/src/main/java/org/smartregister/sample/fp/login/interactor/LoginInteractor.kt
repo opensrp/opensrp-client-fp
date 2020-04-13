@@ -1,6 +1,5 @@
 package org.smartregister.sample.fp.login.interactor
 
-import org.smartregister.domain.LoginResponse
 import org.smartregister.job.ImageUploadServiceJob
 import org.smartregister.job.PullUniqueIdsServiceJob
 import org.smartregister.job.SyncServiceJob
@@ -28,12 +27,4 @@ class LoginInteractor(loginPresenter: BaseLoginContract.Presenter?) : BaseLoginI
                         getFlexValue(BuildConfig.CLIENT_SETTINGS_SYNC_MINUTES))
     }
 
-    override fun scheduleJobsImmediately() {
-        super.scheduleJobsImmediately()
-    }
-
-    override fun processServerSettings(loginResponse: LoginResponse) {
-        super.processServerSettings(loginResponse)
-        //        AncLibrary.getInstance().populateGlobalSettings();
-    }
 }

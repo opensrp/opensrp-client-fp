@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
-import android.widget.PopupMenu
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.loader.content.CursorLoader
@@ -139,13 +138,6 @@ open class HomeRegisterFragment : BaseRegisterFragment(), RegisterFragmentContra
 
         }
         else if (view.id == R.id.popup_menu) {
-            val popupMenu = PopupMenu(activity, view)
-            popupMenu.menuInflater.inflate(R.menu.home_main_menu, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener { item ->
-                true
-            }
-
-            popupMenu.show()
         }
     }
 

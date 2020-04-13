@@ -18,7 +18,6 @@
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:layout_toStartOf="@+id/action_buttons_layout"
-        android:layout_toLeftOf="@+id/action_buttons_layout"
         android:orientation="vertical">
 
         <org.smartregister.view.customcontrols.CustomFontTextView
@@ -27,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="0dp"
-            android:text="Patient Name Patient Name Patient Name Patient Name Patient Name"
+            android:text="@string/patient_name"
             android:textColor="@color/text_black"
             android:textSize="18sp" />
 
@@ -89,7 +88,7 @@
             android:layout_height="80dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/ic_african_girl"
-            app:civ_border_color="#FFFFFFFF"
+            app:civ_border_color="@color/translucent_white"
             app:civ_border_width="0dp" />
 
         <Button

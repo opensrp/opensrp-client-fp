@@ -2,7 +2,6 @@ package org.smartregister.sample.fp.login.presenter
 
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.util.Log
 import android.view.View
 import android.widget.CheckBox
 import android.widget.ImageView
@@ -17,13 +16,11 @@ import org.smartregister.login.model.BaseLoginModel
 import org.smartregister.login.presenter.BaseLoginPresenter
 import org.smartregister.sample.fp.R
 import org.smartregister.sample.fp.login.interactor.LoginInteractor
-import org.smartregister.sample.fp.login.ui.LoginActivity
 import org.smartregister.view.contract.BaseLoginContract
+import timber.log.Timber
 import java.lang.ref.WeakReference
 
-class LoginPresenter(loginView: LoginActivity) : BaseLoginPresenter(), BaseLoginContract.Presenter {
-
-    private val TAG = LoginPresenter::class.java.canonicalName
+class LoginPresenter(loginView: BaseLoginContract.View) : BaseLoginPresenter(), BaseLoginContract.Presenter {
 
     init {
         mLoginView = WeakReference(loginView)
@@ -52,7 +49,7 @@ class LoginPresenter(loginView: LoginActivity) : BaseLoginPresenter(), BaseLogin
                 val gradientDrawable = GradientDrawable()
                 gradientDrawable.shape = GradientDrawable.RECTANGLE
                 gradientDrawable.orientation = GradientDrawable.Orientation.valueOf(background.orientation)
-                gradientDrawable.setColors(intArrayOf(Color.parseColor(background.startColor), Color.parseColor(background.endColor)))
+                gradientDrawable.colors = intArrayOf(Color.parseColor(background.startColor), Color.parseColor(background.endColor))
                 loginLayout.background = gradientDrawable
             }
             if (metadata.logoUrl != null) {
@@ -63,7 +60,7 @@ class LoginPresenter(loginView: LoginActivity) : BaseLoginPresenter(), BaseLogin
                         ?.bitmap
             }
         } catch (e: Exception) {
-            Log.d(TAG, e.message)
+            Timber.d(e.message.toString())
         }
     }
 

@@ -22,8 +22,8 @@ jacoco {
     toolVersion = jacocoVersion
 }
 ext.versionMajor = 1
-ext.versionMinor = 0
-ext.versionPatch = 0
+ext.versionMinor = 2
+ext.versionPatch = 14
 ext.versionClassifier = null
 ext.isSnapshot = false
 ext.minimumSdkVersion = androidMinSdkVersion
@@ -261,7 +261,7 @@ dependencies {
     implementation 'com.android.support:cardview-v7:29.0.0'
     //implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     implementation 'net.zetetic:android-database-sqlcipher:4.2.0@aar'
-    implementation "androidx.core:core-ktx:+"
+    implementation "androidx.core:core-ktx:1.2.0"
     implementation group: 'org.yaml', name: 'snakeyaml', version: '1.25'
     implementation 'id.zelory:compressor:2.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -280,8 +280,8 @@ dependencies {
     /*implementation('com.crashlytics.sdk.android:crashlytics:2.10.1') {
         transitive = true
     }*/
-    implementation 'com.flurry.android:analytics:11.6.0@aar'
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'org.greenrobot:eventbus:3.1.1'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.apache.maven:maven-ant-tasks:2.1.3'
