@@ -47,6 +47,7 @@ import org.smartregister.fp.common.model.Task;
 import org.smartregister.fp.common.rule.AlertRule;
 import org.smartregister.fp.features.home.repository.ContactTasksRepository;
 import org.smartregister.fp.features.home.view.HomeRegisterActivity;
+import org.smartregister.fp.features.profile.view.ProfileActivity;
 import org.smartregister.view.activity.DrishtiApplication;
 
 import java.io.IOException;
@@ -375,10 +376,10 @@ public class Utils extends org.smartregister.util.Utils {
 
     public static void navigateToProfile(Context context, HashMap<String, String> patient) {
 
-        /*Intent intent = new Intent(context, ProfileActivity.class); FIXME Add ProfileActivity
+        Intent intent = new Intent(context, ProfileActivity.class);
         intent.putExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID, patient.get(DBConstantsUtils.KeyUtils.ID_LOWER_CASE));
         intent.putExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP, patient);
-        context.startActivity(intent);*/
+        context.startActivity(intent);
     }
 
     public static String getColumnMapValue(CommonPersonObjectClient pc, String key) {

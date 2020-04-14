@@ -59,6 +59,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/FPAppTheme.NoActionBar" />
 
+        <activity
+            android:name="org.smartregister.fp.features.profile.view.ProfileActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/FPAppTheme.NoActionBar" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
