@@ -13,6 +13,7 @@
         android:background="@color/white"
         android:gravity="center"
         android:orientation="vertical">
+
         <ImageView
             android:id="@+id/site_characteristics_logo"
             android:layout_width="match_parent"
