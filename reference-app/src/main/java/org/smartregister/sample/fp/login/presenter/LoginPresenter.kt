@@ -61,7 +61,7 @@ class LoginPresenter(loginView: BaseLoginContract.View) : BaseLoginPresenter(), 
                         ?.bitmap
             }
         } catch (e: Exception) {
-            Timber.d(e.message.toString())
+            Timber.d(e)
         }
     }
 
