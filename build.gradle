@@ -89,7 +89,7 @@ task clean(type: Delete) {
 }
 
 jacocoFull {
-    excludeProject ":reference-app", ":opensrp-client-fp"
+    excludeProject ":opensrp-client-fp"
 }
 
 coveralls {
