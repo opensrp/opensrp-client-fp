@@ -1,0 +1,2 @@
+include ':reference-app'
+include ':opensrp-fp'
