@@ -3,6 +3,7 @@
     <string name="action_logout">Logout</string>
     <string name="action_language">Language</string>
     <string name="action_mec_wheel">MEC</string>
+
     <!-- General -->
     <string name="app_name">WHO FP</string>
     <string name="saving_dialog_title">Saving…</string>
@@ -18,7 +19,9 @@
     <string name="id">ID</string>
     <string name="patient_location">Location: %1$s</string>
     <string name="dose_given_date">Dose %1$s given %2$s</string>
-    <string name="patient_name">Patient Name</string>
+
+
+
     <string name="unauthorized">Please check the credentials</string>
     <string name="unauthorized_group">Your user group is not allowed to access this device</string>
     <string name="unknown_response">login failed. Try later</string>
@@ -274,10 +277,6 @@
     <string name="allow_phone_call_management">You need to allow the WHO ANC app to manage phone calls to enable calling&#8230;</string>
     <string name="any_changes_you_make">Any changes you make will be lost</string>
     <string name="woman_name">Woman Name</string>
-    <string name="contact_weeks">START\nCONTACT %1$s\n%2$s</string>
-    <string name="contact_weeks_no_break">START &#183; CONTACT %1$s &#183; %2$s</string>
-    <string name="contact_in_progress">CONTACT %1$s\n IN PROGRESS</string>
-    <string name="contact_in_progress_no_break">CONTACT %1$s &#183; IN PROGRESS</string>
     <string name="contact_weeks">FOLLOW UP %1$s\n%2$s</string>
     <string name="contact_weeks_no_break">START &#183; FOLLOW UP %1$s &#183; %2$s</string>
     <string name="contact_in_progress">FOLLOW UP %1$s\n IN PROGRESS</string>
@@ -421,4 +420,5 @@
     <string name="caffeine_intake">Caffeine intake</string>
     <string name="balanced_diet_content_13">The maximum daily dose of caffeine intake for a pregnant woman is 300mg, is equivalent to:</string>
     <string name="balanced_diet_url_11">ftp://ftp.caism.unicamp.br/pub/astec/CARTILHA_DE_EXERCISIO_FISICO_NA_GRAVIDEZ_Publico.pdf</string>
+    <string name="patient_name">Patient Name</string>
 </resources>

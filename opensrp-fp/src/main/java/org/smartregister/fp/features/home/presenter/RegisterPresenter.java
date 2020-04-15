@@ -131,7 +131,7 @@ public class RegisterPresenter implements RegisterContract.Presenter, RegisterCo
     }
 
     @Override
-    public void closeAncRecord(String jsonString) {
+    public void closeFPRecord(String jsonString) {
         try {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getView().getContext());
             AllSharedPreferences allSharedPreferences = new AllSharedPreferences(preferences);

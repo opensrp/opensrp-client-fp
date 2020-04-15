@@ -29,7 +29,6 @@ import org.smartregister.domain.Photo;
 import org.smartregister.domain.ProfileImage;
 import org.smartregister.domain.form.FormLocation;
 import org.smartregister.fp.R;
-import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.ContactSummaryModel;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;

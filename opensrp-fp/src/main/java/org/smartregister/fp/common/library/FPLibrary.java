@@ -143,7 +143,6 @@ public class FPLibrary {
         if (uniqueIdRepository == null) {
             uniqueIdRepository = new UniqueIdRepository();
         }
-
         return uniqueIdRepository;
     }
 

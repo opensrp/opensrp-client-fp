@@ -155,7 +155,7 @@ open class HomeRegisterActivity : BaseRegisterActivity(), RegisterContract.View 
                     val form = JSONObject(jsonString)
                     when (form.getString(FPJsonFormUtils.ENCOUNTER_TYPE)) {
                         ConstantsUtils.EventTypeUtils.REGISTRATION -> (presenter as RegisterContract.Presenter).saveRegistrationForm(jsonString, false)
-                        ConstantsUtils.EventTypeUtils.CLOSE -> (presenter as RegisterContract.Presenter).closeAncRecord(jsonString)
+                        ConstantsUtils.EventTypeUtils.CLOSE -> (presenter as RegisterContract.Presenter).closeFPRecord(jsonString)
                         ConstantsUtils.EventTypeUtils.QUICK_CHECK -> {
                             val contact = Contact()
                             contact.setContactNumber(intent.getIntExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, 0))
