@@ -205,10 +205,23 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
-        int itemId = item.getItemId();
+
         // When user click home menu item then quit this activity.
+        int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
             Utils.navigateToHomeRegister(this, false, FPLibrary.getInstance().getActivityConfiguration().getHomeRegisterActivityClass());
+        }
+        else if (itemId == R.id.menu_btn_call) {
+            launchPhoneDialer(phoneNumber);
+        }
+        else if (itemId == R.id.menu_btn_start_visit) {
+            continueToContact();
+        }
+        else if (itemId == R.id.menu_btn_close_fp_record) {
+            FPJsonFormUtils.launchANCCloseForm(ProfileActivity.this);
+        }
+        /*if (itemId == android.R.id.home) {
+
         } else {
             String contactButtonText = getString(R.string.start_contact);
 
@@ -219,7 +232,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
             }
 
             attachAlertDialog(contactButtonText);
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -270,8 +283,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //MenuInflater inflater = getMenuInflater();
-        //inflater.inflate(R.menu.menu_profile_activity, menu);
+        getMenuInflater().inflate(R.menu.menu_profile_activity, menu);
         return true;
     }
 

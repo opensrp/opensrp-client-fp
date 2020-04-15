@@ -22,6 +22,8 @@
     <string name="patient_name">Patient Name</string>
     <string name="last_synced">Sync Last: %1$s, %2$s</string>
     <string name="start_visit">START VISIT</string>
+    <string name="start_visit_menu">Start visit</string>
+    <string name="close_fp_record_menu">Close FP record</string>
 
 
     <string name="unauthorized">Please check the credentials</string>
@@ -133,7 +135,7 @@
     <string name="registration_info_updated">Registration info updated &#x21;</string>
 
     <string name="call">Call</string>
-    <string name="start_contact">Start Contact</string>
+    <string name="start_contact">Start Follow UP</string>
     <string name="close_anc_record">Close ANC Record</string>
     <string name="copy_to_clipboard">Copy to clipboard</string>
     <string name="no_matching_woman_found_on_this_device">No matching woman found on this device.</string>
@@ -295,8 +297,8 @@
     <string name="save_and_finish">SAVE + FINISH</string>
     <string name="reason_for_visit">REASON FOR VISIT</string>
     <string name="contact_recorded_today">CONTACT %1$d\n DONE TODAY</string>
-    <string name="contact_recorded_today_no_break"> CONTACT %1$d &#183; DONE TODAY</string>
-    <string name="continue_contact">Continue Contact %1$d</string>
+    <string name="contact_recorded_today_no_break"> FOLLOW UP %1$d &#183; DONE TODAY</string>
+    <string name="continue_contact">Continue Follow Up %1$d</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="finalizing_contact">Finalizing Contact %1$d</string>
