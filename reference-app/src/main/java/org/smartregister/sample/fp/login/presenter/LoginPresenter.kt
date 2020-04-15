@@ -2,7 +2,6 @@ package org.smartregister.sample.fp.login.presenter
 
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.util.Log
 import android.view.View
 import android.widget.CheckBox
 import android.widget.ImageView

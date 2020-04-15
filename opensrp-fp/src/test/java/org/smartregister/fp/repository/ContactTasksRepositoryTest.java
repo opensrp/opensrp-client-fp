@@ -22,7 +22,6 @@ import org.powermock.reflect.Whitebox;
 import org.robolectric.util.ReflectionHelpers;
 import org.smartregister.Context;
 import org.smartregister.fp.activity.BaseUnitTest;
-import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.Task;
 import org.smartregister.fp.features.home.repository.ContactTasksRepository;
 import org.smartregister.repository.BaseRepository;

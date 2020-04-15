@@ -1,8 +1,11 @@
 package org.smartregister.sample.fp.login.ui
 
+import android.content.Intent
 import android.widget.Toast
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.smartregister.fp.common.util.ConstantsUtils
+import org.smartregister.fp.features.home.view.HomeRegisterActivity
 import org.smartregister.sample.fp.R
 import org.smartregister.sample.fp.event.ViewConfigurationSyncCompleteEvent
 import org.smartregister.sample.fp.login.presenter.LoginPresenter
@@ -22,16 +25,12 @@ class LoginActivity : BaseLoginActivity(), BaseLoginContract.View {
     override fun goToHome(remote: Boolean) {
         // go to main page after success full login
         gotToHomeRegister(remote)
-        if (remote)
-            Toast.makeText(this, "Remote Login Success", Toast.LENGTH_LONG).show()
-        else
-            Toast.makeText(this, "Local Login Success", Toast.LENGTH_LONG).show()
     }
 
     private fun gotToHomeRegister(remote: Boolean) {
-        /*val intent = Intent(this, BaseHomeRegisterActivity::class.java)
+        val intent = Intent(this, HomeRegisterActivity::class.java)
         intent.putExtra(ConstantsUtils.IntentKeyUtils.IS_REMOTE_LOGIN, remote)
-        startActivity(intent)*/
+        startActivity(intent)
     }
 
     override fun getContentView(): Int {

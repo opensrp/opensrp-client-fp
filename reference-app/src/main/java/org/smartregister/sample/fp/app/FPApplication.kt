@@ -1,21 +1,29 @@
 package org.smartregister.sample.fp.app
 
 import com.evernote.android.job.JobManager
-import com.flurry.android.FlurryAgent
 import org.smartregister.Context
 import org.smartregister.CoreLibrary
+import org.smartregister.commonregistry.CommonFtsObject
 import org.smartregister.configurableviews.ConfigurableViewsLibrary
+import org.smartregister.fp.common.library.FPLibrary
+import org.smartregister.fp.common.util.DBConstantsUtils
+import org.smartregister.fp.common.util.Utils
+import org.smartregister.location.helper.LocationHelper
+import org.smartregister.receiver.SyncStatusBroadcastReceiver
 import org.smartregister.repository.Repository
-import org.smartregister.sample.fp.BuildConfig
+import org.smartregister.sample.fp.BuildConfig.BUILD_TIMESTAMP
+import org.smartregister.sample.fp.BuildConfig.DATABASE_VERSION
+import org.smartregister.sample.fp.R
 import org.smartregister.sample.fp.job.FPJobCreator
 import org.smartregister.sample.fp.repository.FPRepository
+import org.smartregister.sync.DrishtiSyncScheduler
 import org.smartregister.util.Log
 import org.smartregister.view.activity.DrishtiApplication
+import org.smartregister.view.receiver.TimeChangedBroadcastReceiver
 import timber.log.Timber
-import timber.log.Timber.DebugTree
 
-open class FPApplication : DrishtiApplication() {
-
+class FPApplication : DrishtiApplication(), TimeChangedBroadcastReceiver.OnTimeChangedListener {
+    private var commonFtsObject: CommonFtsObject? = null
     private var mPassword: String? = null
 
     override fun onCreate() {
@@ -24,26 +32,56 @@ open class FPApplication : DrishtiApplication() {
         mInstance = this
         context = Context.getInstance()
         context.updateApplicationContext(applicationContext)
+        context.updateCommonFtsObject(createCommonFtsObject())
 
         //Initialize Modules
-        CoreLibrary.init(context, FPConfiguration(), BuildConfig.BUILD_TIMESTAMP)
+        CoreLibrary.init(context, FPSyncConfiguration(), BUILD_TIMESTAMP)
+        FPLibrary.init(context, DATABASE_VERSION)
         ConfigurableViewsLibrary.init(context)
+        SyncStatusBroadcastReceiver.init(this)
+        TimeChangedBroadcastReceiver.init(this)
+        TimeChangedBroadcastReceiver.getInstance().addOnTimeChangedListener(this)
+        LocationHelper.init(Utils.ALLOWED_LEVELS, Utils.DEFAULT_LOCATION_LEVEL)
+
+        try {
+            Utils.saveLanguage("en")
+        } catch (e: Exception) {
+            Timber.e(e, " --> saveLanguage")
+        }
 
         //init Job Manager
         JobManager.create(this).addJobCreator(FPJobCreator())
-        //Only integrate Flurry Analytics for  production. Remove negation to test in debug
+    }
 
-        //Only integrate Flurry Analytics for  production. Remove negation to test in debug
-        if (!BuildConfig.DEBUG) {
-            FlurryAgent.Builder()
-                    .withLogEnabled(true)
-                    .withCaptureUncaughtExceptions(true)
-                    .withContinueSessionMillis(10000)
-                    .withLogLevel(android.util.Log.VERBOSE)
-                    .build(this, BuildConfig.FLURRY_API_KEY)
+    private fun createCommonFtsObject(): CommonFtsObject {
+        if (commonFtsObject == null) {
+            commonFtsObject = CommonFtsObject(getFtsTables())
+            for (ftsTable in commonFtsObject!!.getTables()) {
+                commonFtsObject!!.updateSearchFields(ftsTable, getFtsSearchFields(ftsTable))
+                commonFtsObject!!.updateSortFields(ftsTable, getFtsSortFields(ftsTable))
+            }
         }
-        if (BuildConfig.DEBUG) {
-            Timber.plant(DebugTree())
+        return commonFtsObject!!
+    }
+
+    private fun getFtsTables(): Array<String?>? {
+        return arrayOf(DBConstantsUtils.DEMOGRAPHIC_TABLE_NAME)
+    }
+
+    private fun getFtsSearchFields(tableName: String): Array<String?>? {
+        return if (tableName == DBConstantsUtils.DEMOGRAPHIC_TABLE_NAME) {
+            arrayOf(DBConstantsUtils.KeyUtils.FIRST_NAME, DBConstantsUtils.KeyUtils.LAST_NAME, DBConstantsUtils.KeyUtils.FP_ID)
+        } else {
+            null
+        }
+    }
+
+    private fun getFtsSortFields(tableName: String): Array<String?>? {
+        return if (tableName == DBConstantsUtils.DEMOGRAPHIC_TABLE_NAME) {
+            arrayOf(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, DBConstantsUtils.KeyUtils.FIRST_NAME, DBConstantsUtils.KeyUtils.LAST_NAME,
+                    DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH, DBConstantsUtils.KeyUtils.DATE_REMOVED)
+        } else {
+            null
         }
     }
 
@@ -54,7 +92,7 @@ open class FPApplication : DrishtiApplication() {
                 repository = FPRepository(getInstance()?.applicationContext, context)
             }
         } catch (e: UnsatisfiedLinkError) {
-            Timber.e("Error on getRepository: $e")
+            Log.logError("Error on getRepository: $e")
         }
         return repository
     }
@@ -73,5 +111,38 @@ open class FPApplication : DrishtiApplication() {
 
     override fun logoutCurrentUser() {
 
+    }
+
+    companion object {
+        fun getInstance() : FPApplication = mInstance as FPApplication
+    }
+
+    override fun onTerminate() {
+        Log.logInfo("Application is terminating. Stopping Sync scheduler and resetting isSyncInProgress setting.")
+        cleanUpSyncState()
+        TimeChangedBroadcastReceiver.destroy(this)
+        super.onTerminate()
+    }
+
+    protected fun cleanUpSyncState() {
+        try {
+            DrishtiSyncScheduler.stop(applicationContext)
+            context.allSharedPreferences().saveIsSyncInProgress(false)
+        } catch (e: java.lang.Exception) {
+            Timber.e(e, " --> cleanUpSyncState")
+        }
+    }
+
+    override fun onTimeZoneChanged() {
+        Utils.showToast(this, this.getString(R.string.device_time_changed))
+        context.userService().forceRemoteLogin()
+        logoutCurrentUser()
+    }
+
+    override fun onTimeChanged() {
+        Utils.showToast(this, this.getString(R.string.device_timezone_changed))
+        context.userService().forceRemoteLogin()
+
+        logoutCurrentUser()
     }
 }

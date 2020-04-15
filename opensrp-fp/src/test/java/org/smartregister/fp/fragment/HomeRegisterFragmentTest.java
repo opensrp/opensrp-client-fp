@@ -11,7 +11,6 @@ import org.robolectric.util.ReflectionHelpers;
 import org.smartregister.commonregistry.CommonRepository;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
 import org.smartregister.fp.activity.BaseUnitTest;
-import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.features.home.repository.RegisterQueryProvider;
 import org.smartregister.fp.features.home.view.HomeRegisterFragment;
 

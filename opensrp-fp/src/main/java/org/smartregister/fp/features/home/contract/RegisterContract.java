@@ -36,7 +36,7 @@ public interface RegisterContract {
 
         void saveRegistrationForm(String jsonString, boolean isEditMode);
 
-        void closeAncRecord(String jsonString);
+        void closeFPRecord(String jsonString);
 
     }
 
