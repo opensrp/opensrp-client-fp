@@ -35,7 +35,7 @@ class FPApplication : DrishtiApplication(), TimeChangedBroadcastReceiver.OnTimeC
         context.updateCommonFtsObject(createCommonFtsObject())
 
         //Initialize Modules
-        CoreLibrary.init(context, FPSyncConfiguration(), BUILD_TIMESTAMP)
+        CoreLibrary.init(context, FPConfiguration(), BUILD_TIMESTAMP)
         FPLibrary.init(context, DATABASE_VERSION)
         ConfigurableViewsLibrary.init(context)
         SyncStatusBroadcastReceiver.init(this)

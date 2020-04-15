@@ -3,6 +3,7 @@ package org.smartregister.sample.fp.login.job
 import com.evernote.android.job.Job
 import com.evernote.android.job.JobCreator
 import org.smartregister.job.*
+import org.smartregister.sample.fp.job.ViewConfigurationsServiceJob
 import org.smartregister.sync.intent.SyncIntentService
 import timber.log.Timber
 

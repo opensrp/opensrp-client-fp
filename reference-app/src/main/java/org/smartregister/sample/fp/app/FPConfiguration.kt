@@ -4,7 +4,7 @@ import org.smartregister.SyncConfiguration
 import org.smartregister.SyncFilter
 import org.smartregister.sample.fp.BuildConfig
 
-class FPSyncConfiguration : SyncConfiguration() {
+class FPConfiguration : SyncConfiguration() {
     override fun getSyncMaxRetries(): Int {
         return BuildConfig.MAX_SYNC_RETRIES
     }
@@ -28,6 +28,10 @@ class FPSyncConfiguration : SyncConfiguration() {
         return BuildConfig.OPENMRS_UNIQUE_ID_BATCH_SIZE
     }
 
+    override fun getSynchronizedLocationTags(): MutableList<String> {
+        return ArrayList()
+    }
+
     override fun getUniqueIdInitialBatchSize(): Int {
         return BuildConfig.OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE
     }
@@ -40,15 +44,11 @@ class FPSyncConfiguration : SyncConfiguration() {
         return SyncFilter.TEAM
     }
 
+    override fun getTopAllowedLocationLevel(): String {
+        return ""
+    }
+
     override fun updateClientDetailsTable(): Boolean {
         return true
-    }
-
-    override fun getSynchronizedLocationTags(): List<String?>? {
-        return null
-    }
-
-    override fun getTopAllowedLocationLevel(): String? {
-        return null
     }
 }
