@@ -109,7 +109,7 @@ public abstract class ConstantsUtils {
 
     public static class JsonFormUtils {
         public static final String FP_REGISTER = "fp_register";
-        public static final String ANC_CLOSE = "fp_close";
+        public static final String FP_CLOSE = "fp_close";
         public static final String ANC_PROFILE = "fp_profile";
         public static final String ANC_PROFILE_ENCOUNTER_TYPE = "Profile";
         public static final String ANC_SYMPTOMS_FOLLOW_UP = "fp_symptoms_follow_up";
@@ -119,7 +119,7 @@ public abstract class ConstantsUtils {
         public static final String ANC_TEST_ENCOUNTER_TYPE = "Tests";
         public static final String ANC_COUNSELLING_TREATMENT_ENCOUNTER_TYPE = "Counselling and Treatment";
         public static final String ANC_SITE_CHARACTERISTICS = "fp_site_characteristics";
-        public static final String ANC_QUICK_CHECK = "fp_quick_check";
+        public static final String FP_START_VISIT = "fp_start_visit";
         public static final String ANC_TEST_TASKS = "fp_test_tasks";
     }
 

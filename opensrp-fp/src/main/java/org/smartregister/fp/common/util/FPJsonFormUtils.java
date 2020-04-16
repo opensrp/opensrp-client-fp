@@ -121,7 +121,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
                 ancId.put(FPJsonFormUtils.VALUE, entityId);
             }
 
-        } else if (ConstantsUtils.JsonFormUtils.ANC_CLOSE.equals(formName)) {
+        } else if (ConstantsUtils.JsonFormUtils.FP_CLOSE.equals(formName)) {
             if (StringUtils.isNotBlank(entityId)) {
                 // Inject entity id into the remove form
                 form.remove(FPJsonFormUtils.ENTITY_ID);
@@ -619,7 +619,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
     public static void launchANCCloseForm(Activity activity) {
         try {
             Intent intent = new Intent(activity, JsonFormActivity.class);
-            JSONObject form = FormUtils.getInstance(activity).getFormJson(ConstantsUtils.JsonFormUtils.ANC_CLOSE);
+            JSONObject form = FormUtils.getInstance(activity).getFormJson(ConstantsUtils.JsonFormUtils.FP_CLOSE);
             if (form != null) {
                 form.put(ConstantsUtils.JsonFormKeyUtils.ENTITY_ID,
                         activity.getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID));

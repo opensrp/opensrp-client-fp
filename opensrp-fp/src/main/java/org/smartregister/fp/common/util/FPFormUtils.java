@@ -77,10 +77,10 @@ public class FPFormUtils extends FormUtils {
         FPLibrary.getInstance().getPartialContactRepository().savePartialContact(partialContact);
     }
 
-    /*public static JSONObject getFormJsonCore(PartialContact partialContactRequest, JSONObject form) throws JSONException {
+    public static JSONObject getFormJsonCore(PartialContact partialContactRequest, JSONObject form) throws JSONException {
         //partial contact exists?
 
-        PartialContact partialContact = AncLibrary.getInstance().getPartialContactRepository()
+        PartialContact partialContact = FPLibrary.getInstance().getPartialContactRepository()
                 .getPartialContact(partialContactRequest);
 
         String formJsonString = isValidPartialForm(partialContact) ? getPartialContactForm(partialContact) : form.toString();
@@ -96,15 +96,15 @@ public class FPFormUtils extends FormUtils {
         }
 
         return object;
-    }*/
+    }
 
-    /*private static boolean isValidPartialForm(PartialContact partialContact) {
+    private static boolean isValidPartialForm(PartialContact partialContact) {
         return partialContact != null && (partialContact.getFormJson() != null || partialContact.getFormJsonDraft() != null);
-    }*/
+    }
 
-    /*private static String getPartialContactForm(PartialContact partialContact) {
+    private static String getPartialContactForm(PartialContact partialContact) {
         return partialContact.getFormJsonDraft() != null ? partialContact.getFormJsonDraft() : partialContact.getFormJson();
-    }*/
+    }
 
     public static void processSpecialWidgets(JSONObject widget) throws Exception {
         String widgetType = widget.getString(JsonFormConstants.TYPE);

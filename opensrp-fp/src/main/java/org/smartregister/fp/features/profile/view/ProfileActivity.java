@@ -302,7 +302,8 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         } else {
             Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(ConstantsUtils.ANDROID_SWITCHER + R.id.viewpager + ":" + viewPager.getCurrentItem()); //This might be dirty we maybe can find a better way to do it.
             if (currentFragment instanceof ProfileTasksFragment) {
-                currentFragment.onActivityResult(requestCode, resultCode, data);
+                // FIXME check this method characteristics
+                //currentFragment.onActivityResult(requestCode, resultCode, data);
             }
         }
     }
