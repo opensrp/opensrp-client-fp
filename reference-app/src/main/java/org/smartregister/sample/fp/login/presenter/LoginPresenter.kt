@@ -2,7 +2,6 @@ package org.smartregister.sample.fp.login.presenter
 
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.util.Log
 import android.view.View
 import android.widget.CheckBox
 import android.widget.ImageView
@@ -10,7 +9,7 @@ import android.widget.TextView
 import com.android.volley.toolbox.ImageLoader
 import org.smartregister.configurableviews.model.LoginConfiguration
 import org.smartregister.configurableviews.model.ViewConfiguration
-import org.smartregister.fp.FPLibrary
+import org.smartregister.fp.common.library.FPLibrary
 import org.smartregister.fp.common.util.ConstantsUtils
 import org.smartregister.fp.common.util.ImageLoaderRequestUtils
 import org.smartregister.login.model.BaseLoginModel

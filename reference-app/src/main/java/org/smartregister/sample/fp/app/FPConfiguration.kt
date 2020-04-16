@@ -2,7 +2,6 @@ package org.smartregister.sample.fp.app
 
 import org.smartregister.SyncConfiguration
 import org.smartregister.SyncFilter
-import org.smartregister.repository.AllSharedPreferences
 import org.smartregister.sample.fp.BuildConfig
 
 class FPConfiguration : SyncConfiguration() {

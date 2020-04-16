@@ -1,6 +1,5 @@
 package org.smartregister.sample.fp.login.interactor
 
-import org.smartregister.domain.LoginResponse
 import org.smartregister.job.ImageUploadServiceJob
 import org.smartregister.job.PullUniqueIdsServiceJob
 import org.smartregister.job.SyncServiceJob
