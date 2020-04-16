@@ -93,7 +93,7 @@ public class RegisterFragmentPresenter implements RegisterFragmentContract.Prese
     }
 
     @Override
-    public void updateSortAndFilter(List<? extends Field> filterList, Field sortField) {
+    public void updateSortAndFilter(List<Field> filterList, Field sortField) {
         String filterText = model.getFilterText(filterList, getView().getString(R.string.filter));
         String sortText = model.getSortText(sortField);
 
