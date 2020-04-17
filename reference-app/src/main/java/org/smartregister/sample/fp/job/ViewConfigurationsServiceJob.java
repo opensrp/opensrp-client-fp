@@ -10,9 +10,6 @@ import org.smartregister.configurableviews.service.PullConfigurableViewsIntentSe
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.job.BaseJob;
 
-/**
- * Created by ndegwamartin on 06/09/2018.
- */
 public class ViewConfigurationsServiceJob extends BaseJob {
 
     public static final String TAG = "ViewConfigurationsServiceJob";

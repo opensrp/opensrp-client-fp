@@ -14,9 +14,6 @@ import org.smartregister.view.contract.BaseLoginContract;
 
 import timber.log.Timber;
 
-/**
- * Created by ndegwamartin on 21/06/2018.
- */
 public class LoginActivity extends BaseLoginActivity implements BaseLoginContract.View {
 
     @Override
