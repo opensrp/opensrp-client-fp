@@ -5,9 +5,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 
-import androidx.fragment.app.Fragment;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
@@ -31,11 +31,16 @@ import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.Utils;
 import org.smartregister.fp.features.home.contract.RegisterFragmentContract;
 import org.smartregister.fp.features.home.presenter.RegisterFragmentPresenter;
+import org.smartregister.job.SyncServiceJob;
+import org.smartregister.job.SyncSettingsServiceJob;
 import org.smartregister.receiver.SyncStatusBroadcastReceiver;
 import org.smartregister.view.activity.BaseRegisterActivity;
+import org.smartregister.view.activity.DrishtiApplication;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 import org.smartregister.view.fragment.SecuredNativeSmartRegisterFragment;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -52,6 +57,8 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
     public static final String CLICK_VIEW_ALERT_STATUS = "click_view_alert_status";
     public static final String CLICK_VIEW_SYNC = "click_view_sync";
     public static final String CLICK_VIEW_ATTENTION_FLAG = "click_view_attention_flag";
+
+    private PopupMenu popupMenu;
 
     @Override
     protected void initializePresenter() {
@@ -145,6 +152,25 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
         }
         else if (view.getId() == R.id.popup_menu) {
 
+            if (popupMenu == null) {
+                popupMenu = new PopupMenu(getActivity(), view);
+                popupMenu.getMenuInflater().inflate(R.menu.home_main_menu, popupMenu.getMenu());
+                popupMenu.getMenu().findItem(R.id.btn_logout).setTitle("Logout as " + Utils.getPrefferedName());
+
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    if (item.getItemId() == R.id.btn_sync) {
+                        SyncServiceJob.scheduleJobImmediately(SyncServiceJob.TAG);
+                        SyncSettingsServiceJob.scheduleJobImmediately(SyncSettingsServiceJob.TAG);
+                    }
+                    else if (item.getItemId() == R.id.btn_logout) {
+                        DrishtiApplication.getInstance().logoutCurrentUser();
+                    }
+
+                    return true;
+                });
+            }
+
+            popupMenu.show();
         }
     }
 
@@ -258,6 +284,22 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
         }
 
         return query;
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        // block super call due to the bug
+        //super.onLoaderReset(loader);
+    }
+
+    @Override
+    public void onSyncComplete(FetchStatus fetchStatus) {
+        if (fetchStatus == FetchStatus.fetched || fetchStatus == FetchStatus.nothingFetched) {
+
+        }
+        if (popupMenu != null) {
+            popupMenu.getMenu().findItem(R.id.btn_sync).setTitle(String.format(getString(R.string.last_synced), new SimpleDateFormat("hh:mm a", Utils.getDefaultLocale()).format(new Date()), new SimpleDateFormat("MMM dd", Utils.getDefaultLocale()).format(new Date())));
+        }
     }
 }
 

@@ -1,5 +1,7 @@
 package org.smartregister.sample.fp.app;
 
+import android.content.Intent;
+
 import com.evernote.android.job.JobManager;
 
 import org.smartregister.Context;
@@ -16,6 +18,7 @@ import org.smartregister.repository.Repository;
 import org.smartregister.sample.fp.BuildConfig;
 import org.smartregister.sample.fp.R;
 import org.smartregister.sample.fp.job.FPJobCreator;
+import org.smartregister.sample.fp.login.ui.LoginActivity;
 import org.smartregister.sample.fp.repository.FPRepository;
 import org.smartregister.sync.DrishtiSyncScheduler;
 import org.smartregister.view.activity.DrishtiApplication;
@@ -158,6 +161,11 @@ public class FPApplication extends DrishtiApplication implements TimeChangedBroa
 
     @Override
     public void logoutCurrentUser() {
-
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        context.userService().logoutSession();
     }
 }
