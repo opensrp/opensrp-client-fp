@@ -42,7 +42,7 @@ public class RegisterFragmentModel implements RegisterFragmentContract.Model {
 
     @Override
     public RegisterConfiguration defaultRegisterConfiguration() {
-        return ConfigHelperUtils.INSTANCE.defaultRegisterConfiguration(FPLibrary.getInstance().getApplicationContext());
+        return ConfigHelperUtils.defaultRegisterConfiguration(FPLibrary.getInstance().getApplicationContext());
     }
 
     @Override
@@ -82,9 +82,8 @@ public class RegisterFragmentModel implements RegisterFragmentContract.Model {
         return queryBuilder.mainCondition(mainCondition);
     }
 
-    @NotNull
     @Override
-    public String getFilterText(@Nullable List<? extends Field> list, @Nullable String filterTitle) {
+    public String getFilterText(List<Field> list, String filterTitle) {
         List<? extends Field> filterList = list;
         if (filterList == null) {
             filterList = new ArrayList<>();
