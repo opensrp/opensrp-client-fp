@@ -2,9 +2,10 @@
     <!-- Actions -->
     <string name="action_logout">Logout</string>
     <string name="action_language">Language</string>
+    <string name="action_mec_wheel">MEC</string>
 
     <!-- General -->
-    <string name="app_name">WHO ANC</string>
+    <string name="app_name">WHO FP</string>
     <string name="saving_dialog_title">Saving…</string>
     <string name="removing_dialog_title">Removing…</string>
     <string name="please_wait_message">Please wait</string>
@@ -60,6 +61,7 @@
     <string name="registration_info">Registration info</string>
 
     <!-- register -->
+    <string name="search_clients">Search name or ID</string>
     <string name="opensrp_id">OpenSRP ID</string>
     <string name="anc">WHO ANC</string>
     <string name="error_unable_to_start_form">An error occurred when starting the form</string>
@@ -275,10 +277,10 @@
     <string name="allow_phone_call_management">You need to allow the WHO ANC app to manage phone calls to enable calling&#8230;</string>
     <string name="any_changes_you_make">Any changes you make will be lost</string>
     <string name="woman_name">Woman Name</string>
-    <string name="contact_weeks">START\nCONTACT %1$s\n%2$s</string>
-    <string name="contact_weeks_no_break">START &#183; CONTACT %1$s &#183; %2$s</string>
-    <string name="contact_in_progress">CONTACT %1$s\n IN PROGRESS</string>
-    <string name="contact_in_progress_no_break">CONTACT %1$s &#183; IN PROGRESS</string>
+    <string name="contact_weeks">FOLLOW UP %1$s\n%2$s</string>
+    <string name="contact_weeks_no_break">START &#183; FOLLOW UP %1$s &#183; %2$s</string>
+    <string name="contact_in_progress">FOLLOW UP %1$s\n IN PROGRESS</string>
+    <string name="contact_in_progress_no_break">FOLLOW UP %1$s &#183; IN PROGRESS</string>
     <string name="due_delivery">DUE\nDELIVERY</string>
     <string name="record_birth_popup_message">GA: %1$d weeks\nEDD: %2$s (%3$s ago)\n\n%4$s should come in immediately for delivery.</string>
     <string name="contact_number">Contact %1$d</string>
@@ -296,8 +298,8 @@
     <string name="password">Password</string>
     <string name="finalizing_contact">Finalizing Contact %1$d</string>
     <string name="summarizing_contact_number">Summarizing Contact %1$d</string>
-    <string name="contact_number_due">CONTACT %1$d\n DUE \n %2$s</string>
-    <string name="contact_number_due_no_break">CONTACT %1$d &#183; DUE &#183; %2$s</string>
+    <string name="contact_number_due">FOLLOW UP %1$d\n DUE \n %2$s</string>
+    <string name="contact_number_due_no_break">FOLLOW UP %1$d &#183; DUE &#183; %2$s</string>
     <string name="last_contact">LAST CONTACT</string>
     <string name="key_figure">KEY FIGURES</string>
     <string name="recent_test">RECENT TEST: %1$s</string>
