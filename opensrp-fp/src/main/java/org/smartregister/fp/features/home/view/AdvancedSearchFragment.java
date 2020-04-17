@@ -236,7 +236,7 @@ public class AdvancedSearchFragment extends HomeRegisterFragment
     }
 
     @Override
-    public void initializeAdapter(Set<? extends org.smartregister.configurableviews.model.View> visibleColumns) {
+    public void initializeAdapter(Set<org.smartregister.configurableviews.model.View> visibleColumns) {
         AdvancedSearchProvider advancedSearchProvider =
                 new AdvancedSearchProvider(getActivity(), commonRepository(), visibleColumns, registerActionHandler,
                         paginationViewHandler);
