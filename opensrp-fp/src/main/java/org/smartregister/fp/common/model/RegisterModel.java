@@ -17,6 +17,8 @@ import org.smartregister.util.FormUtils;
 import java.util.List;
 import java.util.Map;
 
+import timber.log.Timber;
+
 public class RegisterModel implements RegisterContract.Model {
     private FormUtils formUtils;
 
@@ -64,7 +66,7 @@ public class RegisterModel implements RegisterContract.Model {
             try {
                 formUtils = FormUtils.getInstance(FPLibrary.getInstance().getApplicationContext());
             } catch (Exception e) {
-                Log.e(RegisterModel.class.getCanonicalName(), e.getMessage(), e);
+                Timber.e(RegisterModel.class.getCanonicalName(), e.getMessage(), e);
             }
         }
         return formUtils;
