@@ -95,11 +95,11 @@ public abstract class ConstantsUtils {
     }
 
     public static class IdentifierUtils {
-        public static final String ANC_ID = "ANC_ID";
+        public static final String FP_ID = "client_id";
     }
 
     public static final class EventTypeUtils {
-        public static final String REGISTRATION = "ANC Registration";
+        public static final String REGISTRATION = "Client Registration";
         public static final String UPDATE_REGISTRATION = "Update ANC Registration";
         public static final String QUICK_CHECK = "Quick Check";
         public static final String CLOSE = "ANC Close";
@@ -136,7 +136,7 @@ public abstract class ConstantsUtils {
         public static final String AGE_ENTERED = "age_entered";
 
         //
-        public static final String FP_ID = "fp_id";
+        public static final String CLIENT_ID = "client_id";
         public static final String STEP1 = "step1";
         public static final String FIELDS = "fields";
     }
@@ -235,6 +235,6 @@ public abstract class ConstantsUtils {
     }
 
     public static class ClientUtils {
-        public static final String ANC_ID = "ANC_ID";
+        public static final String FP_ID = "client_id";
     }
 }

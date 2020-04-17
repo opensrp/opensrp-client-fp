@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Pair;
 
+import com.vijay.jsonwizard.domain.Form;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
 import org.json.JSONObject;

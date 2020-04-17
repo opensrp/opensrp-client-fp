@@ -69,7 +69,7 @@ public class PatientRepository extends BaseRepository {
                         .put(DBConstantsUtils.KeyUtils.REMINDERS, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.REMINDERS)));
                 detailsMap.put(DBConstantsUtils.KeyUtils.HOME_ADDRESS,
                         cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.HOME_ADDRESS)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.EDD, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.EDD)));
+                /*detailsMap.put(DBConstantsUtils.KeyUtils.EDD, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.EDD)));
                 detailsMap.put(DBConstantsUtils.KeyUtils.CONTACT_STATUS, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.CONTACT_STATUS)));
                 detailsMap.put(DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS)));
                 detailsMap.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT,
@@ -83,7 +83,7 @@ public class PatientRepository extends BaseRepository {
                 detailsMap.put(DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT,
                         cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT)));
                 detailsMap.put(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE,
-                        cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE)));
+                        cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE)));*/
             }
             return detailsMap;
         } catch (Exception e) {

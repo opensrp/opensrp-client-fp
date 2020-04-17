@@ -13,6 +13,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.android.gms.vision.barcode.Barcode
 import com.vijay.jsonwizard.activities.JsonFormActivity
+import com.vijay.jsonwizard.activities.JsonWizardFormActivity
+import com.vijay.jsonwizard.domain.Form
 import org.apache.commons.lang3.StringUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -108,7 +110,7 @@ open class HomeRegisterActivity : BaseRegisterActivity(), RegisterContract.View 
     override fun startFormActivity(formName: String?, entityId: String?, metaData: String?) {
         try {
             if (mBaseFragment is HomeRegisterFragment) {
-                val locationId: String = FPLibrary.getInstance().getContext().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID)
+                val locationId: String = FPLibrary.getInstance().context.allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID)
                 (presenter as RegisterPresenter).startForm(formName, entityId, metaData, locationId)
             }
         } catch (e: java.lang.Exception) {
@@ -117,10 +119,19 @@ open class HomeRegisterActivity : BaseRegisterActivity(), RegisterContract.View 
         }
     }
 
-    override fun startFormActivity(form: JSONObject?) {
-        val intent = Intent(this, JsonFormActivity::class.java)
+    override fun startFormActivity(form: JSONObject) {
+        val intent = Intent(this, JsonWizardFormActivity::class.java)
         intent.putExtra(ConstantsUtils.JsonFormExtraUtils.JSON, form.toString())
+        intent.putExtra("form", getFormMetadata())
         startActivityForResult(intent, FPJsonFormUtils.REQUEST_CODE_GET_JSON)
+    }
+
+    fun getFormMetadata(): Form {
+        val form = Form()
+        form.homeAsUpIndicator = R.drawable.ic_action_close
+        form.actionBarBackground = R.color.black
+        form.saveLabel = resources.getString(R.string.save_label)
+        return form
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -158,7 +169,7 @@ open class HomeRegisterActivity : BaseRegisterActivity(), RegisterContract.View 
                         ConstantsUtils.EventTypeUtils.CLOSE -> (presenter as RegisterContract.Presenter).closeFPRecord(jsonString)
                         ConstantsUtils.EventTypeUtils.QUICK_CHECK -> {
                             val contact = Contact()
-                            contact.setContactNumber(intent.getIntExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, 0))
+                            contact.contactNumber = intent.getIntExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, 0)
                             FPFormUtils
                                     .persistPartial(intent.getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID), contact)
                             PatientRepository

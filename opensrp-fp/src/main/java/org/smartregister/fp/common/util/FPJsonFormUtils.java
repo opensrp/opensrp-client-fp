@@ -115,10 +115,10 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
             // Inject opensrp id into the form
             JSONArray field = FPJsonFormUtils.fields(form);
-            JSONObject ancId = getFieldJSONObject(field, ConstantsUtils.JsonFormKeyUtils.FP_ID);
-            if (ancId != null) {
-                ancId.remove(FPJsonFormUtils.VALUE);
-                ancId.put(FPJsonFormUtils.VALUE, entityId);
+            JSONObject clientId = getFieldJSONObject(field, ConstantsUtils.JsonFormKeyUtils.CLIENT_ID);
+            if (clientId != null) {
+                clientId.remove(FPJsonFormUtils.VALUE);
+                clientId.put(FPJsonFormUtils.VALUE, entityId);
             }
 
         } else if (ConstantsUtils.JsonFormUtils.ANC_CLOSE.equals(formName)) {
@@ -171,7 +171,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
             addLastInteractedWith(fields);
             getDobStrings(fields);
-            initializeFirstContactValues(fields);
+//            initializeFirstContactValues(fields);
             FormTag formTag = getFormTag(allSharedPreferences);
 
 
@@ -479,7 +479,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.EDD)) {
             formatEdd(womanClient, jsonObject, DBConstantsUtils.KeyUtils.EDD);
 
-        } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(ConstantsUtils.JsonFormKeyUtils.FP_ID)) {
+        } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(ConstantsUtils.JsonFormKeyUtils.CLIENT_ID)) {
             jsonObject.put(FPJsonFormUtils.VALUE, womanClient.get(DBConstantsUtils.KeyUtils.FP_ID).replace("-", ""));
 
         } else if (womanClient.containsKey(jsonObject.getString(FPJsonFormUtils.KEY))) {

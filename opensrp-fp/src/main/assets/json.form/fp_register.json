@@ -1,0 +1,635 @@
+{
+  "encounter_type": "Client Registration",
+  "count": "1",
+  "entity_id": "",
+  "relational_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "value": "2020-04-16 18:19:46"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "value": "2020-04-16 18:20:12"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date",
+      "value": "16-04-2020"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "value": "861266048427970"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "value": "410010051366588"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "value": "8992300000513665882f"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "value": "03334004065"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Client Registration",
+    "fields": [
+      {
+        "key": "first_name",
+        "type": "edit_text",
+        "openmrs_entity": "NA",
+        "openmrs_entity_id": "person",
+        "openmrs_entity_parent": "first_name",
+        "edit_type": "name",
+        "hint": "Client first name",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the first name"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid first name"
+        },
+        "value": "Zain"
+      },
+      {
+        "key": "last_name",
+        "type": "edit_text",
+        "openmrs_entity": "NA",
+        "openmrs_entity_id": "person",
+        "openmrs_entity_parent": "last_name",
+        "edit_type": "name",
+        "hint": "Client last name",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the last name"
+        },
+        "v_regex": {
+          "value": "[A-Za-z\\s\\.\\-]*",
+          "err": "Please enter a valid last name"
+        },
+        "value": "ul abidin"
+      },
+      {
+        "key": "registration_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "date_picker",
+        "hint": "Registration date",
+        "max_date": "today",
+        "v_required": {
+          "value": true,
+          "err": "Please specify the registration date"
+        },
+        "value": "16-04-2020"
+      },
+      {
+        "key": "referral",
+        "type": "native_radio",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "label": "Referral",
+        "label_info_text": "Whether or not the client is an incoming referral.",
+        "label_text_style": "normal",
+        "options": [
+          {
+            "key": "yes",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": "false",
+          "err": null
+        }
+      },
+      {
+        "key": "referred_by",
+        "type": "native_radio",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "label": "Referred by",
+        "options": [
+          {
+            "key": "community",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "Community"
+          },
+          {
+            "key": "facility",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "Facility"
+          }
+        ],
+        "v_required": {
+          "value": "false",
+          "err": null
+        }
+      },
+      {
+        "key": "client_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_identifier",
+        "openmrs_entity_id": "client_id",
+        "type": "barcode",
+        "barcode_type": "qrcode",
+        "hint": "FP ID",
+        "value": "0",
+        "scanButtonText": "Scan QR Code",
+        "v_numeric": {
+          "value": "true",
+          "err": "This needs to be a number"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "This field is required"
+        }
+      },
+      {
+        "key": "client_id_note",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Unique identification: {client_id}",
+        "toaster_type": "info",
+        "text_color": "#1199F9",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "registration_calculation_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "universal_id",
+        "type": "edit_text",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "edit_type": "name",
+        "hint": "Universal ID",
+        "label": "Universal ID",
+        "label_info_text": "The client's universal ID, if used in the country.",
+        "label_text_style": "normal",
+        "v_required": {
+          "value": "false",
+          "err": null
+        },
+        "value": ""
+      },
+      {
+        "key": "dob",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "birthdate",
+        "type": "hidden",
+        "value": "0",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "registration_calculation_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "dob_from_age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "hidden",
+        "value": "0",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "registration_calculation_rules.yml"
+            }
+          }
+        },
+        "step": "step1",
+        "is-rule-check": true
+      },
+      {
+        "key": "dob_entered",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "date_picker",
+        "hint": "Date of birth (DOB)",
+        "expanded": false,
+        "min_date": "today-49y",
+        "max_date": "today-10y",
+        "duration": {
+          "label": "Age"
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the date of birth"
+        },
+        "relevance": {
+          "step1:dob_unknown": {
+            "ex-checkbox": [
+              {
+                "not": [
+                  "dob_unknown"
+                ]
+              }
+            ]
+          }
+        },
+        "step": "step1",
+        "is-rule-check": true,
+        "is_visible": true,
+        "value": "16-04-2010"
+      },
+      {
+        "key": "dob_unknown",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "birthdate_estimated",
+        "type": "check_box",
+        "options": [
+          {
+            "key": "dob_unknown",
+            "text": "Date of birth unknown",
+            "text_size": "18px",
+            "value": "false",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          }
+        ],
+        "step": "step1",
+        "is-rule-check": false
+      },
+      {
+        "key": "age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "age",
+        "type": "hidden",
+        "value": "0",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "registration_calculation_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "age_from_dob",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "hidden",
+        "value": "0",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "registration_calculation_rules.yml"
+            }
+          }
+        },
+        "step": "step1",
+        "is-rule-check": true
+      },
+      {
+        "key": "age_entered",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person",
+        "openmrs_entity_id": "age",
+        "type": "edit_text",
+        "hint": "Estimated age",
+        "v_numeric": {
+          "value": "true",
+          "err": "Age must be a number"
+        },
+        "v_min": {
+          "value": "10",
+          "err": "Age must be equal to or greater than 10"
+        },
+        "v_max": {
+          "value": "49",
+          "err": "Age must be equal or less than 49"
+        },
+        "relevance": {
+          "step1:dob_unknown": {
+            "ex-checkbox": [
+              {
+                "and": [
+                  "dob_unknown"
+                ]
+              }
+            ]
+          }
+        },
+        "v_required": {
+          "value": "true",
+          "err": "Please enter age"
+        },
+        "step": "step1",
+        "is-rule-check": true,
+        "is_visible": false
+      },
+      {
+        "key": "gender",
+        "type": "native_radio",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "person",
+        "openmrs_entity_parent": "gender",
+        "label": "Gender",
+        "options": [
+          {
+            "key": "Female",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "Female"
+          },
+          {
+            "key": "Male",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "Male"
+          },
+          {
+            "key": "Other",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "Other"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Please select gender"
+        },
+        "is-rule-check": false,
+        "value": "Male"
+      },
+      {
+        "key": "biological_sex",
+        "type": "native_radio",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "label": "Biological sex",
+        "options": [
+          {
+            "key": "Female",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "openmrs_entity_parent": "",
+            "text": "Female"
+          },
+          {
+            "key": "Male",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "openmrs_entity_parent": "",
+            "text": "Male"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": null
+        },
+        "relevance": {
+          "step1:gender": {
+            "type": "string",
+            "ex": "equalTo(.,\"Other\")"
+          }
+        },
+        "is_visible": false
+      },
+      {
+        "key": "method_gender_type",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "hidden",
+        "value": "0",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "registration_calculation_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "marital_status",
+        "type": "native_radio",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "label": "Marital status",
+        "options": [
+          {
+            "key": "unmarried",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "Unmarried"
+          },
+          {
+            "key": "never_married",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "Never married"
+          },
+          {
+            "key": "married",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "Married"
+          },
+          {
+            "key": "polygamous",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "Polygamous"
+          },
+          {
+            "key": "divorced",
+            "openmrs_entity": "NA",
+            "openmrs_entity_id": "Concept - Divorced",
+            "openmrs_entity_parent": "1058AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "text": "Divorced"
+          },
+          {
+            "key": "widowed",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "Widowed"
+          },
+          {
+            "key": "unknown",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "Unknown"
+          }
+        ],
+        "v_required": {
+          "value": "false",
+          "err": null
+        }
+      },
+      {
+        "key": "admin_area",
+        "type": "edit_text",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "edit_type": "name",
+        "hint": "Administrative area",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter administrative area"
+        },
+        "value": "Hhhh"
+      },
+      {
+        "key": "client_address",
+        "type": "edit_text",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "edit_type": "name",
+        "hint": "Client address",
+        "v_required": {
+          "value": "false",
+          "err": null
+        },
+        "value": ""
+      },
+      {
+        "key": "tel_number",
+        "type": "edit_text",
+        "openmrs_entity": "NA",
+        "openmrs_entity_id": "Concept - Contact phone number",
+        "openmrs_entity_parent": "159635AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "edit_type": "number",
+        "hint": "Telephone number",
+        "v_required": {
+          "value": "false",
+          "err": null
+        },
+        "value": ""
+      },
+      {
+        "key": "comm_consent",
+        "type": "native_radio",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "label": "Communication consent",
+        "options": [
+          {
+            "key": "yes",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": "false",
+          "err": null
+        }
+      },
+      {
+        "key": "reminder_message",
+        "type": "native_radio",
+        "openmrs_entity": "NA",
+        "openmrs_entity_id": "Concept - Willing to receive text messages",
+        "openmrs_entity_parent": "163164AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "label": "Reminder messages",
+        "options": [
+          {
+            "key": "yes",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "No"
+          }
+        ],
+        "v_required": {
+          "value": "false",
+          "err": null
+        }
+      }
+    ]
+  },
+  "invisible_required_fields": "[age_entered, biological_sex]",
+  "details": {
+    "appVersionName": "1.7.28-SNAPSHOT",
+    "formVersion": ""
+  }
+}
