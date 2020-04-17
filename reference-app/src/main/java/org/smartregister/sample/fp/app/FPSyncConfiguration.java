@@ -24,10 +24,9 @@ public class FPSyncConfiguration extends SyncConfiguration {
 
     @Override
     public String getSyncFilterValue() {
-        /*AllSharedPreferences sharedPreferences =
+        AllSharedPreferences sharedPreferences =
                 FPLibrary.getInstance().getContext().userService().getAllSharedPreferences();
-        return sharedPreferences.fetchDefaultTeamId(sharedPreferences.fetchRegisteredANM());*/
-        return "";
+        return sharedPreferences.fetchDefaultTeamId(sharedPreferences.fetchRegisteredANM());
     }
 
     @Override

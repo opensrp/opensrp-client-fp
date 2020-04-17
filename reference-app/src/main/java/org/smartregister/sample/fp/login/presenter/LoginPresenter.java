@@ -2,7 +2,6 @@ package org.smartregister.sample.fp.login.presenter;
 
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -10,13 +9,8 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.smartregister.AllConstants;
 import org.smartregister.configurableviews.model.LoginConfiguration;
 import org.smartregister.configurableviews.model.ViewConfiguration;
-import org.smartregister.domain.Setting;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.ImageLoaderRequestUtils;
@@ -28,13 +22,10 @@ import org.smartregister.view.contract.BaseLoginContract;
 
 import java.lang.ref.WeakReference;
 
+import timber.log.Timber;
 
-/**
- * Created by ndegwamartin on 22/06/2018.
- */
+
 public class LoginPresenter extends BaseLoginPresenter implements BaseLoginContract.Presenter {
-
-    private static final String TAG = LoginPresenter.class.getCanonicalName();
 
     public LoginPresenter(BaseLoginContract.View loginView) {
         mLoginView = new WeakReference<>(loginView);
@@ -87,7 +78,7 @@ public class LoginPresenter extends BaseLoginPresenter implements BaseLoginContr
             }
 
         } catch (Exception e) {
-            Log.d(TAG, e.getMessage());
+            Timber.d(e);
         }
     }
 
