@@ -37,16 +37,21 @@ import org.joda.time.format.DateTimeFormatter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.AllConstants;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.domain.ButtonAlertStatus;
 import org.smartregister.fp.common.domain.Contact;
 import org.smartregister.fp.common.event.BaseEvent;
 import org.smartregister.fp.common.library.FPLibrary;
+import org.smartregister.fp.common.model.ContactModel;
+import org.smartregister.fp.common.model.PartialContact;
 import org.smartregister.fp.common.model.Task;
 import org.smartregister.fp.common.rule.AlertRule;
 import org.smartregister.fp.features.home.repository.ContactTasksRepository;
 import org.smartregister.fp.features.home.view.HomeRegisterActivity;
+import org.smartregister.fp.features.profile.view.ProfileActivity;
+import org.smartregister.fp.features.visit.view.StartVisitJsonFormActivity;
 import org.smartregister.view.activity.DrishtiApplication;
 
 import java.io.IOException;
@@ -193,13 +198,16 @@ public class Utils extends org.smartregister.util.Utils {
      * @author martinndegwa
      */
     public static void proceedToContact(String baseEntityId, HashMap<String, String> personObjectClient, Context context) {
-        /*try {
+        try {
 
-            Intent intent = new Intent(context.getApplicationContext(), ContactJsonFormActivity.class);
+            // Fixme remove that line once you get the proper contact
+            personObjectClient.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, "2322");
+
+            Intent intent = new Intent(context.getApplicationContext(), StartVisitJsonFormActivity.class);
 
             Contact quickCheck = new Contact();
             quickCheck.setName(context.getResources().getString(R.string.quick_check));
-            quickCheck.setFormName(ConstantsUtils.JsonFormUtils.ANC_QUICK_CHECK);
+            quickCheck.setFormName(ConstantsUtils.JsonFormUtils.FP_START_VISIT);
             quickCheck.setContactNumber(Integer.valueOf(personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
             quickCheck.setBackground(R.drawable.quick_check_bg);
             quickCheck.setActionBarBackground(R.color.quick_check_red);
@@ -213,13 +221,13 @@ public class Utils extends org.smartregister.util.Utils {
             partialContactRequest.setContactNo(quickCheck.getContactNumber());
             partialContactRequest.setType(quickCheck.getFormName());
 
-            String locationId = AncLibrary.getInstance().getContext().allSharedPreferences()
+            String locationId = FPLibrary.getInstance().getContext().allSharedPreferences()
                     .getPreference(AllConstants.CURRENT_LOCATION_ID);
 
             ContactModel baseContactModel = new ContactModel();
             JSONObject form = baseContactModel.getFormAsJson(quickCheck.getFormName(), baseEntityId, locationId);
 
-            String processedForm = ANCFormUtils.getFormJsonCore(partialContactRequest, form).toString();
+            String processedForm = FPFormUtils.getFormJsonCore(partialContactRequest, form).toString();
 
             if (hasPendingRequiredFields(new JSONObject(processedForm))) {
                 intent.putExtra(ConstantsUtils.JsonFormExtraUtils.JSON, processedForm);
@@ -229,9 +237,9 @@ public class Utils extends org.smartregister.util.Utils {
                 intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, partialContactRequest.getType());
                 intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, partialContactRequest.getContactNo());
                 Activity activity = (Activity) context;
-                activity.startActivityForResult(intent, ANCJsonFormUtils.REQUEST_CODE_GET_JSON);
+                activity.startActivityForResult(intent, FPJsonFormUtils.REQUEST_CODE_GET_JSON);
             } else {
-                intent = new Intent(context, MainContactActivity.class);
+                intent = new Intent(context, StartVisitJsonFormActivity.class);
                 intent.putExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID, baseEntityId);
                 intent.putExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP, personObjectClient);
                 intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, partialContactRequest.getType());
@@ -245,7 +253,7 @@ public class Utils extends org.smartregister.util.Utils {
             Timber.e(e, " --> proceedToContact");
             Utils.showToast(context,
                     "Error proceeding to contact for client " + personObjectClient.get(DBConstantsUtils.KeyUtils.FIRST_NAME));
-        }*/
+        }
     }
 
     /**
@@ -374,11 +382,11 @@ public class Utils extends org.smartregister.util.Utils {
     }
 
     public static void navigateToProfile(Context context, HashMap<String, String> patient) {
-       /* Intent intent = new Intent(context, ProfileActivity.class);
+
+        Intent intent = new Intent(context, ProfileActivity.class);
         intent.putExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID, patient.get(DBConstantsUtils.KeyUtils.ID_LOWER_CASE));
         intent.putExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP, patient);
-        context.startActivity(intent);*/
-       Timber.i("navigateToProfile");
+        context.startActivity(intent);
     }
 
     public static String getColumnMapValue(CommonPersonObjectClient pc, String key) {

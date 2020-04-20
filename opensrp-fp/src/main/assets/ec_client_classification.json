@@ -14,7 +14,7 @@
           },
           {
             "field": "eventType",
-            "field_value": "FP Registration",
+            "field_value": "Client Registration",
             "creates_case": [
               "ec_client"
             ]

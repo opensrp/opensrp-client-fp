@@ -2,14 +2,14 @@
 name: step1_age_from_dob
 description: Age calculated from DOB.
 priority: 1
-condition: "step1_dob_unknown == false"
+condition: "step1_dob_entered != ''"
 actions:
   - 'calculation = helper.getDifferenceDays(step1_dob_entered) / 365.25'
 ---
 name: step1_dob_from_age
 description: If estimated age is entered, calculate the estimated DOB.
 priority: 1
-condition: "step1_dob_unknown == true"
+condition: "step1_age_entered != ''"
 actions:
   - 'calculation = helper.getDOBFromAge(step1_age_entered)'
 ---
@@ -18,14 +18,7 @@ description: The final DOB to be used.
 priority: 1
 condition: "true"
 actions:
-  - 'calculation = (step1_dob_unknown == true ? step1_dob_from_age : step1_dob_entered)'
----
-name: step1_age
-description: The final age to be used.
-priority: 1
-condition: "true"
-actions:
-  - 'calculation = (step1_dob_unknown == true ? step1_age_entered : step1_age_from_dob)'
+  - 'calculation = (step1_dob_unknown == "true" ? step1_dob_from_age : step1_dob_entered)'
 ---
 name: step1_method_gender_type
 description: A calculated field to determine which type of methods (female or male) to use for the client throughout.

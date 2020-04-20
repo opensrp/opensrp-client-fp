@@ -19,6 +19,7 @@ import org.smartregister.domain.ResponseStatus;
 import org.smartregister.fp.R;
 import org.smartregister.fp.activity.BaseUnitTest;
 import org.smartregister.fp.common.cursor.AdvancedMatrixCursor;
+import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.features.home.contract.AdvancedSearchContract;
 import org.smartregister.fp.features.home.contract.RegisterFragmentContract;

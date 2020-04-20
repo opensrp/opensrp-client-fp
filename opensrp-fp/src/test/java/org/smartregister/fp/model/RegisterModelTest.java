@@ -22,6 +22,7 @@ import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.fp.BuildConfig;
 import org.smartregister.fp.activity.BaseUnitTest;
+import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.RegisterModel;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.FPJsonFormUtils;

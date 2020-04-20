@@ -14,6 +14,7 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.smartregister.fp.activity.BaseUnitTest;
+import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.PartialContact;
 import org.smartregister.fp.common.model.PartialContacts;
 import org.smartregister.fp.common.repository.PreviousContactRepository;

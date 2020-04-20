@@ -13,16 +13,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_centerVertical="true">
-        <!--<ImageView
-            android:id="@+id/scanQrCode"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="3dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:gravity="center"
-            android:src="@drawable/ic_icon_qr_code" />-->
 
         <ImageView
             android:id="@+id/left_menu"
@@ -82,26 +72,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true">
-
-        <!--<ImageView
-            android:id="@+id/sync_refresh"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="3dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:gravity="center"
-            android:src="@drawable/ic_icon_synchronize" />
-
-        <ProgressBar
-            android:id="@+id/sync_progress_bar"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_centerInParent="true"
-            android:indeterminate="true"
-            android:visibility="gone" />-->
 
         <ImageView
             android:id="@+id/popup_menu"

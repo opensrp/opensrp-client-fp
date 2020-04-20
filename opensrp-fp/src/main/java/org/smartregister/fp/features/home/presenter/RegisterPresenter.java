@@ -4,8 +4,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Pair;
 
-import com.vijay.jsonwizard.domain.Form;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
 import org.json.JSONObject;
@@ -133,7 +131,7 @@ public class RegisterPresenter implements RegisterContract.Presenter, RegisterCo
     }
 
     @Override
-    public void closeFPRecord(String jsonString) {
+    public void closeAncRecord(String jsonString) {
         try {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getView().getContext());
             AllSharedPreferences allSharedPreferences = new AllSharedPreferences(preferences);
@@ -178,9 +176,9 @@ public class RegisterPresenter implements RegisterContract.Presenter, RegisterCo
 
     private void goToClientProfile(String baseEntityId) {
         if (StringUtils.isNotBlank(baseEntityId)) {
-            HashMap<String, String> womanProfileDetails = (HashMap<String, String>) PatientRepository.getWomanProfileDetails(baseEntityId);
-            if (womanProfileDetails != null) {
-                Utils.navigateToProfile(getView().getContext(), womanProfileDetails);
+            HashMap<String, String> clientProfileDetails = (HashMap<String, String>) PatientRepository.getClientProfileDetails(baseEntityId);
+            if (clientProfileDetails != null) {
+                Utils.navigateToProfile(getView().getContext(), clientProfileDetails);
             }
         }
     }

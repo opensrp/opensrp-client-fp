@@ -42,7 +42,7 @@ public class RegisterFragmentModel implements RegisterFragmentContract.Model {
 
     @Override
     public RegisterConfiguration defaultRegisterConfiguration() {
-        return ConfigHelperUtils.INSTANCE.defaultRegisterConfiguration(FPLibrary.getInstance().getApplicationContext());
+        return ConfigHelperUtils.defaultRegisterConfiguration(FPLibrary.getInstance().getApplicationContext());
     }
 
     @Override
@@ -82,9 +82,8 @@ public class RegisterFragmentModel implements RegisterFragmentContract.Model {
         return queryBuilder.mainCondition(mainCondition);
     }
 
-    @NotNull
     @Override
-    public String getFilterText(@Nullable List<? extends Field> list, @Nullable String filterTitle) {
+    public String getFilterText(List<Field> list, String filterTitle) {
         List<? extends Field> filterList = list;
         if (filterList == null) {
             filterList = new ArrayList<>();
@@ -115,7 +114,7 @@ public class RegisterFragmentModel implements RegisterFragmentContract.Model {
         Map<String, String> editMap = new LinkedHashMap<>();
         if (StringUtils.isNotBlank(ancId)) {
 
-            editMap.put(GLOBAL_IDENTIFIER, ConstantsUtils.IdentifierUtils.FP_ID + ":" + ancId);
+            editMap.put(GLOBAL_IDENTIFIER, ConstantsUtils.IdentifierUtils.ANC_ID + ":" + ancId);
         }
         return editMap;
     }
@@ -166,7 +165,7 @@ public class RegisterFragmentModel implements RegisterFragmentContract.Model {
                     }
                 }
 
-                ancId = getJsonString(getJsonObject(client, "identifiers"), ConstantsUtils.IdentifierUtils.FP_ID);
+                ancId = getJsonString(getJsonObject(client, "identifiers"), ConstantsUtils.IdentifierUtils.ANC_ID);
                 if (StringUtils.isNotBlank(ancId)) {
                     ancId = ancId.replace("-", "");
                 }

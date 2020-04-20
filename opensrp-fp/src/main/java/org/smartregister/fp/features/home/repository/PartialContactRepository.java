@@ -49,7 +49,7 @@ public class PartialContactRepository extends BaseRepository {
                     UPDATED_AT_COLUMN};
 
     public PartialContactRepository() {
-        formProcessingOrderMap = ImmutableMap.<String, Integer>builder().put(ConstantsUtils.JsonFormUtils.ANC_QUICK_CHECK, 1)
+        formProcessingOrderMap = ImmutableMap.<String, Integer>builder().put(ConstantsUtils.JsonFormUtils.FP_START_VISIT, 1)
                 .put(ConstantsUtils.JsonFormUtils.ANC_PROFILE, 2).put(ConstantsUtils.JsonFormUtils.ANC_SYMPTOMS_FOLLOW_UP, 3)
                 .put(ConstantsUtils.JsonFormUtils.ANC_PHYSICAL_EXAM, 4).put(ConstantsUtils.JsonFormUtils.ANC_TEST, 5)
                 .put(ConstantsUtils.JsonFormUtils.ANC_COUNSELLING_TREATMENT, 6).put(ConstantsUtils.JsonFormUtils.ANC_TEST_TASKS, 7).build();

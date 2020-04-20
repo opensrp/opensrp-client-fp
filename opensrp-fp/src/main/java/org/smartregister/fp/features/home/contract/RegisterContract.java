@@ -36,7 +36,7 @@ public interface RegisterContract {
 
         void saveRegistrationForm(String jsonString, boolean isEditMode);
 
-        void closeFPRecord(String jsonString);
+        void closeAncRecord(String jsonString);
 
     }
 
@@ -66,8 +66,6 @@ public interface RegisterContract {
 
         void removeWomanFromANCRegister(String closeFormJsonString, String providerId);
 
-        void getRegistrationFromMetaData(String closeFormJsonString, String providerId);
-
     }
 
     interface InteractorCallBack {
@@ -78,6 +76,5 @@ public interface RegisterContract {
         void setBaseEntityRegister(String baseEntityId);
 
         void onRegistrationSaved(boolean isEdit);
-
     }
 }

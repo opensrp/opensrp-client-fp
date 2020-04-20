@@ -5,6 +5,7 @@
     <color name="accent">#3797ca</color>
     <color name="primaryAccent">#3797ca</color>
     <color name="primaryBackground">#a6d1e7</color>
+    <color name="btn_start_visit">#0192D4</color>
 
     <color name="customAppThemeBlue">#218CC5</color>
     <color name="customAppThemeDarkest">#272727</color>
@@ -59,6 +60,7 @@
     <color name="shadow_gray_20">#20CCCCCC</color>
     <color name="shadow_gray_30">#30CCCCCC</color>
     <color name="shadow_gray_50">#50CCCCCC</color>
+
 
     <color name="view_history_blue">#1f8bc5</color>
 

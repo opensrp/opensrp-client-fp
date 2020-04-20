@@ -24,66 +24,60 @@ import timber.log.Timber;
  * Created by ndegwamartin on 14/07/2018.
  */
 public class PatientRepository extends BaseRepository {
-    private static final String[] projection =
-            new String[]{DBConstantsUtils.KeyUtils.FIRST_NAME, DBConstantsUtils.KeyUtils.LAST_NAME, DBConstantsUtils.KeyUtils.DOB,
-                    DBConstantsUtils.KeyUtils.DOB_UNKNOWN, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.PHONE_NUMBER, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.ALT_NAME,
-                    getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.ALT_PHONE_NUMBER, getRegisterQueryProvider().getDemographicTable() + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, DBConstantsUtils.KeyUtils.FP_ID,
-                    getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.REMINDERS, DBConstantsUtils.KeyUtils.HOME_ADDRESS, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.EDD,
-                    getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.CONTACT_STATUS, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS,
-                    getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.NEXT_CONTACT, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE,
-                    getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.VISIT_START_DATE, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.RED_FLAG_COUNT,
-                    getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE};
 
-    public static Map<String, String> getWomanProfileDetails(String baseEntityId) {
+    private static final String[] clientProjection =
+            new String[]{
+                    DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, DBConstantsUtils.KeyUtils.CLIENT_ID, DBConstantsUtils.KeyUtils.CLIENT_ID_NOTE,
+                    DBConstantsUtils.KeyUtils.FIRST_NAME, DBConstantsUtils.KeyUtils.LAST_NAME, DBConstantsUtils.KeyUtils.DOB,
+                    DBConstantsUtils.KeyUtils.AGE_ENTERED, DBConstantsUtils.KeyUtils.DOB_UNKNOWN, DBConstantsUtils.KeyUtils.REGISTRATION_DATE,
+                    DBConstantsUtils.KeyUtils.REFERRAL, DBConstantsUtils.KeyUtils.REFERRED_BY, DBConstantsUtils.KeyUtils.UNIVERSAL_ID,
+                    DBConstantsUtils.KeyUtils.AGE_FROM_DOB, DBConstantsUtils.KeyUtils.DOB_ENTERED, DBConstantsUtils.KeyUtils.DOB_FROM_AGE,
+                    DBConstantsUtils.KeyUtils.AGE, DBConstantsUtils.KeyUtils.GENDER, DBConstantsUtils.KeyUtils.BIOLOGICAL_SEX,
+                    DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, DBConstantsUtils.KeyUtils.MARITAL_STATUS, DBConstantsUtils.KeyUtils.ADMIN_AREA,
+                    DBConstantsUtils.KeyUtils.CLIENT_ADDRESS, DBConstantsUtils.KeyUtils.TEL_NUMBER, DBConstantsUtils.KeyUtils.COMM_CONSENT,
+                    DBConstantsUtils.KeyUtils.REMINDER_MESSAGE, DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH, DBConstantsUtils.KeyUtils.DATE_REMOVED};
+
+    public static Map<String, String> getClientProfileDetails(String baseEntityId) {
         Cursor cursor = null;
 
         Map<String, String> detailsMap = null;
         try {
             SQLiteDatabase db = getMasterRepository().getReadableDatabase();
-
             String query =
-                    "SELECT " + StringUtils.join(projection, ",") + " FROM " + getRegisterQueryProvider().getDemographicTable() +
-                           "WHERE " +
-                            getRegisterQueryProvider().getDemographicTable() + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?";
+                    "SELECT " + StringUtils.join(clientProjection, ",") + " FROM "
+                            + FPLibrary.getInstance().getRegisterQueryProvider().getDemographicTable()
+                            + " WHERE " +
+                            DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?";
             cursor = db.rawQuery(query, new String[]{baseEntityId});
             if (cursor != null && cursor.moveToFirst()) {
                 detailsMap = new HashMap<>();
-                detailsMap.put(DBConstantsUtils.KeyUtils.FIRST_NAME,
-                        cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.FIRST_NAME)));
-                detailsMap
-                        .put(DBConstantsUtils.KeyUtils.LAST_NAME, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.LAST_NAME)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.FP_ID, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.FP_ID)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.CLIENT_ID, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.CLIENT_ID)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.CLIENT_ID_NOTE, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.CLIENT_ID_NOTE)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.FIRST_NAME, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.FIRST_NAME)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.LAST_NAME, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.LAST_NAME)));
                 detailsMap.put(DBConstantsUtils.KeyUtils.DOB, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.DOB)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.DOB_UNKNOWN,
-                        cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.DOB_UNKNOWN)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID,
-                        cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.ID_LOWER_CASE,
-                        cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.PHONE_NUMBER,
-                        cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.PHONE_NUMBER)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.ALT_NAME, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.ALT_NAME)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.ALT_PHONE_NUMBER,
-                        cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.ALT_PHONE_NUMBER)));
-                detailsMap
-                        .put(DBConstantsUtils.KeyUtils.REMINDERS, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.REMINDERS)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.HOME_ADDRESS,
-                        cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.HOME_ADDRESS)));
-                /*detailsMap.put(DBConstantsUtils.KeyUtils.EDD, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.EDD)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.CONTACT_STATUS, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.CONTACT_STATUS)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT,
-                        cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE,
-                        cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.VISIT_START_DATE,
-                        cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.VISIT_START_DATE)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.RED_FLAG_COUNT,
-                        cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.RED_FLAG_COUNT)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT,
-                        cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE,
-                        cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE)));*/
+                detailsMap.put(DBConstantsUtils.KeyUtils.AGE_ENTERED, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.AGE_ENTERED)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.DOB_UNKNOWN, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.DOB_UNKNOWN)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.REGISTRATION_DATE, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.REGISTRATION_DATE)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.REFERRAL, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.REFERRAL)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.REFERRED_BY, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.REFERRED_BY)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.UNIVERSAL_ID, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.UNIVERSAL_ID)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.AGE_FROM_DOB, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.AGE_FROM_DOB)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.DOB_ENTERED, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.DOB_ENTERED)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.DOB_FROM_AGE, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.DOB_FROM_AGE)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.AGE, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.AGE)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.GENDER, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.GENDER)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.BIOLOGICAL_SEX, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.BIOLOGICAL_SEX)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.MARITAL_STATUS, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.MARITAL_STATUS)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.ADMIN_AREA, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.ADMIN_AREA)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.CLIENT_ADDRESS, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.CLIENT_ADDRESS)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.TEL_NUMBER, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.TEL_NUMBER)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.COMM_CONSENT, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.COMM_CONSENT)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.REMINDER_MESSAGE, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.REMINDER_MESSAGE)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.DATE_REMOVED, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.DATE_REMOVED)));
             }
             return detailsMap;
         } catch (Exception e) {

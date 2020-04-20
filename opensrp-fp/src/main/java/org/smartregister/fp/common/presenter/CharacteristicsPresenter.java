@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import timber.log.Timber;
+
 /**
  * Created by ndegwamartin on 27/08/2018.
  */
@@ -79,7 +81,7 @@ public class CharacteristicsPresenter implements SiteCharacteristicsContract.Pre
             interactor.saveSiteCharacteristics(settings);
 
         } catch (Exception e) {
-            Log.e(CharacteristicsPresenter.class.getCanonicalName(), e.getMessage());
+            Timber.e(CharacteristicsPresenter.class.getCanonicalName(), e.getMessage());
         }
 
         getSiteCharacteristicsView().hideProgressDialog();

@@ -14,7 +14,14 @@
           "column_name": "client_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.client_id"
+            "field": "identifiers.client_id"
+          }
+        },
+        {
+          "column_name": "client_id_note",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.client_id_note"
           }
         },
         {
@@ -28,7 +35,7 @@
           "column_name": "last_name",
           "type": "Client",
           "json_mapping": {
-            "field": "last_name"
+            "field": "lastName"
           }
         },
         {
@@ -53,45 +60,24 @@
           }
         },
         {
-          "column_name": "last_interacted_with",
-          "type": "Event",
-          "json_mapping": {
-            "field": "version"
-          }
-        },
-        {
-          "column_name": "date_removed",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.date_removed"
-          }
-        },
-        {
           "column_name": "registration_date",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.registration_date"
           }
         },
         {
           "column_name": "referral",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.referral"
           }
         },
         {
           "column_name": "referred_by",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.referred_by"
-          }
-        },
-        {
-          "column_name": "client_id_note",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.client_id_note"
           }
         },
         {
@@ -109,10 +95,10 @@
           }
         },
         {
-          "column_name": "age_entered",
+          "column_name": "dob_entered",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.age_entered"
+            "field": "attributes.dob_entered"
           }
         },
         {
@@ -131,35 +117,35 @@
         },
         {
           "column_name": "gender",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "attributes.gender"
+            "field": "gender"
           }
         },
         {
-          "column_name": "gender_type_method",
-          "type": "Event",
+          "column_name": "biological_sex",
+          "type": "Client",
           "json_mapping": {
-            "field": "attributes.gender_type_method"
+            "field": "attributes.biological_sex"
           }
         },
         {
           "column_name": "method_gender_type",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.method_gender_type"
           }
         },
         {
           "column_name": "marital_status",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.marital_status"
           }
         },
         {
           "column_name": "admin_area",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.admin_area"
           }
@@ -180,70 +166,16 @@
         },
         {
           "column_name": "comm_consent",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.comm_consent"
           }
         },
         {
           "column_name": "reminder_message",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.reminder_message"
-          }
-        }
-      ]
-    },
-    {
-      "name": "ec_client",
-      "columns": [
-        {
-          "column_name": "base_entity_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "baseEntityId"
-          }
-        },
-        {
-          "column_name": "client_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.client_id"
-          }
-        },
-        {
-          "column_name": "first_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "firstName"
-          }
-        },
-        {
-          "column_name": "last_name",
-          "type": "Client",
-          "json_mapping": {
-            "field": "last_name"
-          }
-        },
-        {
-          "column_name": "dob",
-          "type": "Client",
-          "json_mapping": {
-            "field": "birthdate"
-          }
-        },
-        {
-          "column_name": "age_entered",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.age_entered"
-          }
-        },
-        {
-          "column_name": "dob_unknown",
-          "type": "Client",
-          "json_mapping": {
-            "field": "birthdateApprox"
           }
         },
         {
@@ -255,138 +187,12 @@
         },
         {
           "column_name": "date_removed",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.date_removed"
           }
-        },
-        {
-          "column_name": "registration_date",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.registration_date"
-          }
-        },
-        {
-          "column_name": "referral",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.referral"
-          }
-        },
-        {
-          "column_name": "referred_by",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.referred_by"
-          }
-        },
-        {
-          "column_name": "client_id_note",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.client_id_note"
-          }
-        },
-        {
-          "column_name": "universal_id",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.universal_id"
-          }
-        },
-        {
-          "column_name": "age_from_dob",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.age_from_dob"
-          }
-        },
-        {
-          "column_name": "age_entered",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.age_entered"
-          }
-        },
-        {
-          "column_name": "dob_from_age",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.dob_from_age"
-          }
-        },
-        {
-          "column_name": "age",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.age"
-          }
-        },
-        {
-          "column_name": "gender",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.gender"
-          }
-        },
-        {
-          "column_name": "gender_type_method",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.gender_type_method"
-          }
-        },
-        {
-          "column_name": "method_gender_type",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.method_gender_type"
-          }
-        },
-        {
-          "column_name": "marital_status",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.marital_status"
-          }
-        },
-        {
-          "column_name": "admin_area",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.admin_area"
-          }
-        },
-        {
-          "column_name": "client_address",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.client_address"
-          }
-        },
-        {
-          "column_name": "tel_number",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.tel_number"
-          }
-        },
-        {
-          "column_name": "comm_consent",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.comm_consent"
-          }
-        },
-        {
-          "column_name": "reminder_message",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.reminder_message"
-          }
         }
       ]
-    },
+    }
   ]
 }

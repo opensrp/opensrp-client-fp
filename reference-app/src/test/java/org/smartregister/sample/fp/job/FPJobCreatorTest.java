@@ -11,14 +11,13 @@ import org.smartregister.job.PullUniqueIdsServiceJob;
 import org.smartregister.job.SyncServiceJob;
 import org.smartregister.job.ValidateSyncDataServiceJob;
 import org.smartregister.sample.fp.base.BaseUnitTest;
-import org.smartregister.sample.fp.login.job.FPJobCreator;
 
 /**
  * Created by ndegwamartin on 07/09/2018.
  */
 public class FPJobCreatorTest extends BaseUnitTest {
 
-    private org.smartregister.sample.fp.login.job.FPJobCreator jobCreator;
+    private FPJobCreator jobCreator;
 
     @Before
     public void setUp() {
