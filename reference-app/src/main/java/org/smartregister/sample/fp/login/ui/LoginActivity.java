@@ -1,10 +1,13 @@
 package org.smartregister.sample.fp.login.ui;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.smartregister.fp.common.util.ConstantsUtils;
+import org.smartregister.fp.common.util.Utils;
 import org.smartregister.fp.features.home.view.HomeRegisterActivity;
 import org.smartregister.sample.fp.R;
 import org.smartregister.sample.fp.event.ViewConfigurationSyncCompleteEvent;
@@ -17,6 +20,14 @@ import timber.log.Timber;
 public class LoginActivity extends BaseLoginActivity implements BaseLoginContract.View {
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        new Handler().postDelayed(() -> {
+            Utils.proceedToContact(null, null, this);
+        }, 1000);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         mLoginPresenter.processViewCustomizations();
@@ -24,6 +35,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
             goToHome(false);
         }
     }
+
 
     @Override
     protected int getContentView() {

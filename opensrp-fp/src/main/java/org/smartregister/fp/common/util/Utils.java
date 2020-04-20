@@ -199,6 +199,17 @@ public class Utils extends org.smartregister.util.Utils {
      */
     public static void proceedToContact(String baseEntityId, HashMap<String, String> personObjectClient, Context context) {
         try {
+            baseEntityId = "3";
+            personObjectClient = new HashMap<>();
+            personObjectClient.put("dob", "2003-03-03T05:00:00.000+05:00");
+            personObjectClient.put("last_interacted_with", "3");
+            personObjectClient.put("base_entity_id", "3");
+            personObjectClient.put("data_removed", null);
+            personObjectClient.put("last_name", "Klay");
+            personObjectClient.put("_id", "3");
+            personObjectClient.put("first_name", "Stacy");
+            personObjectClient.put("relationid", "9993");
+            personObjectClient.put("client_id", "789");
 
             // Fixme remove that line once you get the proper contact
             personObjectClient.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, "2322");
@@ -206,14 +217,15 @@ public class Utils extends org.smartregister.util.Utils {
             Intent intent = new Intent(context.getApplicationContext(), StartVisitJsonFormActivity.class);
 
             Contact quickCheck = new Contact();
-            quickCheck.setName(context.getResources().getString(R.string.quick_check));
+            quickCheck.setName(context.getResources().getString(R.string.family_planning_visit));
             quickCheck.setFormName(ConstantsUtils.JsonFormUtils.FP_START_VISIT);
             quickCheck.setContactNumber(Integer.valueOf(personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
-            quickCheck.setBackground(R.drawable.quick_check_bg);
-            quickCheck.setActionBarBackground(R.color.quick_check_red);
+            //quickCheck.setBackground(R.drawable.quick_check_bg);
+            quickCheck.setActionBarBackground(R.color.btn_start_visit);
+            quickCheck.setNavigationBackground(R.color.start_visit_navigation_background);
             quickCheck.setBackIcon(R.drawable.ic_clear);
-            quickCheck.setWizard(false);
-            quickCheck.setHideSaveLabel(true);
+            quickCheck.setWizard(true);
+            //quickCheck.setHideSaveLabel(true);
 
             //partial contact exists?
             PartialContact partialContactRequest = new PartialContact();
@@ -229,15 +241,18 @@ public class Utils extends org.smartregister.util.Utils {
 
             String processedForm = FPFormUtils.getFormJsonCore(partialContactRequest, form).toString();
 
-            if (hasPendingRequiredFields(new JSONObject(processedForm))) {
-                intent.putExtra(ConstantsUtils.JsonFormExtraUtils.JSON, processedForm);
-                intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, quickCheck);
-                intent.putExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID, partialContactRequest.getBaseEntityId());
-                intent.putExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP, personObjectClient);
-                intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, partialContactRequest.getType());
-                intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, partialContactRequest.getContactNo());
-                Activity activity = (Activity) context;
-                activity.startActivityForResult(intent, FPJsonFormUtils.REQUEST_CODE_GET_JSON);
+            intent.putExtra(ConstantsUtils.JsonFormExtraUtils.JSON, processedForm);
+            intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, quickCheck);
+            intent.putExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID, partialContactRequest.getBaseEntityId());
+            intent.putExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP, personObjectClient);
+            intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, partialContactRequest.getType());
+            intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, partialContactRequest.getContactNo());
+            Activity activity = (Activity) context;
+            activity.startActivityForResult(intent, FPJsonFormUtils.REQUEST_CODE_GET_JSON);
+
+
+            /*if (hasPendingRequiredFields(new JSONObject(processedForm))) {
+
             } else {
                 intent = new Intent(context, StartVisitJsonFormActivity.class);
                 intent.putExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID, baseEntityId);
@@ -246,7 +261,7 @@ public class Utils extends org.smartregister.util.Utils {
                 intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO,
                         Integer.valueOf(personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
                 context.startActivity(intent);
-            }
+            }*/
 
 
         } catch (Exception e) {

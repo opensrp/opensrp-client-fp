@@ -55,544 +55,310 @@
     }
   },
   "step1": {
-    "title": "Family planning visit",
+    "title": "Reason for visit",
+    "next": "step2",
     "fields": [
       {
-        "key": "contact_reason",
+        "key": "label",
+        "type": "label",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "160288AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-        "type": "native_radio",
-        "label": "Reason for coming to facility",
+        "text": "Visit date (required)",
+        "text_color": "black",
+        "top_margin": "20dp",
         "label_text_style": "bold",
-        "options": [
-          {
-            "key": "first_contact",
-            "text": "First contact",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "165269AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "scheduled_contact",
-            "text": "Scheduled contact",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "1246AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "specific_complaint",
-            "text": "Specific complaint",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "5219AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          }
-        ],
+        "text_size": "8sp"
+      },
+      {
+        "key": "visit_date",
+        "type": "date_picker",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "padding_left": "10dp",
+        "margin_left": "10dp",
+        "hint": "",
+        "value": "today",
+        "max_date": "today",
         "v_required": {
-          "value": "true",
-          "err": "Reason for coming to facility is required"
+          "value": true,
+          "err": "Please select the client visit date."
         }
       },
       {
-        "key": "specific_complaint",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "5219AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "key": "reason_for_visit",
         "type": "check_box",
-        "label": "Specific complaint(s)",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "label": "Reason for visit (required)",
         "label_text_style": "bold",
-        "text_color": "#000000",
-        "exclusive": [
-          "dont_know",
-          "none"
-        ],
+        "text_size": "8sp",
+        "margin_top": "10dp",
         "options": [
           {
-            "key": "abnormal_discharge",
-            "text": "Abnormal vaginal discharge",
-            "value": false,
+            "key": "starting_contraception",
+            "text": "Starting contraception",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "123395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
           },
           {
-            "key": "altered_skin_color",
-            "text": "Jaundice",
-            "value": false,
+            "key": "stopping_contraception",
+            "text": "Stopping contraception",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "136443AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
           },
           {
-            "key": "changes_in_bp",
-            "text": "Changes in blood pressure",
-            "value": false,
+            "key": "contraceptive_continuation",
+            "text": "Contraceptive continuation",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "155052AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
           },
           {
-            "key": "constipation",
-            "text": "Constipation",
-            "value": false,
+            "key": "method_switch",
+            "text": "Method switch",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "996AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
           },
           {
-            "key": "contractions",
-            "text": "Contractions",
-            "value": false,
+            "key": "contraception_counseling",
+            "text": "Contraception counseling",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "163750AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
           },
           {
-            "key": "cough",
-            "text": "Cough",
-            "value": false,
+            "key": "emergency_contraception",
+            "text": "Emergency contraception",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "143264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
           },
           {
-            "key": "depression",
-            "text": "Depression",
-            "value": false,
+            "key": "issues_concerns",
+            "text": "Issues and concerns",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "119537AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
           },
           {
-            "key": "anxiety",
-            "text": "Anxiety",
-            "value": false,
+            "key": "implant_removal",
+            "text": "Implant removal",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "121543AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
           },
           {
-            "key": "dizziness",
-            "text": "Dizziness",
-            "value": false,
+            "key": "iud_removal",
+            "text": "IUD removal",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "156046AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "domestic_violence",
-            "text": "Domestic violence",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "141814AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "extreme_pelvic_pain",
-            "text": "Extreme pelvic pain - can't walk (symphysis pubis dysfunction)",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "165270AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "fever",
-            "text": "Fever",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "140238AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "full_abdominal_pain",
-            "text": "Full abdominal pain",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "139547AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "flu_symptoms",
-            "text": "Flu symptoms",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "137162AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "fluid_loss",
-            "text": "Fluid loss",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "148968AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "headache",
-            "text": "Headache",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "139084AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "heartburn",
-            "text": "Heartburn",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "139059AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "leg_cramps",
-            "text": "Leg cramps",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "135969AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "leg_pain",
-            "text": "Leg pain",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "114395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "leg_redness",
-            "text": "Leg redness",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "165215AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "low_back_pain",
-            "text": "Low back pain",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "116225AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "pelvic_pain",
-            "text": "Pelvic pain",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "131034AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "nausea_vomiting_diarrhea",
-            "text": "Nausea / vomiting / diarrhea",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "157892AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "no_fetal_movement",
-            "text": "No fetal movement",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "1452AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "oedema",
-            "text": "Oedema",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "460AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "other_bleeding",
-            "text": "Other bleeding",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "147241AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "other_pain",
-            "text": "Other pain",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "114403AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "other_psychological_symptoms",
-            "text": "Other psychological symptoms",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "160198AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "other_skin_disorder",
-            "text": "Other skin disorder",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "119022AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "other_types_of_violence",
-            "text": "Other types of violence",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "158358AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "dysuria",
-            "text": "Pain during urination (dysuria)",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "118771AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "pruritus",
-            "text": "Pruritus",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "879AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "reduced_fetal_movement",
-            "text": "Reduced or poor fetal movement",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "113377AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "shortness_of_breath",
-            "text": "Shortness of breath",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "141600AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "tiredness",
-            "text": "Tiredness",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "124628AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "trauma",
-            "text": "Trauma",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "124193AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "bleeding",
-            "text": "Vaginal bleeding",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "147232AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "visual_disturbance",
-            "text": "Visual disturbance",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "123074AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "other_specify",
-            "text": "Other (specify)",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
           }
         ],
         "v_required": {
           "value": "true",
-          "err": "Specific complain is required"
-        },
-        "relevance": {
-          "step1:contact_reason": {
-            "type": "string",
-            "ex": "equalTo(.,\"specific_complaint\")"
-          }
+          "err": null
         }
       },
       {
-        "key": "specific_complaint_other",
-        "openmrs_entity_parent": "5219AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "160632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-        "type": "normal_edit_text",
-        "edit_text_style": "bordered",
-        "hint": "Specify",
-        "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter valid content"
-        },
+        "key": "reason_for_stopping",
+        "type": "check_box",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "options": [
+          {
+            "key": "side_effects",
+            "text": "Side effects of contraception",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "desire_pregnancy",
+            "text": "Desire for pregnancy",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "failure",
+            "text": "Reported failure",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "other",
+            "text": "Other (specify)",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          }
+        ],
+        "label": "Reason for stopping method",
+        "label_text_style": "bold",
+        "text_size": "8sp",
+        "margin_top": "10dp",
         "relevance": {
-          "step1:specific_complaint": {
+          "step1:reason_for_visit": {
+            "type": "string",
             "ex-checkbox": [
               {
-                "or": [
-                  "other_specify"
-                ]
+                "or": ["stopping_contraception"]
               }
             ]
           }
         }
       },
       {
-        "key": "danger_signs",
+        "key": "reason_for_stopping_other",
+        "type": "edit_text",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
         "openmrs_entity_parent": "",
-        "openmrs_entity": "concept",
-        "openmrs_entity_id": "160939AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-        "type": "check_box",
-        "label": "Danger signs",
+        "edit_type": "name",
+        "hint": "Other (specify)",
+        "relevance": {
+          "step1:reason_for_stopping" : {
+            "type": "string",
+            "ex-checkbox": [
+              {
+                "or": ["other"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "key": "pregnancy_intention",
+        "type": "native_radio",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "label": "Pregnancy intention",
         "label_text_style": "bold",
-        "text_color": "#000000",
-        "exclusive": [
-          "danger_none"
-        ],
+        "text_size": "8sp",
         "options": [
           {
-            "key": "danger_none",
-            "text": "None",
-            "value": false,
+            "key": "become_pregnant",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "text": "Client wants to become pregnant"
           },
           {
-            "key": "danger_bleeding",
-            "text": "Bleeding vaginally",
-            "value": false,
+            "key": "client_ok",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "150802AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "text": "Client is OK either way"
           },
           {
-            "key": "central_cyanosis",
-            "text": "Central cyanosis",
-            "label_info_text": "Bluish discolouration around the mucous membranes in the mouth, lips and tongue",
-            "label_info_title": "Central cyanosis",
-            "value": false,
+            "key": "client_dont_preg",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "165216AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "text": "Client does not want to become pregnant"
           },
           {
-            "key": "convulsing",
-            "text": "Convulsing",
-            "value": false,
+            "key": "client_unsure",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "164483AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "text": "Client is unsure"
+          }
+        ]
+      }
+    ]
+  },
+  "step2": {
+    "title": "Vital signs",
+    "fields": [
+      {
+        "key": "height",
+        "type": "edit_text",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "edit_type": "number",
+        "hint": "Body height (cm)",
+        "v_required": {
+          "value": "true",
+          "err": null
+        }
+      },
+      {
+        "key": "sys_bp",
+        "type": "edit_text",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "edit_type": "number",
+        "hint": "Systolic blood pressure (mmHg)",
+        "v_required": {
+          "value": "true",
+          "err": null
+        }
+      },
+      {
+        "key": "dia_bp",
+        "type": "edit_text",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "edit_type": "number",
+        "hint": "Diastolic blood pressure (mmHg)",
+        "v_required": {
+          "value": "true",
+          "err": null
+        }
+      },
+      {
+        "key": "allergies",
+        "type": "native_radio",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "label": "Any known allergies",
+        "options": [
+          {
+            "key": "yes",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
+            "openmrs_entity_parent": "",
+            "text": "Yes"
           },
           {
-            "key": "danger_fever",
-            "text": "Fever",
-            "value": false,
+            "key": "no",
+            "openmrs_entity": "",
+            "openmrs_entity_id": "NA",
             "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "140238AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "severe_headache",
-            "text": "Severe headache",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "139081AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "visual_disturbance",
-            "text": "Visual disturbance",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "123074AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "imminent_delivery",
-            "text": "Imminent delivery",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "162818AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "labour",
-            "text": "Labour",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "145AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "looks_very_ill",
-            "text": "Looks very ill",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "163293AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "severe_vomiting",
-            "text": "Severe vomiting",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "118477AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "severe_pain",
-            "text": "Severe pain",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "163477AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "severe_abdominal_pain",
-            "text": "Severe abdominal pain",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "165271AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-          },
-          {
-            "key": "unconscious",
-            "text": "Unconscious",
-            "value": false,
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "concept",
-            "openmrs_entity_id": "123818AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            "text": "No"
           }
         ],
         "v_required": {
           "value": "true",
-          "err": "Danger signs is required"
-        },
-        "relevance": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "quick_check_relevance_rules.yml"
-            }
-          }
+          "err": null
+        }
+      },
+      {
+        "key": "allergies_listed",
+        "type": "edit_text",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "edit_type": "name",
+        "hint": "List of allergies",
+        "v_required": {
+          "value": "true",
+          "err": null
         }
       }
     ]
