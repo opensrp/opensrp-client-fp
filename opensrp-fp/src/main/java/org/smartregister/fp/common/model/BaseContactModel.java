@@ -1,12 +1,7 @@
 package org.smartregister.fp.common.model;
 
-import android.util.Log;
-
 import org.apache.commons.lang3.StringUtils;
-import org.json.JSONObject;
-import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.util.DBConstantsUtils;
-import org.smartregister.fp.common.util.FPJsonFormUtils;
 import org.smartregister.util.FormUtils;
 
 import java.util.Map;
@@ -36,24 +31,5 @@ public abstract class BaseContactModel {
         }
 
         return details.get(key);
-    }
-
-    protected JSONObject getFormAsJson(String formName, String entityId, String currentLocationId) throws Exception {
-        JSONObject form = getFormUtils().getFormJson(formName);
-        if (form == null) {
-            return null;
-        }
-        return FPJsonFormUtils.getFormAsJson(form, formName, entityId, currentLocationId);
-    }
-
-    private FormUtils getFormUtils() {
-        if (formUtils == null) {
-            try {
-                formUtils = FormUtils.getInstance(FPLibrary.getInstance().getApplicationContext());
-            } catch (Exception e) {
-                Log.e(RegisterModel.class.getCanonicalName(), e.getMessage(), e);
-            }
-        }
-        return formUtils;
     }
 }

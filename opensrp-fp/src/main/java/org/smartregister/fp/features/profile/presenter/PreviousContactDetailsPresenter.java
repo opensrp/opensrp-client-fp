@@ -10,7 +10,7 @@ import org.smartregister.fp.common.repository.PreviousContactRepository;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.FPJsonFormUtils;
 import org.smartregister.fp.common.util.Utils;
-import org.smartregister.fp.features.profile.contract.PreviousContactsDetails;
+import org.smartregister.fp.features.profile.contract.PreviousContactsDetailsContract;
 import org.smartregister.fp.features.profile.interactor.PreviousContactsDetailsInteractor;
 
 import java.io.IOException;
@@ -30,13 +30,13 @@ import timber.log.Timber;
 /**
  * Created by ndegwamartin on 13/07/2018.
  */
-public class PreviousContactDetailsPresenter implements PreviousContactsDetails.Presenter {
+public class PreviousContactDetailsPresenter implements PreviousContactsDetailsContract.Presenter {
     private FPJsonFormUtils formUtils = new FPJsonFormUtils();
 
-    private WeakReference<PreviousContactsDetails.View> mProfileView;
-    private PreviousContactsDetails.Interactor mProfileInteractor;
+    private WeakReference<PreviousContactsDetailsContract.View> mProfileView;
+    private PreviousContactsDetailsContract.Interactor mProfileInteractor;
 
-    public PreviousContactDetailsPresenter(PreviousContactsDetails.View profileView) {
+    public PreviousContactDetailsPresenter(PreviousContactsDetailsContract.View profileView) {
         mProfileView = new WeakReference<>(profileView);
         mProfileInteractor = new PreviousContactsDetailsInteractor(this);
     }
@@ -56,7 +56,7 @@ public class PreviousContactDetailsPresenter implements PreviousContactsDetails.
     }
 
     @Override
-    public PreviousContactsDetails.View getProfileView() {
+    public PreviousContactsDetailsContract.View getProfileView() {
         if (mProfileView != null) {
             return mProfileView.get();
         } else {

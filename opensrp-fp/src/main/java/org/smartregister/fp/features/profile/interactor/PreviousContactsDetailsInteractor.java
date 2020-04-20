@@ -1,12 +1,12 @@
 package org.smartregister.fp.features.profile.interactor;
 
 import org.smartregister.fp.common.task.FetchProfileDataTask;
-import org.smartregister.fp.features.profile.contract.PreviousContactsDetails;
+import org.smartregister.fp.features.profile.contract.PreviousContactsDetailsContract;
 
-public class PreviousContactsDetailsInteractor implements PreviousContactsDetails.Interactor {
-    private PreviousContactsDetails.Presenter previousContactsPresenter;
+public class PreviousContactsDetailsInteractor implements PreviousContactsDetailsContract.Interactor {
+    private PreviousContactsDetailsContract.Presenter previousContactsPresenter;
 
-    public PreviousContactsDetailsInteractor(PreviousContactsDetails.Presenter presenter) {
+    public PreviousContactsDetailsInteractor(PreviousContactsDetailsContract.Presenter presenter) {
         this.previousContactsPresenter = presenter;
     }
 
@@ -23,7 +23,7 @@ public class PreviousContactsDetailsInteractor implements PreviousContactsDetail
     }
 
 
-    public PreviousContactsDetails.View getProfileView() {
+    public PreviousContactsDetailsContract.View getProfileView() {
         return previousContactsPresenter.getProfileView();
     }
 }

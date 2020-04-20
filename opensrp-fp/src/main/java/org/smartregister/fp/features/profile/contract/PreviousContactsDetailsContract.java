@@ -9,9 +9,9 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
-public interface PreviousContactsDetails {
+public interface PreviousContactsDetailsContract {
     interface Presenter {
-        PreviousContactsDetails.View getProfileView();
+        PreviousContactsDetailsContract.View getProfileView();
 
         void loadPreviousContactSchedule(String baseEntityId, String contactNo, String edd);
 

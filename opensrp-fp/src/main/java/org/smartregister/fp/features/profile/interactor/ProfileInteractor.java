@@ -32,7 +32,4 @@ public class ProfileInteractor implements ProfileContract.Interactor {
     }
 
 
-    public ProfileContract.View getProfileView() {
-        return mProfilePresenter.getProfileView();
-    }
 }
