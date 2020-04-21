@@ -39,6 +39,7 @@ import org.smartregister.fp.common.domain.YamlConfigItem;
 import org.smartregister.fp.common.domain.YamlConfigWrapper;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.ContactSummaryModel;
+import org.smartregister.fp.common.model.RegisterModel;
 import org.smartregister.fp.common.model.Task;
 import org.smartregister.fp.common.view.EditJsonFormActivity;
 import org.smartregister.fp.features.home.repository.PatientRepository;
@@ -121,7 +122,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
                 ancId.put(FPJsonFormUtils.VALUE, entityId);
             }
 
-        } else if (ConstantsUtils.JsonFormUtils.ANC_CLOSE.equals(formName)) {
+        } else if (ConstantsUtils.JsonFormUtils.FP_CLOSE.equals(formName)) {
             if (StringUtils.isNotBlank(entityId)) {
                 // Inject entity id into the remove form
                 form.remove(FPJsonFormUtils.ENTITY_ID);
@@ -132,6 +133,24 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         }
         Timber.d("form is " + form.toString());
         return form;
+    }
+
+    public static JSONObject getFormAsJson(String formName, String entityId, String currentLocationId) throws Exception{
+        JSONObject form = getFormUtils().getFormJson(formName);
+        if (form == null) {
+            return null;
+        }
+        return FPJsonFormUtils.getFormAsJson(form, formName, entityId, currentLocationId);
+    }
+
+    public static FormUtils getFormUtils() {
+        FormUtils formUtils = null;
+        try {
+            formUtils = FormUtils.getInstance(FPLibrary.getInstance().getApplicationContext());
+        } catch (Exception e) {
+            Timber.e(e, RegisterModel.class.getCanonicalName(), e.getMessage());
+        }
+        return formUtils;
     }
 
     public static JSONObject getFieldJSONObject(JSONArray jsonArray, String key) {
@@ -619,7 +638,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
     public static void launchANCCloseForm(Activity activity) {
         try {
             Intent intent = new Intent(activity, JsonFormActivity.class);
-            JSONObject form = FormUtils.getInstance(activity).getFormJson(ConstantsUtils.JsonFormUtils.ANC_CLOSE);
+            JSONObject form = FormUtils.getInstance(activity).getFormJson(ConstantsUtils.JsonFormUtils.FP_CLOSE);
             if (form != null) {
                 form.put(ConstantsUtils.JsonFormKeyUtils.ENTITY_ID,
                         activity.getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID));

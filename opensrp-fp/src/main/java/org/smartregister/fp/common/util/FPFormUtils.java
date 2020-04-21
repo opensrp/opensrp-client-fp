@@ -18,6 +18,8 @@ import org.json.JSONObject;
 import org.smartregister.fp.common.domain.Contact;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.PartialContact;
+import org.smartregister.fp.common.model.PreviousContact;
+import org.smartregister.fp.common.repository.PreviousContactRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,10 +77,10 @@ public class FPFormUtils extends FormUtils {
         FPLibrary.getInstance().getPartialContactRepository().savePartialContact(partialContact);
     }
 
-    /*public static JSONObject getFormJsonCore(PartialContact partialContactRequest, JSONObject form) throws JSONException {
+    public static JSONObject getFormJsonCore(PartialContact partialContactRequest, JSONObject form) throws JSONException {
         //partial contact exists?
 
-        PartialContact partialContact = AncLibrary.getInstance().getPartialContactRepository()
+        PartialContact partialContact = FPLibrary.getInstance().getPartialContactRepository()
                 .getPartialContact(partialContactRequest);
 
         String formJsonString = isValidPartialForm(partialContact) ? getPartialContactForm(partialContact) : form.toString();
@@ -94,15 +96,15 @@ public class FPFormUtils extends FormUtils {
         }
 
         return object;
-    }*/
+    }
 
-    /*private static boolean isValidPartialForm(PartialContact partialContact) {
+    private static boolean isValidPartialForm(PartialContact partialContact) {
         return partialContact != null && (partialContact.getFormJson() != null || partialContact.getFormJsonDraft() != null);
-    }*/
+    }
 
-    /*private static String getPartialContactForm(PartialContact partialContact) {
+    private static String getPartialContactForm(PartialContact partialContact) {
         return partialContact.getFormJsonDraft() != null ? partialContact.getFormJsonDraft() : partialContact.getFormJson();
-    }*/
+    }
 
     public static void processSpecialWidgets(JSONObject widget) throws Exception {
         String widgetType = widget.getString(JsonFormConstants.TYPE);
@@ -663,7 +665,7 @@ public class FPFormUtils extends FormUtils {
      * @param valueItem    {@link String} - expansion panel value object
      * @throws JSONException
      */
-    /*public void saveExpansionPanelValues(String baseEntityId, String contactNo, JSONObject valueItem) throws JSONException {
+    public void saveExpansionPanelValues(String baseEntityId, String contactNo, JSONObject valueItem) throws JSONException {
         String result = "";
         if (valueItem.has(JsonFormConstants.TYPE) && valueItem.has(JsonFormConstants.VALUES)) {
             String type = valueItem.optString(JsonFormConstants.TYPE);
@@ -681,7 +683,7 @@ public class FPFormUtils extends FormUtils {
         itemToSave.put(JsonFormConstants.VALUE, result);
         itemToSave.put(PreviousContactRepository.CONTACT_NO, contactNo);
         savePreviousContactItem(baseEntityId, itemToSave);
-    }*/
+    }
 
     /**
      * Creates a Previous Contact object {@link PreviousContact} and saves it in the previous contact table {@link PreviousContactRepository} which holds the previous contact's data
@@ -690,7 +692,7 @@ public class FPFormUtils extends FormUtils {
      * @param fieldObject  {@link JSONObject}
      * @throws JSONException
      */
-    /*public void savePreviousContactItem(String baseEntityId, JSONObject fieldObject) throws JSONException {
+    public void savePreviousContactItem(String baseEntityId, JSONObject fieldObject) throws JSONException {
         PreviousContact previousContact = new PreviousContact();
         previousContact.setKey(fieldObject.getString(JsonFormConstants.KEY));
         previousContact.setValue(fieldObject.getString(JsonFormConstants.VALUE));
@@ -700,8 +702,8 @@ public class FPFormUtils extends FormUtils {
     }
 
     protected PreviousContactRepository getPreviousContactRepository() {
-        return AncLibrary.getInstance().getPreviousContactRepository();
-    }*/
+        return FPLibrary.getInstance().getPreviousContactRepository();
+    }
 
     /**
      * Loads the main contact tasks form. Returns a JSONObject of the form.
@@ -736,4 +738,6 @@ public class FPFormUtils extends FormUtils {
             Timber.e(e, " --> updateFormFields");
         }
     }
+
+
 }

@@ -180,7 +180,7 @@ public class FPJsonFormUtilsTest {
     @Test
     public void testGetFormAsJsonInjectsEntityIDinCloseFormCorrectly() throws Exception {
         formObject.put(FPJsonFormUtils.ENTITY_ID, "");
-        JSONObject resultObject = FPJsonFormUtils.getFormAsJson(formObject, ConstantsUtils.JsonFormUtils.ANC_CLOSE, DUMMY_BASE_ENTITY_ID, DUMMY_LOCATION_ID);
+        JSONObject resultObject = FPJsonFormUtils.getFormAsJson(formObject, ConstantsUtils.JsonFormUtils.FP_CLOSE, DUMMY_BASE_ENTITY_ID, DUMMY_LOCATION_ID);
 
         JSONArray field = FPJsonFormUtils.fields(resultObject);
         FPJsonFormUtils.getFieldJSONObject(field, ConstantsUtils.JsonFormKeyUtils.FP_ID);

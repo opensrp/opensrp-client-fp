@@ -20,6 +20,17 @@
     <string name="patient_location">Location: %1$s</string>
     <string name="dose_given_date">Dose %1$s given %2$s</string>
     <string name="patient_name">Patient Name</string>
+    <string name="last_synced">Sync Last: %1$s, %2$s</string>
+    <string name="start_visit">START VISIT</string>
+    <string name="start_visit_menu">Start visit</string>
+    <string name="close_fp_record_menu">Close FP record</string>
+    <string name="group_header">Group Header</string>
+    <string name="sub_group_header">Sub Group Header</string>
+    <string name="default_contact_date">14 Apr 2018</string>
+    <string name="ga">GA</string>
+    <string name="date">DATE</string>
+    <string name="value">VALUE</string>
+    <string name="default_profile_name">Charity Otala</string>
 
 
     <string name="unauthorized">Please check the credentials</string>
@@ -125,12 +136,13 @@
     <string name="overview">OVERVIEW</string>
     <string name="contacts">CONTACTS</string>
     <string name="tasks">TASKS</string>
+    <string name="history">HISTORY</string>
 
     <string name="new_registration_saved">New registration saved &#x21;</string>
     <string name="registration_info_updated">Registration info updated &#x21;</string>
 
     <string name="call">Call</string>
-    <string name="start_contact">Start Contact</string>
+    <string name="start_contact">Start Follow UP</string>
     <string name="close_anc_record">Close ANC Record</string>
     <string name="copy_to_clipboard">Copy to clipboard</string>
     <string name="no_matching_woman_found_on_this_device">No matching woman found on this device.</string>
@@ -292,8 +304,8 @@
     <string name="save_and_finish">SAVE + FINISH</string>
     <string name="reason_for_visit">REASON FOR VISIT</string>
     <string name="contact_recorded_today">CONTACT %1$d\n DONE TODAY</string>
-    <string name="contact_recorded_today_no_break"> CONTACT %1$d &#183; DONE TODAY</string>
-    <string name="continue_contact">Continue Contact %1$d</string>
+    <string name="contact_recorded_today_no_break"> FOLLOW UP %1$d &#183; DONE TODAY</string>
+    <string name="continue_contact">Continue Follow Up %1$d</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="finalizing_contact">Finalizing Contact %1$d</string>
@@ -321,7 +333,7 @@
     <string name="hospital_referral_title">Hospital referral recorded</string>
     <string name="back">Back</string>
     <string name="tab_button_image">Tab button image</string>
-    <string name="tap_button_below">Tap the button below to start/complete a contact</string>
+    <string name="tap_button_below">Tap the button below to start FP visit</string>
     <string name="no_health_data_recorded">No health data recorded</string>
     <string name="tests_tasks_header">Tests</string>
     <string name="go_to_image">Go to image</string>
