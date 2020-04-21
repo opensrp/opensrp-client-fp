@@ -47,13 +47,9 @@ public class ProfileFragmentInteractor implements ProfileFragmentContract.Intera
 
     @Override
     public void updateTask(Task task, String contactNo) {
-        getProfileView().refreshTasksList(FPLibrary.getInstance().getContactTasksRepository().saveOrUpdateTasks(task));
+        mProfileFrgamentPresenter.getProfileView().refreshTasksList(FPLibrary.getInstance().getContactTasksRepository().saveOrUpdateTasks(task));
         savePreviousTaskDetails(contactNo, task);
         createTaskPartialForm(task, contactNo);
-    }
-
-    public ProfileFragmentContract.View getProfileView() {
-        return mProfileFrgamentPresenter.getProfileView();
     }
 
     private void savePreviousTaskDetails(String contactNo, Task task) {
@@ -77,6 +73,6 @@ public class ProfileFragmentInteractor implements ProfileFragmentContract.Intera
 
     private void createTaskPartialForm(Task task, String contactNo) {
         List<Task> doneTasks = utils.getContactTasksRepositoryHelper().getClosedTasks(task.getBaseEntityId());
-        utils.createTasksPartialContainer(task.getBaseEntityId(), getProfileView().getContext(), Integer.parseInt(contactNo) + 1, doneTasks);
+        utils.createTasksPartialContainer(task.getBaseEntityId(), mProfileFrgamentPresenter.getProfileView().getContext(), Integer.parseInt(contactNo) + 1, doneTasks);
     }
 }

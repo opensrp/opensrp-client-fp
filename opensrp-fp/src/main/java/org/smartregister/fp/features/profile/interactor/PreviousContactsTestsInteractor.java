@@ -23,8 +23,4 @@ public class PreviousContactsTestsInteractor implements PreviousContactsTests.In
         new FetchProfileDataTask(isForEdit).execute(baseEntityId);
     }
 
-
-    public PreviousContactsTests.View getProfileView() {
-        return previousContactsTestsPresenter.getProfileView();
-    }
 }

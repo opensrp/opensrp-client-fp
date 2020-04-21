@@ -83,32 +83,7 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent" />
             </LinearLayout>
-            <!-- <LinearLayout
-                 android:id="@+id/charts_layout"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:orientation="vertical"
-                 app:layout_constraintTop_toBottomOf="@+id/last_contact_layout">
 
-
-                 <TextView
-                     android:id="@+id/charts_header"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:background="@color/profile_contact_section_bg"
-                     android:gravity="start"
-                     android:paddingStart="@dimen/contact_drawable_padding"
-                     android:paddingTop="@dimen/contact_drawable_padding"
-                     android:paddingEnd="@dimen/contact_drawable_padding"
-                     android:paddingBottom="@dimen/contact_drawable_padding"
-                     android:singleLine="true"
-                     android:text="@string/key_figure"
-                     android:textAllCaps="true"
-                     android:textAppearance="?android:textAppearanceMedium"
-                     android:textColor="@color/white"
-                     app:layout_constraintTop_toTopOf="parent" />
-
-             </LinearLayout>-->
             <LinearLayout
                 android:id="@+id/test_layout"
                 android:layout_width="match_parent"

@@ -182,7 +182,6 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
         form.setSaveLabel(getResources().getString(R.string.save_label));
         return form;
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

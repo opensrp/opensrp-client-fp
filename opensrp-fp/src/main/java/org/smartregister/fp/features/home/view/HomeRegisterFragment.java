@@ -211,22 +211,6 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
         ((RegisterFragmentPresenter) presenter).updateSortAndFilter(filterList, sortField);
     }
 
-    // it case crash for client registration, app will use this method from searchAdvance file
- /*   @Override
-    public void countExecute() {
-        try {
-            String sql = FPLibrary.getInstance().getRegisterQueryProvider().getCountExecuteQuery(mainCondition, filters);
-            Timber.i(sql);
-            int totalCount = commonRepository().countSearchIds(sql);
-            clientAdapter.setTotalcount(totalCount);
-            Timber.i("Total Register Count %d", clientAdapter.getTotalcount());
-            clientAdapter.setCurrentlimit(20);
-            clientAdapter.setCurrentoffset(0);
-        } catch (Exception e) {
-            Timber.e(e);
-        }
-    }*/
-
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         final AdvancedMatrixCursor matrixCursor = ((RegisterFragmentPresenter) presenter).getMatrixCursor();
