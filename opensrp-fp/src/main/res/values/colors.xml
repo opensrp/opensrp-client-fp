@@ -5,6 +5,8 @@
     <color name="accent">#3797ca</color>
     <color name="primaryAccent">#3797ca</color>
     <color name="primaryBackground">#a6d1e7</color>
+    <color name="btn_start_visit">#0192D4</color>
+    <color name="btn_start_visit_bg_color">#FFC9C9C9</color>
 
     <color name="customAppThemeBlue">#218CC5</color>
     <color name="customAppThemeDarkest">#272727</color>

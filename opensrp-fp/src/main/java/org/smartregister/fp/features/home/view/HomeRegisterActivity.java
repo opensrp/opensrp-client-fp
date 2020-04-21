@@ -3,8 +3,11 @@ package org.smartregister.fp.features.home.view;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -83,13 +86,32 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
         if (bottomNavigationView != null) {
 
             bottomNavigationView.getMenu().findItem(R.id.action_clients).setIcon(R.drawable.ic_icon_nav_clients);
-            bottomNavigationView.getMenu().add(R.string.action_mec_wheel).setIcon(R.drawable.ic_icon_nav_mec_wheel);
+            bottomNavigationView.getMenu().add(Menu.NONE, R.string.action_mec_wheel, Menu.NONE, R.string.action_mec_wheel).setIcon(R.drawable.ic_icon_nav_mec_wheel);
 
             // remove unused menu
             bottomNavigationView.getMenu().removeItem(R.id.action_search);
             bottomNavigationView.getMenu().removeItem(R.id.action_library);
 
-            BottomNavigationListener bottomNavigationListener = new BottomNavigationListener(this);
+            BottomNavigationListener bottomNavigationListener = new BottomNavigationListener(this){
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    if (item.getItemId() == R.string.action_mec_wheel) {
+                        String pkgName = "com.who.mecwheel";
+                        Intent intent = getPackageManager().getLaunchIntentForPackage(pkgName);
+                        if (intent == null) {
+                            try {
+                                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$pkgName"));
+                            } catch (Exception ex) {
+                                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$pkgName"));
+                            }
+                        }
+                        startActivity(intent);
+                        return false;
+                    } else {
+                        return super.onNavigationItemSelected(item);
+                    }
+                }
+            };
             bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavigationListener);
         }
     }
