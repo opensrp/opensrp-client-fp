@@ -43,7 +43,7 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
             formName = getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME);
         }
         super.onCreate(savedInstanceState);
-        new Handler().postDelayed(this::updateViewsProperties, 200);
+        ///new Handler().postDelayed(this::updateViewsProperties, 200);
     }
 
     private void updateViewsProperties() {
