@@ -25,9 +25,8 @@ import timber.log.Timber;
  */
 public class PatientRepository extends BaseRepository {
 
-    private static final String[] clientProjection =
-            new String[]{
-                    DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, DBConstantsUtils.KeyUtils.CLIENT_ID, DBConstantsUtils.KeyUtils.CLIENT_ID_NOTE,
+    private static final String[] projection =
+            new String[]{DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, DBConstantsUtils.KeyUtils.CLIENT_ID, DBConstantsUtils.KeyUtils.CLIENT_ID_NOTE,
                     DBConstantsUtils.KeyUtils.FIRST_NAME, DBConstantsUtils.KeyUtils.LAST_NAME, DBConstantsUtils.KeyUtils.DOB,
                     DBConstantsUtils.KeyUtils.AGE_ENTERED, DBConstantsUtils.KeyUtils.DOB_UNKNOWN, DBConstantsUtils.KeyUtils.REGISTRATION_DATE,
                     DBConstantsUtils.KeyUtils.REFERRAL, DBConstantsUtils.KeyUtils.REFERRED_BY, DBConstantsUtils.KeyUtils.UNIVERSAL_ID,
@@ -44,7 +43,7 @@ public class PatientRepository extends BaseRepository {
         try {
             SQLiteDatabase db = getMasterRepository().getReadableDatabase();
             String query =
-                    "SELECT " + StringUtils.join(clientProjection, ",") + " FROM "
+                    "SELECT " + StringUtils.join(projection, ",") + " FROM "
                             + FPLibrary.getInstance().getRegisterQueryProvider().getDemographicTable()
                             + " WHERE " +
                             DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?";
@@ -81,7 +80,7 @@ public class PatientRepository extends BaseRepository {
             }
             return detailsMap;
         } catch (Exception e) {
-            Timber.e(e, "%s ==> getWomanProfileDetails()", PatientRepository.class.getCanonicalName());
+            Timber.e(e, "%s ==> getClientProfileDetails()", PatientRepository.class.getCanonicalName());
         } finally {
             if (cursor != null) {
                 cursor.close();

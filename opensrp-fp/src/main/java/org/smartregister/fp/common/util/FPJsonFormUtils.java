@@ -15,7 +15,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.common.reflect.TypeToken;
 import com.vijay.jsonwizard.activities.JsonFormActivity;
+import com.vijay.jsonwizard.activities.JsonWizardFormActivity;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
+import com.vijay.jsonwizard.domain.Form;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
@@ -40,7 +42,6 @@ import org.smartregister.fp.common.domain.YamlConfigWrapper;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.ContactSummaryModel;
 import org.smartregister.fp.common.model.Task;
-import org.smartregister.fp.common.view.EditJsonFormActivity;
 import org.smartregister.fp.features.home.repository.PatientRepository;
 import org.smartregister.location.helper.LocationHelper;
 import org.smartregister.repository.AllSharedPreferences;
@@ -523,11 +524,18 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
     }
 
     public static void startFormForEdit(Activity context, int jsonFormActivityRequestCode, String metaData) {
-        Intent intent = new Intent(context, EditJsonFormActivity.class);
-        intent.putExtra(ConstantsUtils.IntentKeyUtils.JSON, metaData);
-        Timber.d("form is %s", metaData);
+        Intent intent = new Intent(context, JsonWizardFormActivity.class);
+        intent.putExtra(ConstantsUtils.JsonFormExtraUtils.JSON, metaData);
+        intent.putExtra("form", getFormMetadata(context));
         context.startActivityForResult(intent, jsonFormActivityRequestCode);
+    }
 
+    private static Form getFormMetadata(Context context) {
+        Form form = new Form();
+        form.setHomeAsUpIndicator(R.drawable.ic_action_close);
+        form.setActionBarBackground(R.color.black);
+        form.setSaveLabel(context.getResources().getString(R.string.save_label));
+        return form;
     }
 
     public static Triple<Boolean, Event, Event> saveRemovedFromANCRegister(AllSharedPreferences allSharedPreferences, String jsonString, String providerId) {

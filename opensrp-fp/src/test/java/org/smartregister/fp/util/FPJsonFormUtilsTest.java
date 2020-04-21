@@ -543,6 +543,6 @@ public class FPJsonFormUtilsTest {
         Assert.assertEquals("ANC Close", eventEventTriple.getMiddle().getEventType());
 
         Assert.assertNotNull(eventEventTriple.getRight());
-        Assert.assertEquals("Update ANC Registration", eventEventTriple.getRight().getEventType());
+        Assert.assertEquals("Edit Client Registration", eventEventTriple.getRight().getEventType());
     }
 }
