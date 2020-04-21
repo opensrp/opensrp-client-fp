@@ -180,7 +180,7 @@ public class RegisterInteractor implements RegisterContract.Interactor {
             if (isEditMode) {
                 // Unassign current OPENSRP ID
                 if (baseClient != null) {
-                    String newOpenSRPId = baseClient.getIdentifier(ConstantsUtils.ClientUtils.OPENSRP_ID).replace("-", "");
+                    String newOpenSRPId = baseClient.getIdentifier(ConstantsUtils.ClientUtils.FP_ID).replace("-", "");
                     String currentOpenSRPId =
                             FPJsonFormUtils.getString(jsonString, ConstantsUtils.CURRENT_OPENSRP_ID).replace("-", "");
                     if (!newOpenSRPId.equals(currentOpenSRPId)) {

@@ -15,7 +15,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.common.reflect.TypeToken;
 import com.vijay.jsonwizard.activities.JsonFormActivity;
+import com.vijay.jsonwizard.activities.JsonWizardFormActivity;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
+import com.vijay.jsonwizard.domain.Form;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
@@ -40,7 +42,6 @@ import org.smartregister.fp.common.domain.YamlConfigWrapper;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.ContactSummaryModel;
 import org.smartregister.fp.common.model.Task;
-import org.smartregister.fp.common.view.EditJsonFormActivity;
 import org.smartregister.fp.features.home.repository.PatientRepository;
 import org.smartregister.location.helper.LocationHelper;
 import org.smartregister.repository.AllSharedPreferences;
@@ -362,7 +363,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
     }
 
-    public static String getAutoPopulatedJsonEditRegisterFormString(Context context, Map<String, String> womanClient) {
+    public static String getAutoPopulatedJsonEditRegisterFormString(Context context, Map<String, String> registerClient) {
         try {
             JSONObject form = FormUtils.getInstance(context).getFormJson(ConstantsUtils.JsonFormUtils.FP_REGISTER);
             LocationPickerView lpv = createLocationPickerView(context);
@@ -372,7 +373,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
             FPJsonFormUtils.addWomanRegisterHierarchyQuestions(form);
             Timber.d("Form is %s", form.toString());
             if (form != null) {
-                form.put(FPJsonFormUtils.ENTITY_ID, womanClient.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID));
+                form.put(FPJsonFormUtils.ENTITY_ID, registerClient.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID));
                 form.put(FPJsonFormUtils.ENCOUNTER_TYPE, ConstantsUtils.EventTypeUtils.UPDATE_REGISTRATION);
 
                 JSONObject metadata = form.getJSONObject(FPJsonFormUtils.METADATA);
@@ -381,7 +382,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
                 metadata.put(FPJsonFormUtils.ENCOUNTER_LOCATION, lastLocationId);
 
-                form.put(ConstantsUtils.CURRENT_OPENSRP_ID, womanClient.get(DBConstantsUtils.KeyUtils.FP_ID).replace("-", ""));
+                form.put(ConstantsUtils.CURRENT_OPENSRP_ID, registerClient.get(DBConstantsUtils.KeyUtils.FP_ID).replace("-", ""));
 
                 //inject opensrp id into the form
                 JSONObject stepOne = form.getJSONObject(FPJsonFormUtils.STEP1);
@@ -389,7 +390,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                    processPopulatableFields(womanClient, jsonObject);
+                    processPopulatableFields(registerClient, jsonObject);
 
                 }
 
@@ -453,38 +454,42 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         }
     }
 
-    protected static void processPopulatableFields(Map<String, String> womanClient, JSONObject jsonObject)
+    protected static void processPopulatableFields(Map<String, String> client, JSONObject jsonObject)
             throws JSONException {
 
         if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(ConstantsUtils.JsonFormKeyUtils.DOB_ENTERED)) {
-            getDobUsingEdd(womanClient, jsonObject, DBConstantsUtils.KeyUtils.DOB);
+            getDobUsingEdd(client, jsonObject, DBConstantsUtils.KeyUtils.DOB);
 
         } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.HOME_ADDRESS)) {
-            String homeAddress = womanClient.get(DBConstantsUtils.KeyUtils.HOME_ADDRESS);
+            String homeAddress = client.get(DBConstantsUtils.KeyUtils.HOME_ADDRESS);
             jsonObject.put(FPJsonFormUtils.VALUE, homeAddress);
 
-        } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(ConstantsUtils.WOM_IMAGE)) {
-            getPhotoFieldValue(womanClient, jsonObject);
         } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.DOB_UNKNOWN)) {
             jsonObject.put(FPJsonFormUtils.READ_ONLY, false);
             JSONObject optionsObject = jsonObject.getJSONArray(ConstantsUtils.JsonFormKeyUtils.OPTIONS).getJSONObject(0);
-            optionsObject.put(FPJsonFormUtils.VALUE, womanClient.get(DBConstantsUtils.KeyUtils.DOB_UNKNOWN));
+            optionsObject.put(FPJsonFormUtils.VALUE, client.get(DBConstantsUtils.KeyUtils.DOB_UNKNOWN));
 
         } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(ConstantsUtils.KeyUtils.AGE_ENTERED)) {
             jsonObject.put(FPJsonFormUtils.READ_ONLY, false);
-            if (StringUtils.isNotBlank(womanClient.get(DBConstantsUtils.KeyUtils.DOB))) {
-                jsonObject.put(FPJsonFormUtils.VALUE, Utils.getAgeFromDate(womanClient.get(DBConstantsUtils.KeyUtils.DOB)));
+            if (StringUtils.isNotBlank(client.get(DBConstantsUtils.KeyUtils.DOB))) {
+                jsonObject.put(FPJsonFormUtils.VALUE, Utils.getAgeFromDate(client.get(DBConstantsUtils.KeyUtils.DOB)));
             }
 
         } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.EDD)) {
-            formatEdd(womanClient, jsonObject, DBConstantsUtils.KeyUtils.EDD);
+            formatEdd(client, jsonObject, DBConstantsUtils.KeyUtils.EDD);
 
         } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(ConstantsUtils.JsonFormKeyUtils.CLIENT_ID)) {
-            jsonObject.put(FPJsonFormUtils.VALUE, womanClient.get(DBConstantsUtils.KeyUtils.FP_ID).replace("-", ""));
+            jsonObject.put(FPJsonFormUtils.READ_ONLY, true);
+            jsonObject.put(FPJsonFormUtils.VALUE, client.get(DBConstantsUtils.KeyUtils.FP_ID).replace("-", ""));
 
-        } else if (womanClient.containsKey(jsonObject.getString(FPJsonFormUtils.KEY))) {
+        } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.UNIVERSAL_ID)
+                || jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.REFERRAL)
+                || jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.REFERRED_BY)) {
+            jsonObject.put(FPJsonFormUtils.READ_ONLY, true);
+            jsonObject.put(FPJsonFormUtils.VALUE, client.get(jsonObject.getString(FPJsonFormUtils.KEY)));
+        } else if (client.containsKey(jsonObject.getString(FPJsonFormUtils.KEY))) {
             jsonObject.put(FPJsonFormUtils.READ_ONLY, false);
-            jsonObject.put(FPJsonFormUtils.VALUE, womanClient.get(jsonObject.getString(FPJsonFormUtils.KEY)));
+            jsonObject.put(FPJsonFormUtils.VALUE, client.get(jsonObject.getString(FPJsonFormUtils.KEY)));
         } else {
             Timber.e("ERROR:: Unprocessed Form Object Key %s", jsonObject.getString(FPJsonFormUtils.KEY));
         }
@@ -523,11 +528,18 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
     }
 
     public static void startFormForEdit(Activity context, int jsonFormActivityRequestCode, String metaData) {
-        Intent intent = new Intent(context, EditJsonFormActivity.class);
+        Intent intent = new Intent(context, JsonWizardFormActivity.class);
         intent.putExtra(ConstantsUtils.IntentKeyUtils.JSON, metaData);
-        Timber.d("form is %s", metaData);
+        intent.putExtra("form", getFormMetadata(context));
         context.startActivityForResult(intent, jsonFormActivityRequestCode);
+    }
 
+    private static Form getFormMetadata(Context context) {
+        Form form = new Form();
+        form.setHomeAsUpIndicator(R.drawable.ic_action_close);
+        form.setActionBarBackground(R.color.black);
+        form.setSaveLabel(context.getResources().getString(R.string.save_label));
+        return form;
     }
 
     public static Triple<Boolean, Event, Event> saveRemovedFromANCRegister(AllSharedPreferences allSharedPreferences, String jsonString, String providerId) {
