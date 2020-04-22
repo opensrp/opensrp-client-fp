@@ -14,14 +14,14 @@
           },
           {
             "field": "eventType",
-            "field_value": "FP Registration",
+            "field_value": "Client Registration",
             "creates_case": [
               "ec_client"
             ]
           },
           {
             "field": "eventType",
-            "field_value": "Update FP Registration",
+            "field_value": "Edit Client Registration",
             "creates_case": [
               "ec_client"
             ]

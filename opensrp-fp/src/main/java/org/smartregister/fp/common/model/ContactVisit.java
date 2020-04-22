@@ -22,6 +22,7 @@ import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.FPFormUtils;
 import org.smartregister.fp.common.util.FPJsonFormUtils;
 import org.smartregister.fp.common.util.FilePathUtils;
+import org.smartregister.fp.common.util.Utils;
 import org.smartregister.fp.features.home.repository.PartialContactRepository;
 import org.smartregister.fp.features.home.repository.PatientRepository;
 import org.smartregister.util.JsonFormUtils;
@@ -223,7 +224,7 @@ public class ContactVisit {
                         //Do not save empty checkbox values with nothing inside square braces ([])
                         if (fieldObject.has(JsonFormConstants.VALUE) &&
                                 !TextUtils.isEmpty(fieldObject.getString(JsonFormConstants.VALUE)) &&
-                                !isCheckboxValueEmpty(fieldObject)) {
+                                !Utils.isCheckboxValueEmpty(fieldObject)) {
 
                             fieldObject.put(PreviousContactRepository.CONTACT_NO, contactNo);
                             ANCFormUtils.savePreviousContactItem(baseEntityId, fieldObject);
@@ -317,15 +318,6 @@ public class ContactVisit {
                 ANCFormUtils.saveExpansionPanelValues(baseEntityId, contactNo, valueItem);
             }
         }
-    }
-
-    private boolean isCheckboxValueEmpty(JSONObject fieldObject) throws JSONException {
-        if (!fieldObject.has(JsonFormConstants.VALUE)) {
-            return true;
-        }
-        String currentValue = fieldObject.getString(JsonFormConstants.VALUE);
-        return TextUtils.equals(currentValue, "[]") || (currentValue.length() == 2
-                && currentValue.startsWith("[") && currentValue.endsWith("]"));
     }
 
     public Map<String, Long> getCurrentClientTasks() {

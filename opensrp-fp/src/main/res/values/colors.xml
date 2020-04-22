@@ -8,6 +8,7 @@
     <color name="btn_start_visit">#0192D4</color>
     <color name="start_visit_navigation_background">#0E7BAD</color>
 
+    <color name="btn_start_visit_bg_color">#FFC9C9C9</color>
     <color name="customAppThemeBlue">#218CC5</color>
     <color name="customAppThemeDarkest">#272727</color>
     <color name="customAppThemeDark">#373737</color>
@@ -111,4 +112,5 @@
     <color name="snow">#fafafa</color>
     <color name="light_gray">#D2D2D2</color>
     <color name="translucent_very_light_gray">#D2D2D2</color>
+    <color name="dark_tangerine">#FFFCA917</color>
 </resources>

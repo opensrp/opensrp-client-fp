@@ -17,8 +17,6 @@ public interface ContactContract {
 
         void displayToast(int resourceId);
 
-        String getString(int resourceId);
-
         void loadGlobals(Contact contact);
 
     }
@@ -48,16 +46,12 @@ public interface ContactContract {
     interface Model {
         String extractPatientName(Map<String, String> womanDetails);
 
-        JSONObject getFormAsJson(String formName, String entityId, String currentLocationId) throws Exception;
     }
 
     interface Interactor extends BaseContactContract.Interactor {
         HashMap<String, String> finalizeContactForm(Map<String, String> details, Context context);
 
         int getGestationAge(Map<String, String> details);
-    }
-
-    interface InteractorCallback extends BaseContactContract.InteractorCallback {
     }
 
 }

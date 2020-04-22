@@ -14,7 +14,14 @@
           "column_name": "client_id",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.client_id"
+            "field": "identifiers.client_id"
+          }
+        },
+        {
+          "column_name": "client_id_note",
+          "type": "Client",
+          "json_mapping": {
+            "field": "identifiers.client_id_note"
           }
         },
         {
@@ -53,45 +60,24 @@
           }
         },
         {
-          "column_name": "last_interacted_with",
-          "type": "Event",
-          "json_mapping": {
-            "field": "version"
-          }
-        },
-        {
-          "column_name": "date_removed",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.date_removed"
-          }
-        },
-        {
           "column_name": "registration_date",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.registration_date"
           }
         },
         {
           "column_name": "referral",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.referral"
           }
         },
         {
           "column_name": "referred_by",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.referred_by"
-          }
-        },
-        {
-          "column_name": "client_id_note",
-          "type": "Event",
-          "json_mapping": {
-            "field": "attributes.client_id_note"
           }
         },
         {
@@ -109,10 +95,10 @@
           }
         },
         {
-          "column_name": "age_entered",
+          "column_name": "dob_entered",
           "type": "Client",
           "json_mapping": {
-            "field": "attributes.age_entered"
+            "field": "attributes.dob_entered"
           }
         },
         {
@@ -131,35 +117,35 @@
         },
         {
           "column_name": "gender",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
-            "field": "attributes.gender"
+            "field": "gender"
           }
         },
         {
-          "column_name": "gender_type_method",
-          "type": "Event",
+          "column_name": "biological_sex",
+          "type": "Client",
           "json_mapping": {
-            "field": "attributes.gender_type_method"
+            "field": "attributes.biological_sex"
           }
         },
         {
           "column_name": "method_gender_type",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.method_gender_type"
           }
         },
         {
           "column_name": "marital_status",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.marital_status"
           }
         },
         {
           "column_name": "admin_area",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.admin_area"
           }
@@ -180,16 +166,30 @@
         },
         {
           "column_name": "comm_consent",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.comm_consent"
           }
         },
         {
           "column_name": "reminder_message",
-          "type": "Event",
+          "type": "Client",
           "json_mapping": {
             "field": "attributes.reminder_message"
+          }
+        },
+        {
+          "column_name": "last_interacted_with",
+          "type": "Event",
+          "json_mapping": {
+            "field": "version"
+          }
+        },
+        {
+          "column_name": "date_removed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.date_removed"
           }
         }
       ]

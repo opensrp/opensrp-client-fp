@@ -220,19 +220,6 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         else if (itemId == R.id.menu_btn_close_fp_record) {
             FPJsonFormUtils.launchANCCloseForm(ProfileActivity.this);
         }
-        /*if (itemId == android.R.id.home) {
-
-        } else {
-            String contactButtonText = getString(R.string.start_contact);
-
-            if (buttonAlertStatus.equals(ConstantsUtils.AlertStatusUtils.TODAY)) {
-                contactButtonText = String.format(getString(R.string.contact_recorded_today_no_break), Utils.getTodayContact(detailMap.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
-            } else if (buttonAlertStatus.equals(ConstantsUtils.AlertStatusUtils.IN_PROGRESS)) {
-                contactButtonText = String.format(getString(R.string.continue_contact), Integer.valueOf(detailMap.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
-            }
-
-            attachAlertDialog(contactButtonText);
-        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -317,7 +304,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void startFormForEdit(ClientDetailsFetchedEvent event) {
         if (event != null && event.isEditMode()) {
-            String formMetadata = FPJsonFormUtils.getAutoPopulatedJsonEditRegisterFormString(this, event.getWomanClient());
+            String formMetadata = FPJsonFormUtils.getAutoPopulatedJsonEditRegisterFormString(this, event.getClient());
             try {
                 FPJsonFormUtils.startFormForEdit(this, FPJsonFormUtils.REQUEST_CODE_GET_JSON, formMetadata);
             } catch (Exception e) {
@@ -331,7 +318,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     public void refreshProfileTopSection(ClientDetailsFetchedEvent event) {
         if (event != null && !event.isEditMode()) {
             Utils.removeStickyEvent(event);
-            ((ProfilePresenter) presenter).refreshProfileTopSection(event.getWomanClient());
+            ((ProfilePresenter) presenter).refreshProfileTopSection(event.getClient());
         }
     }
 

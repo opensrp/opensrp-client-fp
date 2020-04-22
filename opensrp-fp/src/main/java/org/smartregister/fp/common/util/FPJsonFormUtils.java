@@ -15,7 +15,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.common.reflect.TypeToken;
 import com.vijay.jsonwizard.activities.JsonFormActivity;
+import com.vijay.jsonwizard.activities.JsonWizardFormActivity;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
+import com.vijay.jsonwizard.domain.Form;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
@@ -39,8 +41,8 @@ import org.smartregister.fp.common.domain.YamlConfigItem;
 import org.smartregister.fp.common.domain.YamlConfigWrapper;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.ContactSummaryModel;
+import org.smartregister.fp.common.model.RegisterModel;
 import org.smartregister.fp.common.model.Task;
-import org.smartregister.fp.common.view.EditJsonFormActivity;
 import org.smartregister.fp.features.home.repository.PatientRepository;
 import org.smartregister.location.helper.LocationHelper;
 import org.smartregister.repository.AllSharedPreferences;
@@ -115,10 +117,10 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
             // Inject opensrp id into the form
             JSONArray field = FPJsonFormUtils.fields(form);
-            JSONObject ancId = getFieldJSONObject(field, ConstantsUtils.JsonFormKeyUtils.FP_ID);
-            if (ancId != null) {
-                ancId.remove(FPJsonFormUtils.VALUE);
-                ancId.put(FPJsonFormUtils.VALUE, entityId);
+            JSONObject clientId = getFieldJSONObject(field, ConstantsUtils.JsonFormKeyUtils.CLIENT_ID);
+            if (clientId != null) {
+                clientId.remove(FPJsonFormUtils.VALUE);
+                clientId.put(FPJsonFormUtils.VALUE, entityId);
             }
 
         } else if (ConstantsUtils.JsonFormUtils.FP_CLOSE.equals(formName)) {
@@ -132,6 +134,24 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         }
         Timber.d("form is " + form.toString());
         return form;
+    }
+
+    public static JSONObject getFormAsJson(String formName, String entityId, String currentLocationId) throws Exception{
+        JSONObject form = getFormUtils().getFormJson(formName);
+        if (form == null) {
+            return null;
+        }
+        return FPJsonFormUtils.getFormAsJson(form, formName, entityId, currentLocationId);
+    }
+
+    public static FormUtils getFormUtils() {
+        FormUtils formUtils = null;
+        try {
+            formUtils = FormUtils.getInstance(FPLibrary.getInstance().getApplicationContext());
+        } catch (Exception e) {
+            Timber.e(e, RegisterModel.class.getCanonicalName(), e.getMessage());
+        }
+        return formUtils;
     }
 
     public static JSONObject getFieldJSONObject(JSONArray jsonArray, String key) {
@@ -171,7 +191,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
             addLastInteractedWith(fields);
             getDobStrings(fields);
-            initializeFirstContactValues(fields);
+//            initializeFirstContactValues(fields);
             FormTag formTag = getFormTag(allSharedPreferences);
 
 
@@ -479,7 +499,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.EDD)) {
             formatEdd(womanClient, jsonObject, DBConstantsUtils.KeyUtils.EDD);
 
-        } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(ConstantsUtils.JsonFormKeyUtils.FP_ID)) {
+        } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(ConstantsUtils.JsonFormKeyUtils.CLIENT_ID)) {
             jsonObject.put(FPJsonFormUtils.VALUE, womanClient.get(DBConstantsUtils.KeyUtils.FP_ID).replace("-", ""));
 
         } else if (womanClient.containsKey(jsonObject.getString(FPJsonFormUtils.KEY))) {
@@ -523,11 +543,18 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
     }
 
     public static void startFormForEdit(Activity context, int jsonFormActivityRequestCode, String metaData) {
-        Intent intent = new Intent(context, EditJsonFormActivity.class);
-        intent.putExtra(ConstantsUtils.IntentKeyUtils.JSON, metaData);
-        Timber.d("form is %s", metaData);
+        Intent intent = new Intent(context, JsonWizardFormActivity.class);
+        intent.putExtra(ConstantsUtils.JsonFormExtraUtils.JSON, metaData);
+        intent.putExtra("form", getFormMetadata(context));
         context.startActivityForResult(intent, jsonFormActivityRequestCode);
+    }
 
+    private static Form getFormMetadata(Context context) {
+        Form form = new Form();
+        form.setHomeAsUpIndicator(R.drawable.ic_action_close);
+        form.setActionBarBackground(R.color.black);
+        form.setSaveLabel(context.getResources().getString(R.string.save_label));
+        return form;
     }
 
     public static Triple<Boolean, Event, Event> saveRemovedFromANCRegister(AllSharedPreferences allSharedPreferences, String jsonString, String providerId) {
