@@ -76,7 +76,7 @@ public class PatientRepositoryTest {
         PatientRepository patientRepositoryHelper = new PatientRepository();
         Assert.assertNotNull(patientRepositoryHelper);
 
-        Map<String, String> womanProfileDetails = PatientRepository.getWomanProfileDetails(DUMMY_BASE_ENTITY_ID);
+        Map<String, String> womanProfileDetails = PatientRepository.getClientProfileDetails(DUMMY_BASE_ENTITY_ID);
         Assert.assertNull(womanProfileDetails);
 
     }
@@ -108,7 +108,7 @@ public class PatientRepositoryTest {
         PowerMockito.when(cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.PHONE_NUMBER)))
                 .thenReturn("020-234-234");
 
-        Map<String, String> expectedMap = PatientRepository.getWomanProfileDetails(DUMMY_BASE_ENTITY_ID);
+        Map<String, String> expectedMap = PatientRepository.getClientProfileDetails(DUMMY_BASE_ENTITY_ID);
         Assert.assertEquals("Mary", expectedMap.get(DBConstantsUtils.KeyUtils.FIRST_NAME));
         Assert.assertEquals("Mary", expectedMap.get(DBConstantsUtils.KeyUtils.LAST_NAME));
         Assert.assertEquals("234-234", expectedMap.get(DBConstantsUtils.KeyUtils.FP_ID));

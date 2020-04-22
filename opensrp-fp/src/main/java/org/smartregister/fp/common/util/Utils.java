@@ -243,8 +243,7 @@ public class Utils extends org.smartregister.util.Utils {
 
             String locationId = FPLibrary.getInstance().getContext().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
 
-            ContactModel baseContactModel = new ContactModel();
-            JSONObject form = baseContactModel.getFormAsJson(startVisit.getFormName(), baseEntityId, locationId);
+            JSONObject form = FPJsonFormUtils.getFormAsJson(startVisit.getFormName(), baseEntityId, locationId);
 
             String processedForm = FPFormUtils.getFormJsonCore(partialContactRequest, form).toString();
 

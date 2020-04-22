@@ -40,9 +40,9 @@ public class RegisterQueryProvider {
         return DBConstantsUtils.RegisterTable.DEMOGRAPHIC;
     }
 
-    public String getDetailsTable() {
+    /*public String getDetailsTable() {
         return DBConstantsUtils.RegisterTable.DETAILS;
-    }
+    }*/
 
     public String getCountExecuteQuery(String mainCondition, String filters) {
 
@@ -70,7 +70,13 @@ public class RegisterQueryProvider {
         return new String[]{getDemographicTable() + "." + DBConstantsUtils.KeyUtils.RELATIONAL_ID, getDemographicTable() + "." + DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH,
                 getDemographicTable() + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, getDemographicTable() + "." + DBConstantsUtils.KeyUtils.FIRST_NAME,
                 getDemographicTable() + "." + DBConstantsUtils.KeyUtils.LAST_NAME, getDemographicTable() + "." + DBConstantsUtils.KeyUtils.FP_ID,
-                getDemographicTable() + "." + DBConstantsUtils.KeyUtils.DOB, getDemographicTable() + "." + DBConstantsUtils.KeyUtils.DATE_REMOVED};
+                getDemographicTable() + "." + DBConstantsUtils.KeyUtils.DOB, getDemographicTable() + "." + DBConstantsUtils.KeyUtils.DATE_REMOVED,
+                getDemographicTable() + "." + DBConstantsUtils.KeyUtils.RED_FLAG_COUNT, getDemographicTable() + "." + DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT,
+                getDemographicTable() + "." + DBConstantsUtils.KeyUtils.CONTACT_STATUS, getDemographicTable() + "." + DBConstantsUtils.KeyUtils.NEXT_CONTACT,
+                getDemographicTable() + "." + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE, getDemographicTable() + "." + DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE,
+                getDemographicTable() + "." + DBConstantsUtils.KeyUtils.VISIT_START_DATE, getDemographicTable() + "." + DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS,
+                getDemographicTable() + "." + DBConstantsUtils.KeyUtils.EDD
+        };
     }
 }
 

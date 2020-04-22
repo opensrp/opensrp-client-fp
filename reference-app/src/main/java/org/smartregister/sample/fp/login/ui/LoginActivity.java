@@ -5,7 +5,6 @@ import android.content.Intent;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.smartregister.fp.common.util.ConstantsUtils;
-import org.smartregister.fp.common.util.Utils;
 import org.smartregister.fp.features.home.view.HomeRegisterActivity;
 import org.smartregister.sample.fp.R;
 import org.smartregister.sample.fp.event.ViewConfigurationSyncCompleteEvent;
@@ -38,8 +37,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
 
     @Override
     public void goToHome(boolean remote) {
-        Utils.proceedToContact(null, null, this);
-        //gotToHomeRegister(remote);
+        gotToHomeRegister(remote);
     }
 
     private void gotToHomeRegister(boolean remote) {
