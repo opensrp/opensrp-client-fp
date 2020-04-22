@@ -180,7 +180,7 @@ public class RegisterInteractor implements RegisterContract.Interactor {
             if (isEditMode) {
                 // Unassign current OPENSRP ID
                 if (baseClient != null) {
-                    String newOpenSRPId = baseClient.getIdentifier(ConstantsUtils.ClientUtils.ANC_ID).replace("-", "");
+                    String newOpenSRPId = baseClient.getIdentifier(ConstantsUtils.ClientUtils.FP_ID).replace("-", "");
                     String currentOpenSRPId =
                             FPJsonFormUtils.getString(jsonString, ConstantsUtils.CURRENT_OPENSRP_ID).replace("-", "");
                     if (!newOpenSRPId.equals(currentOpenSRPId)) {
@@ -192,17 +192,17 @@ public class RegisterInteractor implements RegisterContract.Interactor {
 
             } else {
                 if (baseClient != null) {
-                    String opensrpId = baseClient.getIdentifier(ConstantsUtils.ClientUtils.ANC_ID);
+                    String opensrpId = baseClient.getIdentifier(ConstantsUtils.ClientUtils.FP_ID);
 
                     //mark OPENSRP ID as used
                     getUniqueIdRepository().close(opensrpId);
                 }
             }
 
-            if (baseClient != null || baseEvent != null) {
+           /* if (baseClient != null || baseEvent != null) {
                 String imageLocation = FPJsonFormUtils.getFieldValue(jsonString, ConstantsUtils.WOM_IMAGE);
                 FPJsonFormUtils.saveImage(baseEvent.getProviderId(), baseClient.getBaseEntityId(), imageLocation);
-            }
+            }*/
 
             long lastSyncTimeStamp = getAllSharedPreferences().fetchLastUpdatedAtDate(0);
             Date lastSyncDate = new Date(lastSyncTimeStamp);

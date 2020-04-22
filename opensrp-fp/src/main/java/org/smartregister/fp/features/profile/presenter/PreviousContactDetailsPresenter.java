@@ -27,9 +27,7 @@ import java.util.Map;
 
 import timber.log.Timber;
 
-/**
- * Created by ndegwamartin on 13/07/2018.
- */
+
 public class PreviousContactDetailsPresenter implements PreviousContactsDetailsContract.Presenter {
     private FPJsonFormUtils formUtils = new FPJsonFormUtils();
 

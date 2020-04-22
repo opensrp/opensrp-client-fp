@@ -12,4 +12,5 @@ public class ContactModel extends BaseContactModel implements ContactContract.Mo
         return super.extractPatientName(womanDetails);
 
     }
+
 }

@@ -1,5 +1,6 @@
 package org.smartregister.fp.common.listener;
 
+
 import android.content.Context;
 import android.view.View;
 
@@ -35,8 +36,6 @@ public class ContactTaskDisplayClickListener implements View.OnClickListener {
             }
         }
     }
-
-
 
     /**
      * Intitiates the undo tasks functionality

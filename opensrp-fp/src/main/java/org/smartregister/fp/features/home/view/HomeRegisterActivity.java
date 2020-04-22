@@ -18,7 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.vision.barcode.Barcode;
-import com.vijay.jsonwizard.activities.JsonFormActivity;
+import com.vijay.jsonwizard.activities.JsonWizardFormActivity;
+import com.vijay.jsonwizard.domain.Form;
 
 import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
@@ -168,11 +169,19 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
 
     @Override
     public void startFormActivity(JSONObject form) {
-        Intent intent = new Intent(this, JsonFormActivity.class);
+        Intent intent = new Intent(this, JsonWizardFormActivity.class);
         intent.putExtra(ConstantsUtils.JsonFormExtraUtils.JSON, form.toString());
+        intent.putExtra("form", getFormMetadata());
         startActivityForResult(intent, FPJsonFormUtils.REQUEST_CODE_GET_JSON);
     }
 
+    private Form getFormMetadata() {
+        Form form = new Form();
+        form.setHomeAsUpIndicator(R.drawable.ic_action_close);
+        form.setActionBarBackground(R.color.black);
+        form.setSaveLabel(getResources().getString(R.string.save_label));
+        return form;
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -193,9 +202,9 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
             } else {
                 Timber.i("NO RESULT FOR QR CODE");
             }
-        } else {
+        } /*else {
             onActivityResultExtended(requestCode, resultCode, data);
-        }
+        }*/
     }
 
     @Override

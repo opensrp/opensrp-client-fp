@@ -176,9 +176,9 @@ public class RegisterPresenter implements RegisterContract.Presenter, RegisterCo
 
     private void goToClientProfile(String baseEntityId) {
         if (StringUtils.isNotBlank(baseEntityId)) {
-            HashMap<String, String> womanProfileDetails = (HashMap<String, String>) PatientRepository.getWomanProfileDetails(baseEntityId);
-            if (womanProfileDetails != null) {
-                Utils.navigateToProfile(getView().getContext(), womanProfileDetails);
+            HashMap<String, String> clientProfileDetails = (HashMap<String, String>) PatientRepository.getClientProfileDetails(baseEntityId);
+            if (clientProfileDetails != null) {
+                Utils.navigateToProfile(getView().getContext(), clientProfileDetails);
             }
         }
     }

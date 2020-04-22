@@ -45,6 +45,7 @@ public interface ContactContract {
 
     interface Model {
         String extractPatientName(Map<String, String> womanDetails);
+
     }
 
     interface Interactor extends BaseContactContract.Interactor {

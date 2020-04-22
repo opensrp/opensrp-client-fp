@@ -21,7 +21,7 @@ public class FetchProfileDataTask extends AsyncTask<String, Integer, Map<String,
 
     protected Map<String, String> doInBackground(String... params) {
         String baseEntityId = params[0];
-        return PatientRepository.getWomanProfileDetails(baseEntityId);
+        return PatientRepository.getClientProfileDetails(baseEntityId);
     }
 
     protected void onPostExecute(Map<String, String> client) {

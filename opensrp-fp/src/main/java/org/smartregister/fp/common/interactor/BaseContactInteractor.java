@@ -15,7 +15,7 @@ public abstract class BaseContactInteractor {
 
     protected void fetchWomanDetails(final String baseEntityId, final BaseContactContract.InteractorCallback callBack) {
         Runnable runnable = () -> {
-            final Map<String, String> womanDetails = PatientRepository.getWomanProfileDetails(baseEntityId);
+            final Map<String, String> womanDetails = PatientRepository.getClientProfileDetails(baseEntityId);
             appExecutors.mainThread().execute(() -> callBack.onWomanDetailsFetched(womanDetails));
         };
 

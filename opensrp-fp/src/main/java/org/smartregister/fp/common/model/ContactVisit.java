@@ -320,8 +320,6 @@ public class ContactVisit {
         }
     }
 
-
-
     public Map<String, Long> getCurrentClientTasks() {
         return currentClientTasks;
     }

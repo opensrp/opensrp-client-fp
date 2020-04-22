@@ -31,8 +31,6 @@
     <string name="date">DATE</string>
     <string name="value">VALUE</string>
     <string name="default_profile_name">Charity Otala</string>
-
-
     <string name="unauthorized">Please check the credentials</string>
     <string name="unauthorized_group">Your user group is not allowed to access this device</string>
     <string name="unknown_response">login failed. Try later</string>
@@ -432,4 +430,5 @@
     <string name="caffeine_intake">Caffeine intake</string>
     <string name="balanced_diet_content_13">The maximum daily dose of caffeine intake for a pregnant woman is 300mg, is equivalent to:</string>
     <string name="balanced_diet_url_11">ftp://ftp.caism.unicamp.br/pub/astec/CARTILHA_DE_EXERCISIO_FISICO_NA_GRAVIDEZ_Publico.pdf</string>
+    <string name="save_label">SAVE</string>
 </resources>

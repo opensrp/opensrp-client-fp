@@ -14,7 +14,7 @@ public class ClientDetailsFetchedEvent extends BaseEvent {
         this.isEditMode = isEditMode;
     }
 
-    public Map<String, String> getWomanClient() {
+    public Map<String, String> getClient() {
         return womanClient;
     }
 

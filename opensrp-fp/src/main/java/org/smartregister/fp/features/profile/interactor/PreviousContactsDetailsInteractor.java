@@ -1,6 +1,7 @@
 package org.smartregister.fp.features.profile.interactor;
 
 import org.smartregister.fp.common.task.FetchProfileDataTask;
+
 import org.smartregister.fp.features.profile.contract.PreviousContactsDetailsContract;
 
 public class PreviousContactsDetailsInteractor implements PreviousContactsDetailsContract.Interactor {
@@ -21,7 +22,6 @@ public class PreviousContactsDetailsInteractor implements PreviousContactsDetail
     public void refreshProfileView(String baseEntityId, boolean isForEdit) {
         new FetchProfileDataTask(isForEdit).execute(baseEntityId);
     }
-
 
     public PreviousContactsDetailsContract.View getProfileView() {
         return previousContactsPresenter.getProfileView();
