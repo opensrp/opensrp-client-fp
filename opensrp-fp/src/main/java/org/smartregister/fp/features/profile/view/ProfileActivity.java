@@ -304,7 +304,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void startFormForEdit(ClientDetailsFetchedEvent event) {
         if (event != null && event.isEditMode()) {
-            String formMetadata = FPJsonFormUtils.getAutoPopulatedJsonEditRegisterFormString(this, event.getWomanClient());
+            String formMetadata = FPJsonFormUtils.getAutoPopulatedJsonEditRegisterFormString(this, event.getClient());
             try {
                 FPJsonFormUtils.startFormForEdit(this, FPJsonFormUtils.REQUEST_CODE_GET_JSON, formMetadata);
             } catch (Exception e) {
@@ -318,7 +318,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     public void refreshProfileTopSection(ClientDetailsFetchedEvent event) {
         if (event != null && !event.isEditMode()) {
             Utils.removeStickyEvent(event);
-            ((ProfilePresenter) presenter).refreshProfileTopSection(event.getWomanClient());
+            ((ProfilePresenter) presenter).refreshProfileTopSection(event.getClient());
         }
     }
 
