@@ -1,0 +1,7 @@
+---
+name: step2_toaster1
+description: This is bmi field  which is calculated by height and weight.
+priority: 1
+condition: "true"
+actions:
+  - "calculation = ['bmi': (step2_weight / ((step2_height/100)^2))]"

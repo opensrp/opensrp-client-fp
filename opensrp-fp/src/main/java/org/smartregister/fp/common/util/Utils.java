@@ -20,6 +20,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.gson.reflect.TypeToken;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.rules.RuleConstant;
 
@@ -46,6 +47,7 @@ import org.smartregister.fp.common.event.BaseEvent;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.ContactModel;
 import org.smartregister.fp.common.model.PartialContact;
+import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.model.Task;
 import org.smartregister.fp.common.rule.AlertRule;
 import org.smartregister.fp.features.home.repository.ContactTasksRepository;
@@ -53,8 +55,10 @@ import org.smartregister.fp.features.home.view.HomeRegisterActivity;
 import org.smartregister.fp.features.profile.view.ProfileActivity;
 import org.smartregister.fp.features.visit.view.StartVisitJsonFormActivity;
 import org.smartregister.view.activity.DrishtiApplication;
+import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,10 +67,12 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import timber.log.Timber;
 
@@ -210,39 +216,39 @@ public class Utils extends org.smartregister.util.Utils {
             personObjectClient.put("first_name", "Stacy");
             personObjectClient.put("relationid", "9993");
             personObjectClient.put("client_id", "789");
-
-            // Fixme remove that line once you get the proper contact
-            personObjectClient.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, "2322");
+            personObjectClient.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, "0");
 
             Intent intent = new Intent(context.getApplicationContext(), StartVisitJsonFormActivity.class);
 
-            Contact quickCheck = new Contact();
-            quickCheck.setName(context.getResources().getString(R.string.family_planning_visit));
-            quickCheck.setFormName(ConstantsUtils.JsonFormUtils.FP_START_VISIT);
-            quickCheck.setContactNumber(Integer.valueOf(personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
+            Contact startVisit = new Contact();
+            startVisit.setName(context.getResources().getString(R.string.family_planning_visit));
+            startVisit.setFormName(ConstantsUtils.JsonFormUtils.FP_START_VISIT);
+            startVisit.setContactNumber(Integer.valueOf(personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
             //quickCheck.setBackground(R.drawable.quick_check_bg);
-            quickCheck.setActionBarBackground(R.color.btn_start_visit);
-            quickCheck.setNavigationBackground(R.color.start_visit_navigation_background);
-            quickCheck.setBackIcon(R.drawable.ic_clear);
-            quickCheck.setWizard(true);
+            startVisit.setActionBarBackground(R.color.btn_start_visit);
+            startVisit.setNavigationBackground(R.color.start_visit_navigation_background);
+            startVisit.setBackIcon(R.drawable.ic_clear);
+            startVisit.setWizard(true);
             //quickCheck.setHideSaveLabel(true);
+
+
+
 
             //partial contact exists?
             PartialContact partialContactRequest = new PartialContact();
             partialContactRequest.setBaseEntityId(baseEntityId);
-            partialContactRequest.setContactNo(quickCheck.getContactNumber());
-            partialContactRequest.setType(quickCheck.getFormName());
+            partialContactRequest.setContactNo(startVisit.getContactNumber());
+            partialContactRequest.setType(startVisit.getFormName());
 
-            String locationId = FPLibrary.getInstance().getContext().allSharedPreferences()
-                    .getPreference(AllConstants.CURRENT_LOCATION_ID);
+            String locationId = FPLibrary.getInstance().getContext().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
 
             ContactModel baseContactModel = new ContactModel();
-            JSONObject form = baseContactModel.getFormAsJson(quickCheck.getFormName(), baseEntityId, locationId);
+            JSONObject form = baseContactModel.getFormAsJson(startVisit.getFormName(), baseEntityId, locationId);
 
             String processedForm = FPFormUtils.getFormJsonCore(partialContactRequest, form).toString();
 
             intent.putExtra(ConstantsUtils.JsonFormExtraUtils.JSON, processedForm);
-            intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, quickCheck);
+            intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, startVisit);
             intent.putExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID, partialContactRequest.getBaseEntityId());
             intent.putExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP, personObjectClient);
             intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, partialContactRequest.getType());
@@ -268,6 +274,70 @@ public class Utils extends org.smartregister.util.Utils {
             Timber.e(e, " --> proceedToContact");
             Utils.showToast(context,
                     "Error proceeding to contact for client " + personObjectClient.get(DBConstantsUtils.KeyUtils.FIRST_NAME));
+        }
+    }
+
+    public static void loadGlobalConfig(Context context, String baseEntityId) {
+        Set<String> defaultValueFields = new HashSet<>();
+        JSONObject mainJson;
+        try {
+            mainJson = FPJsonFormUtils.readJsonFromAsset(context.getApplicationContext(), "json.form/" + ConstantsUtils.JsonFormUtils.FP_START_VISIT);
+            if (mainJson.has(ConstantsUtils.DEFAULT_VALUES)) {
+                JSONArray defaultValuesArray = mainJson.getJSONArray(ConstantsUtils.DEFAULT_VALUES);
+                defaultValueFields.addAll(getListValues(defaultValuesArray));
+            }
+
+            Map<String, List<String>> formGlobalKeys = new HashMap<>();
+            Set<String> globalKeys = new HashSet<>();
+            loadContactGlobalsConfig(formGlobalKeys, globalKeys, context);
+
+            Map<String, String> formGlobalValues = new HashMap<>();
+            for (String item : defaultValueFields) {
+                if (globalKeys.contains(item)) {
+                    formGlobalValues.put(item, getMapValue(item, baseEntityId, 0));
+                }
+            }
+
+        } catch (Exception e) {
+            Timber.e(e, "Error reading json from asset file ");
+        }
+    }
+
+    public static String getMapValue(String key, String baseEntityId, int contactNo) {
+        PreviousContact request = new PreviousContact();
+        request.setBaseEntityId(baseEntityId);
+        request.setKey(key);
+        if (contactNo > 1) {
+            request.setContactNo(String.valueOf(contactNo - 1));
+        }
+
+        PreviousContact previousContact = FPLibrary.getInstance().getPreviousContactRepository().getPreviousContact(request);
+        return previousContact != null ? previousContact.getValue() : null;
+    }
+
+    public static void loadContactGlobalsConfig(Map<String, List<String>> formGlobalKeys, Set<String> globalKeys, Context context) throws IOException {
+        Iterable<Object> contactGlobals = readYaml(FilePathUtils.FileUtils.VISIT_GLOBALS, new Yaml(), context);
+
+        for (Object ruleObject : contactGlobals) {
+            Map<String, Object> map = ((Map<String, Object>) ruleObject);
+            formGlobalKeys.put(map.get(ConstantsUtils.FORM).toString(), (List<String>) map.get(JsonFormConstants.FIELDS));
+            globalKeys.addAll((List<String>) map.get(JsonFormConstants.FIELDS));
+        }
+    }
+
+    public static Iterable<Object> readYaml(String filename, Yaml yaml, Context context) throws IOException {
+        InputStreamReader inputStreamReader =
+                new InputStreamReader(context.getApplicationContext().getAssets().open((FilePathUtils.FolderUtils.CONFIG_FOLDER_PATH + filename)));
+        return yaml.loadAll(inputStreamReader);
+    }
+
+    public static List<String> getListValues(JSONArray jsonArray) {
+        if (jsonArray != null) {
+            return FPLibrary.getInstance().getGsonInstance()
+                    .fromJson(jsonArray.toString(), new TypeToken<List<String>>() {
+                    }.getType());
+        } else {
+            return new ArrayList<>();
         }
     }
 

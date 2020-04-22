@@ -1,8 +1,8 @@
 package org.smartregister.fp.features.visit.view;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -24,9 +24,17 @@ import org.smartregister.fp.common.domain.Contact;
 import org.smartregister.fp.common.helper.FPRulesEngineFactory;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.FPFormUtils;
+import org.smartregister.fp.common.util.FilePathUtils;
+import org.smartregister.view.activity.LoginActivity;
+import org.yaml.snakeyaml.Yaml;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import timber.log.Timber;
 
@@ -35,15 +43,31 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
     protected FPRulesEngineFactory rulesEngineFactory = null;
     private ProgressDialog progressDialog;
     private String formName;
-    private FPFormUtils ANCFormUtils = new FPFormUtils();
+    private FPFormUtils FPFormUtils = new FPFormUtils();
+    private Yaml yaml = new Yaml();
+
+    private Map<String, List<String>> formGlobalKeys = new HashMap<>();
+    private Map<String, String> formGlobalValues = new HashMap<>();
+    private Set<String> globalKeys = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //loadGlobals();
         if (getIntent() != null) {
             formName = getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME);
         }
         super.onCreate(savedInstanceState);
+
         ///new Handler().postDelayed(this::updateViewsProperties, 200);
+    }
+
+    private void loadGlobals() {
+        try {
+            loadContactGlobalsConfig();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void updateViewsProperties() {
@@ -104,6 +128,22 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
             return (Contact) form;
         }
         return null;
+    }
+
+    private void loadContactGlobalsConfig() throws IOException {
+        Iterable<Object> contactGlobals = readYaml(FilePathUtils.FileUtils.VISIT_GLOBALS);
+
+        for (Object ruleObject : contactGlobals) {
+            Map<String, Object> map = ((Map<String, Object>) ruleObject);
+            formGlobalKeys.put(map.get(ConstantsUtils.FORM).toString(), (List<String>) map.get(JsonFormConstants.FIELDS));
+            globalKeys.addAll((List<String>) map.get(JsonFormConstants.FIELDS));
+        }
+    }
+
+    public Iterable<Object> readYaml(String filename) throws IOException {
+        InputStreamReader inputStreamReader =
+                new InputStreamReader(this.getAssets().open((FilePathUtils.FolderUtils.CONFIG_FOLDER_PATH + filename)));
+        return yaml.loadAll(inputStreamReader);
     }
 
     @Override
@@ -200,7 +240,7 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
      * @author dubdabasoduba
      */
     public void proceedToMainContactPage() {
-        /*Intent intent = new Intent(this, MainContactActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
 
         int contactNo = getIntent().getIntExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, 0);
         String baseEntityId = getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID);
@@ -210,10 +250,10 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
         intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME));
         intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, contactNo);
         Contact contact = getContact();
-        contact.setJsonForm(ANCFormUtils.addFormDetails(currentJsonState()));
+        contact.setJsonForm(FPFormUtils.addFormDetails(currentJsonState()));
         contact.setContactNumber(contactNo);
-        ANCFormUtils.persistPartial(baseEntityId, getContact());
-        this.startActivity(intent);*/
+        FPFormUtils.persistPartial(baseEntityId, getContact());
+        this.startActivity(intent);
     }
 
     /**
@@ -224,4 +264,6 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
     public void finishInitialQuickCheck() {
         StartVisitJsonFormActivity.this.finish();
     }
+
+
 }

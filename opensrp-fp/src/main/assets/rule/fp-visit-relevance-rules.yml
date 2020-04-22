@@ -1,0 +1,7 @@
+---
+name: step2_issues_concerns_f
+description: This field will be shown if reason for visit contains issues and concerns
+priority: 1
+condition: "step1_reason_for_visit.contains('issues_concerns')"
+actions:
+  - "isRelevant = true"

@@ -183,7 +183,7 @@ public class StartVisitJsonWizardFormFragment extends JsonWizardFormFragment {
         try {
             if (savePartial) {
                 if (getActivity() != null) {
-                    //((ContactJsonFormActivity) getActivity()).proceedToMainContactPage();
+                    ((StartVisitJsonFormActivity) getActivity()).proceedToMainContactPage();
                 }
             } else {
                 super.save();
