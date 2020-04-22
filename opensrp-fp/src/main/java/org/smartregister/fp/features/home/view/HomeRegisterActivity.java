@@ -319,7 +319,7 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel).toUpperCase(),
                 (dialog, which) -> dialog.dismiss());
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.record_birth).toUpperCase(),
-                (dialog, which) -> FPJsonFormUtils.launchANCCloseForm(HomeRegisterActivity.this));
+                (dialog, which) -> FPJsonFormUtils.launchFPCloseForm(HomeRegisterActivity.this));
         return alertDialog;
     }
 

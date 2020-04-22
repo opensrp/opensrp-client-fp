@@ -536,7 +536,7 @@ public class FPJsonFormUtilsTest {
         Mockito.when(allSharedPreferences.fetchDefaultTeam(providerId)).thenReturn("bukesa");
         Mockito.when(allSharedPreferences.fetchDefaultTeamId(providerId)).thenReturn("39305854-5db8-4538-a367-8d4b7118f9af");
 
-        Triple<Boolean, Event, Event> eventEventTriple = FPJsonFormUtils.saveRemovedFromANCRegister(allSharedPreferences, closeAnc, providerId);
+        Triple<Boolean, Event, Event> eventEventTriple = FPJsonFormUtils.saveRemovedFromFPRegister(allSharedPreferences, closeAnc, providerId);
         Assert.assertNotNull(eventEventTriple);
         Assert.assertFalse(eventEventTriple.getLeft());
         Assert.assertNotNull(eventEventTriple.getMiddle());

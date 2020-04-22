@@ -541,7 +541,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         return form;
     }
 
-    public static Triple<Boolean, Event, Event> saveRemovedFromANCRegister(AllSharedPreferences allSharedPreferences, String jsonString, String providerId) {
+    public static Triple<Boolean, Event, Event> saveRemovedFromFPRegister(AllSharedPreferences allSharedPreferences, String jsonString, String providerId) {
         try {
             boolean isDeath = false;
             Triple<Boolean, JSONObject, JSONArray> registrationFormParams = validateParameters(jsonString);
@@ -561,7 +561,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
             try {
                 encounterLocation = metadata.getString(ConstantsUtils.JsonFormKeyUtils.ENCOUNTER_LOCATION);
             } catch (JSONException e) {
-                Timber.e(e, "JsonFormUtils --> saveRemovedFromANCRegister --> getEncounterLocation");
+                Timber.e(e, "JsonFormUtils --> saveRemovedFromFPRegister --> getEncounterLocation");
             }
 
             Date encounterDate = new Date();
@@ -579,7 +579,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
                 String value = FPJsonFormUtils.getString(jsonObject, FPJsonFormUtils.VALUE);
                 if (StringUtils.isNotBlank(value)) {
                     FPJsonFormUtils.addObservation(event, jsonObject);
-                    if (jsonObject.get(FPJsonFormUtils.KEY).equals(ConstantsUtils.JsonFormKeyUtils.ANC_CLOSE_REASON)) {
+                    if (jsonObject.get(FPJsonFormUtils.KEY).equals(ConstantsUtils.JsonFormKeyUtils.FP_CLOSE_REASON)) {
                         isDeath = "Woman Died".equalsIgnoreCase(value);
                     }
                 }
@@ -622,12 +622,12 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
             return Triple.of(isDeath, event, updateChildDetailsEvent);
         } catch (Exception e) {
-            Timber.e(e, "JsonFormUtils --> saveRemovedFromANCRegister");
+            Timber.e(e, "JsonFormUtils --> saveRemovedFromFPRegister");
         }
         return null;
     }
 
-    public static void launchANCCloseForm(Activity activity) {
+    public static void launchFPCloseForm(Activity activity) {
         try {
             Intent intent = new Intent(activity, JsonWizardFormActivity.class);
             intent.putExtra("form", getFormMetadata(activity));
@@ -639,7 +639,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
                 activity.startActivityForResult(intent, FPJsonFormUtils.REQUEST_CODE_GET_JSON);
             }
         } catch (Exception e) {
-            Timber.e(e, "JsonFormUtils --> launchANCCloseForm");
+            Timber.e(e, "JsonFormUtils --> launchFPCloseForm");
         }
     }
 

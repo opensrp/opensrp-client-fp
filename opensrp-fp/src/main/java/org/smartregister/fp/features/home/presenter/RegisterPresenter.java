@@ -140,7 +140,7 @@ public class RegisterPresenter implements RegisterContract.Presenter, RegisterCo
             getView().showProgressDialog(jsonString.contains(ConstantsUtils.EventTypeUtils.CLOSE) ? R.string.removing_dialog_title :
                     R.string.saving_dialog_title);
 
-            interactor.removeWomanFromANCRegister(jsonString, allSharedPreferences.fetchRegisteredANM());
+            interactor.removeClientFromFPRegister(jsonString, allSharedPreferences.fetchRegisteredANM());
         } catch (Exception e) {
             Timber.e(e, " --> closeAncRecord");
 

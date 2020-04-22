@@ -218,7 +218,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
             continueToContact();
         }
         else if (itemId == R.id.menu_btn_close_fp_record) {
-            FPJsonFormUtils.launchANCCloseForm(ProfileActivity.this);
+            FPJsonFormUtils.launchFPCloseForm(ProfileActivity.this);
         }
         /*if (itemId == android.R.id.home) {
 
@@ -236,7 +236,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         return super.onOptionsItemSelected(item);
     }
 
-    private void attachAlertDialog(String contactButtonText) {
+    /*private void attachAlertDialog(String contactButtonText) {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
@@ -256,7 +256,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
                         continueToContact();
                         break;
                     case CLOSE_FP_RECORD:
-                        FPJsonFormUtils.launchANCCloseForm(ProfileActivity.this);
+                        FPJsonFormUtils.launchFPCloseForm(ProfileActivity.this);
                         break;
                     default:
                         if (textClicked.startsWith(ConstantsUtils.CONTINUE)) {
@@ -269,7 +269,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
             dialog.dismiss();
         });
         builderSingle.show();
-    }
+    }*/
 
     private void continueToContact() {
         if (!buttonAlertStatus.equals(ConstantsUtils.AlertStatusUtils.TODAY)) {
