@@ -35,7 +35,7 @@
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
         android:textSize="17sp"
-        android:text="14 Apr 2018"
+        android:text="@string/default_contact_date"
         android:textAppearance="?android:textAppearanceSmall"
         android:textColor="@color/black_text_color"
         app:layout_constraintHorizontal_weight="1"

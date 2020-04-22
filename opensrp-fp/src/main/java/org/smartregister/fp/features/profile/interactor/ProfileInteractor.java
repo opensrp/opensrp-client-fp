@@ -31,8 +31,4 @@ public class ProfileInteractor implements ProfileContract.Interactor {
         return FPLibrary.getInstance().getContactTasksRepository().getTasksCount(baseEntityId);
     }
 
-
-    public ProfileContract.View getProfileView() {
-        return mProfilePresenter.getProfileView();
-    }
 }

@@ -29,7 +29,7 @@ import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.FilePathUtils;
 import org.smartregister.fp.common.util.Utils;
-import org.smartregister.fp.features.profile.contract.PreviousContactsDetails;
+import org.smartregister.fp.features.profile.contract.PreviousContactsDetailsContract;
 import org.smartregister.fp.features.profile.presenter.PreviousContactDetailsPresenter;
 
 import java.io.IOException;
@@ -43,9 +43,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class PreviousContactsDetailsActivity extends AppCompatActivity implements PreviousContactsDetails.View {
+public class PreviousContactsDetailsActivity extends AppCompatActivity implements PreviousContactsDetailsContract.View {
     private static final String TAG = PreviousContactsDetailsActivity.class.getCanonicalName();
-    protected PreviousContactsDetails.Presenter mProfilePresenter;
+    protected PreviousContactsDetailsContract.Presenter mProfilePresenter;
     protected ActionBar actionBar;
     private RecyclerView contactSchedule;
     private TextView deliveryDate;

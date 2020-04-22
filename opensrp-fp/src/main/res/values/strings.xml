@@ -23,9 +23,14 @@
     <string name="last_synced">Sync Last: %1$s, %2$s</string>
     <string name="start_visit">START VISIT</string>
     <string name="start_visit_menu">Start visit</string>
-    <string name="close_fp_record_menu">Close FP Record</string>
-
-
+    <string name="close_fp_record_menu">Close FP record</string>
+    <string name="group_header">Group Header</string>
+    <string name="sub_group_header">Sub Group Header</string>
+    <string name="default_contact_date">14 Apr 2018</string>
+    <string name="ga">GA</string>
+    <string name="date">DATE</string>
+    <string name="value">VALUE</string>
+    <string name="default_profile_name">Charity Otala</string>
     <string name="unauthorized">Please check the credentials</string>
     <string name="unauthorized_group">Your user group is not allowed to access this device</string>
     <string name="unknown_response">login failed. Try later</string>

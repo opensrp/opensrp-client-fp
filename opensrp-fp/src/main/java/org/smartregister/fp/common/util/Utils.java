@@ -1,6 +1,7 @@
 package org.smartregister.fp.common.util;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.vijay.jsonwizard.constants.JsonFormConstants;
+import com.vijay.jsonwizard.domain.ExpansionPanelValuesModel;
 import com.vijay.jsonwizard.rules.RuleConstant;
 
 import net.sqlcipher.database.SQLiteDatabase;
@@ -44,7 +46,6 @@ import org.smartregister.fp.common.domain.ButtonAlertStatus;
 import org.smartregister.fp.common.domain.Contact;
 import org.smartregister.fp.common.event.BaseEvent;
 import org.smartregister.fp.common.library.FPLibrary;
-import org.smartregister.fp.common.model.ContactModel;
 import org.smartregister.fp.common.model.PartialContact;
 import org.smartregister.fp.common.model.Task;
 import org.smartregister.fp.common.rule.AlertRule;
@@ -224,8 +225,7 @@ public class Utils extends org.smartregister.util.Utils {
             String locationId = FPLibrary.getInstance().getContext().allSharedPreferences()
                     .getPreference(AllConstants.CURRENT_LOCATION_ID);
 
-            ContactModel baseContactModel = new ContactModel();
-            JSONObject form = baseContactModel.getFormAsJson(quickCheck.getFormName(), baseEntityId, locationId);
+            JSONObject form = FPJsonFormUtils.getFormAsJson(quickCheck.getFormName(), baseEntityId, locationId);
 
             String processedForm = FPFormUtils.getFormJsonCore(partialContactRequest, form).toString();
 
@@ -712,5 +712,157 @@ public class Utils extends org.smartregister.util.Utils {
      */
     public ContactTasksRepository getContactTasksRepositoryHelper() {
         return FPLibrary.getInstance().getContactTasksRepository();
+    }
+
+    /**
+     * Displays the extra info on the expansion panel widget.
+     *
+     * @param view {@link View}
+     */
+    public static void infoAlertDialog(View view) {
+        Context context = ((Context) view.getTag(R.id.accordion_context));
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(context, R.style.AppThemeAlertDialog);
+        builderSingle.setTitle((String) view.getTag(R.id.accordion_info_title));
+        builderSingle.setMessage((String) view.getTag(R.id.accordion_info_text));
+        builderSingle.setIcon(com.vijay.jsonwizard.R.drawable.dialog_info_filled);
+        builderSingle.setNegativeButton(context.getResources().getString(R.string.ok),
+                (dialog, which) -> dialog.dismiss());
+
+        builderSingle.show();
+    }
+
+    /**
+     * Creates the new updated tasks with the the new values
+     *
+     * @param taskValue {@link JSONObject}
+     * @param task      {@link Task}
+     * @return task {@link Task}
+     */
+    public static Task createTask(JSONObject taskValue, Task task) {
+        Task newTask = new Task();
+        newTask.setId(task.getId());
+        newTask.setBaseEntityId(task.getBaseEntityId());
+        newTask.setKey(task.getKey());
+        newTask.setValue(String.valueOf(taskValue));
+        newTask.setUpdated(true);
+        newTask.setComplete(FPJsonFormUtils.checkIfTaskIsComplete(taskValue));
+        newTask.setCreatedAt(Calendar.getInstance().getTimeInMillis());
+        return newTask;
+    }
+
+    /**
+     * Removes the task values & sets it to empty.
+     *
+     * @param taskValue {@link JSONObject}
+     * @return task {@link JSONObject}
+     */
+    public static JSONObject removeTestResults(JSONObject taskValue) {
+        JSONObject task = new JSONObject();
+        if (taskValue != null && taskValue.has(JsonFormConstants.VALUE)) {
+            taskValue.remove(JsonFormConstants.VALUE);
+            task = taskValue;
+        }
+        return task;
+    }
+
+    /**
+     * Returns the expansion panel values which were selected from the forms.
+     *
+     * @param taskValue {@link JSONObject}
+     * @param taskKey   {@link String}
+     * @return values {@link JSONArray}
+     */
+    public static JSONArray getExpansionPanelValues(JSONObject taskValue, String taskKey) {
+        JSONArray values = new JSONArray();
+        if (taskValue != null && StringUtils.isNotBlank(taskKey)) {
+            JSONArray taskValueArray = new JSONArray();
+            taskValueArray.put(taskValue);
+            values = new FPFormUtils().loadExpansionPanelValues(taskValueArray, taskKey);
+        }
+
+        return values;
+    }
+
+
+
+    /**
+     * Returns a map of the expansion panel values
+     *
+     * @param secondaryValues {@link JSONArray}
+     * @return expansionPanelValuesMap = {@link Map}
+     */
+    public static Map<String, ExpansionPanelValuesModel> getSecondaryValues(JSONArray secondaryValues) {
+        Map<String, ExpansionPanelValuesModel> stringExpansionPanelValuesModelMap = new HashMap<>();
+        if (secondaryValues != null && secondaryValues.length() > 0) {
+            stringExpansionPanelValuesModelMap = new FPFormUtils().createSecondaryValuesMap(secondaryValues);
+        }
+        return stringExpansionPanelValuesModelMap;
+    }
+
+    /**
+     * Loads the sub forms using the name on the accordion.  It returns the sub form fields
+     *
+     * @param taskValue {@link JSONObject}
+     * @param context   {@link Context}
+     * @return fields  {@link JSONArray}
+     */
+    public static JSONArray loadSubFormFields(JSONObject taskValue, Context context) {
+        JSONArray fields = new JSONArray();
+        try {
+            if (taskValue != null && taskValue.has(JsonFormConstants.CONTENT_FORM)) {
+                String subFormName = taskValue.getString(JsonFormConstants.CONTENT_FORM);
+                JSONObject subForm = FPFormUtils.getSubFormJson(subFormName, "", context);
+                if (subForm.has(JsonFormConstants.CONTENT_FORM)) {
+                    fields = subForm.getJSONArray(JsonFormConstants.CONTENT_FORM);
+                }
+            }
+        } catch (JSONException e) {
+            Timber.e(e, " --> loadSubFormFields");
+        } catch (Exception e) {
+            Timber.e(e, " --> loadSubFormFields");
+        }
+        return fields;
+    }
+
+
+
+    /**
+     * Get the form title for the accordion text
+     *
+     * @param taskValue {@link JSONObject}
+     * @return title {@link String}
+     */
+    public static String getFormTitle(JSONObject taskValue) {
+        String title = "";
+        if (taskValue != null && taskValue.has(JsonFormConstants.TEXT)) {
+            title = taskValue.optString(JsonFormConstants.TEXT);
+        }
+        return title;
+    }
+
+    /**
+     * Updates the form step1 title to match the test header
+     *
+     * @param form  {@link JSONObject}
+     * @param title {@link String}
+     */
+    public static void updateFormTitle(JSONObject form, String title) {
+        try {
+            if (form != null && StringUtils.isNotBlank(title) && form.has(JsonFormConstants.STEP1)) {
+                JSONObject stepOne = form.getJSONObject(JsonFormConstants.STEP1);
+                stepOne.put(JsonFormConstants.STEP_TITLE, title);
+            }
+        } catch (JSONException e) {
+            Timber.e(e, " --> updateFormTitle");
+        }
+    }
+
+    public static boolean isCheckboxValueEmpty(JSONObject fieldObject) throws JSONException {
+        if (!fieldObject.has(JsonFormConstants.VALUE)) {
+            return true;
+        }
+        String currentValue = fieldObject.getString(JsonFormConstants.VALUE);
+        return TextUtils.equals(currentValue, "[]") || (currentValue.length() == 2
+                && currentValue.startsWith("[") && currentValue.endsWith("]"));
     }
 }

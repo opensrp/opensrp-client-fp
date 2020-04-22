@@ -41,7 +41,6 @@ public class DBConstantsUtils {
         public static final String REMINDER_MESSAGE = "reminder_message";
         public static final String LAST_INTERACTED_WITH = "last_interacted_with";
         public static final String DATE_REMOVED = "date_removed";
-
         public static final String ID = "_ID";
         public static final String ID_LOWER_CASE = "_id";
         public static final String STEPNAME = "stepName";

@@ -1,7 +1,5 @@
 package org.smartregister.fp.common.model;
 
-import org.json.JSONObject;
-
 import java.util.Date;
 import java.util.Map;
 
@@ -46,11 +44,6 @@ public class ContactSummaryModel extends BaseContactModel {
     @Override
     public String extractPatientName(Map<String, String> womanDetails) {
         return super.extractPatientName(womanDetails);
-    }
-
-    @Override
-    public JSONObject getFormAsJson(String formName, String entityId, String currentLocationId) throws Exception {
-        return super.getFormAsJson(formName, entityId, currentLocationId);
     }
 
     public String getContactWeeks() {
