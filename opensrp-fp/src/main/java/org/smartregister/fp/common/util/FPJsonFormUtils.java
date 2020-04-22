@@ -629,7 +629,8 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
     public static void launchANCCloseForm(Activity activity) {
         try {
-            Intent intent = new Intent(activity, JsonFormActivity.class);
+            Intent intent = new Intent(activity, JsonWizardFormActivity.class);
+            intent.putExtra("form", getFormMetadata(activity));
             JSONObject form = FormUtils.getInstance(activity).getFormJson(ConstantsUtils.JsonFormUtils.FP_CLOSE);
             if (form != null) {
                 form.put(ConstantsUtils.JsonFormKeyUtils.ENTITY_ID,

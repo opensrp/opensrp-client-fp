@@ -139,7 +139,9 @@ public class ProfilePresenter implements ProfileContract.Presenter, RegisterCont
         if (client != null) {
             getProfileView()
                     .setProfileName(client.get(DBConstantsUtils.KeyUtils.FIRST_NAME) + " " + client.get(DBConstantsUtils.KeyUtils.LAST_NAME));
-            getProfileView().setProfileAge(String.valueOf(Utils.getAgeFromDate(client.get(DBConstantsUtils.KeyUtils.DOB))));
+            if (client.get(DBConstantsUtils.KeyUtils.DOB) != null && !client.get(DBConstantsUtils.KeyUtils.DOB).isEmpty())
+                getProfileView().setProfileAge(String.valueOf(Utils.getAgeFromDate(client.get(DBConstantsUtils.KeyUtils.DOB))));
+            else getProfileView().setProfileAge(client.get(DBConstantsUtils.KeyUtils.AGE_ENTERED));
             try {
                 getProfileView().setProfileGestationAge(
                         client.containsKey(DBConstantsUtils.KeyUtils.EDD) && client.get(DBConstantsUtils.KeyUtils.EDD) != null ?
@@ -149,7 +151,8 @@ public class ProfilePresenter implements ProfileContract.Presenter, RegisterCont
             }
             getProfileView().setProfileID(client.get(DBConstantsUtils.KeyUtils.FP_ID));
             getProfileView().setProfileImage(client.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID));
-            getProfileView().setPhoneNumber(client.get(DBConstantsUtils.KeyUtils.PHONE_NUMBER));
+            if (client.get(DBConstantsUtils.KeyUtils.TEL_NUMBER) != null && !client.get(DBConstantsUtils.KeyUtils.TEL_NUMBER).isEmpty())
+                getProfileView().setPhoneNumber(client.get(DBConstantsUtils.KeyUtils.TEL_NUMBER));
         }
     }
 
