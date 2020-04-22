@@ -474,7 +474,6 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
             if (StringUtils.isNotBlank(client.get(DBConstantsUtils.KeyUtils.DOB))) {
                 jsonObject.put(FPJsonFormUtils.VALUE, Utils.getAgeFromDate(client.get(DBConstantsUtils.KeyUtils.DOB)));
             }
-
         } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.EDD)) {
             formatEdd(client, jsonObject, DBConstantsUtils.KeyUtils.EDD);
 
