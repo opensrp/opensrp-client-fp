@@ -9,34 +9,34 @@
       "openmrs_entity": "concept",
       "openmrs_data_type": "start",
       "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-      "value": "2020-04-16 18:19:46"
+      "value": ""
     },
     "end": {
       "openmrs_entity_parent": "",
       "openmrs_entity": "concept",
       "openmrs_data_type": "end",
       "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-      "value": "2020-04-16 18:20:12"
+      "value": ""
     },
     "today": {
       "openmrs_entity_parent": "",
       "openmrs_entity": "encounter",
       "openmrs_entity_id": "encounter_date",
-      "value": "16-04-2020"
+      "value": ""
     },
     "deviceid": {
       "openmrs_entity_parent": "",
       "openmrs_entity": "concept",
       "openmrs_data_type": "deviceid",
       "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-      "value": "861266048427970"
+      "value": ""
     },
     "subscriberid": {
       "openmrs_entity_parent": "",
       "openmrs_entity": "concept",
       "openmrs_data_type": "subscriberid",
       "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-      "value": "410010051366588"
+      "value": ""
     },
     "simserial": {
       "openmrs_entity_parent": "",
@@ -50,7 +50,7 @@
       "openmrs_entity": "concept",
       "openmrs_data_type": "phonenumber",
       "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-      "value": "03334004065"
+      "value": ""
     },
     "encounter_location": "",
     "look_up": {
@@ -167,7 +167,14 @@
         "v_required": {
           "value": "false",
           "err": null
-        }
+        },
+        "relevance": {
+          "step1:referral": {
+            "type": "string",
+            "ex": "equalTo(.,\"yes\")"
+          }
+        },
+        "is_visible": false
       },
       {
         "key": "client_id",
@@ -397,7 +404,7 @@
           "err": "Please select gender"
         },
         "is-rule-check": false,
-        "value": "Male"
+        "value": ""
       },
       {
         "key": "biological_sex",
@@ -608,7 +615,14 @@
         "v_required": {
           "value": "false",
           "err": null
-        }
+        },
+        "relevance": {
+          "step1:comm_consent": {
+            "type": "string",
+            "ex": "equalTo(.,\"yes\")"
+          }
+        },
+        "is_visible": false
       }
     ]
   },
