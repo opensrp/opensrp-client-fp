@@ -579,8 +579,8 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
                 String value = FPJsonFormUtils.getString(jsonObject, FPJsonFormUtils.VALUE);
                 if (StringUtils.isNotBlank(value)) {
                     FPJsonFormUtils.addObservation(event, jsonObject);
-                    if (jsonObject.get(FPJsonFormUtils.KEY).equals(ConstantsUtils.JsonFormKeyUtils.FP_CLOSE_REASON)) {
-                        isDeath = "Woman Died".equalsIgnoreCase(value);
+                    if (jsonObject.get(FPJsonFormUtils.KEY).equals(ConstantsUtils.JsonFormKeyUtils.RECORD_CLOSE_REASON)) {
+                        isDeath = "Client Died".equalsIgnoreCase(value);
                     }
                 }
             }

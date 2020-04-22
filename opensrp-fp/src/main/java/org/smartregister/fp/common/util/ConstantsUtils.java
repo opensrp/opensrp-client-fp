@@ -131,10 +131,9 @@ public abstract class ConstantsUtils {
         public static final String ATTRIBUTES = "attributes";
         public static final String DEATH_DATE = "deathdate";
         public static final String DEATH_DATE_APPROX = "deathdateApprox";
-        public static final String FP_CLOSE_REASON = "fp_close_reason";
+        public static final String RECORD_CLOSE_REASON = "record_close_reason";
         public static final String DOB_ENTERED = "dob_entered";
         public static final String AGE_ENTERED = "age_entered";
-
         //
         public static final String CLIENT_ID = "client_id";
         public static final String STEP1 = "step1";

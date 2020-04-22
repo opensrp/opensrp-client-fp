@@ -23,7 +23,7 @@
     <string name="last_synced">Sync Last: %1$s, %2$s</string>
     <string name="start_visit">START VISIT</string>
     <string name="start_visit_menu">Start visit</string>
-    <string name="close_fp_record_menu">Close FP record</string>
+    <string name="close_fp_record_menu">Close FP Record</string>
 
 
     <string name="unauthorized">Please check the credentials</string>

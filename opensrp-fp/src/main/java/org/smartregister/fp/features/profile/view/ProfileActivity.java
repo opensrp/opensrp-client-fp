@@ -50,7 +50,6 @@ import timber.log.Timber;
  * Created by ndegwamartin on 10/07/2018.
  */
 public class ProfileActivity extends BaseProfileActivity implements ProfileContract.View {
-    public static final String CLOSE_FP_RECORD = "Close FP Record";
     private TextView nameView;
     private TextView ageView;
     private TextView gestationAgeView;
@@ -74,7 +73,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         String baseEntityId = getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID);
         ((ProfilePresenter) presenter).refreshProfileView(baseEntityId);
         registerEventBus();
-        getTasksCount(baseEntityId);
+//        getTasksCount(baseEntityId);
     }
 
     protected void registerEventBus() {
@@ -95,7 +94,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     @Override
     protected void setupViews() {
         super.setupViews();
-        getButtonAlertStatus();
+//        getButtonAlertStatus();
         ageView = findViewById(R.id.textview_detail_two);
         gestationAgeView = findViewById(R.id.textview_detail_three);
         ancIdView = findViewById(R.id.textview_detail_one);
