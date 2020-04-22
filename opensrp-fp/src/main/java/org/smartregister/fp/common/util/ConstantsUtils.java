@@ -102,7 +102,7 @@ public abstract class ConstantsUtils {
         public static final String REGISTRATION = "Client Registration";
         public static final String UPDATE_REGISTRATION = "Edit Client Registration";
         public static final String QUICK_CHECK = "Quick Check";
-        public static final String CLOSE = "ANC Close";
+        public static final String CLOSE = "Close FP Record";
         public static final String SITE_CHARACTERISTICS = "Site Characteristics";
         public static final String CONTACT_VISIT = "Contact Visit";
     }

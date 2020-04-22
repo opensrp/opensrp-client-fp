@@ -50,7 +50,7 @@ import timber.log.Timber;
  * Created by ndegwamartin on 10/07/2018.
  */
 public class ProfileActivity extends BaseProfileActivity implements ProfileContract.View {
-    public static final String CLOSE_ANC_RECORD = "Close ANC Record";
+    public static final String CLOSE_FP_RECORD = "Close FP Record";
     private TextView nameView;
     private TextView ageView;
     private TextView gestationAgeView;
@@ -242,7 +242,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         arrayAdapter.add(getString(R.string.call));
         arrayAdapter.add(contactButtonText);
-        arrayAdapter.add(getString(R.string.close_anc_record));
+        arrayAdapter.add(getString(R.string.close_fp_record));
 
         builderSingle.setAdapter(arrayAdapter, (dialog, which) -> {
             String textClicked = arrayAdapter.getItem(which);
@@ -255,7 +255,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
                     case ConstantsUtils.CONTINUE_CONTACT:
                         continueToContact();
                         break;
-                    case CLOSE_ANC_RECORD:
+                    case CLOSE_FP_RECORD:
                         FPJsonFormUtils.launchANCCloseForm(ProfileActivity.this);
                         break;
                     default:
