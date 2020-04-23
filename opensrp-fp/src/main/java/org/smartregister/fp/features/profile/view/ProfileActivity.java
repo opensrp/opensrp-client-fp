@@ -2,7 +2,6 @@ package org.smartregister.fp.features.profile.view;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -12,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,7 +48,6 @@ import timber.log.Timber;
  * Created by ndegwamartin on 10/07/2018.
  */
 public class ProfileActivity extends BaseProfileActivity implements ProfileContract.View {
-    public static final String CLOSE_ANC_RECORD = "Close ANC Record";
     private TextView nameView;
     private TextView ageView;
     private TextView gestationAgeView;
@@ -95,7 +92,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     @Override
     protected void setupViews() {
         super.setupViews();
-        getButtonAlertStatus();
+//        getButtonAlertStatus();
         ageView = findViewById(R.id.textview_detail_two);
         gestationAgeView = findViewById(R.id.textview_detail_three);
         ancIdView = findViewById(R.id.textview_detail_one);
@@ -218,44 +215,9 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
             continueToContact();
         }
         else if (itemId == R.id.menu_btn_close_fp_record) {
-            FPJsonFormUtils.launchANCCloseForm(ProfileActivity.this);
+            FPJsonFormUtils.launchFPCloseForm(ProfileActivity.this);
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void attachAlertDialog(String contactButtonText) {
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        arrayAdapter.add(getString(R.string.call));
-        arrayAdapter.add(contactButtonText);
-        arrayAdapter.add(getString(R.string.close_anc_record));
-
-        builderSingle.setAdapter(arrayAdapter, (dialog, which) -> {
-            String textClicked = arrayAdapter.getItem(which);
-            if (textClicked != null) {
-                switch (textClicked) {
-                    case ConstantsUtils.CALL:
-                        launchPhoneDialer(phoneNumber);
-                        break;
-                    case ConstantsUtils.START_CONTACT:
-                    case ConstantsUtils.CONTINUE_CONTACT:
-                        continueToContact();
-                        break;
-                    case CLOSE_ANC_RECORD:
-                        FPJsonFormUtils.launchANCCloseForm(ProfileActivity.this);
-                        break;
-                    default:
-                        if (textClicked.startsWith(ConstantsUtils.CONTINUE)) {
-                            continueToContact();
-                        }
-                        break;
-                }
-            }
-
-            dialog.dismiss();
-        });
-        builderSingle.show();
     }
 
     private void continueToContact() {
@@ -304,7 +266,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void startFormForEdit(ClientDetailsFetchedEvent event) {
         if (event != null && event.isEditMode()) {
-            String formMetadata = FPJsonFormUtils.getAutoPopulatedJsonEditRegisterFormString(this, event.getClient());
+            String formMetadata = FPJsonFormUtils.getAutoPopulatedJsonEditRegisterFormString(this, event.getRegisteredClient());
             try {
                 FPJsonFormUtils.startFormForEdit(this, FPJsonFormUtils.REQUEST_CODE_GET_JSON, formMetadata);
             } catch (Exception e) {
@@ -318,7 +280,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     public void refreshProfileTopSection(ClientDetailsFetchedEvent event) {
         if (event != null && !event.isEditMode()) {
             Utils.removeStickyEvent(event);
-            ((ProfilePresenter) presenter).refreshProfileTopSection(event.getClient());
+            ((ProfilePresenter) presenter).refreshProfileTopSection(event.getRegisteredClient());
         }
     }
 

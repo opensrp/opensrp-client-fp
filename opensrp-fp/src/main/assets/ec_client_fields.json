@@ -95,13 +95,6 @@
           }
         },
         {
-          "column_name": "dob_entered",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.dob_entered"
-          }
-        },
-        {
           "column_name": "dob_from_age",
           "type": "Client",
           "json_mapping": {

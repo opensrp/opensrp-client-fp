@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -136,7 +137,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         return form;
     }
 
-    public static JSONObject getFormAsJson(String formName, String entityId, String currentLocationId) throws Exception{
+    public static JSONObject getFormAsJson(String formName, String entityId, String currentLocationId) throws Exception {
         JSONObject form = getFormUtils().getFormJson(formName);
         if (form == null) {
             return null;
@@ -382,7 +383,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
     }
 
-    public static String getAutoPopulatedJsonEditRegisterFormString(Context context, Map<String, String> womanClient) {
+    public static String getAutoPopulatedJsonEditRegisterFormString(Context context, Map<String, String> registeredClient) {
         try {
             JSONObject form = FormUtils.getInstance(context).getFormJson(ConstantsUtils.JsonFormUtils.FP_REGISTER);
             LocationPickerView lpv = createLocationPickerView(context);
@@ -392,7 +393,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
             FPJsonFormUtils.addWomanRegisterHierarchyQuestions(form);
             Timber.d("Form is %s", form.toString());
             if (form != null) {
-                form.put(FPJsonFormUtils.ENTITY_ID, womanClient.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID));
+                form.put(FPJsonFormUtils.ENTITY_ID, registeredClient.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID));
                 form.put(FPJsonFormUtils.ENCOUNTER_TYPE, ConstantsUtils.EventTypeUtils.UPDATE_REGISTRATION);
 
                 JSONObject metadata = form.getJSONObject(FPJsonFormUtils.METADATA);
@@ -401,15 +402,25 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
                 metadata.put(FPJsonFormUtils.ENCOUNTER_LOCATION, lastLocationId);
 
-                form.put(ConstantsUtils.CURRENT_OPENSRP_ID, womanClient.get(DBConstantsUtils.KeyUtils.FP_ID).replace("-", ""));
+                form.put(ConstantsUtils.CURRENT_OPENSRP_ID, registeredClient.get(DBConstantsUtils.KeyUtils.FP_ID).replace("-", ""));
 
                 //inject opensrp id into the form
                 JSONObject stepOne = form.getJSONObject(FPJsonFormUtils.STEP1);
                 JSONArray jsonArray = stepOne.getJSONArray(FPJsonFormUtils.FIELDS);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    processPopulatableFields(registeredClient, jsonObject);
 
-                    processPopulatableFields(womanClient, jsonObject);
+                }
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.REFERRED_BY)) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            jsonArray.remove(i);
+                        }
+                        break;
+                    }
 
                 }
 
@@ -473,38 +484,41 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         }
     }
 
-    protected static void processPopulatableFields(Map<String, String> womanClient, JSONObject jsonObject)
+    protected static void processPopulatableFields(Map<String, String> client, JSONObject jsonObject)
             throws JSONException {
 
         if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(ConstantsUtils.JsonFormKeyUtils.DOB_ENTERED)) {
-            getDobUsingEdd(womanClient, jsonObject, DBConstantsUtils.KeyUtils.DOB);
+            getDobUsingEdd(client, jsonObject, DBConstantsUtils.KeyUtils.DOB);
 
         } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.HOME_ADDRESS)) {
-            String homeAddress = womanClient.get(DBConstantsUtils.KeyUtils.HOME_ADDRESS);
+            String homeAddress = client.get(DBConstantsUtils.KeyUtils.HOME_ADDRESS);
             jsonObject.put(FPJsonFormUtils.VALUE, homeAddress);
 
-        } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(ConstantsUtils.WOM_IMAGE)) {
-            getPhotoFieldValue(womanClient, jsonObject);
         } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.DOB_UNKNOWN)) {
             jsonObject.put(FPJsonFormUtils.READ_ONLY, false);
             JSONObject optionsObject = jsonObject.getJSONArray(ConstantsUtils.JsonFormKeyUtils.OPTIONS).getJSONObject(0);
-            optionsObject.put(FPJsonFormUtils.VALUE, womanClient.get(DBConstantsUtils.KeyUtils.DOB_UNKNOWN));
+            optionsObject.put(FPJsonFormUtils.VALUE, client.get(DBConstantsUtils.KeyUtils.DOB_UNKNOWN));
 
         } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(ConstantsUtils.KeyUtils.AGE_ENTERED)) {
             jsonObject.put(FPJsonFormUtils.READ_ONLY, false);
-            if (StringUtils.isNotBlank(womanClient.get(DBConstantsUtils.KeyUtils.DOB))) {
-                jsonObject.put(FPJsonFormUtils.VALUE, Utils.getAgeFromDate(womanClient.get(DBConstantsUtils.KeyUtils.DOB)));
+            if (StringUtils.isNotBlank(client.get(DBConstantsUtils.KeyUtils.DOB))) {
+                jsonObject.put(FPJsonFormUtils.VALUE, Utils.getAgeFromDate(client.get(DBConstantsUtils.KeyUtils.DOB)));
             }
-
         } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.EDD)) {
-            formatEdd(womanClient, jsonObject, DBConstantsUtils.KeyUtils.EDD);
+            formatEdd(client, jsonObject, DBConstantsUtils.KeyUtils.EDD);
 
         } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(ConstantsUtils.JsonFormKeyUtils.CLIENT_ID)) {
-            jsonObject.put(FPJsonFormUtils.VALUE, womanClient.get(DBConstantsUtils.KeyUtils.FP_ID).replace("-", ""));
+            jsonObject.put(FPJsonFormUtils.READ_ONLY, true);
+            jsonObject.put(FPJsonFormUtils.VALUE, client.get(DBConstantsUtils.KeyUtils.FP_ID).replace("-", ""));
 
-        } else if (womanClient.containsKey(jsonObject.getString(FPJsonFormUtils.KEY))) {
+        } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.UNIVERSAL_ID)
+                || jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.REFERRAL)
+                || jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.REFERRED_BY)) {
+            jsonObject.put(FPJsonFormUtils.READ_ONLY, true);
+            jsonObject.put(FPJsonFormUtils.VALUE, client.get(jsonObject.getString(FPJsonFormUtils.KEY)));
+        } else if (client.containsKey(jsonObject.getString(FPJsonFormUtils.KEY))) {
             jsonObject.put(FPJsonFormUtils.READ_ONLY, false);
-            jsonObject.put(FPJsonFormUtils.VALUE, womanClient.get(jsonObject.getString(FPJsonFormUtils.KEY)));
+            jsonObject.put(FPJsonFormUtils.VALUE, client.get(jsonObject.getString(FPJsonFormUtils.KEY)));
         } else {
             Timber.e("ERROR:: Unprocessed Form Object Key %s", jsonObject.getString(FPJsonFormUtils.KEY));
         }
@@ -544,7 +558,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
     public static void startFormForEdit(Activity context, int jsonFormActivityRequestCode, String metaData) {
         Intent intent = new Intent(context, JsonWizardFormActivity.class);
-        intent.putExtra(ConstantsUtils.JsonFormExtraUtils.JSON, metaData);
+        intent.putExtra(ConstantsUtils.IntentKeyUtils.JSON, metaData);
         intent.putExtra("form", getFormMetadata(context));
         context.startActivityForResult(intent, jsonFormActivityRequestCode);
     }
@@ -557,7 +571,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         return form;
     }
 
-    public static Triple<Boolean, Event, Event> saveRemovedFromANCRegister(AllSharedPreferences allSharedPreferences, String jsonString, String providerId) {
+    public static Triple<Boolean, Event, Event> saveRemovedFromFPRegister(AllSharedPreferences allSharedPreferences, String jsonString, String providerId) {
         try {
             boolean isDeath = false;
             Triple<Boolean, JSONObject, JSONArray> registrationFormParams = validateParameters(jsonString);
@@ -577,7 +591,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
             try {
                 encounterLocation = metadata.getString(ConstantsUtils.JsonFormKeyUtils.ENCOUNTER_LOCATION);
             } catch (JSONException e) {
-                Timber.e(e, "JsonFormUtils --> saveRemovedFromANCRegister --> getEncounterLocation");
+                Timber.e(e, "JsonFormUtils --> saveRemovedFromFPRegister --> getEncounterLocation");
             }
 
             Date encounterDate = new Date();
@@ -595,8 +609,8 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
                 String value = FPJsonFormUtils.getString(jsonObject, FPJsonFormUtils.VALUE);
                 if (StringUtils.isNotBlank(value)) {
                     FPJsonFormUtils.addObservation(event, jsonObject);
-                    if (jsonObject.get(FPJsonFormUtils.KEY).equals(ConstantsUtils.JsonFormKeyUtils.ANC_CLOSE_REASON)) {
-                        isDeath = "Woman Died".equalsIgnoreCase(value);
+                    if (jsonObject.get(FPJsonFormUtils.KEY).equals(ConstantsUtils.JsonFormKeyUtils.RECORD_CLOSE_REASON)) {
+                        isDeath = "Client Died".equalsIgnoreCase(value);
                     }
                 }
             }
@@ -638,14 +652,15 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
             return Triple.of(isDeath, event, updateChildDetailsEvent);
         } catch (Exception e) {
-            Timber.e(e, "JsonFormUtils --> saveRemovedFromANCRegister");
+            Timber.e(e, "JsonFormUtils --> saveRemovedFromFPRegister");
         }
         return null;
     }
 
-    public static void launchANCCloseForm(Activity activity) {
+    public static void launchFPCloseForm(Activity activity) {
         try {
-            Intent intent = new Intent(activity, JsonFormActivity.class);
+            Intent intent = new Intent(activity, JsonWizardFormActivity.class);
+            intent.putExtra("form", getFormMetadata(activity));
             JSONObject form = FormUtils.getInstance(activity).getFormJson(ConstantsUtils.JsonFormUtils.FP_CLOSE);
             if (form != null) {
                 form.put(ConstantsUtils.JsonFormKeyUtils.ENTITY_ID,
@@ -654,7 +669,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
                 activity.startActivityForResult(intent, FPJsonFormUtils.REQUEST_CODE_GET_JSON);
             }
         } catch (Exception e) {
-            Timber.e(e, "JsonFormUtils --> launchANCCloseForm");
+            Timber.e(e, "JsonFormUtils --> launchFPCloseForm");
         }
     }
 

@@ -8,49 +8,42 @@
       "openmrs_entity_parent": "",
       "openmrs_entity": "concept",
       "openmrs_data_type": "start",
-      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-      "value": ""
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     },
     "end": {
       "openmrs_entity_parent": "",
       "openmrs_entity": "concept",
       "openmrs_data_type": "end",
-      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-      "value": ""
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     },
     "today": {
       "openmrs_entity_parent": "",
       "openmrs_entity": "encounter",
-      "openmrs_entity_id": "encounter_date",
-      "value": ""
+      "openmrs_entity_id": "encounter_date"
     },
     "deviceid": {
       "openmrs_entity_parent": "",
       "openmrs_entity": "concept",
       "openmrs_data_type": "deviceid",
-      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-      "value": ""
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     },
     "subscriberid": {
       "openmrs_entity_parent": "",
       "openmrs_entity": "concept",
       "openmrs_data_type": "subscriberid",
-      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-      "value": ""
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     },
     "simserial": {
       "openmrs_entity_parent": "",
       "openmrs_entity": "concept",
       "openmrs_data_type": "simserial",
-      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-      "value": "8992300000513665882f"
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     },
     "phonenumber": {
       "openmrs_entity_parent": "",
       "openmrs_entity": "concept",
       "openmrs_data_type": "phonenumber",
-      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-      "value": ""
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     },
     "encounter_location": "",
     "look_up": {
@@ -173,8 +166,7 @@
             "type": "string",
             "ex": "equalTo(.,\"yes\")"
           }
-        },
-        "is_visible": false
+        }
       },
       {
         "key": "client_id",

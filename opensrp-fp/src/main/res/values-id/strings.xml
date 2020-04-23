@@ -128,7 +128,7 @@
 
     <string name="call">Panggilan</string>
     <string name="start_contact">Mulai kontak</string>
-    <string name="close_anc_record">Tutup catatan ANC</string>
+    <string name="close_fp_record">Tutup catatan ANC</string>
     <string name="copy_to_clipboard">Menyalin ke clipboard</string>
     <string name="no_matching_woman_found_on_this_device">Tidak ditemukan wanita yang cocok di perangkat ini</string>
     <string name="go_to_advanced_search">Pergi ke pencarian lebih lanjut</string>
