@@ -166,8 +166,7 @@
             "type": "string",
             "ex": "equalTo(.,\"yes\")"
           }
-        },
-        "is_visible": false
+        }
       },
       {
         "key": "client_id",

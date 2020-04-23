@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -136,7 +137,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         return form;
     }
 
-    public static JSONObject getFormAsJson(String formName, String entityId, String currentLocationId) throws Exception{
+    public static JSONObject getFormAsJson(String formName, String entityId, String currentLocationId) throws Exception {
         JSONObject form = getFormUtils().getFormJson(formName);
         if (form == null) {
             return null;
@@ -408,8 +409,18 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
                 JSONArray jsonArray = stepOne.getJSONArray(FPJsonFormUtils.FIELDS);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-
                     processPopulatableFields(registeredClient, jsonObject);
+
+                }
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.REFERRED_BY)) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            jsonArray.remove(i);
+                        }
+                        break;
+                    }
 
                 }
 
