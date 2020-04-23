@@ -73,7 +73,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         String baseEntityId = getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID);
         ((ProfilePresenter) presenter).refreshProfileView(baseEntityId);
         registerEventBus();
-//        getTasksCount(baseEntityId);
+        getTasksCount(baseEntityId);
     }
 
     protected void registerEventBus() {
@@ -221,41 +221,6 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         }
         return super.onOptionsItemSelected(item);
     }
-
-    /*private void attachAlertDialog(String contactButtonText) {
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        arrayAdapter.add(getString(R.string.call));
-        arrayAdapter.add(contactButtonText);
-        arrayAdapter.add(getString(R.string.close_fp_record));
-
-        builderSingle.setAdapter(arrayAdapter, (dialog, which) -> {
-            String textClicked = arrayAdapter.getItem(which);
-            if (textClicked != null) {
-                switch (textClicked) {
-                    case ConstantsUtils.CALL:
-                        launchPhoneDialer(phoneNumber);
-                        break;
-                    case ConstantsUtils.START_CONTACT:
-                    case ConstantsUtils.CONTINUE_CONTACT:
-                        continueToContact();
-                        break;
-                    case CLOSE_FP_RECORD:
-                        FPJsonFormUtils.launchFPCloseForm(ProfileActivity.this);
-                        break;
-                    default:
-                        if (textClicked.startsWith(ConstantsUtils.CONTINUE)) {
-                            continueToContact();
-                        }
-                        break;
-                }
-            }
-
-            dialog.dismiss();
-        });
-        builderSingle.show();
-    }*/
 
     private void continueToContact() {
         if (!buttonAlertStatus.equals(ConstantsUtils.AlertStatusUtils.TODAY)) {
