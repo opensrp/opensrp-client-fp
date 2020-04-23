@@ -382,7 +382,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
     }
 
-    public static String getAutoPopulatedJsonEditRegisterFormString(Context context, Map<String, String> registerClient) {
+    public static String getAutoPopulatedJsonEditRegisterFormString(Context context, Map<String, String> registeredClient) {
         try {
             JSONObject form = FormUtils.getInstance(context).getFormJson(ConstantsUtils.JsonFormUtils.FP_REGISTER);
             LocationPickerView lpv = createLocationPickerView(context);
@@ -392,7 +392,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
             FPJsonFormUtils.addWomanRegisterHierarchyQuestions(form);
             Timber.d("Form is %s", form.toString());
             if (form != null) {
-                form.put(FPJsonFormUtils.ENTITY_ID, registerClient.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID));
+                form.put(FPJsonFormUtils.ENTITY_ID, registeredClient.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID));
                 form.put(FPJsonFormUtils.ENCOUNTER_TYPE, ConstantsUtils.EventTypeUtils.UPDATE_REGISTRATION);
 
                 JSONObject metadata = form.getJSONObject(FPJsonFormUtils.METADATA);
@@ -401,7 +401,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
                 metadata.put(FPJsonFormUtils.ENCOUNTER_LOCATION, lastLocationId);
 
-                form.put(ConstantsUtils.CURRENT_OPENSRP_ID, registerClient.get(DBConstantsUtils.KeyUtils.FP_ID).replace("-", ""));
+                form.put(ConstantsUtils.CURRENT_OPENSRP_ID, registeredClient.get(DBConstantsUtils.KeyUtils.FP_ID).replace("-", ""));
 
                 //inject opensrp id into the form
                 JSONObject stepOne = form.getJSONObject(FPJsonFormUtils.STEP1);
@@ -409,7 +409,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                    processPopulatableFields(registerClient, jsonObject);
+                    processPopulatableFields(registeredClient, jsonObject);
 
                 }
 

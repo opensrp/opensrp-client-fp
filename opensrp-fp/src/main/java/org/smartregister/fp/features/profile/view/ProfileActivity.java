@@ -2,7 +2,6 @@ package org.smartregister.fp.features.profile.view;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -12,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -268,7 +266,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void startFormForEdit(ClientDetailsFetchedEvent event) {
         if (event != null && event.isEditMode()) {
-            String formMetadata = FPJsonFormUtils.getAutoPopulatedJsonEditRegisterFormString(this, event.getRegistrationClient());
+            String formMetadata = FPJsonFormUtils.getAutoPopulatedJsonEditRegisterFormString(this, event.getRegisteredClient());
             try {
                 FPJsonFormUtils.startFormForEdit(this, FPJsonFormUtils.REQUEST_CODE_GET_JSON, formMetadata);
             } catch (Exception e) {
@@ -282,7 +280,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     public void refreshProfileTopSection(ClientDetailsFetchedEvent event) {
         if (event != null && !event.isEditMode()) {
             Utils.removeStickyEvent(event);
-            ((ProfilePresenter) presenter).refreshProfileTopSection(event.getRegistrationClient());
+            ((ProfilePresenter) presenter).refreshProfileTopSection(event.getRegisteredClient());
         }
     }
 
