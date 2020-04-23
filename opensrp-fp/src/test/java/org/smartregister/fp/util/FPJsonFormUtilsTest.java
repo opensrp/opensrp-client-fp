@@ -136,7 +136,7 @@ public class FPJsonFormUtilsTest {
 
 
         JSONObject fieldObject = new JSONObject();
-        fieldObject.put(FPJsonFormUtils.KEY, ConstantsUtils.JsonFormKeyUtils.FP_ID);
+        fieldObject.put(FPJsonFormUtils.KEY, ConstantsUtils.ClientUtils.FP_ID);
         fieldObject.put(FPJsonFormUtils.VALUE, "");
         fieldObject.put(FPJsonFormUtils.OPENMRS_ENTITY, "");
         fieldObject.put(FPJsonFormUtils.OPENMRS_ENTITY_ID, "");
@@ -171,10 +171,10 @@ public class FPJsonFormUtilsTest {
         JSONObject resultObject = FPJsonFormUtils.getFormAsJson(formObject, ConstantsUtils.JsonFormUtils.FP_REGISTER, DUMMY_BASE_ENTITY_ID, DUMMY_LOCATION_ID);
 
         JSONArray field = FPJsonFormUtils.fields(resultObject);
-        FPJsonFormUtils.getFieldJSONObject(field, ConstantsUtils.JsonFormKeyUtils.FP_ID);
+        FPJsonFormUtils.getFieldJSONObject(field, ConstantsUtils.ClientUtils.FP_ID);
 
         Assert.assertNotNull(resultObject);
-        Assert.assertEquals(DUMMY_BASE_ENTITY_ID.replaceAll("-", ""), FPJsonFormUtils.getFieldJSONObject(field, ConstantsUtils.JsonFormKeyUtils.FP_ID).get(FPJsonFormUtils.VALUE));
+        Assert.assertEquals(DUMMY_BASE_ENTITY_ID.replaceAll("-", ""), FPJsonFormUtils.getFieldJSONObject(field, ConstantsUtils.ClientUtils.FP_ID).get(FPJsonFormUtils.VALUE));
     }
 
     @Test
@@ -183,7 +183,7 @@ public class FPJsonFormUtilsTest {
         JSONObject resultObject = FPJsonFormUtils.getFormAsJson(formObject, ConstantsUtils.JsonFormUtils.FP_CLOSE, DUMMY_BASE_ENTITY_ID, DUMMY_LOCATION_ID);
 
         JSONArray field = FPJsonFormUtils.fields(resultObject);
-        FPJsonFormUtils.getFieldJSONObject(field, ConstantsUtils.JsonFormKeyUtils.FP_ID);
+        FPJsonFormUtils.getFieldJSONObject(field, ConstantsUtils.ClientUtils.FP_ID);
 
         Assert.assertNotNull(resultObject);
         Assert.assertEquals(DUMMY_BASE_ENTITY_ID, resultObject.getString(FPJsonFormUtils.ENTITY_ID));
