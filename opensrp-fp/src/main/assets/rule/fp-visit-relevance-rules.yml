@@ -1,7 +1,116 @@
 ---
-name: step2_issues_concerns_f
-description: This field will be shown if reason for visit contains issues and concerns
+name: step5_issues_concerns_f
+description: This field will be shown if reason for visit contains issues & concerns and method_gender_type female
 priority: 1
-condition: "step1_reason_for_visit.contains('issues_concerns')"
+condition: "step1_reason_for_visit.contains('issues_concerns') && global_method_gender_type == 'Female'"
+actions:
+  - "isRelevant = true"
+---
+name: step5_issues_concerns_m
+description: This field will be shown if reason for visit contains issues & concerns and method_gender_type male
+priority: 1
+condition: "step1_reason_for_visit.contains('issues_concerns') && global_method_gender_type == 'Male'"
+actions:
+  - "isRelevant = true"
+---
+name: step5_issues_concerns_other_f
+description: This field will be shown if user check other
+priority: 1
+condition: "step5_issues_concerns_f.contains('other')"
+actions:
+  - "isRelevant = true"
+---
+name: step5_issues_concerns_other_m
+description: This field will be shown if user check other
+priority: 1
+condition: "step5_issues_concerns_m.contains('other')"
+actions:
+  - "isRelevant = true"
+---
+name: step5_toaster1
+description: This field will be shown if user check other
+priority: 1
+condition: "step5_issues_concerns_f.contains('prolonged_bleeding') ||
+            step5_issues_concerns_f.contains('irregular_bleeding') ||
+            step5_issues_concerns_f.contains('amenorrhea') ||
+            step5_issues_concerns_f.contains('vaginal_bleeding') ||
+            step5_issues_concerns_f.contains('cramping_pain') ||
+            step5_issues_concerns_f.contains('anemia') ||
+            step5_issues_concerns_f.contains('feel_iudstrings') ||
+            step5_issues_concerns_f.contains('abdominal_pain') ||
+            step5_issues_concerns_f.contains('perforation') ||
+            step5_issues_concerns_f.contains('uid_partial_expul') ||
+            step5_issues_concerns_f.contains('uid_complete_expul') ||
+            step5_issues_concerns_f.contains('missing_strings') ||
+            step5_issues_concerns_f.contains('acne') ||
+            step5_issues_concerns_f.contains('ordinary_headache') ||
+            step5_issues_concerns_f.contains('breast_tenderness') ||
+            step5_issues_concerns_f.contains('weight_change') ||
+            step5_issues_concerns_f.contains('nausea') ||
+            step5_issues_concerns_f.contains('heart_disease') ||
+            step5_issues_concerns_f.contains('migraine_headache') ||
+            step5_issues_concerns_f.contains('missed_pills') ||
+            step5_issues_concerns_f.contains('late_injection') ||
+            step5_issues_concerns_f.contains('sex_drive_change') ||
+            step5_issues_concerns_f.contains('suspected_preg') ||
+            step5_issues_concerns_f.contains('issues_patch') ||
+            step5_issues_concerns_f.contains('issues_ring') ||
+            step5_issues_concerns_f.contains('change_in_mp') ||
+            step5_issues_concerns_f.contains('blood_clots') ||
+            step5_issues_concerns_f.contains('lasting_pain') ||
+            step5_issues_concerns_f.contains('infected_incision') ||
+            step5_issues_concerns_f.contains('abscess') ||
+            step5_issues_concerns_f.contains('difficulty_condom_use') ||
+            step5_issues_concerns_f.contains('irritation') ||
+            step5_issues_concerns_f.contains('incorrect_condom_use') ||
+            step5_issues_concerns_f.contains('difficult_partner') ||
+            step5_issues_concerns_f.contains('condom_squeaks') ||
+            step5_issues_concerns_f.contains('other')
+"
+actions:
+  - "isRelevant = true"
+---
+name: step5_toaster2
+description: This field will be shown if user check other
+priority: 1
+condition: "step5_issues_concerns_f.contains('thrombosis') ||
+            step5_issues_concerns_f.contains('ectopic_pregnancy') ||
+            step5_issues_concerns_f.contains('heart_attack') ||
+            step5_issues_concerns_f.contains('liver_disorders') ||
+            step5_issues_concerns_f.contains('pid') ||
+            step5_issues_concerns_f.contains('pulmonary_embolism') ||
+            step5_issues_concerns_f.contains('ruptured_ectopic_preg') ||
+            step5_issues_concerns_f.contains('reaction_to_latex') ||
+            step5_issues_concerns_f.contains('stroke') ||
+            step5_issues_concerns_f.contains('shock_syndrome')
+"
+actions:
+  - "isRelevant = true"
+---
+name: step7_method_exit_f
+description: Contraceptive method at exit.
+priority: 1
+condition: "global_method_gender_type == 'Female'"
+actions:
+  - "isRelevant = true"
+---
+name: step7_methods_exit_secondaryf
+description: Secondary contraceptive method at exit.
+priority: 1
+condition: "step7_method_exit_f == 'no_method' && global_method_gender_type == 'Female'"
+actions:
+  - "isRelevant = true"
+---
+name: step7_method_exit_m
+description: Contraceptive method at exit.
+priority: 1
+condition: "global_method_gender_type == 'Male'"
+actions:
+  - "isRelevant = true"
+---
+name: step7_methods_exit_secondary_m
+description: Secondary contraceptive method at exit.
+priority: 1
+condition: "global_method_gender_type == 'Male' && step7_method_exit_m == 'no_method'"
 actions:
   - "isRelevant = true"

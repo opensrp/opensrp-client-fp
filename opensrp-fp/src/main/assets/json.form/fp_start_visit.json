@@ -6,6 +6,9 @@
     "entity_id": "",
     "relational_id": "",
     "form_version": "0.0.1",
+    "default_values": [
+
+    ],
     "metadata": {
         "start": {
             "openmrs_entity_parent": "",
@@ -56,7 +59,7 @@
     },
     "step1": {
         "title": "Reason for visit",
-        "next": "step2",
+        "next": "step7",
         "fields": [
             {
                 "key": "label",
@@ -283,7 +286,7 @@
             }
         ]
     },
-    "step5": {
+    "step2": {
         "title": "Vital signs",
         "next": "step3",
         "fields": [
@@ -512,7 +515,6 @@
         "title": "Client History",
         "next": "step4",
         "fields": [
-
             {
                 "key": "method_at_intake_m",
                 "type": "native_radio",
@@ -1897,13 +1899,13 @@
             }
         ]
     },
-    "step2": {
+    "step5": {
         "title": "Issues and Concerns",
         "next": "step6",
         "fields": [
             {
                 "key": "issues_concerns_f",
-                "type": "spinner",
+                "type": "check_box",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
@@ -1914,154 +1916,334 @@
                         }
                     }
                 },
-                "values": [
-                    "Heavy or prolonged bleeding",
-                    "Irregular bleeding",
-                    "Amenorrhea",
-                    "Unexplained vaginal bleeding",
-                    "Cramping and pain",
-                    "Possible anemia",
-                    "Partner can feel IUD strings during intercourse",
-                    "Severe pain in lower abdomen",
-                    "Suspected perforation",
-                    "IUD partial expulsion",
-                    "IUD complete expulsion",
-                    "Missing strings",
-                    "Acne",
-                    "Ordinary headaches",
-                    "Breast tenderness",
-                    "Weight change",
-                    "Nausea or dizziness",
-                    "Ischemic heart disease",
-                    "Migraine headaches",
-                    "Missed pills",
-                    "Late injections",
-                    "Mood changes or changes in sex drive",
-                    "Suspected pregnancy",
-                    "Issues with Combined Contraceptive Patch",
-                    "Issues with vaginal ring",
-                    "Change in timing of monthly bleeding",
-                    "Bleeding or blood clots",
-                    "Pain lasting for months",
-                    "Infection at the incision site",
-                    "Abscess",
-                    "Difficulty using the condom",
-                    "Irritation",
-                    "Condom used incorrectly",
-                    "Difficulty persuading partner to use method",
-                    "Condom squeaks or makes noise during sex",
-                    "Deep vein thrombosis",
-                    "Ectopic pregnancy",
-                    "Heart attack",
-                    "Liver disorders",
-                    "Pelvic inflammatory disease (PID)",
-                    "Pulmonary embolism",
-                    "Ruptured ectopic pregnancy",
-                    "Severe allergic reaction to latex",
-                    "Stroke",
-                    "Toxic shock syndrome",
-                    "Other (Specify)"
+                "options": [
+                    {
+                        "key": "prolonged_bleeding",
+                        "text": "Heavy or prolonged bleeding",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "irregular_bleeding",
+                        "text": "Irregular bleeding",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "amenorrhea",
+                        "text": "Amenorrhea",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "vaginal_bleeding",
+                        "text": "Unexplained vaginal bleeding",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "cramping_pain",
+                        "text": "Cramping and pain",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "anemia",
+                        "text": "Possible anemia",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "feel_iudstrings",
+                        "text": "Partner can feel IUD strings during intercourse",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "abdominal_pain",
+                        "text": "Severe pain in lower abdomen",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "perforation",
+                        "text": "Suspected perforation",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "uid_partial_expul",
+                        "text": "IUD partial expulsion",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "uid_complete_expul",
+                        "text": "IUD complete expulsion",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "missing_strings",
+                        "text": "Missing strings",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "acne",
+                        "text": "Acne",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "ordinary_headache",
+                        "text": "Ordinary headaches",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "breast_tenderness",
+                        "text": "Breast tenderness",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "weight_change",
+                        "text": "Weight change",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "nausea",
+                        "text": "Nausea or dizziness",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "heart_disease",
+                        "text": "Ischemic heart disease",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "migraine_headache",
+                        "text": "Migraine headaches",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "missed_pills",
+                        "text": "Missed pills",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "late_injection",
+                        "text": "Late injections",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "sex_drive_change",
+                        "text": "Mood changes or changes in sex drive",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "suspected_preg",
+                        "text": "Suspected pregnancy",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "issues_patch",
+                        "text": "Issues with Combined Contraceptive Patch",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "issues_ring",
+                        "text": "Issues with vaginal ring",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "change_in_mp",
+                        "text": "Change in timing of monthly bleeding",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "blood_clots",
+                        "text": "Bleeding or blood clots",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "lasting_pain",
+                        "text": "Pain lasting for months",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "infected_incision",
+                        "text": "Infection at the incision site",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "abscess",
+                        "text": "Abscess",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "difficulty_condom_use",
+                        "text": "Difficulty using the condom",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "irritation",
+                        "text": "Irritation",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "incorrect_condom_use",
+                        "text": "Condom used incorrectly",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "difficult_partner",
+                        "text": "Difficulty persuading partner to use method",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "condom_squeaks",
+                        "text": "Condom squeaks or makes noise during sex",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "thrombosis",
+                        "text": "Deep vein thrombosis",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "ectopic_pregnancy",
+                        "text": "Ectopic pregnancy",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "heart_attack",
+                        "text": "Heart attack",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "liver_disorders",
+                        "text": "Liver disorders",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "pid",
+                        "text": "Pelvic inflammatory disease (PID)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "pulmonary_embolism",
+                        "text": "Pulmonary embolism",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "ruptured_ectopic_preg",
+                        "text": "Ruptured ectopic pregnancy",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "reaction_to_latex",
+                        "text": "Severe allergic reaction to latex",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "stroke",
+                        "text": "Stroke",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "shock_syndrome",
+                        "text": "Toxic shock syndrome",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "other",
+                        "text": "Other (Specify)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    }
                 ],
-                "keys": [
-                    "prolonged_bleeding",
-                    "irregular_bleeding",
-                    "amenorrhea",
-                    "vaginal_bleeding",
-                    "cramping_pain",
-                    "anemia",
-                    "feel_iudstrings",
-                    "abdominal_pain",
-                    "perforation",
-                    "uid_partial_expul",
-                    "uid_complete_expul",
-                    "missing_strings",
-                    "acne",
-                    "ordinary_headache",
-                    "breast_tenderness",
-                    "weight_change",
-                    "nausea",
-                    "heart_disease",
-                    "migraine_headache",
-                    "missed_pills",
-                    "late_injection",
-                    "sex_drive_change",
-                    "suspected_preg",
-                    "issues_patch",
-                    "issues_ring",
-                    "change_in_mp",
-                    "blood_clots",
-                    "lasting_pain",
-                    "infected_incision",
-                    "abscess",
-                    "difficulty_condom_use",
-                    "irritation",
-                    "incorrect_condom_use",
-                    "difficult_partner",
-                    "condom_squeaks",
-                    "thrombosis",
-                    "ectopic_pregnancy",
-                    "heart_attack",
-                    "liver_disorders",
-                    "pid",
-                    "pulmonary_embolism",
-                    "ruptured_ectopic_preg",
-                    "reaction_to_latex",
-                    "stroke",
-                    "shock_syndrome",
-                    "other"
-                ],
-                "openmrs_choice_ids": {
-                    "prolonged_bleeding": "NA",
-                    "irregular_bleeding": "NA",
-                    "amenorrhea": "NA",
-                    "vaginal_bleeding": "NA",
-                    "cramping_pain": "NA",
-                    "anemia": "NA",
-                    "feel_iudstrings": "NA",
-                    "abdominal_pain": "NA",
-                    "perforation": "NA",
-                    "uid_partial_expul": "NA",
-                    "uid_complete_expul": "NA",
-                    "missing_strings": "NA",
-                    "acne": "NA",
-                    "ordinary_headache": "NA",
-                    "breast_tenderness": "NA",
-                    "weight_change": "NA",
-                    "nausea": "NA",
-                    "heart_disease": "NA",
-                    "migraine_headache": "NA",
-                    "missed_pills": "NA",
-                    "late_injection": "NA",
-                    "sex_drive_change": "NA",
-                    "suspected_preg": "NA",
-                    "issues_patch": "NA",
-                    "issues_ring": "NA",
-                    "change_in_mp": "NA",
-                    "blood_clots": "NA",
-                    "lasting_pain": "NA",
-                    "infected_incision": "NA",
-                    "abscess": "NA",
-                    "difficulty_condom_use": "NA",
-                    "irritation": "NA",
-                    "incorrect_condom_use": "NA",
-                    "difficult_partner": "NA",
-                    "condom_squeaks": "NA",
-                    "thrombosis": "NA",
-                    "ectopic_pregnancy": "NA",
-                    "heart_attack": "NA",
-                    "liver_disorders": "NA",
-                    "pid": "NA",
-                    "pulmonary_embolism": "NA",
-                    "ruptured_ectopic_preg": "NA",
-                    "reaction_to_latex": "NA",
-                    "stroke": "NA",
-                    "shock_syndrome": "NA",
-                    "other": "NA"
-                },
-                "hint": "Issues and concerns",
+                "label": "Issues and concerns",
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Error"
                 }
             },
             {
@@ -2071,51 +2253,105 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "edit_type": "name",
-                "hint": "Other (Specify)"
+                "hint": "Other (Specify)",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
             },
             {
                 "key": "issues_concerns_m",
-                "type": "spinner",
+                "type": "check_box",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "values": [
-                    "Bleeding or blood clots",
-                    "Pain lasting for months",
-                    "Infection at the incision site",
-                    "Abscess",
-                    "Difficulty using the condom",
-                    "Irritation",
-                    "Condom used incorrectly",
-                    "Difficulty persuading partner to use method",
-                    "Condom squeaks or makes noise during sex",
-                    "Other (Specify)"
+                "options": [
+                    {
+                        "key": "bleed_blood_clots",
+                        "text": "Bleeding or blood clots",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "pain_lasting_months",
+                        "text": "Pain lasting for months",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "infection_incision_site",
+                        "text": "Infection at the incision site",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "abscess_m",
+                        "text": "Abscess",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "difficult_use_condom",
+                        "text": "Difficulty using the condom",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "irritation_m",
+                        "text": "Irritation",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "incorrect_use_condom",
+                        "text": "Condom used incorrectly",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "difficult_persuade_partner",
+                        "text": "Difficulty persuading partner to use method",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "condom_makes_noise",
+                        "text": "Condom squeaks or makes noise during sex",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "other",
+                        "text": "Other (Specify)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    }
                 ],
-                "keys": [
-                    "bleed_blood_clots",
-                    "pain_lasting_months",
-                    "infection_incision_site",
-                    "abscess_m",
-                    "difficult_use_condom",
-                    "irritation_m",
-                    "incorrect_use_condom",
-                    "difficult_persuade_partner",
-                    "condom_makes_noise",
-                    "other"
-                ],
-                "openmrs_choice_ids": {
-                    "bleed_blood_clots": "NA",
-                    "pain_lasting_months": "NA",
-                    "infection_incision_site": "NA",
-                    "abscess_m": "NA",
-                    "difficult_use_condom": "NA",
-                    "irritation_m": "NA",
-                    "incorrect_use_condom": "NA",
-                    "difficult_persuade_partner": "NA",
-                    "condom_makes_noise": "NA",
-                    "other": "NA"
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
                 },
-                "hint": "Issues and concerns"
+                "label": "Issues and concerns",
+                "v_required": {
+                    "value": "true",
+                    "err": "Error"
+                }
             },
             {
                 "key": "issues_concerns_other_m",
@@ -2124,7 +2360,46 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "edit_type": "name",
-                "hint": "Other (Specify)"
+                "hint": "Other (Specify)",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster1",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "type": "toaster_notes",
+                "text": "Counsel according to guidance provided in \"Family Planning: A Global Handbook for Providers\" or in accordance to national guidelines. ",
+                "toaster_type": "warning",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster2",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "type": "toaster_notes",
+                "text": "This is a sign and/or symptom of a serious health condition. This condition occurs rarely to extremely rarely among users of contraceptive methods and among people of reproductive age. Immediately take action or refer for care if a client reports this issue. Clients who develop this condition might need to switch methods.",
+                "toaster_type": "problem",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
             }
         ]
     },
@@ -2613,6 +2888,1200 @@
                     "value": "true",
                     "err": null
                 }
+            }
+        ]
+    },
+    "step7": {
+        "title": "Service Provision",
+        "fields": [
+            {
+                "key": "head_preg_checklist",
+                "type": "label",
+                "text": "Pregnancy Checklist",
+                "text_size": "9sp",
+                "text_color": "black",
+                "label_text_style": "bold",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": ""
+            },
+            {
+                "key": "toaster1",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "type": "toaster_notes",
+                "text": "Please use the pregnancy checklist to rule out pregnancy before proceeding.",
+                "toaster_type": "info"
+            },
+            {
+                "key": "menses_7days",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "Last monthly bleeding started within the past 7 days",
+                "options": [
+                    {
+                        "key": "yes",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Yes"
+                    },
+                    {
+                        "key": "no",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "No"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                }
+            },
+            {
+                "key": "abstained",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "Abstained from sexual intercourse since last normal menses, delivery, miscarriage or abortion",
+                "options": [
+                    {
+                        "key": "yes",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Yes"
+                    },
+                    {
+                        "key": "no",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "No"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                }
+            },
+            {
+                "key": "correct_method_use",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "Consistently and correctly using reliable contraceptive method",
+                "options": [
+                    {
+                        "key": "yes",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Yes"
+                    },
+                    {
+                        "key": "no",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "No"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                }
+            },
+            {
+                "key": "delivered_4weeks",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "Delivered in the last 4 weeks",
+                "options": [
+                    {
+                        "key": "yes",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Yes"
+                    },
+                    {
+                        "key": "no",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "No"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                }
+            },
+            {
+                "key": "lam",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "Delivered less than 6 months ago, and fully or nearly-fully breastfeeding, and amenorrhoeic",
+                "options": [
+                    {
+                        "key": "yes",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Yes"
+                    },
+                    {
+                        "key": "no",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "No"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                }
+            },
+            {
+                "key": "miscarriage_abortion_7days",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "Miscarriage or abortion in the past 7 days",
+                "options": [
+                    {
+                        "key": "yes",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Yes"
+                    },
+                    {
+                        "key": "no",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "No"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "miscarriage_abortion_12days",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "Miscarriage or abortion in the past 12 days",
+                "options": [
+                    {
+                        "key": "yes",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Yes"
+                    },
+                    {
+                        "key": "no",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "No"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "preg_test_result",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "Pregnancy test result",
+                "options": [
+                    {
+                        "key": "pregnant",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Pregnant"
+                    },
+                    {
+                        "key": "not_pregnant",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Not Pregnant"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "head_method_removal",
+                "type": "label",
+                "text": "Method Removal",
+                "text_size": "9sp",
+                "text_color": "black",
+                "label_text_style": "bold",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": ""
+            },
+            {
+                "key": "iud_removal",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "IUD removal done",
+                "options": [
+                    {
+                        "key": "yes",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Yes"
+                    },
+                    {
+                        "key": "no",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "No"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "implant_removal",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "Implant removal done",
+                "options": [
+                    {
+                        "key": "yes",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Yes"
+                    },
+                    {
+                        "key": "no",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "No"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "head_voluntary_info",
+                "type": "label",
+                "text": "Voluntary Informed Consent",
+                "text_size": "9sp",
+                "text_color": "black",
+                "label_text_style": "bold",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": ""
+            },
+            {
+                "key": "informed_consent",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "Voluntary informed consent obtained",
+                "options": [
+                    {
+                        "key": "yes",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Yes"
+                    },
+                    {
+                        "key": "no",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "No"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "head_exams_test",
+                "type": "label",
+                "text": "Exams & Tests",
+                "text_size": "9sp",
+                "text_color": "black",
+                "label_text_style": "bold",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": ""
+            },
+            {
+                "key": "pelvic_exam",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "Pelvic/genital examination done",
+                "options": [
+                    {
+                        "key": "done",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Done"
+                    },
+                    {
+                        "key": "not_done",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Not done"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "pelvic_exam_not_done",
+                "type": "spinner",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "values": [
+                    "Provider not available",
+                    "Supplies not available",
+                    "Client refused",
+                    "Other"
+                ],
+                "keys": [
+                    "no_provider",
+                    "no_supplies",
+                    "client_refused",
+                    "other"
+                ],
+                "openmrs_choice_ids": {
+                    "no_provider": "NA",
+                    "no_supplies": "NA",
+                    "client_refused": "NA",
+                    "other": "NA"
+                },
+                "hint": "Reason pelvic/genital examination was not done",
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "sti_assess_phys_exam",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "STI risk assessment: medical history and physical examination done",
+                "options": [
+                    {
+                        "key": "done",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Done"
+                    },
+                    {
+                        "key": "not_done",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Not done"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "sti_assess_phys_exam_not_done",
+                "type": "spinner",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "values": [
+                    "Provider not available",
+                    "Supplies not available",
+                    "Client refused",
+                    "Other"
+                ],
+                "keys": [
+                    "no_provider",
+                    "no_supplies",
+                    "client_refused",
+                    "other"
+                ],
+                "openmrs_choice_ids": {
+                    "no_provider": "NA",
+                    "no_supplies": "NA",
+                    "client_refused": "NA",
+                    "other": "NA"
+                },
+                "hint": "Reason STI risk assessment: medical history and physical examination was not done",
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "sti_hiv_screening",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "STI/HIV screening: laboratory tests done",
+                "options": [
+                    {
+                        "key": "done",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Done"
+                    },
+                    {
+                        "key": "not_done",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Not done"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "sti_hiv_screening_not_done",
+                "type": "spinner",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "values": [
+                    "Provider not available",
+                    "Supplies not available",
+                    "Client refused",
+                    "Other"
+                ],
+                "keys": [
+                    "no_provider",
+                    "no_supplies",
+                    "client_refused",
+                    "other"
+                ],
+                "openmrs_choice_ids": {
+                    "no_provider": "NA",
+                    "no_supplies": "NA",
+                    "client_refused": "NA",
+                    "other": "NA"
+                },
+                "hint": "Reason STI/HIV screening: laboratory tests were not done",
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "hb_test",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "Haemoglobin test done",
+                "options": [
+                    {
+                        "key": "done",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Done"
+                    },
+                    {
+                        "key": "not_done",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Not done"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "hb_test_not_done",
+                "type": "spinner",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "values": [
+                    "Provider not available",
+                    "Supplies not available",
+                    "Client refused",
+                    "Other"
+                ],
+                "keys": [
+                    "no_provider",
+                    "no_supplies",
+                    "client_refused",
+                    "other"
+                ],
+                "openmrs_choice_ids": {
+                    "no_provider": "NA",
+                    "no_supplies": "NA",
+                    "client_refused": "NA",
+                    "other": "NA"
+                },
+                "hint": "Reason haemoglobin test was not done",
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "bp_screening",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "Blood pressure screening done",
+                "options": [
+                    {
+                        "key": "done",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Done"
+                    },
+                    {
+                        "key": "not_done",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Not done"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "bp_screening_not_done",
+                "type": "spinner",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "values": [
+                    "Provider not available",
+                    "Supplies not available",
+                    "Client refused",
+                    "Other"
+                ],
+                "keys": [
+                    "no_provider",
+                    "no_supplies",
+                    "client_refused",
+                    "other"
+                ],
+                "openmrs_choice_ids": {
+                    "no_provider": "NA",
+                    "no_supplies": "NA",
+                    "client_refused": "NA",
+                    "other": "NA"
+                },
+                "hint": "Reason blood pressure screening was not done",
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "head_method_exit",
+                "type": "label",
+                "text": "Method at Exit",
+                "text_size": "9sp",
+                "text_color": "black",
+                "label_text_style": "bold",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": ""
+            },
+            {
+                "key": "method_exit_f",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "Method at exit - primary",
+                "options": [
+                    {
+                        "key": "cu_iud",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Copper-bearing intrauterine devices (Cu-IUDs)"
+                    },
+                    {
+                        "key": "lng_iud",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Levonorgestrel IUD (LNG-IUD)"
+                    },
+                    {
+                        "key": "etg_onerod",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Etonogestrel (ETG) one-rod"
+                    },
+                    {
+                        "key": "lng_tworod",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Levonorgestrel (LNG) two-rod"
+                    },
+                    {
+                        "key": "dmpa_im",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "DMPA-IM (DMPA, administered intramuscularly)"
+                    },
+                    {
+                        "key": "dmpa_sc",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "DMPA-SC (DMPA, administered subcutaneously)"
+                    },
+                    {
+                        "key": "net_en",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "NET-EN norethisterone enanthate"
+                    },
+                    {
+                        "key": "pop",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Progestogen-only pills (POP)"
+                    },
+                    {
+                        "key": "coc",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Combined oral contraceptives (COCs)"
+                    },
+                    {
+                        "key": "patch",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Combined contraceptive patch"
+                    },
+                    {
+                        "key": "cvr",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Combined contraceptive vaginal ring (CVR)"
+                    },
+                    {
+                        "key": "pvr",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Progesterone-releasing vaginal ring (PVR)"
+                    },
+                    {
+                        "key": "lam",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Lactational amenorrhea method (LAM)"
+                    },
+                    {
+                        "key": "female_condoms",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Female condoms"
+                    },
+                    {
+                        "key": "male_condoms",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Male condoms"
+                    },
+                    {
+                        "key": "ecp",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Emergency contraceptive pills (ECPs)"
+                    },
+                    {
+                        "key": "fab",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Fertility awareness-based methods (FAB)"
+                    },
+                    {
+                        "key": "female_sterilization",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Female sterilization"
+                    },
+                    {
+                        "key": "male_method",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Female relying on male method"
+                    },
+                    {
+                        "key": "no_method",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "No method"
+                    }
+                ],
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "methods_exit_secondaryf",
+                "type": "check_box",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "options": [
+                    {
+                        "key": "cu_iud",
+                        "text": "Copper-bearing intrauterine devices (Cu-IUDs)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "lng_iud",
+                        "text": "Levonorgestrel IUD (LNG-IUD)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "etg_onerod",
+                        "text": "Etonogestrel (ETG) one-rod",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "lng_tworod",
+                        "text": "Levonorgestrel (LNG) two-rod",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "dmpa_im",
+                        "text": "DMPA-IM (DMPA, administered intramuscularly)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "dmpa_sc",
+                        "text": "DMPA-SC (DMPA, administered subcutaneously)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "net_en",
+                        "text": "NET-EN norethisterone enanthate",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "pop",
+                        "text": "Progestogen-only pills (POP)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "coc",
+                        "text": "Combined oral contraceptives (COCs)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "patch",
+                        "text": "Combined contraceptive patch",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "cvr",
+                        "text": "Combined contraceptive vaginal ring (CVR)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "pvr",
+                        "text": "Progesterone-releasing vaginal ring (PVR)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "lam",
+                        "text": "Lactational amenorrhea method (LAM)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "female_condoms",
+                        "text": "Female condoms",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "male_condoms",
+                        "text": "Male condoms",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "ecp",
+                        "text": "Emergency contraceptive pills (ECPs)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "fab",
+                        "text": "Fertility awareness-based methods (FAB)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "female_sterilization",
+                        "text": "Female sterilization",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "male_method",
+                        "text": "Female relying on male method",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "no_method",
+                        "text": "No method",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    }
+                ],
+                "exclusive": ["no_method"],
+                "label": "Method(s) at exit - secondary",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                }
+            },
+            {
+                "key": "method_exit_m",
+                "type": "native_radio",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "label": "Method at exit - primary",
+                "options": [
+                    {
+                        "key": "male_condoms",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Male condoms"
+                    },
+                    {
+                        "key": "male_sterilization",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Male sterilization"
+                    },
+                    {
+                        "key": "withdrawal",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Withdrawal"
+                    },
+                    {
+                        "key": "female_method",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "Male relying on female method"
+                    },
+                    {
+                        "key": "no_method",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_parent": "",
+                        "text": "No method"
+                    }
+                ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                }
+            },
+            {
+                "key": "methods_exit_secondary_m",
+                "type": "spinner",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "exclusive": ["no_method"],
+                "options": [
+                    {
+                        "key": "male_condoms",
+                        "value": "Male condoms",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "male_sterilization",
+                        "value": "Male sterilization",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "withdrawal",
+                        "value": "Withdrawal",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "female_method",
+                        "value": "Male relying on female method",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "no_method",
+                        "value": "No method",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    }
+                ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
+                "label": "Method(s) at exit - secondary",
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                }
+            },
+            {
+                "key": "provider",
+                "type": "edit_text",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "edit_type": "name",
+                "hint": "Provider",
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "reason_different_chosen_exit_method",
+                "type": "spinner",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "values": [
+                    "Chosen method out of stock",
+                    "Supplies required to provide chosen method are out of stock",
+                    "Health worker lacks skills to provide chosen method",
+                    "Client requires a referral",
+                    "Other (specify)"
+                ],
+                "keys": [
+                    "no_stock",
+                    "no_supplies",
+                    "no_provider_capacity",
+                    "referral_required",
+                    "other"
+                ],
+                "openmrs_choice_ids": {
+                    "no_stock": "NA",
+                    "no_supplies": "NA",
+                    "no_provider_capacity": "NA",
+                    "referral_required": "NA",
+                    "other": "NA"
+                },
+                "hint": "Reason for why method at exit is not the same as chosen method",
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "reason_different_chosen_exit_method_other",
+                "type": "edit_text",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "edit_type": "name",
+                "hint": "Other (specify)"
+            },
+            {
+                "key": "reason_no_method_exit",
+                "type": "spinner",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "values": [
+                    "Chooses not to use",
+                    "Out of stock",
+                    "Other"
+                ],
+                "keys": [
+                    "chooses_not_use",
+                    "out_of_stock",
+                    "other"
+                ],
+                "openmrs_choice_ids": {
+                    "chooses_not_use": "NA",
+                    "out_of_stock": "NA",
+                    "other": "NA"
+                },
+                "hint": "Reason for no method at exit",
+                "v_required": {
+                    "value": "true",
+                    "err": null
+                }
+            },
+            {
+                "key": "reason_no_method_exit_other",
+                "type": "edit_text",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "edit_type": "name",
+                "hint": "Other (specify)"
             }
         ]
     }

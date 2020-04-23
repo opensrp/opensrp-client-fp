@@ -206,17 +206,18 @@ public class Utils extends org.smartregister.util.Utils {
      */
     public static void proceedToContact(String baseEntityId, HashMap<String, String> personObjectClient, Context context) {
         try {
-            baseEntityId = "3";
+            baseEntityId = "ba9b0b5c-4453-4fc3-8d62-f13fbaf0a342";
             personObjectClient = new HashMap<>();
-            personObjectClient.put("dob", "2003-03-03T05:00:00.000+05:00");
-            personObjectClient.put("last_interacted_with", "3");
-            personObjectClient.put("base_entity_id", "3");
+            personObjectClient.put("dob", "1995-12-18T05:00:00.000+05:00");
+            personObjectClient.put("last_interacted_with", "1587569732782");
+            personObjectClient.put("base_entity_id", "ba9b0b5c-4453-4fc3-8d62-f13fbaf0a342");
             personObjectClient.put("data_removed", null);
-            personObjectClient.put("last_name", "Klay");
-            personObjectClient.put("_id", "3");
-            personObjectClient.put("first_name", "Stacy");
-            personObjectClient.put("relationid", "9993");
-            personObjectClient.put("client_id", "789");
+            personObjectClient.put("last_name", "Wilson");
+            personObjectClient.put("_id", "ba9b0b5c-4453-4fc3-8d62-f13fbaf0a342");
+            personObjectClient.put("first_name", "Jimmy");
+            personObjectClient.put("relationid", null);
+            personObjectClient.put("client_id", "1341502");
+            personObjectClient.put(DBConstantsUtils.KeyUtils.GENDER, "Female");
             personObjectClient.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, "0");
 
             Intent intent = new Intent(context.getApplicationContext(), StartVisitJsonFormActivity.class);
@@ -231,6 +232,8 @@ public class Utils extends org.smartregister.util.Utils {
             startVisit.setBackIcon(R.drawable.ic_clear);
             startVisit.setWizard(true);
             //quickCheck.setHideSaveLabel(true);
+            Map<String, String> globals = loadGlobalConfig(context, personObjectClient, baseEntityId, Integer.valueOf(personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)), ConstantsUtils.JsonFormUtils.FP_START_VISIT);
+            startVisit.setGlobals(globals);
 
 
 
@@ -245,7 +248,19 @@ public class Utils extends org.smartregister.util.Utils {
 
             JSONObject form = FPJsonFormUtils.getFormAsJson(startVisit.getFormName(), baseEntityId, locationId);
 
+            JSONObject defaultGlobal = new JSONObject();
+            if (!globals.isEmpty()) {
+                for (Map.Entry<String, String> entry : globals.entrySet()) {
+                    defaultGlobal.put(entry.getKey(), entry.getValue());
+                }
+            }
+            form.put(JsonFormConstants.JSON_FORM_KEY.GLOBAL, defaultGlobal);
+
             String processedForm = FPFormUtils.getFormJsonCore(partialContactRequest, form).toString();
+
+
+
+
 
             intent.putExtra(ConstantsUtils.JsonFormExtraUtils.JSON, processedForm);
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, startVisit);
@@ -277,11 +292,12 @@ public class Utils extends org.smartregister.util.Utils {
         }
     }
 
-    public static void loadGlobalConfig(Context context, String baseEntityId) {
+    public static Map<String, String>  loadGlobalConfig(Context context, HashMap<String, String> personObjectClient, String baseEntityId, int contactNo, String formName) {
+        Map<String, String> globals = new HashMap<>();
         Set<String> defaultValueFields = new HashSet<>();
         JSONObject mainJson;
         try {
-            mainJson = FPJsonFormUtils.readJsonFromAsset(context.getApplicationContext(), "json.form/" + ConstantsUtils.JsonFormUtils.FP_START_VISIT);
+            mainJson = FPJsonFormUtils.readJsonFromAsset(context.getApplicationContext(), "json.form/" + formName);
             if (mainJson.has(ConstantsUtils.DEFAULT_VALUES)) {
                 JSONArray defaultValuesArray = mainJson.getJSONArray(ConstantsUtils.DEFAULT_VALUES);
                 defaultValueFields.addAll(getListValues(defaultValuesArray));
@@ -292,15 +308,47 @@ public class Utils extends org.smartregister.util.Utils {
             loadContactGlobalsConfig(formGlobalKeys, globalKeys, context);
 
             Map<String, String> formGlobalValues = new HashMap<>();
-            for (String item : defaultValueFields) {
-                if (globalKeys.contains(item)) {
-                    formGlobalValues.put(item, getMapValue(item, baseEntityId, 0));
+            if (contactNo > 1) {
+                for (String item : defaultValueFields) {
+                    if (globalKeys.contains(item)) {
+                        formGlobalValues.put(item, getMapValue(item, baseEntityId, contactNo));
+                    }
                 }
+            }
+
+            List<String> contactGlobals = formGlobalKeys.get(formName);
+
+            if (contactGlobals != null) {
+
+                for (String contactGlobal : contactGlobals) {
+                    if (formGlobalValues.containsKey(contactGlobal)) {
+                        String some = globals.get(contactGlobal);
+
+                        if (some == null || !some.equals(formGlobalValues.get(contactGlobal))) {
+                            globals.put(contactGlobal, formGlobalValues.get(contactGlobal));
+                        }
+
+                    } else {
+                        globals.put(contactGlobal, "");
+                    }
+                }
+
+                //Inject some form defaults from client details
+                globals.put(ConstantsUtils.KeyUtils.CONTACT_NO, String.valueOf(contactNo));
+                globals.put(ConstantsUtils.PREVIOUS_CONTACT_NO, contactNo > 1 ? String.valueOf(contactNo - 1) : "0");
+                globals.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER));
+
+
+                String lastContactDate = personObjectClient.get(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE);
+                globals.put(ConstantsUtils.KeyUtils.LAST_CONTACT_DATE, !TextUtils.isEmpty(lastContactDate) ? Utils.reverseHyphenSeperatedValues(lastContactDate, "-") : "");
+
             }
 
         } catch (Exception e) {
             Timber.e(e, "Error reading json from asset file ");
         }
+
+        return globals;
     }
 
     public static String getMapValue(String key, String baseEntityId, int contactNo) {
