@@ -57,7 +57,7 @@
     },
     "step1": {
         "title": "Reason for visit",
-        "next": "step7",
+        "next": "step8",
         "fields": [
             {
                 "key": "label",
@@ -3702,16 +3702,30 @@
                 "label_text_style": "bold",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
-                "openmrs_entity_parent": ""
+                "openmrs_entity_parent": "",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
             },
             {
-                "key": "toaster1",
+                "key": "use_preg_checklist_note",
                 "openmrs_entity_parent": "",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "type": "toaster_notes",
                 "text": "Please use the pregnancy checklist to rule out pregnancy before proceeding.",
-                "toaster_type": "info"
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
             },
             {
                 "key": "menses_7days",
@@ -3736,6 +3750,13 @@
                         "text": "No"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -3764,6 +3785,13 @@
                         "text": "No"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -3792,6 +3820,13 @@
                         "text": "No"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -3820,6 +3855,13 @@
                         "text": "No"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -3848,6 +3890,13 @@
                         "text": "No"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -3876,9 +3925,16 @@
                         "text": "No"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -3904,9 +3960,62 @@
                         "text": "No"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": null
+                }
+            },
+            {
+                "key": "pregnancy_ruled_out",
+                "type": "hidden",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "pregnancy_ruled_out_note",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Reasonably certain the woman is not pregnant. Proceed with method service provision.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "pregnancy_not_ruled_out_note",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Pregnancy cannot be ruled out. Perform a pregnancy test.",
+                "toaster_type": "problem",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
                 }
             },
             {
@@ -3916,6 +4025,13 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "label": "Pregnancy test result",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "options": [
                     {
                         "key": "pregnant",
@@ -3938,12 +4054,51 @@
                 }
             },
             {
+                "key": "toaster_preg_result_negative",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Pregnancy test result is negative. Proceed with method service provision.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_preg_result_positive",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Pregnancy test result is positive. Refer the woman to antenatal care services.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
                 "key": "head_method_removal",
                 "type": "label",
                 "text": "Method Removal",
                 "text_size": "9sp",
                 "text_color": "black",
                 "label_text_style": "bold",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": ""
@@ -3971,6 +4126,13 @@
                         "text": "No"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": null
@@ -3999,6 +4161,13 @@
                         "text": "No"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": null
@@ -4013,7 +4182,30 @@
                 "label_text_style": "bold",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
-                "openmrs_entity_parent": ""
+                "openmrs_entity_parent": "",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "informed_consent_note",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Please obtain informed consent before proceeding with the method provision.",
+                "toaster_type": "problem",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
             },
             {
                 "key": "informed_consent",
@@ -4038,6 +4230,13 @@
                         "text": "No"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": null
@@ -4052,7 +4251,122 @@
                 "label_text_style": "bold",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
-                "openmrs_entity_parent": ""
+                "openmrs_entity_parent": "",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_pelvic_genital",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Pelvic/genital examination needed",
+                "label_info_text": "A pelvic/genital examination is Class A: Essential and mandatory in all circumstances for safe and effective use of the contraceptive method.",
+                "label_text_style": "normal",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_blood_pressure",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Blood pressure screening needed",
+                "label_info_text": "A blood pressure screening is Class A: Essential and mandatory in all circumstances for safe and effective use of the contraceptive method.",
+                "label_text_style": "normal",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_sti_risk_assess",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "STI risk assessment: medical history and physical examination needed",
+                "label_info_text": "A STI risk assessment: medical history and physical examination is Class A: Essential and mandatory in all circumstances for safe and effective use of the contraceptive method.",
+                "label_text_style": "normal",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_sti_hiv_screening",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "STI/HIV screening: laboratory tests needed",
+                "label_info_text": "A STI/HIV screening: laboratory tests is Class B: The examination or test contributes substantially to safe and effective use, but implementation may be considered within the public health and/or service context. The risk of not performing the examination or test should be balanced against the benefits of making the contraceptive method available, meaning they contributes substantially to safe and effective use.",
+                "label_text_style": "normal",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_haemoglobin_test",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Haemoglobin test needed",
+                "label_info_text": "A haemoglobin test is Class B: The examination or test contributes substantially to safe and effective use, but implementation may be considered within the public health and/or service context. The risk of not performing the examination or test should be balanced against the benefits of making the contraceptive method available, meaning they contributes substantially to safe and effective use.",
+                "label_text_style": "normal",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_in_healthy_women",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Blood pressure screening needed",
+                "label_info_text": "In healthy women, no examinations or tests are essential or mandatory before initiating this method. However, there is special consideration for blood pressure screening; it is desirable to have blood pressure measurements taken before initiation of this method. It is important to note that in settings where blood pressure measurements are unavailable, women should not be denied use of this method simply because their blood pressure cannot be measured.",
+                "label_text_style": "normal",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
             },
             {
                 "key": "pelvic_exam",
@@ -4077,6 +4391,13 @@
                         "text": "Not done"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": null
@@ -4084,27 +4405,46 @@
             },
             {
                 "key": "pelvic_exam_not_done",
-                "type": "spinner",
+                "type": "check_box",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "values": [
-                    "Provider not available",
-                    "Supplies not available",
-                    "Client refused",
-                    "Other"
+                "options": [
+                    {
+                        "key": "no_provider",
+                        "text": "Provider not available",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "no_supplies",
+                        "text": "Supplies not available",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "client_refused",
+                        "text": "Client refused",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "other",
+                        "text": "Other",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    }
                 ],
-                "keys": [
-                    "no_provider",
-                    "no_supplies",
-                    "client_refused",
-                    "other"
-                ],
-                "openmrs_choice_ids": {
-                    "no_provider": "NA",
-                    "no_supplies": "NA",
-                    "client_refused": "NA",
-                    "other": "NA"
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
                 },
                 "hint": "Reason pelvic/genital examination was not done",
                 "v_required": {
@@ -4119,6 +4459,13 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "label": "STI risk assessment: medical history and physical examination done",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "options": [
                     {
                         "key": "done",
@@ -4142,27 +4489,46 @@
             },
             {
                 "key": "sti_assess_phys_exam_not_done",
-                "type": "spinner",
+                "type": "check_box",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "values": [
-                    "Provider not available",
-                    "Supplies not available",
-                    "Client refused",
-                    "Other"
+                "options": [
+                    {
+                        "key": "no_provider",
+                        "text": "Provider not available",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "no_supplies",
+                        "text": "Supplies not available",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "client_refused",
+                        "text": "Client refused",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "other",
+                        "text": "Other",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    }
                 ],
-                "keys": [
-                    "no_provider",
-                    "no_supplies",
-                    "client_refused",
-                    "other"
-                ],
-                "openmrs_choice_ids": {
-                    "no_provider": "NA",
-                    "no_supplies": "NA",
-                    "client_refused": "NA",
-                    "other": "NA"
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
                 },
                 "hint": "Reason STI risk assessment: medical history and physical examination was not done",
                 "v_required": {
@@ -4193,6 +4559,13 @@
                         "text": "Not done"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": null
@@ -4200,27 +4573,46 @@
             },
             {
                 "key": "sti_hiv_screening_not_done",
-                "type": "spinner",
+                "type": "check_box",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "values": [
-                    "Provider not available",
-                    "Supplies not available",
-                    "Client refused",
-                    "Other"
+                "options": [
+                    {
+                        "key": "no_provider",
+                        "text": "Provider not available",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "no_supplies",
+                        "text": "Supplies not available",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "client_refused",
+                        "text": "Client refused",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "other",
+                        "text": "Other",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    }
                 ],
-                "keys": [
-                    "no_provider",
-                    "no_supplies",
-                    "client_refused",
-                    "other"
-                ],
-                "openmrs_choice_ids": {
-                    "no_provider": "NA",
-                    "no_supplies": "NA",
-                    "client_refused": "NA",
-                    "other": "NA"
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
                 },
                 "hint": "Reason STI/HIV screening: laboratory tests were not done",
                 "v_required": {
@@ -4251,6 +4643,13 @@
                         "text": "Not done"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": null
@@ -4258,27 +4657,46 @@
             },
             {
                 "key": "hb_test_not_done",
-                "type": "spinner",
+                "type": "check_box",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "values": [
-                    "Provider not available",
-                    "Supplies not available",
-                    "Client refused",
-                    "Other"
+                "options": [
+                    {
+                        "key": "no_provider",
+                        "text": "Provider not available",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "no_supplies",
+                        "text": "Supplies not available",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "client_refused",
+                        "text": "Client refused",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "other",
+                        "text": "Other",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    }
                 ],
-                "keys": [
-                    "no_provider",
-                    "no_supplies",
-                    "client_refused",
-                    "other"
-                ],
-                "openmrs_choice_ids": {
-                    "no_provider": "NA",
-                    "no_supplies": "NA",
-                    "client_refused": "NA",
-                    "other": "NA"
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
                 },
                 "hint": "Reason haemoglobin test was not done",
                 "v_required": {
@@ -4309,6 +4727,13 @@
                         "text": "Not done"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": null
@@ -4316,27 +4741,46 @@
             },
             {
                 "key": "bp_screening_not_done",
-                "type": "spinner",
+                "type": "check_box",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "values": [
-                    "Provider not available",
-                    "Supplies not available",
-                    "Client refused",
-                    "Other"
+                "options": [
+                    {
+                        "key": "no_provider",
+                        "text": "Provider not available",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "no_supplies",
+                        "text": "Supplies not available",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "client_refused",
+                        "text": "Client refused",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "other",
+                        "text": "Other",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    }
                 ],
-                "keys": [
-                    "no_provider",
-                    "no_supplies",
-                    "client_refused",
-                    "other"
-                ],
-                "openmrs_choice_ids": {
-                    "no_provider": "NA",
-                    "no_supplies": "NA",
-                    "client_refused": "NA",
-                    "other": "NA"
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
                 },
                 "hint": "Reason blood pressure screening was not done",
                 "v_required": {
@@ -4736,7 +5180,7 @@
             },
             {
                 "key": "methods_exit_secondary_m",
-                "type": "spinner",
+                "type": "check_box",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
@@ -5405,13 +5849,6 @@
                             "rules-file": "fp-visit-calculations-rules.yml"
                         }
                     }
-                },
-                "relevance": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-relevance-rules.yml"
-                        }
-                    }
                 }
             },
             {
@@ -5424,13 +5861,6 @@
                     "rules-engine": {
                         "ex-rules": {
                             "rules-file": "fp-visit-calculations-rules.yml"
-                        }
-                    }
-                },
-                "relevance": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-relevance-rules.yml"
                         }
                     }
                 }
@@ -5447,13 +5877,6 @@
                             "rules-file": "fp-visit-calculations-rules.yml"
                         }
                     }
-                },
-                "relevance": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-relevance-rules.yml"
-                        }
-                    }
                 }
             },
             {
@@ -5466,13 +5889,6 @@
                     "rules-engine": {
                         "ex-rules": {
                             "rules-file": "fp-visit-calculations-rules.yml"
-                        }
-                    }
-                },
-                "relevance": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-relevance-rules.yml"
                         }
                     }
                 }
@@ -5489,13 +5905,6 @@
                             "rules-file": "fp-visit-calculations-rules.yml"
                         }
                     }
-                },
-                "relevance": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-relevance-rules.yml"
-                        }
-                    }
                 }
             },
             {
@@ -5510,13 +5919,6 @@
                             "rules-file": "fp-visit-calculations-rules.yml"
                         }
                     }
-                },
-                "relevance": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-relevance-rules.yml"
-                        }
-                    }
                 }
             },
             {
@@ -5529,13 +5931,6 @@
                     "rules-engine": {
                         "ex-rules": {
                             "rules-file": "fp-visit-calculations-rules.yml"
-                        }
-                    }
-                },
-                "relevance": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-relevance-rules.yml"
                         }
                     }
                 }
@@ -5612,6 +6007,13 @@
                         "text": "No"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": null
@@ -5649,6 +6051,13 @@
                         "text": "Referral for other general services"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": null
@@ -5663,6 +6072,13 @@
                 "edit_type": "name",
                 "min_date": "today",
                 "hint": "Date of scheduled referral appointment",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -5676,6 +6092,13 @@
                 "openmrs_entity_parent": "",
                 "edit_type": "name",
                 "hint": "Location of scheduled referral appointment",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -5690,6 +6113,13 @@
                 "edit_type": "name",
                 "value": "today",
                 "hint": "Date referral was made",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -5703,6 +6133,13 @@
                 "openmrs_entity_parent": "",
                 "edit_type": "name",
                 "hint": "Provider who made referral",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -5716,6 +6153,13 @@
                 "openmrs_entity_parent": "",
                 "edit_type": "name",
                 "hint": "Provider's facility",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -5729,6 +6173,13 @@
                 "openmrs_entity_parent": "",
                 "edit_type": "number",
                 "hint": "Provider's telephone number",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -5742,6 +6193,13 @@
                 "openmrs_entity_parent": "",
                 "edit_type": "name",
                 "hint": "Referral notes",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": "Field required"

@@ -219,6 +219,7 @@ public class Utils extends org.smartregister.util.Utils {
             personObjectClient.put("client_id", "1341502");
             personObjectClient.put(DBConstantsUtils.KeyUtils.GENDER, "Female");
             personObjectClient.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, "0");
+            personObjectClient.put(DBConstantsUtils.KeyUtils.REFERRAL, "yes");
 
             Intent intent = new Intent(context.getApplicationContext(), StartVisitJsonFormActivity.class);
 
@@ -338,6 +339,7 @@ public class Utils extends org.smartregister.util.Utils {
                 globals.put(ConstantsUtils.PREVIOUS_CONTACT_NO, contactNo > 1 ? String.valueOf(contactNo - 1) : "0");
                 globals.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER));
                 globals.put(DBConstantsUtils.KeyUtils.GENDER, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER));
+                globals.put(DBConstantsUtils.KeyUtils.REFERRAL, personObjectClient.get(DBConstantsUtils.KeyUtils.REFERRAL));
 
 
                 String lastContactDate = personObjectClient.get(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE);
