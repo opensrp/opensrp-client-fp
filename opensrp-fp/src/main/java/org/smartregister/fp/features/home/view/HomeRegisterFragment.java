@@ -71,10 +71,12 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
     }
 
     @Override
-    public void setUniqueID(String qrCode) { }
+    public void setUniqueID(String qrCode) {
+    }
 
     @Override
-    public void setAdvancedSearchFormData(HashMap<String, String> formData) { }
+    public void setAdvancedSearchFormData(HashMap<String, String> formData) {
+    }
 
     @Override
     public void setupViews(View view) {
@@ -146,11 +148,9 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
             new AttentionFlagsTask(baseHomeRegisterActivity, pc).execute();
         } else if (view.getId() == R.id.filter_text_view) {
             baseHomeRegisterActivity.switchToFragment(BaseRegisterActivity.SORT_FILTER_POSITION);
-        }
-        else if (view.getId() == R.id.due_only_text_view) {
+        } else if (view.getId() == R.id.due_only_text_view) {
 
-        }
-        else if (view.getId() == R.id.popup_menu) {
+        } else if (view.getId() == R.id.popup_menu) {
 
             if (popupMenu == null) {
                 popupMenu = new PopupMenu(getActivity(), view);
@@ -161,8 +161,7 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
                     if (item.getItemId() == R.id.btn_sync) {
                         SyncServiceJob.scheduleJobImmediately(SyncServiceJob.TAG);
                         SyncSettingsServiceJob.scheduleJobImmediately(SyncSettingsServiceJob.TAG);
-                    }
-                    else if (item.getItemId() == R.id.btn_logout) {
+                    } else if (item.getItemId() == R.id.btn_logout) {
                         DrishtiApplication.getInstance().logoutCurrentUser();
                     }
 
@@ -215,17 +214,7 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         final AdvancedMatrixCursor matrixCursor = ((RegisterFragmentPresenter) presenter).getMatrixCursor();
         if (!globalQrSearch || matrixCursor == null) {
-            if (id == LOADER_ID) {
-                return new CursorLoader(getActivity()) {
-                    @Override
-                    public Cursor loadInBackground() {
-                        String query = filterAndSortQuery();
-                        return commonRepository().rawCustomQueryForAdapter(query);
-                    }
-                };
-            } else {
-                return null;
-            }
+            return super.onCreateLoader(id, args);
         } else {
             globalQrSearch = false;
             if (id == RecyclerViewFragment.LOADER_ID) {// Returns a new CursorLoader
@@ -240,37 +229,6 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
         }
     }
 
-    private String filterAndSortQuery() {
-        SmartRegisterQueryBuilder registerQueryBuilder = new SmartRegisterQueryBuilder(mainSelect);
-
-        String query = "";
-        try {
-            if (isValidFilterForFts(commonRepository())) {
-                String sql = FPLibrary.getInstance().getRegisterQueryProvider().getObjectIdsQuery(mainCondition, filters) + (StringUtils.isBlank(getDefaultSortQuery()) ? "" : " order by " + getDefaultSortQuery());
-                sql = registerQueryBuilder.addlimitandOffset(sql, clientAdapter.getCurrentlimit(), clientAdapter.getCurrentoffset());
-                //List<String> ids = commonRepository().findSearchIds(sql);
-                query = FPLibrary.getInstance().getRegisterQueryProvider().mainRegisterQuery() + " order by " + getDefaultSortQuery();
-
-                //String joinedIds = "'" + StringUtils.join(ids, "','") + "'";
-                //return query.replace("%s", joinedIds);
-                return query;
-            } else {
-                if (!TextUtils.isEmpty(filters) && TextUtils.isEmpty(Sortqueries)) {
-                    registerQueryBuilder.addCondition(filters);
-                    query = registerQueryBuilder.orderbyCondition(Sortqueries);
-                    query = registerQueryBuilder.Endquery(registerQueryBuilder.addlimitandOffset(query
-                            , clientAdapter.getCurrentlimit()
-                            , clientAdapter.getCurrentoffset()));
-                }
-                return query;
-            }
-        } catch (Exception e) {
-            Timber.e(e);
-        }
-
-        return query;
-    }
-
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         // block super call due to the bug
@@ -279,9 +237,6 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
 
     @Override
     public void onSyncComplete(FetchStatus fetchStatus) {
-        if (fetchStatus == FetchStatus.fetched || fetchStatus == FetchStatus.nothingFetched) {
-
-        }
         if (popupMenu != null) {
             popupMenu.getMenu().findItem(R.id.btn_sync).setTitle(String.format(getString(R.string.last_synced), new SimpleDateFormat("hh:mm a", Utils.getDefaultLocale()).format(new Date()), new SimpleDateFormat("MMM dd", Utils.getDefaultLocale()).format(new Date())));
         }

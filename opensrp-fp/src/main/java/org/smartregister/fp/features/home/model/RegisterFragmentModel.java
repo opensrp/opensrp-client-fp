@@ -35,9 +35,6 @@ import java.util.Set;
 import static org.smartregister.fp.common.util.ConstantsUtils.GLOBAL_IDENTIFIER;
 
 
-/**
- * Created by keyman on 12/07/2018.
- */
 public class RegisterFragmentModel implements RegisterFragmentContract.Model {
 
     @Override
@@ -67,15 +64,21 @@ public class RegisterFragmentModel implements RegisterFragmentContract.Model {
     @Override
     public String mainSelect(String tableName, String mainCondition) {
         SmartRegisterQueryBuilder queryBuilder = new SmartRegisterQueryBuilder();
-        String[] columns = new String[]{tableName + "." + DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH,
-                tableName + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, tableName + "." + DBConstantsUtils.KeyUtils.FIRST_NAME,
-                tableName + "." + DBConstantsUtils.KeyUtils.LAST_NAME, tableName + "." + DBConstantsUtils.KeyUtils.FP_ID,
-                tableName + "." + DBConstantsUtils.KeyUtils.DOB, tableName + "." + DBConstantsUtils.KeyUtils.DATE_REMOVED/*, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.PHONE_NUMBER,
-                getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.ALT_NAME,
-                getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.EDD, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.RED_FLAG_COUNT,
-                getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.CONTACT_STATUS,
-                getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.NEXT_CONTACT, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE,
-                getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE*/};
+        String[] columns = new String[]
+                {tableName + ".relationalid", tableName + "." + DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH,
+                        tableName + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, tableName + "." + DBConstantsUtils.KeyUtils.CLIENT_ID,
+                        tableName + "." + DBConstantsUtils.KeyUtils.CLIENT_ID_NOTE, tableName + "." + DBConstantsUtils.KeyUtils.FIRST_NAME,
+                        tableName + "." + DBConstantsUtils.KeyUtils.LAST_NAME, tableName + "." + DBConstantsUtils.KeyUtils.DOB,
+                        tableName + "." + DBConstantsUtils.KeyUtils.AGE_ENTERED, tableName + "." + DBConstantsUtils.KeyUtils.DOB_UNKNOWN,
+                        tableName + "." + DBConstantsUtils.KeyUtils.REGISTRATION_DATE, tableName + "." + DBConstantsUtils.KeyUtils.REFERRAL,
+                        tableName + "." + DBConstantsUtils.KeyUtils.REFERRED_BY, tableName + "." + DBConstantsUtils.KeyUtils.UNIVERSAL_ID,
+                        tableName + "." + DBConstantsUtils.KeyUtils.AGE_FROM_DOB, tableName + "." + DBConstantsUtils.KeyUtils.DOB_FROM_AGE,
+                        tableName + "." + DBConstantsUtils.KeyUtils.AGE, tableName + "." + DBConstantsUtils.KeyUtils.GENDER,
+                        tableName + "." + DBConstantsUtils.KeyUtils.BIOLOGICAL_SEX, tableName + "." + DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE,
+                        tableName + "." + DBConstantsUtils.KeyUtils.MARITAL_STATUS, tableName + "." + DBConstantsUtils.KeyUtils.ADMIN_AREA,
+                        tableName + "." + DBConstantsUtils.KeyUtils.CLIENT_ADDRESS, tableName + "." + DBConstantsUtils.KeyUtils.TEL_NUMBER,
+                        tableName + "." + DBConstantsUtils.KeyUtils.COMM_CONSENT, tableName + "." + DBConstantsUtils.KeyUtils.REMINDER_MESSAGE,
+                        tableName + "." + DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH, tableName + "." + DBConstantsUtils.KeyUtils.DATE_REMOVED};
         queryBuilder.SelectInitiateMainTable(tableName, columns);
         /*queryBuilder.customJoin(" join " + getRegisterQueryProvider().getDetailsTable()
                 + " on " + getRegisterQueryProvider().getDemographicTable() + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + "= " + getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID); */
@@ -191,7 +194,6 @@ public class RegisterFragmentModel implements RegisterFragmentContract.Model {
             Log.e(getClass().getName(), "", e);
         }
         return null;
-
     }
 
     private String getJsonString(JSONObject jsonObject, String field) {
@@ -208,7 +210,6 @@ public class RegisterFragmentModel implements RegisterFragmentContract.Model {
             Log.e(getClass().getName(), "", e);
         }
         return "";
-
     }
 
     private JSONObject getJsonObject(JSONObject jsonObject, String field) {
