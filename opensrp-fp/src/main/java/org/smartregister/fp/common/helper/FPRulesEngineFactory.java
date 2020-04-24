@@ -13,14 +13,14 @@ import java.util.Map;
 
 public class FPRulesEngineFactory extends RulesEngineFactory {
     private Map<String, String> globalValues;
-    private AncRulesEngineHelper ancRulesEngineHelper;
+    private FPRulesEngineHelper FPRulesEngineHelper;
     private String selectedRuleName;
 
 
     public FPRulesEngineFactory(Context context, Map<String, String> globalValues, JSONObject mJSONObject) {
         super(context, globalValues);
-        this.ancRulesEngineHelper = new AncRulesEngineHelper(context);
-        this.ancRulesEngineHelper.setJsonObject(mJSONObject);
+        this.FPRulesEngineHelper = new FPRulesEngineHelper(context);
+        this.FPRulesEngineHelper.setJsonObject(mJSONObject);
         this.globalValues = globalValues;
 
     }
@@ -37,7 +37,7 @@ public class FPRulesEngineFactory extends RulesEngineFactory {
 
         selectedRuleName = facts.get(RuleConstant.SELECTED_RULE);
 
-        facts.put("helper", ancRulesEngineHelper);
+        facts.put("helper", FPRulesEngineHelper);
         return facts;
     }
 

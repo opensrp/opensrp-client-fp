@@ -937,7 +937,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         sectionDetailTitle.setText(template.title);
         sectionDetails.setText(output);//Perhaps refactor to use Json Form Parser Implementation
 
-        if (FPLibrary.getInstance().getAncRulesEngineHelper().getRelevance(facts, yamlConfigItem.getIsRedFont())) {
+        if (FPLibrary.getInstance().getFPRulesEngineHelper().getRelevance(facts, yamlConfigItem.getIsRedFont())) {
             sectionDetailTitle.setTextColor(context.getResources().getColor(R.color.overview_font_red));
             sectionDetails.setTextColor(context.getResources().getColor(R.color.overview_font_red));
         } else {

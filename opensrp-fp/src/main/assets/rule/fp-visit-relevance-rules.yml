@@ -97,6 +97,107 @@ condition: "(step3_never_used_contraception == 'no' && global_method_gender_type
 actions:
   - "isRelevant = true"
 ---
+name: step3_sex_active
+description: Whether or not the client is sexually active.
+priority: 1
+condition: "(step3_ever_had_sex == 'yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_days_unprotect_sex
+description: Days since unprotected sex
+priority: 1
+condition: "(global_gender == 'Female' && step1_reason_for_visit.contains('emergency_contraception'))"
+actions:
+  - "isRelevant = true"
+---
+name: step3_gravida
+description: The number of pregnancies, current and past, regardless of pregnancy outcome.
+priority: 1
+condition: "(global_gender == 'Female' && step3_ever_had_sex == 'yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_parity
+description: The number of pregnancies reaching parity. Zero births is defined as nulliparous. 1 or more births, the client is parous.
+priority: 1
+condition: "(global_gender == 'Female' && step3_gravida > 0)"
+actions:
+  - "isRelevant = true"
+---
+name: step3_delivered_last_six_months
+description: Whether the client has deliverd a baby within the past 6 months.
+priority: 1
+condition: "(global_gender == 'Female' && step3_parity > 0)"
+actions:
+  - "isRelevant = true"
+---
+name: step3_delivery_date
+description: If the client has delivered in the past 6 months, the date in which she delivered
+priority: 1
+condition: "(step3_delivered_last_six_months == 'yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_breastfeeding
+description: Select if a woman is currently breastfeeding.
+priority: 1
+condition: "(global_gender == 'Female')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_breastfeeding_status
+description: Describe the woman's breastfeeding status
+priority: 1
+condition: "(step3_breastfeeding == 'yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_recent_miscarriage_abortion
+description: Select if the woman had an abortion or a miscarriage within the past 4 weeks
+priority: 1
+condition: "(global_gender == 'Female')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_date_miscarriage_abortion
+description: If the woman had a miscarriage or abortion, when the miscarriage or abortion took place.
+priority: 1
+condition: "(step3_recent_miscarriage_abortion == 'yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_miscarriage_abortion_preg_stage
+description: If the woman recently had a miscarriage or abortion, when in the pregnancy the abortion took place.
+priority: 1
+condition: "(step3_recent_miscarriage_abortion == 'yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_start_date_last_menses
+description: First day of last normal menses.
+priority: 1
+condition: "(global_gender == 'Female')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_missed_menses
+description: Calculated field to determine the number of days since the woman's last normal period started.
+priority: 1
+condition: "(global_gender == 'Female')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_amenorrhea
+description: Calculated field to determine the number of days since the woman's last normal period started.
+priority: 1
+condition: "(global_gender == 'Female')"
+actions:
+  - "isRelevant = true"
+---
+
+
+
 name: step5_issues_concerns_f
 description: This field will be shown if reason for visit contains issues & concerns and method_gender_type female
 priority: 1

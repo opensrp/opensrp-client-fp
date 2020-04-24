@@ -5,6 +5,9 @@ priority: 1
 condition: "true"
 actions:
   - "calculation = ['bmi': (step2_weight / ((step2_height/100)^2))]"
+
+
+
 ---
 name: step3_method_at_intake
 description: method at intake
@@ -48,6 +51,33 @@ condition: "true"
 actions:
   - "calculation = (global_method_gender_type == 'Female' ? prior_methods_used_f : prior_methods_used_m)"
 ---
+name: step3_postpartum
+description: Calculated field to determine if the woman is postpartum (less than 6 weeks since delivery).
+priority: 1
+condition: "(step3_delivered_last_six_months == 'yes')"
+actions:
+  - "calculation = (helper.getDifferenceDays(step3_delivery_date) < 42 ? 1 : 0)"
+---
+name: step3_days_postpartum
+description: Calculated field to determine the number of days postpartum the woman is.
+priority: 1
+condition: "(step3_delivered_last_six_months == 'yes')"
+actions:
+  - "calculation = (helper.getDifferenceDays(step3_delivery_date))"
+---
+name: step3_days_since_last_menses
+description: Calculated field to determine the number of days since the woman's last normal period started.
+priority: 1
+condition: "(global_gender == 'Female')"
+actions:
+  - "calculation = (helper.getDifferenceDays(step3_start_date_last_menses))"
+---
+
+
+
+
+
+
 name: step7_lng_iud_start_other
 description: Calculated field to determine whether the woman who is being provided with an LNG-IUD can start the method now.
 priority: 1

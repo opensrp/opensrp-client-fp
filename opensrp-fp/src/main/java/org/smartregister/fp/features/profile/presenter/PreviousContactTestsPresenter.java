@@ -96,7 +96,7 @@ public class PreviousContactTestsPresenter implements PreviousContactsTests.Pres
             }
 
             for (YamlConfigItem yamlConfigItem : testsConfig.getFields()) {
-                if (FPLibrary.getInstance().getAncRulesEngineHelper()
+                if (FPLibrary.getInstance().getFPRulesEngineHelper()
                         .getRelevance(facts, yamlConfigItem.getRelevance())) {
                     yamlConfigList.add(new YamlConfigWrapper(null, null, yamlConfigItem, ""));
                     valueCount = +1;

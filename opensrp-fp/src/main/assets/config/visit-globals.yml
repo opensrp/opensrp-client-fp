@@ -1,4 +1,5 @@
 ---
 form: fp_start_visit
 fields:
+  - "gender"
   - "method_gender_type"

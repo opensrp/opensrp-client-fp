@@ -337,6 +337,7 @@ public class Utils extends org.smartregister.util.Utils {
                 globals.put(ConstantsUtils.KeyUtils.CONTACT_NO, String.valueOf(contactNo));
                 globals.put(ConstantsUtils.PREVIOUS_CONTACT_NO, contactNo > 1 ? String.valueOf(contactNo - 1) : "0");
                 globals.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER));
+                globals.put(DBConstantsUtils.KeyUtils.GENDER, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER));
 
 
                 String lastContactDate = personObjectClient.get(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE);
@@ -541,7 +542,7 @@ public class Utils extends org.smartregister.util.Utils {
             AlertRule alertRule = new AlertRule(gestationAge, nextContactDate);
             alertStatus =
                     StringUtils.isNotBlank(contactStatus) && ConstantsUtils.AlertStatusUtils.ACTIVE.equals(contactStatus) ?
-                            ConstantsUtils.AlertStatusUtils.IN_PROGRESS : FPLibrary.getInstance().getAncRulesEngineHelper()
+                            ConstantsUtils.AlertStatusUtils.IN_PROGRESS : FPLibrary.getInstance().getFPRulesEngineHelper()
                             .getButtonAlertStatus(alertRule, ConstantsUtils.RulesFileUtils.ALERT_RULES);
         } else {
             alertStatus = StringUtils.isNotBlank(contactStatus) ? ConstantsUtils.AlertStatusUtils.IN_PROGRESS : "DEAD";

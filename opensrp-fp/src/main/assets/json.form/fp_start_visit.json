@@ -514,49 +514,6 @@
         "next": "step4",
         "fields": [
             {
-                "key": "dummy",
-                "type": "toaster_notes",
-                "openmrs_entity": "",
-                "openmrs_entity_id": "",
-                "openmrs_entity_parent": "",
-                "text": "still on {method_on_file}?",
-                "calculation": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-calculations-rules.yml"
-                        }
-                    }
-                }
-            },
-            {
-                "key": "method_at_intake",
-                "type": "hidden",
-                "openmrs_entity": "",
-                "openmrs_entity_id": "",
-                "openmrs_entity_parent": "",
-                "calculation": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-calculations-rules.yml"
-                        }
-                    }
-                }
-            },
-            {
-                "key": "on_another_method",
-                "type": "hidden",
-                "openmrs_entity": "",
-                "openmrs_entity_id": "",
-                "openmrs_entity_parent": "",
-                "calculation": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-calculations-rules.yml"
-                        }
-                    }
-                }
-            },
-            {
                 "key": "method_on_file",
                 "type": "hidden",
                 "openmrs_entity": "",
@@ -813,6 +770,20 @@
                 "v_required": {
                     "value": "true",
                     "err": null
+                }
+            },
+            {
+                "key": "method_at_intake",
+                "type": "hidden",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
                 }
             },
             {
@@ -1107,6 +1078,20 @@
                 }
             },
             {
+                "key": "on_another_method",
+                "type": "hidden",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
                 "key": "current_method",
                 "type": "hidden",
                 "openmrs_entity": "",
@@ -1197,20 +1182,6 @@
                         }
                     }
                 }
-            },
-            {
-                "key": "postpartum",
-                "type": "hidden",
-                "openmrs_entity": "",
-                "openmrs_entity_id": "",
-                "openmrs_entity_parent": ""
-            },
-            {
-                "key": "days_postpartum",
-                "type": "hidden",
-                "openmrs_entity": "",
-                "openmrs_entity_id": "",
-                "openmrs_entity_parent": ""
             },
             {
                 "key": "reason_no_method",
@@ -1427,20 +1398,6 @@
                 "v_required": {
                     "value": "true",
                     "err": null
-                }
-            },
-            {
-                "key": "prior_methods_used",
-                "type": "hidden",
-                "openmrs_entity": "",
-                "openmrs_entity_id": "",
-                "openmrs_entity_parent": "",
-                "calculation": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-calculations-rules.yml"
-                        }
-                    }
                 }
             },
             {
@@ -1679,12 +1636,28 @@
                 }
             },
             {
+                "key": "prior_methods_used",
+                "type": "hidden",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
                 "key": "ever_had_sex",
                 "type": "native_radio",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "label": "Ever had sex",
+                "label_info_text": "Whether or not the client has ever had sex before.",
+                "label_text_style": "normal",
                 "options": [
                     {
                         "key": "yes",
@@ -1709,6 +1682,15 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "label": "Sexually active",
+                "label_info_text": "Whether or not the client is sexually active now.",
+                "label_text_style": "normal",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "options": [
                     {
                         "key": "yes",
@@ -1733,10 +1715,17 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "edit_type": "number",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "hint": "Days since unprotected sex",
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -1746,10 +1735,19 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "edit_type": "number",
+                "label_info_text": "The number of pregnancies, current and past, regardless of pregnancy outcome.",
+                "label_text_style": "normal",
                 "hint": "Number of pregnancies",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -1760,9 +1758,18 @@
                 "openmrs_entity_parent": "",
                 "edit_type": "number",
                 "hint": "Number of births",
+                "label_info_text": "Including both live and stillbirths.",
+                "label_text_style": "normal",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -1788,9 +1795,63 @@
                         "text": "No"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
+                }
+            },
+            {
+                "key": "delivery_date",
+                "type": "date_picker",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "hint": "Date of delivery",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                }
+            },
+            {
+                "key": "postpartum",
+                "type": "hidden",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "days_postpartum",
+                "type": "hidden",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
                 }
             },
             {
@@ -1800,6 +1861,15 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "label": "Breastfeeding",
+                "label_info_text": "Whether or not the client is currently breastfeeding.",
+                "label_text_style": "normal",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "options": [
                     {
                         "key": "yes",
@@ -1818,7 +1888,7 @@
                 ],
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field Required"
                 }
             },
             {
@@ -1828,6 +1898,15 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "label": "Breastfeeding status",
+                "label_info_text": "Exclusive breastfeeding = Giving the infant only breast milk with no supplementation of any type - not even water - except for perhaps vitamins, minerals, or medication\n\nFully breastfeeding = The client is giving the infant breast milk almost exclusively but also water, juice, vitamins or other nutrients infrequently\n\nNearly fully breastfeeding = The client is giving the infant some liquid or food in addition to breast milk, but more than three-fourths (75%) of feedings are breastfeeds\n\nPartially breastfeeding = The client is breastfeeding less than nearly fully breastfeeding, giving the infant more supplementation with other liquids or food. Less than three-fourths (75%) of feedings are breastfeeds.",
+                "label_text_style": "normal",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "options": [
                     {
                         "key": "exclusive_breastfeeding",
@@ -1860,7 +1939,7 @@
                 ],
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -1870,6 +1949,15 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "label": "Recent miscarriage or abortion",
+                "label_info_text": "Whether or not the client had a miscarriage or abortion in the last 4 weeks.",
+                "label_text_style": "normal",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "options": [
                     {
                         "key": "yes",
@@ -1888,7 +1976,26 @@
                 ],
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
+                }
+            },
+            {
+                "key": "date_miscarriage_abortion",
+                "type": "date_picker",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "hint": "Date of miscarriage or abortion",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
                 }
             },
             {
@@ -1921,9 +2028,36 @@
                         "text": "Immediate post-septic abortion"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
+                }
+            },
+            {
+                "key": "start_date_last_menses",
+                "type": "date_picker",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "hint": "Start date of last normal menses",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
+                "max_date": "today",
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
                 }
             },
             {
@@ -1931,7 +2065,14 @@
                 "type": "hidden",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
-                "openmrs_entity_parent": ""
+                "openmrs_entity_parent": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                }
             },
             {
                 "key": "missed_menses",
@@ -1940,6 +2081,15 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "label": "Missed or late menses",
+                "label_info_text": "Whether or not the client has a missed or late menses.",
+                "label_text_style": "normal",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "options": [
                     {
                         "key": "yes",
@@ -1958,7 +2108,7 @@
                 ],
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -1968,6 +2118,15 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "label": "Amenorrhea",
+                "label_info_text": "If the woman has never had menses or if the woman has had no menses for 3 cycles over the time span of 6 months.",
+                "label_text_style": "normal",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "options": [
                     {
                         "key": "yes",
@@ -1986,7 +2145,7 @@
                 ],
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             }
         ]

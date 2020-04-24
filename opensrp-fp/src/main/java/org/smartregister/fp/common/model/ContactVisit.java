@@ -186,7 +186,7 @@ public class ContactVisit {
             YamlConfig attentionFlagConfig = (YamlConfig) ruleObject;
 
             for (YamlConfigItem yamlConfigItem : attentionFlagConfig.getFields()) {
-                if (FPLibrary.getInstance().getAncRulesEngineHelper().getRelevance(facts, yamlConfigItem.getRelevance())) {
+                if (FPLibrary.getInstance().getFPRulesEngineHelper().getRelevance(facts, yamlConfigItem.getRelevance())) {
                     Integer requiredFieldCount = attentionFlagCountMap.get(attentionFlagConfig.getGroup());
                     requiredFieldCount = requiredFieldCount == null ? 1 : ++requiredFieldCount;
                     attentionFlagCountMap.put(attentionFlagConfig.getGroup(), requiredFieldCount);

@@ -18,7 +18,7 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.reflect.Whitebox;
 import org.robolectric.RuntimeEnvironment;
 import org.smartregister.fp.activity.BaseUnitTest;
-import org.smartregister.fp.common.helper.AncRulesEngineHelper;
+import org.smartregister.fp.common.helper.FPRulesEngineHelper;
 import org.smartregister.fp.common.rule.AlertRule;
 import org.smartregister.fp.common.rule.ContactRule;
 import org.smartregister.fp.common.util.ConstantsUtils;
@@ -34,11 +34,11 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by ndegwamartin on 09/11/2018.
  */
-public class AncRulesEngineHelperTest extends BaseUnitTest {
+public class FPRulesEngineHelperTest extends BaseUnitTest {
 
     private static final String ALERT_RULE_FIELD_TODAY_DATE = "todayDate";
 
-    private AncRulesEngineHelper ancRulesEngineHelper;
+    private FPRulesEngineHelper fpRulesEngineHelper;
 
     @Mock
     private Rules rules;
@@ -55,21 +55,21 @@ public class AncRulesEngineHelperTest extends BaseUnitTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        ancRulesEngineHelper = new AncRulesEngineHelper(RuntimeEnvironment.application);
+        fpRulesEngineHelper = new FPRulesEngineHelper(RuntimeEnvironment.application);
     }
 
     @Test
     public void testRulesEngineHelperConstructorCreatesValidInstance() {
-        Assert.assertNotNull(ancRulesEngineHelper);
+        Assert.assertNotNull(fpRulesEngineHelper);
     }
 
     @Test
     public void testProcessInferentialRulesInvokesCorrectRulesEngineWithCorrectParameters() {
 
-        Whitebox.setInternalState(ancRulesEngineHelper, "inferentialRulesEngine", inferentialRulesEngine);
-        Whitebox.setInternalState(ancRulesEngineHelper, "defaultRulesEngine", defaultRulesEngine);
+        Whitebox.setInternalState(fpRulesEngineHelper, "inferentialRulesEngine", inferentialRulesEngine);
+        Whitebox.setInternalState(fpRulesEngineHelper, "defaultRulesEngine", defaultRulesEngine);
 
-        ancRulesEngineHelper.processInferentialRules(rules, facts);
+        fpRulesEngineHelper.processInferentialRules(rules, facts);
 
         Mockito.verify(inferentialRulesEngine).fire(rules, facts);
         Mockito.verify(defaultRulesEngine, Mockito.times(0)).fire(rules, facts);
@@ -78,10 +78,10 @@ public class AncRulesEngineHelperTest extends BaseUnitTest {
     @Test
     public void testProcessDefaultRulesInvokesCorrectRulesEngineWithCorrectParameters() {
 
-        Whitebox.setInternalState(ancRulesEngineHelper, "inferentialRulesEngine", inferentialRulesEngine);
-        Whitebox.setInternalState(ancRulesEngineHelper, "defaultRulesEngine", defaultRulesEngine);
+        Whitebox.setInternalState(fpRulesEngineHelper, "inferentialRulesEngine", inferentialRulesEngine);
+        Whitebox.setInternalState(fpRulesEngineHelper, "defaultRulesEngine", defaultRulesEngine);
 
-        ancRulesEngineHelper.processDefaultRules(rules, facts);
+        fpRulesEngineHelper.processDefaultRules(rules, facts);
 
         Mockito.verify(defaultRulesEngine).fire(rules, facts);
         Mockito.verify(inferentialRulesEngine, Mockito.times(0)).fire(rules, facts);
@@ -94,7 +94,7 @@ public class AncRulesEngineHelperTest extends BaseUnitTest {
         AlertRule alertRule = new AlertRule(30, "2019-07-09");
         Whitebox.setInternalState(alertRule, ALERT_RULE_FIELD_TODAY_DATE, new LocalDate("2018-11-09"));
 
-        String buttonAlertStatus = ancRulesEngineHelper.getButtonAlertStatus(alertRule, ConstantsUtils.RulesFileUtils.ALERT_RULES);
+        String buttonAlertStatus = fpRulesEngineHelper.getButtonAlertStatus(alertRule, ConstantsUtils.RulesFileUtils.ALERT_RULES);
 
         assertEquals(ConstantsUtils.AlertStatusUtils.NOT_DUE, buttonAlertStatus);
     }
@@ -106,7 +106,7 @@ public class AncRulesEngineHelperTest extends BaseUnitTest {
         AlertRule alertRule = new AlertRule(30, "2018-11-09");
         Whitebox.setInternalState(alertRule, ALERT_RULE_FIELD_TODAY_DATE, new LocalDate("2018-11-09"));
 
-        String buttonAlertStatus = ancRulesEngineHelper.getButtonAlertStatus(alertRule, ConstantsUtils.RulesFileUtils.ALERT_RULES);
+        String buttonAlertStatus = fpRulesEngineHelper.getButtonAlertStatus(alertRule, ConstantsUtils.RulesFileUtils.ALERT_RULES);
 
         assertEquals(ConstantsUtils.AlertStatusUtils.DUE, buttonAlertStatus);
     }
@@ -119,7 +119,7 @@ public class AncRulesEngineHelperTest extends BaseUnitTest {
         AlertRule alertRule = new AlertRule(30, "2018-11-01");
         Whitebox.setInternalState(alertRule, ALERT_RULE_FIELD_TODAY_DATE, new LocalDate("2018-11-09"));
 
-        String buttonAlertStatus = ancRulesEngineHelper.getButtonAlertStatus(alertRule, ConstantsUtils.RulesFileUtils.ALERT_RULES);
+        String buttonAlertStatus = fpRulesEngineHelper.getButtonAlertStatus(alertRule, ConstantsUtils.RulesFileUtils.ALERT_RULES);
 
         assertEquals(ConstantsUtils.AlertStatusUtils.OVERDUE, buttonAlertStatus);
     }
@@ -132,7 +132,7 @@ public class AncRulesEngineHelperTest extends BaseUnitTest {
         AlertRule alertRule = new AlertRule(41, "2018-11-11");
         Whitebox.setInternalState(alertRule, ALERT_RULE_FIELD_TODAY_DATE, new LocalDate("2018-11-12"));
 
-        String buttonAlertStatus = ancRulesEngineHelper.getButtonAlertStatus(alertRule, ConstantsUtils.RulesFileUtils.ALERT_RULES);
+        String buttonAlertStatus = fpRulesEngineHelper.getButtonAlertStatus(alertRule, ConstantsUtils.RulesFileUtils.ALERT_RULES);
 
         assertEquals(ConstantsUtils.AlertStatusUtils.DELIVERY_DUE, buttonAlertStatus);
     }
@@ -144,7 +144,7 @@ public class AncRulesEngineHelperTest extends BaseUnitTest {
         AlertRule alertRule = new AlertRule(42, "2018-11-04");
         Whitebox.setInternalState(alertRule, ALERT_RULE_FIELD_TODAY_DATE, new LocalDate("2018-11-11"));
 
-        String buttonAlertStatus = ancRulesEngineHelper.getButtonAlertStatus(alertRule, ConstantsUtils.RulesFileUtils.ALERT_RULES);
+        String buttonAlertStatus = fpRulesEngineHelper.getButtonAlertStatus(alertRule, ConstantsUtils.RulesFileUtils.ALERT_RULES);
 
         assertEquals(ConstantsUtils.AlertStatusUtils.EXPIRED, buttonAlertStatus);
     }
@@ -157,7 +157,7 @@ public class AncRulesEngineHelperTest extends BaseUnitTest {
         AlertRule alertRule = new AlertRule(42, "2018-10-09");
         Whitebox.setInternalState(alertRule, ALERT_RULE_FIELD_TODAY_DATE, new LocalDate("2018-11-09"));
 
-        String buttonAlertStatus = ancRulesEngineHelper.getButtonAlertStatus(alertRule, ConstantsUtils.RulesFileUtils.ALERT_RULES);
+        String buttonAlertStatus = fpRulesEngineHelper.getButtonAlertStatus(alertRule, ConstantsUtils.RulesFileUtils.ALERT_RULES);
 
         assertEquals(ConstantsUtils.AlertStatusUtils.EXPIRED, buttonAlertStatus);
     }
@@ -167,13 +167,13 @@ public class AncRulesEngineHelperTest extends BaseUnitTest {
 
         ContactRule contactRule = new ContactRule(20, true, DUMMY_BASE_ENTITY_ID);
 
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        List<Integer> scheduleWeeksList = ancRulesEngineHelperSpy
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        List<Integer> scheduleWeeksList = fpRulesEngineHelperSpy
                 .getContactVisitSchedule(contactRule, ConstantsUtils.RulesFileUtils.CONTACT_RULES);
 
         Assert.assertNotNull(scheduleWeeksList);
 
-        Mockito.verify(ancRulesEngineHelperSpy)
+        Mockito.verify(fpRulesEngineHelperSpy)
                 .processInferentialRules(ArgumentMatchers.any(Rules.class), ArgumentMatchers.any(Facts.class));
 
     }
@@ -183,8 +183,8 @@ public class AncRulesEngineHelperTest extends BaseUnitTest {
 
         ContactRule contactRule = new ContactRule(4, true, DUMMY_BASE_ENTITY_ID);
 
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        List<Integer> scheduleWeeksList = ancRulesEngineHelperSpy
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        List<Integer> scheduleWeeksList = fpRulesEngineHelperSpy
                 .getContactVisitSchedule(contactRule, ConstantsUtils.RulesFileUtils.CONTACT_RULES);
 
         Assert.assertNotNull(scheduleWeeksList);
@@ -198,8 +198,8 @@ public class AncRulesEngineHelperTest extends BaseUnitTest {
 
         ContactRule contactRule = new ContactRule(12, true, DUMMY_BASE_ENTITY_ID);
 
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        List<Integer> scheduleWeeksList = ancRulesEngineHelperSpy
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        List<Integer> scheduleWeeksList = fpRulesEngineHelperSpy
                 .getContactVisitSchedule(contactRule, ConstantsUtils.RulesFileUtils.CONTACT_RULES);
 
         Assert.assertNotNull(scheduleWeeksList);
@@ -213,8 +213,8 @@ public class AncRulesEngineHelperTest extends BaseUnitTest {
 
         ContactRule contactRule = new ContactRule(20, true, DUMMY_BASE_ENTITY_ID);
 
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        List<Integer> scheduleWeeksList = ancRulesEngineHelperSpy
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        List<Integer> scheduleWeeksList = fpRulesEngineHelperSpy
                 .getContactVisitSchedule(contactRule, ConstantsUtils.RulesFileUtils.CONTACT_RULES);
 
         Assert.assertNotNull(scheduleWeeksList);
@@ -228,8 +228,8 @@ public class AncRulesEngineHelperTest extends BaseUnitTest {
 
         ContactRule contactRule = new ContactRule(28, true, DUMMY_BASE_ENTITY_ID);
 
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        List<Integer> scheduleWeeksList = ancRulesEngineHelperSpy
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        List<Integer> scheduleWeeksList = fpRulesEngineHelperSpy
                 .getContactVisitSchedule(contactRule, ConstantsUtils.RulesFileUtils.CONTACT_RULES);
 
         Assert.assertNotNull(scheduleWeeksList);
@@ -243,8 +243,8 @@ public class AncRulesEngineHelperTest extends BaseUnitTest {
 
         ContactRule contactRule = new ContactRule(40, true, DUMMY_BASE_ENTITY_ID);
 
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        List<Integer> scheduleWeeksList = ancRulesEngineHelperSpy
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        List<Integer> scheduleWeeksList = fpRulesEngineHelperSpy
                 .getContactVisitSchedule(contactRule, ConstantsUtils.RulesFileUtils.CONTACT_RULES);
 
         Assert.assertNotNull(scheduleWeeksList);
@@ -255,139 +255,139 @@ public class AncRulesEngineHelperTest extends BaseUnitTest {
 
     @Test
     public void testStripGaNumber() {
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        assertEquals("12", ancRulesEngineHelperSpy.stripGaNumber("12 Weeks 7 Days"));
-        assertEquals("12", ancRulesEngineHelperSpy.stripGaNumber("12"));
-        assertEquals("12", ancRulesEngineHelperSpy.stripGaNumber("12 Weeks"));
-        assertEquals("12", ancRulesEngineHelperSpy.stripGaNumber("12 Weeks 7"));
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        assertEquals("12", fpRulesEngineHelperSpy.stripGaNumber("12 Weeks 7 Days"));
+        assertEquals("12", fpRulesEngineHelperSpy.stripGaNumber("12"));
+        assertEquals("12", fpRulesEngineHelperSpy.stripGaNumber("12 Weeks"));
+        assertEquals("12", fpRulesEngineHelperSpy.stripGaNumber("12 Weeks 7"));
     }
 
     @Test
     public void testGetValueFromCommonInputsFieldInAccordion() throws JSONException {
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        ancRulesEngineHelperSpy.setJsonObject(new JSONObject(DUMMY_JSON_OBJECT));
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        fpRulesEngineHelperSpy.setJsonObject(new JSONObject(DUMMY_JSON_OBJECT));
         //Test obtaining value for edit_text field
-        assertEquals(ancRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step1_elly_test"), "12");
+        assertEquals(fpRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step1_elly_test"), "12");
         //Test obtaining value for hidden field
         assertEquals(
-                ancRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step1_ultrasound_gest_age"),
+                fpRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step1_ultrasound_gest_age"),
                 "39 weeks 6 days");
         //Test obtaining value for number_selector field
-        assertEquals(ancRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step1_no_of_fetuses"),
+        assertEquals(fpRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step1_no_of_fetuses"),
                 "1");
         //Test obtaining value for date_picker field
         assertEquals(
-                ancRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step1_blood_type_test_date"),
+                fpRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step1_blood_type_test_date"),
                 "08-04-2019");
     }
 
     @Test
     public void testGetValueFromRadioButtonsFieldInAccordion() throws JSONException {
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        ancRulesEngineHelperSpy.setJsonObject(new JSONObject(DUMMY_JSON_OBJECT));
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        fpRulesEngineHelperSpy.setJsonObject(new JSONObject(DUMMY_JSON_OBJECT));
         //Test obtaining value for extended_radio_button field
-        assertEquals(ancRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step1_ultrasound"),
+        assertEquals(fpRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step1_ultrasound"),
                 "done_today");
         //Test obtaining value for native_radio field
-        assertEquals(ancRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step1_blood_type"), "ab");
+        assertEquals(fpRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step1_blood_type"), "ab");
 
     }
 
     @Test
     public void testGetValueFromCheckobxFieldInAccordion() throws JSONException {
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        ancRulesEngineHelperSpy.setJsonObject(new JSONObject(DUMMY_JSON_OBJECT));
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        fpRulesEngineHelperSpy.setJsonObject(new JSONObject(DUMMY_JSON_OBJECT));
         //Test obtaining value for check_box field
         assertEquals(
-                ancRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step1_urine_test_notdone"),
+                fpRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step1_urine_test_notdone"),
                 "[stock_out, expired_stock, other]");
 
     }
 
     @Test
     public void testGetValueFromAccordionWithEmptyJson() throws JSONException {
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
         assertEquals(
-                ancRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step1_blood_type_test_date"), "");
+                fpRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step1_blood_type_test_date"), "");
     }
 
     @Test
     public void testGetValueFromAccordionWithMissingStep() throws JSONException {
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
         assertEquals(
-                ancRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step3_blood_type_test_date"), "");
+                fpRulesEngineHelperSpy.getValueFromAccordion("accordion_ultrasound", "step3_blood_type_test_date"), "");
     }
 
     @Test
     public void testGetValueFromAccordionWithNoValues() throws JSONException {
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
         assertEquals(
-                ancRulesEngineHelperSpy.getValueFromAccordion("accordion_other_tests", "step2_blood_type_test_date"), "");
+                fpRulesEngineHelperSpy.getValueFromAccordion("accordion_other_tests", "step2_blood_type_test_date"), "");
     }
 
     @Test
     public void testCompareDateWhenFirstDateIsLower() {
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        assertEquals(ancRulesEngineHelperSpy.compareTwoDates("31-05-2018", "31-05-2019"), -1);
-        assertEquals(ancRulesEngineHelperSpy.compareTwoDates("31-01-2019", "31-05-2019"), -1);
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        assertEquals(fpRulesEngineHelperSpy.compareTwoDates("31-05-2018", "31-05-2019"), -1);
+        assertEquals(fpRulesEngineHelperSpy.compareTwoDates("31-01-2019", "31-05-2019"), -1);
     }
 
     @Test
     public void testCompareDateWhenBothDatesAreEqual() {
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        assertEquals(ancRulesEngineHelperSpy.compareTwoDates("31-05-2019", "31-05-2019"), 0);
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        assertEquals(fpRulesEngineHelperSpy.compareTwoDates("31-05-2019", "31-05-2019"), 0);
     }
 
     @Test
     public void testCompareDateWhenFirstDateIsHigher() {
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        assertEquals(ancRulesEngineHelperSpy.compareTwoDates("31-05-2019", "31-05-2018"), 1);
-        assertEquals(ancRulesEngineHelperSpy.compareTwoDates("31-05-2019", "31-01-2019"), 1);
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        assertEquals(fpRulesEngineHelperSpy.compareTwoDates("31-05-2019", "31-05-2018"), 1);
+        assertEquals(fpRulesEngineHelperSpy.compareTwoDates("31-05-2019", "31-01-2019"), 1);
     }
 
     @Test
     public void testCompareDateWhenAnyDateIsNullOrEmpty() {
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        assertEquals(ancRulesEngineHelperSpy.compareTwoDates("", "31-05-2019"), -2);
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        assertEquals(fpRulesEngineHelperSpy.compareTwoDates("", "31-05-2019"), -2);
     }
 
     @Test
     public void testCompareDateAgainstToday() {
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        assertEquals(ancRulesEngineHelperSpy
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        assertEquals(fpRulesEngineHelperSpy
                 .compareDateAgainstToday((new LocalDate()).toString(FormUtils.NATIIVE_FORM_DATE_FORMAT_PATTERN)), 0);
     }
 
     @Test
     public void testCompareDatesWithContactDate() throws ParseException {
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        assertTrue(ancRulesEngineHelperSpy.compareDateAgainstContactDate("31-05-2019", "2019-05-31"));
-        assertTrue(ancRulesEngineHelperSpy.compareDateAgainstContactDate("30-05-2019", "2019-05-31"));
-        assertFalse(ancRulesEngineHelperSpy.compareDateAgainstContactDate(null, "2019-05-31"));
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        assertTrue(fpRulesEngineHelperSpy.compareDateAgainstContactDate("31-05-2019", "2019-05-31"));
+        assertTrue(fpRulesEngineHelperSpy.compareDateAgainstContactDate("30-05-2019", "2019-05-31"));
+        assertFalse(fpRulesEngineHelperSpy.compareDateAgainstContactDate(null, "2019-05-31"));
     }
 
     @Test
     public void testConvertContactDate() throws ParseException {
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        assertEquals(ancRulesEngineHelperSpy.convertContactDateToTestDate("2019-05-31"), "31-05-2019");
-        assertEquals(ancRulesEngineHelperSpy.convertContactDateToTestDate("2018-02-01"), "01-02-2018");
-        assertEquals(ancRulesEngineHelperSpy.convertContactDateToTestDate(""), "");
-        assertEquals(ancRulesEngineHelperSpy.convertContactDateToTestDate(null), "");
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        assertEquals(fpRulesEngineHelperSpy.convertContactDateToTestDate("2019-05-31"), "31-05-2019");
+        assertEquals(fpRulesEngineHelperSpy.convertContactDateToTestDate("2018-02-01"), "01-02-2018");
+        assertEquals(fpRulesEngineHelperSpy.convertContactDateToTestDate(""), "");
+        assertEquals(fpRulesEngineHelperSpy.convertContactDateToTestDate(null), "");
     }
 
     @Test
     public void testCompareDateWithDurationsAddedAgainstToday() {
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        assertEquals(-1, ancRulesEngineHelperSpy.compareDateWithDurationsAddedAgainstToday("31-05-2018", "28d"));
-        assertEquals(-1, ancRulesEngineHelperSpy.compareDateWithDurationsAddedAgainstToday("28-11-2019", "4d"));
-        assertEquals(-1, ancRulesEngineHelperSpy.compareDateWithDurationsAddedAgainstToday("28-11-2018", "2m"));
-        assertEquals(1, ancRulesEngineHelperSpy.compareDateWithDurationsAddedAgainstToday("28-11-2030", "1y"));
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        assertEquals(-1, fpRulesEngineHelperSpy.compareDateWithDurationsAddedAgainstToday("31-05-2018", "28d"));
+        assertEquals(-1, fpRulesEngineHelperSpy.compareDateWithDurationsAddedAgainstToday("28-11-2019", "4d"));
+        assertEquals(-1, fpRulesEngineHelperSpy.compareDateWithDurationsAddedAgainstToday("28-11-2018", "2m"));
+        assertEquals(1, fpRulesEngineHelperSpy.compareDateWithDurationsAddedAgainstToday("28-11-2030", "1y"));
     }
 
     @Test
     public void testGetRelevance() {
-        AncRulesEngineHelper ancRulesEngineHelperSpy = Mockito.spy(ancRulesEngineHelper);
-        boolean isRelevant = ancRulesEngineHelperSpy.getRelevance(new Facts(), "true");
+        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
+        boolean isRelevant = fpRulesEngineHelperSpy.getRelevance(new Facts(), "true");
         assertTrue(isRelevant);
     }
 }

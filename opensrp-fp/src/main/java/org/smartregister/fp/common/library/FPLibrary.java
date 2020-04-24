@@ -16,7 +16,7 @@ import org.smartregister.CoreLibrary;
 import org.smartregister.configurableviews.helper.JsonSpecHelper;
 import org.smartregister.domain.Setting;
 import org.smartregister.fp.common.config.ActivityConfiguration;
-import org.smartregister.fp.common.helper.AncRulesEngineHelper;
+import org.smartregister.fp.common.helper.FPRulesEngineHelper;
 import org.smartregister.fp.common.repository.PreviousContactRepository;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.FilePathUtils;
@@ -52,7 +52,7 @@ public class FPLibrary {
     private UniqueIdRepository uniqueIdRepository;
     private DetailsRepository detailsRepository;
     private ECSyncHelper ecSyncHelper;
-    private AncRulesEngineHelper ancRulesEngineHelper;
+    private FPRulesEngineHelper FPRulesEngineHelper;
     private PreviousContactRepository previousContactRepository;
 
     private ClientProcessorForJava clientProcessorForJava;
@@ -147,11 +147,11 @@ public class FPLibrary {
         return uniqueIdRepository;
     }
 
-    public AncRulesEngineHelper getAncRulesEngineHelper() {
-        if (ancRulesEngineHelper == null) {
-            ancRulesEngineHelper = new AncRulesEngineHelper(getApplicationContext());
+    public FPRulesEngineHelper getFPRulesEngineHelper() {
+        if (FPRulesEngineHelper == null) {
+            FPRulesEngineHelper = new FPRulesEngineHelper(getApplicationContext());
         }
-        return ancRulesEngineHelper;
+        return FPRulesEngineHelper;
     }
 
     public ECSyncHelper getEcSyncHelper() {
