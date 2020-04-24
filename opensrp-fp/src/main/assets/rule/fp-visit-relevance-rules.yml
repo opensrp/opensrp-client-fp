@@ -194,10 +194,86 @@ priority: 1
 condition: "(global_gender == 'Female')"
 actions:
   - "isRelevant = true"
+
+
+
+
+
+
 ---
+name: step6_keeping_method
+description: Whether client is keeping a current method or stopping the method they are currently using.
+priority: 1
+condition: "(step3_current_method != 'no_method')"
+actions:
+  - "isRelevant = true"
+---
+name: step6_how_method_removed
+description: For clients needing an IUD/Implant removal, whether the service is being provided on site or off-site (i.e. referral).
+priority: 1
+condition: "(step6_method_removal != 1)"
+actions:
+  - "isRelevant = true"
+---
+name: step6_toaster_helps_clients
+description: Note to the health worker to remind them what to cover during counselling.
+priority: 1
+condition: "(step3_current_method == 'no_method' || step6_keeping_method == 'switch_method' || step6_keeping_method == 'continue_method')"
+actions:
+  - "isRelevant = true"
+---
+name: step6_method_in_mind
+description: If the client had a method in mind coming in to the visit.
+priority: 1
+condition: "(step3_current_method == 'no_method' || step6_keeping_method == 'switch_method')"
+actions:
+  - "isRelevant = true"
+---
+name: step6_method_requested_f
+description: The first pick of method desired by the client, prior to medical eligibility tests. This may be the method in mind or the method selected after discussing the full range of methods.
+priority: 1
+condition: "(step6_method_in_mind == 'yes' && global_method_gender_type == 'Female')"
+actions:
+  - "isRelevant = true"
+---
+name: step6_method_requested_m
+description: The first pick of method desired by the client, prior to medical eligibility tests. This may be the method in mind or the method selected after discussing the full range of methods.
+priority: 1
+condition: "(step6_method_in_mind == 'yes' && global_method_gender_type == 'Male')"
+actions:
+  - "isRelevant = true"
+---
+name: step6_method_chosen_f
+description: The first pick of method desired by the client, prior to medical eligibility tests. This may be the method in mind or the method selected after discussing the full range of methods.
+priority: 1
+condition: "((step3_current_method == 'no_method' || step6_keeping_method == 'switch_method') && global_method_gender_type == 'Female')"
+actions:
+  - "isRelevant = true"
+---
+name: step6_method_chosen_m
+description: The first pick of method desired by the client, prior to medical eligibility tests. This may be the method in mind or the method selected after discussing the full range of methods.
+priority: 1
+condition: "((step3_current_method == 'no_method' || step6_keeping_method == 'switch_method') && global_method_gender_type == 'Male')"
+actions:
+  - "isRelevant = true"
+---
+name: step6_provide_method_location
+description: Where the client will be receiving the method. This depends on the available stock and the skill of the health worker present.
+priority: 1
+condition: "(step6_method_chosen != 'no_method')"
+actions:
+  - "isRelevant = true"
 
 
 
+
+
+
+
+
+
+
+---
 name: step5_issues_concerns_f
 description: This field will be shown if reason for visit contains issues & concerns and method_gender_type female
 priority: 1

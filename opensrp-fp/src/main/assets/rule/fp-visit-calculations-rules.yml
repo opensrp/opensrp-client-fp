@@ -71,13 +71,97 @@ priority: 1
 condition: "(global_gender == 'Female')"
 actions:
   - "calculation = (helper.getDifferenceDays(step3_start_date_last_menses))"
+
+
+
+
+
 ---
+name: step5_issues_concerns
+description: NA
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (global_method_gender_type == 'Female' ? issues_concerns_f : issues_concerns_m)"
+---
+name: step5_issues_concerns_other
+description: NA
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (global_method_gender_type == 'Female' ? issues_concerns_other_f : issues_concerns_other_m)"
 
 
 
 
 
 
+---
+name: step6_method_removal
+description: For clients who wish to stop their method, this is a calculated field to determine whether the client needs the method to be removed (e.g. IUDs, Implants).
+priority: 1
+condition: "true"
+actions:
+  - "calculation = ((step6_keeping_method == 'stop_method' || step6_keeping_method == 'switch_method') && (step3_current_method == 'iud' || step3_current_method == 'cu_iud' || step3_current_method == 'lng_iud' || step3_current_method == 'implants' || step3_current_method == 'etg_onerod' || step3_current_method == 'lng_tworod')) ? 1 : 0"
+---
+name: step6_method_requested
+description: For clients who wish to stop their method, this is a calculated field to determine whether the client needs the method to be removed (e.g. IUDs, Implants).
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (global_method_gender_type == 'Female' ? method_requested_f : method_requested_m)"
+---
+name: step6_method_chosen
+description: For clients who wish to stop their method, this is a calculated field to determine whether the client needs the method to be removed (e.g. IUDs, Implants).
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (global_method_gender_type == 'Female' ? method_chosen_f : method_chosen_m)"
+---
+name: step6_needs_pregnancy_checklist
+description: Calculated field to determine whether, based on the woman's chosen method, the pregnancy checklist is required.
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (step6_method_chosen == 'cu_iud' || step6_method_chosen == 'lng_iud' || step6_method_chosen == 'etg_onerod' || step6_method_chosen == 'lng_tworod' || step6_method_chosen == 'dmpa_im' || step6_method_chosen == 'dmpa_sc' || step6_method_chosen == 'net_en' || step6_method_chosen == 'pop' || step6_method_chosen == 'coc' || step6_method_chosen == 'patch' || step6_method_chosen == 'cvr' || step6_method_chosen == 'pvr' || step6_method_chosen == 'ecp' || step6_method_chosen == 'female_sterilization') ? 1 : 0"
+---
+name: step6_informed_consent_required
+description: Calculated field to determine whether, based on the woman's chosen method, voluntary informed consent needs to be obtained.
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (step6_method_chosen == 'cu_iud' || step6_method_chosen == 'lng_iud' || step6_method_chosen == 'etg_onerod' || step6_method_chosen == 'lng_tworod' || step6_method_chosen == 'dmpa_im' || step6_method_chosen == 'dmpa_sc' || step6_method_chosen == 'net_en' || step6_method_chosen == 'female_sterilization' || step6_method_chosen == 'male_sterilization') ? 1 : 0"
+---
+name: step6_referral
+description: Calculated field to determine whether the client is being referred.
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (step6_how_method_removed == 'off_site' || step6_provide_method_location == 'provided_off_site') ? 'Yes' : 'No'"
+
+
+
+
+
+
+
+
+
+---
+name: step7_method_exit
+description: NA
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (global_method_gender_type == 'Female' ? method_exit_f : method_exit_m)"
+---
+name: step7_methods_exit_secondary
+description: NA
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (global_method_gender_type == 'Female' ? methods_exit_secondaryf : methods_exit_secondary_m)"
+---
 name: step7_lng_iud_start_other
 description: Calculated field to determine whether the woman who is being provided with an LNG-IUD can start the method now.
 priority: 1
