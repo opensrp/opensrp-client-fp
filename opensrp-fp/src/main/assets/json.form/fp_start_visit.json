@@ -1,14 +1,12 @@
 {
     "validate_on_submit": false,
     "display_scroll_bars": true,
-    "count": "6",
+    "count": "7",
     "encounter_type": "Family planning visit",
     "entity_id": "",
     "relational_id": "",
     "form_version": "0.0.1",
-    "default_values": [
-
-    ],
+    "default_values": [],
     "metadata": {
         "start": {
             "openmrs_entity_parent": "",
@@ -59,7 +57,7 @@
     },
     "step1": {
         "title": "Reason for visit",
-        "next": "step7",
+        "next": "step3",
         "fields": [
             {
                 "key": "label",
@@ -516,6 +514,63 @@
         "next": "step4",
         "fields": [
             {
+                "key": "dummy",
+                "type": "toaster_notes",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "text": "still on {method_on_file}?",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "method_at_intake",
+                "type": "hidden",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "on_another_method",
+                "type": "hidden",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "method_on_file",
+                "type": "hidden",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
                 "key": "method_at_intake_m",
                 "type": "native_radio",
                 "openmrs_entity": "",
@@ -547,7 +602,7 @@
                     {
                         "key": "female_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "160694AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
                         "openmrs_entity_parent": "",
                         "text": "Male relying on female method"
                     },
@@ -564,12 +619,10 @@
                     "err": "Method at intake required"
                 },
                 "relevance": {
-                    "step3:method_on_file": {
-                        "ex-checkbox": [
-                            {
-                               "or": ["method_on_file"]
-                            }
-                        ]
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
                     }
                 }
             },
@@ -581,35 +634,31 @@
                 "openmrs_entity_parent": "",
                 "label": "Method at intake",
                 "relevance": {
-                    "step3:method_on_file": {
-                        "ex-checkbox": [
-                            {
-                                "not": [
-                                    "method_on_file"
-                                ]
-                            }
-                        ]
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
                     }
                 },
                 "options": [
                     {
                         "key": "iud",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Unspecified IUD"
                     },
                     {
                         "key": "cu_iud",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Copper-bearing intrauterine devices (Cu-IUDs)"
                     },
                     {
                         "key": "lng_iud",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "159783AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
                         "openmrs_entity_parent": "",
                         "text": "Levonorgestrel IUD (LNG-IUD)"
                     },
@@ -623,43 +672,43 @@
                     {
                         "key": "etg_onerod",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Etonogestrel (ETG) one-rod"
                     },
                     {
                         "key": "lng_tworod",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Levonorgestrel (LNG) two-rod"
                     },
                     {
                         "key": "injectable",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Unspecified injectable"
                     },
                     {
                         "key": "dmpa_im",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "DMPA-IM (DMPA, administered intramuscularly)"
                     },
                     {
                         "key": "dmpa_sc",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "DMPA-SC (DMPA, administered subcutaneously)"
                     },
                     {
                         "key": "net_en",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
-                        "openmrs_entity_parent": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": "275813002",
                         "text": "NET-EN norethisterone enanthate"
                     },
                     {
@@ -672,91 +721,91 @@
                     {
                         "key": "coc",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Combined oral contraceptives (COCs)"
                     },
                     {
                         "key": "patch",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Combined contraceptive patch"
                     },
                     {
                         "key": "cvr",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Combined contraceptive vaginal ring (CVR)"
                     },
                     {
                         "key": "pvr",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Progesterone-releasing vaginal ring (PVR)"
                     },
                     {
                         "key": "lam",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Lactational amenorrhea method (LAM)"
                     },
                     {
                         "key": "barrier_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Unspecified barrier method"
                     },
                     {
                         "key": "female_condoms",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Female condoms"
                     },
                     {
                         "key": "male_condoms",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male condoms"
                     },
                     {
                         "key": "ecp",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "5275AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
                         "openmrs_entity_parent": "",
                         "text": "Emergency contraceptive pills (ECPs)"
                     },
                     {
                         "key": "fab",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Fertility awareness-based methods (FAB)"
                     },
                     {
                         "key": "female_sterilization",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Female sterilization"
                     },
                     {
                         "key": "male_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "160694AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
                         "openmrs_entity_parent": "",
                         "text": "Female relying on male method"
                     },
                     {
                         "key": "no_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No method"
                     }
@@ -772,35 +821,51 @@
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "label": "Is the client still on ${method_on_file}?",
+                "label": "Is the client still on {method_on_file}?",
                 "options": [
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
                 ],
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
+                },
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
                 }
             },
             {
                 "key": "on_another_method_m",
-                "type": "native_radio",
+                "type": "check_box",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "label": "Is the client currently on another method?",
+                "label_info_text": "Select all methods the client is currently using.",
+                "label_text_style": "normal",
                 "options": [
                     {
                         "key": "male_condoms",
@@ -838,6 +903,13 @@
                         "text": "No method"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": null
@@ -845,11 +917,13 @@
             },
             {
                 "key": "on_another_method_f",
-                "type": "native_radio",
+                "type": "check_box",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "label": "Is the client currently on another method?",
+                "label_info_text": "Select all methods the client is currently using.",
+                "label_text_style": "normal",
                 "options": [
                     {
                         "key": "iud",
@@ -1020,85 +1094,285 @@
                         "text": "No method"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": null
                 }
             },
             {
-                "key": "reason_no_method",
-                "type": "spinner",
+                "key": "current_method",
+                "type": "hidden",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "values": [
-                    "Abstinence",
-                    "Religious reasons",
-                    "Side effects of contraception",
-                    "Reported failure of contraceptive methods",
-                    "Does not want to use contraception",
-                    "Partner/family member does not want the client to use contraception",
-                    "Cannot afford contraception",
-                    "Currently pregnant",
-                    "Currently breastfeeding",
-                    "Just delivered a baby",
-                    "Same sex partner(s)",
-                    "Sterile or infertile for non-contraceptive reasons",
-                    "History of female or male sterilization",
-                    "Partner has history of sterilization",
-                    "Doesn't care about pregnancy",
-                    "Seeking pregnancy",
-                    "Out of stock - Method",
-                    "Out of stock - Supplies",
-                    "Forgot to use contraception/lapse in use",
-                    "Don't know/not sure",
-                    "Other (Specify)"
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "iud_insertion_date",
+                "type": "date_picker",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "hint": "IUD insertion date",
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "implant_date",
+                "type": "date_picker",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "hint": "Implant date",
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "last_injection_date",
+                "type": "date_picker",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "hint": "Last injection date",
+                "label_info_text": "Please input the client's most recent injection date.",
+                "label_text_style": "normal",
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "sterilization_date",
+                "type": "date_picker",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "hint": "Sterilization date",
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "postpartum",
+                "type": "hidden",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": ""
+            },
+            {
+                "key": "days_postpartum",
+                "type": "hidden",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": ""
+            },
+            {
+                "key": "reason_no_method",
+                "type": "check_box",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "options": [
+                    {
+                        "key": "abstinence",
+                        "text": "Abstinence",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "religious_reasons",
+                        "text": "Religious reasons",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "side_effects",
+                        "text": "Side effects of contraception",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "report_failure",
+                        "text": "Reported failure of contraceptive methods",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "doesnt_want",
+                        "text": "Does not want to use contraception",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "partner_refuse",
+                        "text": "Partner/family member does not want the client to use contraception",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "cant_afford",
+                        "text": "Cannot afford contraception",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "pregnant",
+                        "text": "Currently pregnant",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "breastfeeding",
+                        "text": "Currently breastfeeding",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "gave_birth",
+                        "text": "Just delivered a baby",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "same_partner",
+                        "text": "Same sex partner(s)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "sterile_infertile",
+                        "text": "Sterile or infertile for non-contraceptive reasons",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "male_female_sterile",
+                        "text": "History of female or male sterilization",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "partner_sterile",
+                        "text": "Partner has history of sterilization",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "care_nt_pregnancy",
+                        "text": "Doesn't care about pregnancy",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "seek_pregnancy",
+                        "text": "Seeking pregnancy",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "method_outstock",
+                        "text": "Out of stock - Method",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "supplies_outstock",
+                        "text": "Out of stock - Supplies",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "forgot_to_use",
+                        "text": "Forgot to use contraception/lapse in use",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "dont_know",
+                        "text": "Don't know/not sure",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "other",
+                        "text": "Other (Specify)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    }
                 ],
-                "keys": [
-                    "abstinence",
-                    "religious_reasons",
-                    "side_effects",
-                    "report_failure",
-                    "doesnt_want",
-                    "partner_refuse",
-                    "cant_afford",
-                    "pregnant",
-                    "breastfeeding",
-                    "gave_birth",
-                    "same_partner",
-                    "sterile_infertile",
-                    "male_female_sterile",
-                    "partner_sterile",
-                    "care_nt_pregnancy",
-                    "seek_pregnancy",
-                    "method_outstock",
-                    "supplies_outstock",
-                    "forgot_to_use",
-                    "dont_know",
-                    "other"
-                ],
-                "openmrs_choice_ids": {
-                    "abstinence": "NA",
-                    "religious_reasons": "NA",
-                    "side_effects": "NA",
-                    "report_failure": "NA",
-                    "doesnt_want": "NA",
-                    "partner_refuse": "NA",
-                    "cant_afford": "NA",
-                    "pregnant": "NA",
-                    "breastfeeding": "NA",
-                    "gave_birth": "NA",
-                    "same_partner": "NA",
-                    "sterile_infertile": "NA",
-                    "male_female_sterile": "NA",
-                    "partner_sterile": "NA",
-                    "care_nt_pregnancy": "NA",
-                    "seek_pregnancy": "NA",
-                    "method_outstock": "NA",
-                    "supplies_outstock": "NA",
-                    "forgot_to_use": "NA",
-                    "dont_know": "NA",
-                    "other": "NA"
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
                 },
                 "hint": "Reason for no contraceptive method"
             },
@@ -1109,6 +1383,13 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "edit_type": "name",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "hint": "Other (Specify)"
             },
             {
@@ -1118,6 +1399,8 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "label": "Never used contraception",
+                "label_info_text": "Has the client never used any modern contraceptive method?",
+                "label_text_style": "normal",
                 "options": [
                     {
                         "key": "yes",
@@ -1134,125 +1417,265 @@
                         "text": "No"
                     }
                 ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
                     "err": null
+                }
+            },
+            {
+                "key": "prior_methods_used",
+                "type": "hidden",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
                 }
             },
             {
                 "key": "prior_methods_used_m",
-                "type": "spinner",
+                "type": "check_box",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "values": [
-                    "Male condoms",
-                    "Male sterilization",
-                    "Withdrawal",
-                    "Male relying on female method"
+                "options": [
+                    {
+                        "key": "male_condoms",
+                        "text": "Male condoms",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "male_sterilization",
+                        "text": "Male sterilization",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "withdrawal",
+                        "text": "Withdrawal",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "female_method",
+                        "text": "Male relying on female method",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    }
                 ],
-                "keys": [
-                    "male_condoms",
-                    "male_sterilization",
-                    "withdrawal",
-                    "female_method"
-                ],
-                "openmrs_choice_ids": {
-                    "male_condoms": "NA",
-                    "male_sterilization": "NA",
-                    "withdrawal": "NA",
-                    "female_method": "NA"
-                },
                 "hint": "Prior methods used",
+                "label_info_text": "Please select any methods that the client has used in the past.",
+                "label_text_style": "normal",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field requried"
                 }
             },
             {
                 "key": "prior_methods_used_f",
-                "type": "spinner",
+                "type": "check_box",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "values": [
-                    "Unspecified IUD",
-                    "Copper-bearing intrauterine devices (Cu-IUDs)",
-                    "Levonorgestrel IUD (LNG-IUD)",
-                    "Unspecified implants",
-                    "Etonogestrel (ETG) one-rod",
-                    "Levonorgestrel (LNG) two-rod",
-                    "Unspecified injectable",
-                    "DMPA-IM (DMPA, administered intramuscularly)",
-                    "DMPA-SC (DMPA, administered subcutaneously)",
-                    "NET-EN norethisterone enanthate",
-                    "Progestogen-only pills (POP)",
-                    "Combined oral contraceptives (COCs)",
-                    "Combined contraceptive patch",
-                    "Combined contraceptive vaginal ring (CVR)",
-                    "Progesterone-releasing vaginal ring (PVR)",
-                    "Lactational amenorrhea method (LAM)",
-                    "Unspecified barrier method",
-                    "Female condoms",
-                    "Male condoms",
-                    "Emergency contraceptive pills (ECPs)",
-                    "Fertility awareness-based methods (FAB)",
-                    "Female sterilization",
-                    "Female relying on male method"
+                "options": [
+                    {
+                        "key": "iud",
+                        "text": "Unspecified IUD",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "cu_iud",
+                        "text": "Copper-bearing intrauterine devices (Cu-IUDs)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "lng_iud",
+                        "text": "Levonorgestrel IUD (LNG-IUD)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "implants",
+                        "text": "Unspecified implants",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "etg_onerod",
+                        "text": "Etonogestrel (ETG) one-rod",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "lng_tworod",
+                        "text": "Levonorgestrel (LNG) two-rod",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "injectable",
+                        "text": "Unspecified injectable",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "dmpa_im",
+                        "text": "DMPA-IM (DMPA, administered intramuscularly)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "dmpa_sc",
+                        "text": "DMPA-SC (DMPA, administered subcutaneously)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "net_en",
+                        "text": "NET-EN norethisterone enanthate",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "pop",
+                        "text": "Progestogen-only pills (POP)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "coc",
+                        "text": "Combined oral contraceptives (COCs)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "patch",
+                        "text": "Combined contraceptive patch",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "cvr",
+                        "text": "Combined contraceptive vaginal ring (CVR)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "pvr",
+                        "text": "Progesterone-releasing vaginal ring (PVR)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "lam",
+                        "text": "Lactational amenorrhea method (LAM)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "barrier_method",
+                        "text": "Unspecified barrier method",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "female_condoms",
+                        "text": "Female condoms",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "male_condoms",
+                        "text": "Male condoms",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "ecp",
+                        "text": "Emergency contraceptive pills (ECPs)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "fab",
+                        "text": "Fertility awareness-based methods (FAB)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "female_sterilization",
+                        "text": "Female sterilization",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "male_method",
+                        "text": "Female relying on male method",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    }
                 ],
-                "keys": [
-                    "iud",
-                    "cu_iud",
-                    "lng_iud",
-                    "implants",
-                    "etg_onerod",
-                    "lng_tworod",
-                    "injectable",
-                    "dmpa_im",
-                    "dmpa_sc",
-                    "net_en",
-                    "pop",
-                    "coc",
-                    "patch",
-                    "cvr",
-                    "pvr",
-                    "lam",
-                    "barrier_method",
-                    "female_condoms",
-                    "male_condoms",
-                    "ecp",
-                    "fab",
-                    "female_sterilization",
-                    "male_method"
-                ],
-                "openmrs_choice_ids": {
-                    "iud": "NA",
-                    "cu_iud": "NA",
-                    "lng_iud": "NA",
-                    "implants": "NA",
-                    "etg_onerod": "NA",
-                    "lng_tworod": "NA",
-                    "injectable": "NA",
-                    "dmpa_im": "NA",
-                    "dmpa_sc": "NA",
-                    "net_en": "NA",
-                    "pop": "159784AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                    "coc": "NA",
-                    "patch": "NA",
-                    "cvr": "NA",
-                    "pvr": "NA",
-                    "lam": "NA",
-                    "barrier_method": "NA",
-                    "female_condoms": "NA",
-                    "male_condoms": "NA",
-                    "ecp": "NA",
-                    "fab": "NA",
-                    "female_sterilization": "NA"
-                },
                 "hint": "Prior methods used",
+                "label_info_text": "Please select any methods that the client has used in the past.",
+                "label_text_style": "normal",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -1502,6 +1925,13 @@
                     "value": "true",
                     "err": null
                 }
+            },
+            {
+                "key": "days_since_last_menses",
+                "type": "hidden",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": ""
             },
             {
                 "key": "missed_menses",
@@ -3993,6 +4423,465 @@
                 }
             },
             {
+                "key": "toaster_cu_iud",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "type": "toaster_notes",
+                "text": "Cu-IUD\n- Start the method at the client's convenience.\n- No backup method required.\n- A Cu-IUD can be inserted within 5 days of unprotected intercourse as an emergency contraceptive.\n- When the time of ovulation can be estimated, a Cu-IUD can be inserted beyond 5 days after intercourse, as long as insertion does not occur more than 5 days after ovulation.",
+                "toaster_type": "info",
+                "relevance": {
+                    "step7:method_exit_f": {
+                        "type": "string",
+                        "ex": "equalTo(.,\"cu_iud\")"
+                    }
+                }
+            },
+            {
+                "key": "toaster_start_method_no_backup",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "LNG-IUD\n- Start the method at the client's convenience.\n- No backup method required.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_a_backup_required",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "LNG-IUD\n- Start the method at the client's convenience.\n- A backup method is required.\n- Client must abstain from sex or use additional contraceptive protection for the next 7 days.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_inserted_at_least",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "LNG-IUD\n- The LNG-IUD should be inserted at least 6 days after the client has taken ECPs (progestin-only, combined, or ulipristal acetate (UPA)).\n- A backup method is required.\n- Client must abstain from sex or use additional contraceptive protection for the next 7 days.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_immediately_after_delivery",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "LNG-IUD\n- Provide LNG-IUD immediately after the delivery of the placenta.\n- No backup method required.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_repeat_injection",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "LNG-IUD\n- Provide method at the time in which the repeat injection would have been given.\n- No backup method required.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_one_rod_or",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Etonogestrel (ETG) one-rod or Levonorgestrel (LNG) two-rod\n- Start the method at the client's convenience.\n- No backup method required.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_one_rod_with_backup_needed",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Etonogestrel (ETG) one-rod or Levonorgestrel (LNG) two-rod\n- Start the method at the client's convenience.\n- A backup method is required.\n- Client must abstain from sex or use additional contraceptive protection for the next 7 days.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_one_rod_on_same_day",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Etonogestrel (ETG) one-rod or Levonorgestrel (LNG) two-rod\n- Provide implant on the same day as the client takes ECPs if they are combined or progestin-only pills. Also provide a backup method.\n- If the client took a Ulipristal acetate (UPA) ECP, then wait to insert the implant on the 6th day or later after taking UPA-ECPs. In this case also schedule follow-up appointment to receive the implant.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_one_rod_repeat_injection",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Etonogestrel (ETG) one-rod or Levonorgestrel (LNG) two-rod\n- Provide method at the time in which the repeat injection would have been given.\n- No backup method required.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_dmpa_no_backup",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "DMPA-IM or DMPA-SC or NET-EN\n- Start the method at the client's convenience.\n- No backup method required.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_dmpa_need_backup",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "DMPA-IM or DMPA-SC or NET-EN\n- Start the method at the client's convenience.\n- A backup method is required.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_dmpa_provide_injection",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "DMPA-IM or DMPA-SC or NET-EN\n- Provide injection on the same day as the client takes ECPs if they are combined or progestin-only pills. Also provide a backup method.\n- If the client took a Ulipristal acetate (UPA) ECP, then wait to provide the injection on the 6th day or later after taking UPA-ECPs. In this case also schedule follow-up appointment to receive the injection.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_pop_no_backup",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "POP\n- Start the method at the client's convenience.\n- Provide up to 1 year's supply POPs with appropriate instructions on initiation.\n- No backup method required.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_pop_with_backup",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "POP\n- Start the method at the client's convenience.\n- Provide up to 1 year's supply POPs with appropriate instructions on initiation.\n- A backup method is required.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_coc_no_backup",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "COCs or Combined patch or CVR\n- Start the method at the client's convenience.\n- Provide up to 1 year's supply COCs, patches, or CVRs with appropriate instructions on initiation.\n- No backup method required.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_coc_with_backup",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "COCs or Combined patch or CVR\n- Start the method at the client's convenience.\n- Provide up to 1 year's supply COCs, patches, or CVRs with appropriate instructions on initiation.\n- A backup method is required.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_pvr_no_backup",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "PVR\n- Start the method at the client's convenience.\n- No backup method required.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_ecp_provide_pill",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "ECPs\n- Provide pill(s) and guide client to take immediately",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_lam_no_backup",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "LAM:\n- Start the method at the client's convenience.\n- No backup method required.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_condom_no_backup",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Condoms or Withdrawal\n- Start the method at the client's convenience.\n- No backup method required.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_fab_with_backup",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Fertility awareness-based methods (FAB)\n- Start the method at the client's convenience.\n- A backup method is required.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_male_ster_with_backup",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Male sterilization\n- Start the method at the client's convenience.\n- A backup method is required for 3 months following the procedure.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "toaster_female_ster_with_backup",
+                "type": "toaster_notes",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "text": "Female sterilization\n- Start the method at the client's convenience.\n- No backup method required.",
+                "toaster_type": "info",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "iud_insertion_date",
+                "type": "date_picker",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "hint": "Date of IUD insertion",
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "implant_date",
+                "type": "date_picker",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "hint": "Implant insertion date",
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "last_injection_date",
+                "type": "date_picker",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "hint": "Injection date",
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "sterilization_date",
+                "type": "date_picker",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "hint": "Sterilization date",
+                "v_required": {
+                    "value": "true",
+                    "err": "Field required"
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
                 "key": "provider",
                 "type": "edit_text",
                 "openmrs_entity": "",
@@ -4002,40 +4891,63 @@
                 "hint": "Provider",
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
                 "key": "reason_different_chosen_exit_method",
-                "type": "spinner",
+                "type": "check_box",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "values": [
-                    "Chosen method out of stock",
-                    "Supplies required to provide chosen method are out of stock",
-                    "Health worker lacks skills to provide chosen method",
-                    "Client requires a referral",
-                    "Other (specify)"
+                "options": [
+                    {
+                        "key": "no_stock",
+                        "text": "Chosen method out of stock",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "no_supplies",
+                        "text": "Supplies required to provide chosen method are out of stock",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "no_provider_capacity",
+                        "text": "Health worker lacks skills to provide chosen method",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "referral_required",
+                        "text": "Client requires a referral",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "other",
+                        "text": "Other (specify)",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    }
                 ],
-                "keys": [
-                    "no_stock",
-                    "no_supplies",
-                    "no_provider_capacity",
-                    "referral_required",
-                    "other"
-                ],
-                "openmrs_choice_ids": {
-                    "no_stock": "NA",
-                    "no_supplies": "NA",
-                    "no_provider_capacity": "NA",
-                    "referral_required": "NA",
-                    "other": "NA"
-                },
                 "hint": "Reason for why method at exit is not the same as chosen method",
                 "v_required": {
                     "value": "true",
                     "err": null
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
                 }
             },
             {
@@ -4045,33 +4957,55 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "edit_type": "name",
-                "hint": "Other (specify)"
+                "hint": "Other (specify)",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
             },
             {
                 "key": "reason_no_method_exit",
-                "type": "spinner",
+                "type": "check_box",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "values": [
-                    "Chooses not to use",
-                    "Out of stock",
-                    "Other"
+                "options": [
+                    {
+                        "key": "chooses_not_use",
+                        "text": "Chooses not to use",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "out_of_stock",
+                        "text": "Out of stock",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    },
+                    {
+                        "key": "other",
+                        "text": "Other",
+                        "openmrs_entity": "",
+                        "openmrs_entity_id": "",
+                        "openmrs_entity_parent": ""
+                    }
                 ],
-                "keys": [
-                    "chooses_not_use",
-                    "out_of_stock",
-                    "other"
-                ],
-                "openmrs_choice_ids": {
-                    "chooses_not_use": "NA",
-                    "out_of_stock": "NA",
-                    "other": "NA"
-                },
                 "hint": "Reason for no method at exit",
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
                 }
             },
             {
@@ -4081,7 +5015,183 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "edit_type": "name",
-                "hint": "Other (specify)"
+                "hint": "Other (specify)",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "lng_iud_start_other",
+                "type": "hidden",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "value": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "lng_iud_backup_needed",
+                "type": "hidden",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "value": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "implant_start_other",
+                "type": "hidden",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "value": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "implant_backup_needed",
+                "type": "hidden",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "value": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "injectable_start_other",
+                "type": "hidden",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "value": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "injectable_backup_needed",
+                "type": "hidden",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "value": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "pop_combined_method_backup_needed",
+                "type": "hidden",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "value": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "method_exit_start_date",
+                "type": "hidden",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "value": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                }
             }
         ]
     }

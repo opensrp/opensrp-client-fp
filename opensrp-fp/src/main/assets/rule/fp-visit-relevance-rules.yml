@@ -1,4 +1,102 @@
 ---
+name: step3_method_at_intake_m
+description: Reported use of method at intake
+priority: 1
+condition: "(step3_method_on_file == '' || step3_method_on_file == 'no_method') && global_method_gender_type == 'Male'"
+actions:
+  - "isRelevant = true"
+---
+name: step3_method_at_intake_f
+description: Reported use of method at intake
+priority: 1
+condition: "(step3_method_on_file == '' || step3_method_on_file == 'no_method') && global_method_gender_type == 'Female'"
+actions:
+  - "isRelevant = true"
+---
+name: step3_still_on_method
+description: Reported use of method at intake
+priority: 1
+condition: "(step3_method_on_file != '' && step3_method_on_file != 'no_method')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_on_another_method_m
+description: Reported use of method at intake
+priority: 1
+condition: "(step3_still_on_method != 'no' && global_method_gender_type == 'Male')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_on_another_method_f
+description: Reported use of method at intake
+priority: 1
+condition: "(step3_still_on_method != 'no' && global_method_gender_type == 'Female')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_iud_insertion_date
+description: Date of IUD insertion if currently using the method.
+priority: 1
+condition: "(step3_current_method == 'iud' || step3_current_method == 'cu_iud' || step3_current_method == 'lng_iud')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_implant_date
+description: Date of last implant if currently using the method.
+priority: 1
+condition: "(step3_current_method == 'implants' || step3_current_method == 'etg_onerod' || step3_current_method == 'lng_tworod')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_last_injection_date
+description: Date of last injection if currently using the method.
+priority: 1
+condition: "(step3_current_method == 'injectable' || step3_current_method == 'dmpa_im' || step3_current_method == 'dmpa_sc' || step3_current_method == 'net_en')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_sterilization_date
+description: Date of sterilization, if not reversed.
+priority: 1
+condition: "(step3_current_method == 'male_sterilization' || step3_current_method == 'female_sterilization')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_reason_no_method
+description: If not using a method, the reason for no contraceptive method use.
+priority: 1
+condition: "(step3_current_method == 'no_method')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_reason_no_method_other
+description: The other reason for no contraceptive method.
+priority: 1
+condition: "(step3_reason_no_method == 'other')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_never_used_contraception
+description: If the client has never previously used any modern contraceptive methods.
+priority: 1
+condition: "(step3_current_method == 'no_method')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_prior_methods_used_m
+description: Contraceptive methods the client has a history of using
+priority: 1
+condition: "(step3_never_used_contraception == 'no' && global_method_gender_type == 'Male')"
+actions:
+  - "isRelevant = true"
+---
+name: step3_prior_methods_used_f
+description: Contraceptive methods the client has a history of using
+priority: 1
+condition: "(step3_never_used_contraception == 'no' && global_method_gender_type == 'Female')"
+actions:
+  - "isRelevant = true"
+---
 name: step5_issues_concerns_f
 description: This field will be shown if reason for visit contains issues & concerns and method_gender_type female
 priority: 1
@@ -112,5 +210,271 @@ name: step7_methods_exit_secondary_m
 description: Secondary contraceptive method at exit.
 priority: 1
 condition: "global_method_gender_type == 'Male' && step7_method_exit_m == 'no_method'"
+actions:
+  - "isRelevant = true"
+---
+name: step7_lng_iud_start_other
+description: Calculated field to determine whether the woman who is being provided with an LNG-IUD can start the method now.
+priority: 1
+condition: "global_method_gender_type == 'Female' && step7_method_exit_f == 'lng_iud'"
+actions:
+  - "isRelevant = true"
+---
+name: step7_lng_iud_backup_needed
+description: Calculated field to determine whether the woman who is being provided with an LNG-IUD right now, requires a back-up method.
+priority: 1
+condition: "step7_lng_iud_start_other == 0"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_start_method_no_backup
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "step7_method_exit_f == 'lng_iud' && step7_lng_iud_start_other == 0 && step7_lng_iud_backup_needed == 0"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_a_backup_required
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "step7_method_exit_f == 'lng_iud' && step7_lng_iud_start_other == 0 && step7_lng_iud_backup_needed == 1"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_inserted_at_least
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "step7_method_exit_f == 'lng_iud' && step7_lng_iud_start_other == 1 && step3_current_method == 'ecp'"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_immediately_after_delivery
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "step7_method_exit_f == 'lng_iud' && step7_lng_iud_start_other == 1 && step3_postpartum == 1 && step3_days_postpartum <= 2"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_repeat_injection
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "step7_method_exit_f == 'lng_iud' && step7_lng_iud_start_other == 1 && (step3_current_method == 'dmpa_im' || step3_current_method == 'dmpa_sc' || step3_current_method == 'net_en')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_implant_start_other
+description: Calculated field to determine whether the woman who is being provided with an implant can start the method now.
+priority: 1
+condition: "step7_method_exit_f == 'etg_onerod' || step7_method_exit_f == 'lng_tworod'"
+actions:
+  - "isRelevant = true"
+---
+name: step7_implant_backup_needed
+description: Calculated field to determine whether the woman who is being provided with an implant right now, requires a back-up method.
+priority: 1
+condition: "step7_implant_start_other == 0"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_one_rod_or
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'etg_onerod' || step7_method_exit_f == 'lng_tworod') && step7_implant_start_other == 0 && step7_implant_backup_needed == 0"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_one_rod_with_backup_needed
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'etg_onerod' || step7_method_exit_f == 'lng_tworod') && step7_implant_start_other == 0 && step7_implant_backup_needed == 1"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_one_rod_on_same_day
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'etg_onerod' || step7_method_exit_f == 'lng_tworod') && step7_implant_start_other == 1 && step3_current_method == 'ecp'"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_one_rod_repeat_injection
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'etg_onerod' || step7_method_exit_f == 'lng_tworod') && step7_implant_start_other == 1 && (step3_current_method == 'dmpa_im' || step3_current_method == 'dmpa_sc' || step3_current_method == 'net_en')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_injectable_start_other
+description: Calculated field to determine whether the woman who is being provided with an injectable can start the method now.
+priority: 1
+condition: "(step7_method_exit_f == 'dmpa_im' || step7_method_exit_f == 'dmpa_sc' || step7_method_exit_f == 'net_en')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_injectable_backup_needed
+description: Calculated field to determine whether the woman who is being provided with an injectable right now, requires a back-up method.
+priority: 1
+condition: "step7_injectable_start_other == 0"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_dmpa_no_backup
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'dmpa_im' || step7_method_exit_f == 'dmpa_sc' || step7_method_exit_f == 'net_en') && step7_injectable_start_other == 0 && step7_injectable_backup_needed == 0"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_dmpa_need_backup
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'dmpa_im' || step7_method_exit_f == 'dmpa_sc' || step7_method_exit_f == 'net_en') && step7_injectable_start_other == 0 && step7_injectable_backup_needed == 1"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_dmpa_provide_injection
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'dmpa_im' || step7_method_exit_f == 'dmpa_sc' || step7_method_exit_f == 'net_en') && step7_injectable_start_other == 1"
+actions:
+  - "isRelevant = true"
+---
+name: step7_pop_combined_method_backup_needed
+description: Calculated field to determine whether the woman who is being provided with POP or a combined method right now, requires a back-up method.
+priority: 1
+condition: "(step7_method_exit_f == 'pop' || step7_method_exit_f == 'coc' || step7_method_exit_f == 'patch' || step7_method_exit_f == 'cvr')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_pop_no_backup
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'pop' && step7_pop_combined_method_backup_needed == 0)"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_pop_with_backup
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'pop' && step7_pop_combined_method_backup_needed == 1)"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_coc_no_backup
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'coc' || step7_method_exit_f == 'patch' || step7_method_exit_f == 'cvr') && step7_pop_combined_method_backup_needed == 0"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_coc_with_backup
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'coc' || step7_method_exit_f == 'patch' || step7_method_exit_f == 'cvr') && step7_pop_combined_method_backup_needed == 1"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_pvr_no_backup
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'pvr')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_ecp_provide_pill
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'ecp')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_lam_no_backup
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'lam')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_condom_no_backup
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'male_condoms' || step7_method_exit_f == 'female_condoms' || step7_method_exit_m == 'withdrawal')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_fab_with_backup
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'fab')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_male_ster_with_backup
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_m == 'male_sterilization')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_toaster_female_ster_with_backup
+description: Note displayed to the health worker telling her when the client can start the method and whether a back-up is required, based on the when to start and backup method needed decision logic.
+priority: 1
+condition: "(step7_method_exit_f == 'female_sterilization')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_iud_insertion_date
+description: The date that the IUD was or will be inserted.
+priority: 1
+condition: "(step7_method_exit_f == 'cu_iud' || step7_method_exit_f == 'lng_iud')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_implant_date
+description: The date that the implants were or will be inserted.
+priority: 1
+condition: "(step7_method_exit_f == 'etg_onerod' || step7_method_exit_f == 'lng_tworod')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_last_injection_date
+description: The date that the last injection was done.
+priority: 1
+condition: "(step7_method_exit_f == 'dmpa_im' || step7_method_exit_f == 'dmpa_sc' || step7_method_exit_f == 'net_en')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_sterilization_date
+description: The date that the sterilization procedure was done.
+priority: 1
+condition: "(step7_method_exit_f == 'female_sterilization' || step7_method_exit_m == 'male_sterilization')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_reason_different_chosen_exit_method
+description: The date that the sterilization procedure was done.
+priority: 1
+condition: "(step7_method_exit_f != step6_method_chosen_f || step7_method_exit_m == step6_method_chosen_m)"
+actions:
+  - "isRelevant = true"
+---
+name: step7_reason_different_chosen_exit_method_other
+description: The date that the sterilization procedure was done.
+priority: 1
+condition: "step7_reason_different_chosen_exit_method.contains('other')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_reason_no_method_exit
+description: The date that the sterilization procedure was done.
+priority: 1
+condition: "(step7_method_exit_f == 'no_method' || step7_method_exit_m == 'no_method')"
+actions:
+  - "isRelevant = true"
+---
+name: step7_reason_no_method_exit_other
+description: The date that the sterilization procedure was done.
+priority: 1
+condition: "step7_reason_no_method_exit.contains('other')"
 actions:
   - "isRelevant = true"
