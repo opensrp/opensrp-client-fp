@@ -18,6 +18,7 @@ import org.smartregister.cursoradapter.RecyclerViewFragment;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
 import org.smartregister.cursoradapter.SmartRegisterQueryBuilder;
 import org.smartregister.domain.FetchStatus;
+import org.smartregister.domain.ResponseErrorStatus;
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.cursor.AdvancedMatrixCursor;
 import org.smartregister.fp.common.event.SyncEvent;
@@ -47,10 +48,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import timber.log.Timber;
-
-/**
- * Created by keyman on 26/06/2018.
- */
 
 public class HomeRegisterFragment extends BaseRegisterFragment implements RegisterFragmentContract.View, SyncStatusBroadcastReceiver.SyncStatusListener {
     public static final String CLICK_VIEW_NORMAL = "click_view_normal";
@@ -230,16 +227,69 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        // block super call due to the bug
-        //super.onLoaderReset(loader);
-    }
-
-    @Override
     public void onSyncComplete(FetchStatus fetchStatus) {
+        refreshSyncStatusViews(fetchStatus);
         if (popupMenu != null) {
             popupMenu.getMenu().findItem(R.id.btn_sync).setTitle(String.format(getString(R.string.last_synced), new SimpleDateFormat("hh:mm a", Utils.getDefaultLocale()).format(new Date()), new SimpleDateFormat("MMM dd", Utils.getDefaultLocale()).format(new Date())));
         }
+    }
+
+    private void refreshSyncStatusViews(FetchStatus fetchStatus) {
+
+        if (SyncStatusBroadcastReceiver.getInstance().isSyncing()) {
+            org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.syncing));
+            Timber.i( getString(org.smartregister.R.string.syncing));
+        } else {
+            if (fetchStatus != null) {
+
+                if (fetchStatus.equals(FetchStatus.fetchedFailed)) {
+                    if(fetchStatus.displayValue().equals(ResponseErrorStatus.malformed_url.name())) {
+                        org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_failed_malformed_url));
+                        Timber.i( getString(org.smartregister.R.string.sync_failed_malformed_url));
+                    }
+                    else if (fetchStatus.displayValue().equals(ResponseErrorStatus.timeout.name())) {
+                        org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_failed_timeout_error));
+                        Timber.i(getString(org.smartregister.R.string.sync_failed_timeout_error));
+                    }
+                    else {
+                        org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_failed));
+                        Timber.i(getString(org.smartregister.R.string.sync_failed));
+                    }
+
+                } else if (fetchStatus.equals(FetchStatus.fetched)
+                        || fetchStatus.equals(FetchStatus.nothingFetched)) {
+
+                    setRefreshList(true);
+                    renderView();
+
+                    org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
+                    Timber.i( getString(org.smartregister.R.string.sync_complete));
+
+                } else if (fetchStatus.equals(FetchStatus.noConnection)) {
+
+                    org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_failed_no_internet));
+                    Timber.i( getString(org.smartregister.R.string.sync_failed_no_internet));
+                }
+            }
+            else{
+                Timber.i("Fetch Status NULL");
+            }
+
+        }
+
+        refreshSyncProgressSpinner();
+    }
+
+    private void renderView() {
+        getDefaultOptionsProvider();
+        if (isPausedOrRefreshList()) {
+            presenter.initializeQueries(getMainCondition());
+        }
+        updateSearchView();
+        presenter.processViewConfigurations();
+        // updateLocationText();
+        refreshSyncProgressSpinner();
+        setTotalPatients();
     }
 }
 
