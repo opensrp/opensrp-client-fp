@@ -86,7 +86,7 @@ public class ContactVisit {
         facts = new Facts();
         formSubmissionIDs = new ArrayList<>();
 
-        getCurrentClientsTasks(baseEntityId);
+        //getCurrentClientsTasks(baseEntityId);
         updateEventAndRequiredStepsField(baseEntityId, partialContactRepository, partialContactList, facts, formSubmissionIDs);
 
         womanDetail = getWomanDetail(baseEntityId, nextContactVisitDate, nextContact);
@@ -160,7 +160,7 @@ public class ContactVisit {
                     eventJson.put(JsonFormConstants.Properties.DETAILS, JsonFormUtils.getJSONObject(formObject, JsonFormConstants.Properties.DETAILS));
                     FPLibrary.getInstance().getEcSyncHelper().addEvent(baseEntityId, eventJson);
 
-                    processTasks(formObject);
+                    //processTasks(formObject);
                 }
 
                 //Remove partial contact

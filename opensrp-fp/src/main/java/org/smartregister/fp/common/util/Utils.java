@@ -206,7 +206,7 @@ public class Utils extends org.smartregister.util.Utils {
      */
     public static void proceedToContact(String baseEntityId, HashMap<String, String> personObjectClient, Context context) {
         try {
-            baseEntityId = "ba9b0b5c-4453-4fc3-8d62-f13fbaf0a342";
+            /*baseEntityId = "ba9b0b5c-4453-4fc3-8d62-f13fbaf0a342";
             personObjectClient = new HashMap<>();
             personObjectClient.put("dob", "1995-12-18T05:00:00.000+05:00");
             personObjectClient.put("last_interacted_with", "1587569732782");
@@ -217,9 +217,14 @@ public class Utils extends org.smartregister.util.Utils {
             personObjectClient.put("first_name", "Jimmy");
             personObjectClient.put("relationid", null);
             personObjectClient.put("client_id", "1341502");
+            personObjectClient.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, "1");
             personObjectClient.put(DBConstantsUtils.KeyUtils.GENDER, "Female");
-            personObjectClient.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, "0");
-            personObjectClient.put(DBConstantsUtils.KeyUtils.REFERRAL, "yes");
+            personObjectClient.put(DBConstantsUtils.KeyUtils.REFERRAL, "yes");*/
+
+            personObjectClient.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER));
+            String nextContact = personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
+            personObjectClient.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, nextContact == null ? "1" : nextContact);
+
 
             Intent intent = new Intent(context.getApplicationContext(), StartVisitJsonFormActivity.class);
 
@@ -334,12 +339,15 @@ public class Utils extends org.smartregister.util.Utils {
                     }
                 }
 
+                String currentMethod = getMapValue(ConstantsUtils.JsonFormFieldUtils.CURRENT_METHOD, baseEntityId, contactNo);
+
                 //Inject some form defaults from client details
                 globals.put(ConstantsUtils.KeyUtils.CONTACT_NO, String.valueOf(contactNo));
                 globals.put(ConstantsUtils.PREVIOUS_CONTACT_NO, contactNo > 1 ? String.valueOf(contactNo - 1) : "0");
-                globals.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER));
+                globals.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE));
                 globals.put(DBConstantsUtils.KeyUtils.GENDER, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER));
                 globals.put(DBConstantsUtils.KeyUtils.REFERRAL, personObjectClient.get(DBConstantsUtils.KeyUtils.REFERRAL));
+                globals.put(ConstantsUtils.JsonFormFieldUtils.CURRENT_METHOD, currentMethod == null ? "" : currentMethod);
 
 
                 String lastContactDate = personObjectClient.get(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE);

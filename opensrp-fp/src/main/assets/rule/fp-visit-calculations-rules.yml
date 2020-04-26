@@ -21,14 +21,14 @@ description: method at intake
 priority: 1
 condition: "true"
 actions:
-  - "calculation = (global_method_gender_type == 'Female' ? on_another_method_f : on_another_method_m)"
+  - "calculation = (global_method_gender_type == 'Female' ? step3_on_another_method_f : step3_on_another_method_m)"
 ---
 name: step3_method_on_file
 description: Field to pre-populate the client's current method(s) on file, if any.
 priority: 1
 condition: "true"
 actions:
-  - "calculation = step7_method_exit"
+  - "calculation = global_current_method"
 ---
 name: step3_still_on_method
 description: Whether or not the client is currently using the system's method on file.
@@ -49,7 +49,7 @@ description: set prior method depend on gender
 priority: 1
 condition: "true"
 actions:
-  - "calculation = (global_method_gender_type == 'Female' ? prior_methods_used_f : prior_methods_used_m)"
+  - "calculation = (global_method_gender_type == 'Female' ? step3_prior_methods_used_f : step3_prior_methods_used_m)"
 ---
 name: step3_postpartum
 description: Calculated field to determine if the woman is postpartum (less than 6 weeks since delivery).
@@ -82,14 +82,14 @@ description: NA
 priority: 1
 condition: "true"
 actions:
-  - "calculation = (global_method_gender_type == 'Female' ? issues_concerns_f : issues_concerns_m)"
+  - "calculation = (global_method_gender_type == 'Female' ? step5_issues_concerns_f : step5_issues_concerns_m)"
 ---
 name: step5_issues_concerns_other
 description: NA
 priority: 1
 condition: "true"
 actions:
-  - "calculation = (global_method_gender_type == 'Female' ? issues_concerns_other_f : issues_concerns_other_m)"
+  - "calculation = (global_method_gender_type == 'Female' ? step5_issues_concerns_other_f : step5_issues_concerns_other_m)"
 
 
 
@@ -109,14 +109,14 @@ description: For clients who wish to stop their method, this is a calculated fie
 priority: 1
 condition: "true"
 actions:
-  - "calculation = (global_method_gender_type == 'Female' ? method_requested_f : method_requested_m)"
+  - "calculation = (global_method_gender_type == 'Female' ? step6_method_requested_f : step6_method_requested_m)"
 ---
 name: step6_method_chosen
 description: For clients who wish to stop their method, this is a calculated field to determine whether the client needs the method to be removed (e.g. IUDs, Implants).
 priority: 1
 condition: "true"
 actions:
-  - "calculation = (global_method_gender_type == 'Female' ? method_chosen_f : method_chosen_m)"
+  - "calculation = (global_method_gender_type == 'Female' ? step6_method_chosen_f : step6_method_chosen_m)"
 ---
 name: step6_needs_pregnancy_checklist
 description: Calculated field to determine whether, based on the woman's chosen method, the pregnancy checklist is required.

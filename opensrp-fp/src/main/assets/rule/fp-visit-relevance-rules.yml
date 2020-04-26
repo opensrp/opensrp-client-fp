@@ -23,14 +23,14 @@ actions:
 name: step3_on_another_method_m
 description: Reported use of method at intake
 priority: 1
-condition: "(step3_still_on_method != 'no' && global_method_gender_type == 'Male')"
+condition: "(step3_still_on_method == 'no' && global_method_gender_type == 'Male')"
 actions:
   - "isRelevant = true"
 ---
 name: step3_on_another_method_f
 description: Reported use of method at intake
 priority: 1
-condition: "(step3_still_on_method != 'no' && global_method_gender_type == 'Female')"
+condition: "(step3_still_on_method == 'no' && global_method_gender_type == 'Female')"
 actions:
   - "isRelevant = true"
 ---
@@ -100,7 +100,7 @@ actions:
 name: step3_sex_active
 description: Whether or not the client is sexually active.
 priority: 1
-condition: "(step3_ever_had_sex == 'yes')"
+condition: "step3_ever_had_sex == 'yes'"
 actions:
   - "isRelevant = true"
 ---
@@ -330,7 +330,7 @@ actions:
 name: step6_method_requested_f
 description: The first pick of method desired by the client, prior to medical eligibility tests. This may be the method in mind or the method selected after discussing the full range of methods.
 priority: 1
-condition: "(step6_method_in_mind == 'yes' && global_method_gender_type == 'Female')"
+condition: "step6_method_in_mind == 'yes' && global_method_gender_type == 'Female'"
 actions:
   - "isRelevant = true"
 ---
@@ -361,8 +361,6 @@ priority: 1
 condition: "(step6_method_chosen != 'no_method')"
 actions:
   - "isRelevant = true"
-
-
 
 
 

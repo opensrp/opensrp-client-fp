@@ -57,7 +57,7 @@
     },
     "step1": {
         "title": "Reason for visit",
-        "next": "step8",
+        "next": "step2",
         "fields": [
             {
                 "key": "label",
@@ -164,7 +164,7 @@
                 ],
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -255,28 +255,28 @@
                     {
                         "key": "become_pregnant",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Client wants to become pregnant"
                     },
                     {
                         "key": "client_ok",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Client is OK either way"
                     },
                     {
                         "key": "client_dont_preg",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Client does not want to become pregnant"
                     },
                     {
                         "key": "client_unsure",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Client is unsure"
                     }
@@ -471,14 +471,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -538,21 +538,21 @@
                     {
                         "key": "male_condoms",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male condoms"
                     },
                     {
                         "key": "male_sterilization",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male sterilization"
                     },
                     {
                         "key": "withdrawal",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Withdrawal"
                     },
@@ -566,7 +566,7 @@
                     {
                         "key": "no_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No method"
                     }
@@ -622,7 +622,7 @@
                     {
                         "key": "implants",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Unspecified implants"
                     },
@@ -769,7 +769,7 @@
                 ],
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -841,35 +841,35 @@
                     {
                         "key": "male_condoms",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male condoms"
                     },
                     {
                         "key": "male_sterilization",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male sterilization"
                     },
                     {
                         "key": "withdrawal",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Withdrawal"
                     },
                     {
                         "key": "female_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male relying on female method"
                     },
                     {
                         "key": "no_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No method"
                     }
@@ -883,7 +883,7 @@
                 },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -899,70 +899,70 @@
                     {
                         "key": "iud",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Unspecified IUD"
                     },
                     {
                         "key": "cu_iud",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Copper-bearing intrauterine devices (Cu-IUDs)"
                     },
                     {
                         "key": "lng_iud",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Levonorgestrel IUD (LNG-IUD)"
                     },
                     {
                         "key": "implants",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Unspecified implants"
                     },
                     {
                         "key": "etg_onerod",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Etonogestrel (ETG) one-rod"
                     },
                     {
                         "key": "lng_tworod",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Levonorgestrel (LNG) two-rod"
                     },
                     {
                         "key": "injectable",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Unspecified injectable"
                     },
                     {
                         "key": "dmpa_im",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "DMPA-IM (DMPA, administered intramuscularly)"
                     },
                     {
                         "key": "dmpa_sc",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "DMPA-SC (DMPA, administered subcutaneously)"
                     },
                     {
                         "key": "net_en",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "NET-EN norethisterone enanthate"
                     },
@@ -976,91 +976,91 @@
                     {
                         "key": "coc",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Combined oral contraceptives (COCs)"
                     },
                     {
                         "key": "patch",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Combined contraceptive patch"
                     },
                     {
                         "key": "cvr",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Combined contraceptive vaginal ring (CVR)"
                     },
                     {
                         "key": "pvr",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Progesterone-releasing vaginal ring (PVR)"
                     },
                     {
                         "key": "lam",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Lactational amenorrhea method (LAM)"
                     },
                     {
                         "key": "barrier_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Unspecified barrier method"
                     },
                     {
                         "key": "female_condoms",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Female condoms"
                     },
                     {
                         "key": "male_condoms",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male condoms"
                     },
                     {
                         "key": "ecp",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Emergency contraceptive pills (ECPs)"
                     },
                     {
                         "key": "fab",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Fertility awareness-based methods (FAB)"
                     },
                     {
                         "key": "female_sterilization",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Female sterilization"
                     },
                     {
                         "key": "male_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Female relying on male method"
                     },
                     {
                         "key": "no_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No method"
                     }
@@ -1074,7 +1074,7 @@
                 },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -1376,14 +1376,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -1397,7 +1397,7 @@
                 },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -1662,14 +1662,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -1695,14 +1695,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -1783,14 +1783,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -1874,14 +1874,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -1911,28 +1911,28 @@
                     {
                         "key": "exclusive_breastfeeding",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Exclusive breastfeeding"
                     },
                     {
                         "key": "fully_breastfeeding",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Fully breastfeeding"
                     },
                     {
                         "key": "nearly_breastfeeding",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Nearly fully breastfeeding"
                     },
                     {
                         "key": "partially_breastfeeding",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Partially breastfeeding"
                     }
@@ -1962,14 +1962,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -2023,7 +2023,7 @@
                     {
                         "key": "septic_abortion",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Immediate post-septic abortion"
                     }
@@ -2094,14 +2094,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -2131,14 +2131,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -2166,14 +2166,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -2292,14 +2292,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -2323,14 +2323,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -3022,6 +3022,7 @@
     },
     "step6": {
         "title": "Method Selection",
+        "next": "step7",
         "fields": [
             {
                 "key": "keeping_method",
@@ -3043,28 +3044,28 @@
                     {
                         "key": "stop_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Stop method"
                     },
                     {
                         "key": "continue_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Continue method"
                     },
                     {
                         "key": "switch_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Switch methods"
                     }
                 ],
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -3092,14 +3093,14 @@
                     {
                         "key": "on_site",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Done on site"
                     },
                     {
                         "key": "off_site",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Done off site (referral)"
                     }
@@ -3142,20 +3143,20 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "label": "Method in mind",
-                "text": "Whether or not the client has a method in mind.",
-                "text_color": "#1199F9",
+                "label_info_text": "Whether or not the client has a method in mind.",
+                "label_text_style": "normal",
                 "options": [
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -3169,7 +3170,7 @@
                 },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -3192,133 +3193,133 @@
                     {
                         "key": "cu_iud",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Copper-bearing intrauterine devices (Cu-IUDs)"
                     },
                     {
                         "key": "lng_iud",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Levonorgestrel IUD (LNG-IUD)"
                     },
                     {
                         "key": "etg_onerod",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Etonogestrel (ETG) one-rod"
                     },
                     {
                         "key": "lng_tworod",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Levonorgestrel (LNG) two-rod"
                     },
                     {
                         "key": "dmpa_im",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "DMPA-IM (DMPA, administered intramuscularly)"
                     },
                     {
                         "key": "dmpa_sc",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "DMPA-SC (DMPA, administered subcutaneously)"
                     },
                     {
                         "key": "net_en",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "NET-EN norethisterone enanthate"
                     },
                     {
                         "key": "pop",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Progestogen-only pills (POP)"
                     },
                     {
                         "key": "coc",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Combined oral contraceptives (COCs)"
                     },
                     {
                         "key": "patch",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Combined contraceptive patch"
                     },
                     {
                         "key": "cvr",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Combined contraceptive vaginal ring (CVR)"
                     },
                     {
                         "key": "pvr",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Progesterone-releasing vaginal ring (PVR)"
                     },
                     {
                         "key": "lam",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Lactational amenorrhea method (LAM)"
                     },
                     {
                         "key": "female_condoms",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Female condoms"
                     },
                     {
                         "key": "male_condoms",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male condoms"
                     },
                     {
                         "key": "ecp",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Emergency contraceptive pills (ECPs)"
                     },
                     {
                         "key": "fab",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Fertility awareness-based methods (FAB)"
                     },
                     {
                         "key": "female_sterilization",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Female sterilization"
                     }
                 ],
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -3341,28 +3342,28 @@
                     {
                         "key": "male_condoms",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male condoms"
                     },
                     {
                         "key": "male_sterilization",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male sterilization"
                     },
                     {
                         "key": "withdrawal",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Withdrawal"
                     }
                 ],
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -3385,7 +3386,7 @@
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "label": "Medical Eligibility Criteria (MEC)",
+                "text": "Medical Eligibility Criteria (MEC)",
                 "label_text_color": "#000000",
                 "label_text_style": "bold"
             },
@@ -3409,140 +3410,140 @@
                     {
                         "key": "cu_iud",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Copper-bearing intrauterine devices (Cu-IUDs)"
                     },
                     {
                         "key": "lng_iud",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Levonorgestrel IUD (LNG-IUD)"
                     },
                     {
                         "key": "etg_onerod",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Etonogestrel (ETG) one-rod"
                     },
                     {
                         "key": "lng_tworod",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Levonorgestrel (LNG) two-rod"
                     },
                     {
                         "key": "dmpa_im",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "DMPA-IM (DMPA, administered intramuscularly)"
                     },
                     {
                         "key": "dmpa_sc",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "DMPA-SC (DMPA, administered subcutaneously)"
                     },
                     {
                         "key": "net_en",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "NET-EN norethisterone enanthate"
                     },
                     {
                         "key": "pop",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Progestogen-only pills (POP)"
                     },
                     {
                         "key": "coc",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Combined oral contraceptives (COCs)"
                     },
                     {
                         "key": "patch",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Combined contraceptive patch"
                     },
                     {
                         "key": "cvr",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Combined contraceptive vaginal ring (CVR)"
                     },
                     {
                         "key": "pvr",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Progesterone-releasing vaginal ring (PVR)"
                     },
                     {
                         "key": "lam",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Lactational amenorrhea method (LAM)"
                     },
                     {
                         "key": "female_condoms",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Female condoms"
                     },
                     {
                         "key": "male_condoms",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male condoms"
                     },
                     {
                         "key": "ecp",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Emergency contraceptive pills (ECPs)"
                     },
                     {
                         "key": "fab",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Fertility awareness-based methods (FAB)"
                     },
                     {
                         "key": "female_sterilization",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Female sterilization"
                     },
                     {
                         "key": "no_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No method"
                     }
                 ],
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -3565,35 +3566,35 @@
                     {
                         "key": "male_condoms",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male condoms"
                     },
                     {
                         "key": "male_sterilization",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male sterilization"
                     },
                     {
                         "key": "withdrawal",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Withdrawal"
                     },
                     {
                         "key": "no_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No method"
                     }
                 ],
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -3621,14 +3622,14 @@
                     {
                         "key": "provided_on_site",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Provided on site"
                     },
                     {
                         "key": "provided_off_site",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Provided off site (referral)"
                     }
@@ -3642,7 +3643,7 @@
                 },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -3738,14 +3739,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -3773,14 +3774,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -3808,14 +3809,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -3843,14 +3844,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -3878,14 +3879,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -3913,14 +3914,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -3948,14 +3949,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -3969,7 +3970,7 @@
                 },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -4036,21 +4037,21 @@
                     {
                         "key": "pregnant",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Pregnant"
                     },
                     {
                         "key": "not_pregnant",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Not Pregnant"
                     }
                 ],
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -4114,14 +4115,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -4135,7 +4136,7 @@
                 },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -4149,14 +4150,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -4170,7 +4171,7 @@
                 },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -4218,14 +4219,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -4239,7 +4240,7 @@
                 },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -4379,14 +4380,14 @@
                     {
                         "key": "done",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Done"
                     },
                     {
                         "key": "not_done",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Not done"
                     }
@@ -4400,7 +4401,7 @@
                 },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -4449,7 +4450,7 @@
                 "hint": "Reason pelvic/genital examination was not done",
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -4470,21 +4471,21 @@
                     {
                         "key": "done",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Done"
                     },
                     {
                         "key": "not_done",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Not done"
                     }
                 ],
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -4533,7 +4534,7 @@
                 "hint": "Reason STI risk assessment: medical history and physical examination was not done",
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -4547,14 +4548,14 @@
                     {
                         "key": "done",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Done"
                     },
                     {
                         "key": "not_done",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Not done"
                     }
@@ -4568,7 +4569,7 @@
                 },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -4617,7 +4618,7 @@
                 "hint": "Reason STI/HIV screening: laboratory tests were not done",
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -4631,14 +4632,14 @@
                     {
                         "key": "done",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Done"
                     },
                     {
                         "key": "not_done",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Not done"
                     }
@@ -4652,7 +4653,7 @@
                 },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -4701,7 +4702,7 @@
                 "hint": "Reason haemoglobin test was not done",
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -4715,14 +4716,14 @@
                     {
                         "key": "done",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Done"
                     },
                     {
                         "key": "not_done",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Not done"
                     }
@@ -4736,7 +4737,7 @@
                 },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -4785,7 +4786,7 @@
                 "hint": "Reason blood pressure screening was not done",
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -4810,140 +4811,140 @@
                     {
                         "key": "cu_iud",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Copper-bearing intrauterine devices (Cu-IUDs)"
                     },
                     {
                         "key": "lng_iud",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Levonorgestrel IUD (LNG-IUD)"
                     },
                     {
                         "key": "etg_onerod",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Etonogestrel (ETG) one-rod"
                     },
                     {
                         "key": "lng_tworod",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Levonorgestrel (LNG) two-rod"
                     },
                     {
                         "key": "dmpa_im",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "DMPA-IM (DMPA, administered intramuscularly)"
                     },
                     {
                         "key": "dmpa_sc",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "DMPA-SC (DMPA, administered subcutaneously)"
                     },
                     {
                         "key": "net_en",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "NET-EN norethisterone enanthate"
                     },
                     {
                         "key": "pop",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Progestogen-only pills (POP)"
                     },
                     {
                         "key": "coc",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Combined oral contraceptives (COCs)"
                     },
                     {
                         "key": "patch",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Combined contraceptive patch"
                     },
                     {
                         "key": "cvr",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Combined contraceptive vaginal ring (CVR)"
                     },
                     {
                         "key": "\"Emergency contraceptive pills (ECPs)\"",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Progesterone-releasing vaginal ring (PVR)"
                     },
                     {
                         "key": "lam",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Lactational amenorrhea method (LAM)"
                     },
                     {
                         "key": "female_condoms",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Female condoms"
                     },
                     {
                         "key": "male_condoms",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male condoms"
                     },
                     {
                         "key": "ecp",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Emergency contraceptive pills (ECPs)"
                     },
                     {
                         "key": "fab",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Fertility awareness-based methods (FAB)"
                     },
                     {
                         "key": "female_sterilization",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Female sterilization"
                     },
                     {
                         "key": "male_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Female relying on male method"
                     },
                     {
                         "key": "no_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No method"
                     }
@@ -5133,35 +5134,35 @@
                     {
                         "key": "male_condoms",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male condoms"
                     },
                     {
                         "key": "male_sterilization",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male sterilization"
                     },
                     {
                         "key": "withdrawal",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Withdrawal"
                     },
                     {
                         "key": "female_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Male relying on female method"
                     },
                     {
                         "key": "no_method",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No method"
                     }
@@ -5753,7 +5754,7 @@
                 "hint": "Reason for why method at exit is not the same as chosen method",
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 },
                 "relevance": {
                     "rules-engine": {
@@ -5995,14 +5996,14 @@
                     {
                         "key": "yes",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Yes"
                     },
                     {
                         "key": "no",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "No"
                     }
@@ -6016,7 +6017,7 @@
                 },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {
@@ -6032,21 +6033,21 @@
                     {
                         "key": "family_planning",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Referral for family planning (procedure)"
                     },
                     {
                         "key": "screening",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Referral for screening, including diagnostics and lab testing"
                     },
                     {
                         "key": "general_services",
                         "openmrs_entity": "",
-                        "openmrs_entity_id": "NA",
+                        "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
                         "text": "Referral for other general services"
                     }
@@ -6060,7 +6061,7 @@
                 },
                 "v_required": {
                     "value": "true",
-                    "err": null
+                    "err": "Field required"
                 }
             },
             {

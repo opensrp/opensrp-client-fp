@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 
+import com.vijay.jsonwizard.activities.JsonFormActivity;
 import com.vijay.jsonwizard.fragments.JsonWizardFormFragment;
 import com.vijay.jsonwizard.interactors.JsonFormInteractor;
 
@@ -112,7 +113,7 @@ public class StartVisitJsonWizardFormFragment extends JsonWizardFormFragment {
             if (getContact() != null && getContact().getBackIcon() > 0 &&
                     getContact().getFormName().equals(ConstantsUtils.JsonFormUtils.FP_START_VISIT)) {
                 goBackButton.setImageResource(R.drawable.ic_clear);
-                //goBackButton.setOnClickListener(view1 -> quickCheckClose());
+                goBackButton.setOnClickListener(view1 -> startVisitClose());
             } else {
                 goBackButton.setOnClickListener(view12 -> backClick());
             }
@@ -145,7 +146,7 @@ public class StartVisitJsonWizardFormFragment extends JsonWizardFormFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_save && getActivity() != null) {
-            //((StartVisitJsonFormActivity) getActivity()).proceedToMainContactPage();
+            ((StartVisitJsonFormActivity) getActivity()).proceedToMainContactPage();
         }
 
         if (item.getItemId() == MENU_NAVIGATION) {
@@ -342,5 +343,13 @@ public class StartVisitJsonWizardFormFragment extends JsonWizardFormFragment {
                 //((StartVisitJsonFormActivity) getActivity()).proceedToMainContactPage();
             }
         }
+    }
+
+    private void startVisitClose() {
+        AlertDialog dialog = new AlertDialog.Builder(getContext(), R.style.AppThemeAlertDialog)
+                .setTitle(getJsonApi().getConfirmCloseTitle()).setMessage(getJsonApi().getConfirmCloseMessage())
+                .setNegativeButton(R.string.yes, (dialog1, which) -> ((StartVisitJsonFormActivity) getActivity()).finishInitialQuickCheck()).setPositiveButton(R.string.no, (dialog12, which) -> Timber.d("No button on dialog in %s", JsonFormActivity.class.getCanonicalName())).create();
+
+        dialog.show();
     }
 }

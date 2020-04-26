@@ -47,6 +47,7 @@
     <string name="sync_round_complete">Sync round complete&#8230;</string>
     <string name="device_timezone_changed">"The device's timezone changed. Please login again."</string>
     <string name="device_time_changed">"The device's time has changed. Please login again."</string>
+    <string name="finalizing_form_message">Please wait as we finalizing the form.</string>
 
     <!-- sync -->
     <string name="sync_failed_no_internet">Sync failed. Check your internet connection.</string>

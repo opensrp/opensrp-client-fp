@@ -1,7 +1,6 @@
 package org.smartregister.fp.features.visit.view;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,10 +21,10 @@ import org.json.JSONObject;
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.domain.Contact;
 import org.smartregister.fp.common.helper.FPRulesEngineFactory;
+import org.smartregister.fp.common.task.FinalizeVisitFormTask;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.FPFormUtils;
 import org.smartregister.fp.common.util.FilePathUtils;
-import org.smartregister.view.activity.LoginActivity;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
@@ -60,6 +59,8 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
 
         ///new Handler().postDelayed(this::updateViewsProperties, 200);
     }
+
+
 
     private void loadGlobals() {
         try {
@@ -234,26 +235,23 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
         }
     }
 
-    /**
+    /*z
      * Partially saves the Quick Check forms details then proceeds to the main contact page
      *
      * @author dubdabasoduba
      */
     public void proceedToMainContactPage() {
-        Intent intent = new Intent(this, LoginActivity.class);
 
         int contactNo = getIntent().getIntExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, 0);
         String baseEntityId = getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID);
 
+        /*Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID, baseEntityId);
         intent.putExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP, getIntent().getSerializableExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP));
         intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME));
-        intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, contactNo);
-        Contact contact = getContact();
-        contact.setJsonForm(FPFormUtils.addFormDetails(currentJsonState()));
-        contact.setContactNumber(contactNo);
-        FPFormUtils.persistPartial(baseEntityId, getContact());
-        this.startActivity(intent);
+        intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, contactNo);*/
+
+        new FinalizeVisitFormTask(this, baseEntityId, contactNo, getContact(), currentJsonState()).execute();
     }
 
     /**

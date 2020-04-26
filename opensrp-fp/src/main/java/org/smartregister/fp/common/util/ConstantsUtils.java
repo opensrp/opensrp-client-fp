@@ -141,6 +141,10 @@ public abstract class ConstantsUtils {
         public static final String FIELDS = "fields";
     }
 
+    public static class JsonFormFieldUtils {
+        public static final String CURRENT_METHOD = "current_method";
+    }
+
     public static class JsonFormExtraUtils {
         public static final String CONTACT = "contact";
         public static final String JSON = "json";

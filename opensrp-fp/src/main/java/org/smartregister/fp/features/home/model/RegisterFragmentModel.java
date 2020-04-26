@@ -3,8 +3,6 @@ package org.smartregister.fp.features.home.model;
 import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,7 +68,25 @@ public class RegisterFragmentModel implements RegisterFragmentContract.Model {
         String[] columns = new String[]{tableName + "." + DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH,
                 tableName + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, tableName + "." + DBConstantsUtils.KeyUtils.FIRST_NAME,
                 tableName + "." + DBConstantsUtils.KeyUtils.LAST_NAME, tableName + "." + DBConstantsUtils.KeyUtils.FP_ID,
-                tableName + "." + DBConstantsUtils.KeyUtils.DOB, tableName + "." + DBConstantsUtils.KeyUtils.DATE_REMOVED/*, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.PHONE_NUMBER,
+                tableName + "." + DBConstantsUtils.KeyUtils.DOB, tableName + "." + DBConstantsUtils.KeyUtils.DATE_REMOVED,
+
+                tableName + "." + DBConstantsUtils.KeyUtils.RELATIONAL_ID, tableName + "." + DBConstantsUtils.KeyUtils.CLIENT_ID_NOTE,
+                tableName + "." + DBConstantsUtils.KeyUtils.AGE_ENTERED, tableName + "." + DBConstantsUtils.KeyUtils.DOB_FROM_AGE,
+                tableName + "." + DBConstantsUtils.KeyUtils.REGISTRATION_DATE, tableName + "." + DBConstantsUtils.KeyUtils.REFERRAL,
+                tableName + "." + DBConstantsUtils.KeyUtils.REFERRED_BY, tableName + "." + DBConstantsUtils.KeyUtils.UNIVERSAL_ID,
+                tableName + "." + DBConstantsUtils.KeyUtils.AGE_FROM_DOB, tableName + "." + DBConstantsUtils.KeyUtils.DOB_ENTERED,
+                tableName + "." + DBConstantsUtils.KeyUtils.DOB_FROM_AGE, tableName + "." + DBConstantsUtils.KeyUtils.AGE,
+                tableName + "." + DBConstantsUtils.KeyUtils.GENDER, tableName + "." + DBConstantsUtils.KeyUtils.BIOLOGICAL_SEX,
+                tableName + "." + DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, tableName + "." + DBConstantsUtils.KeyUtils.MARITAL_STATUS,
+                tableName + "." + DBConstantsUtils.KeyUtils.ADMIN_AREA, tableName + "." + DBConstantsUtils.KeyUtils.CLIENT_ADDRESS,
+                tableName + "." + DBConstantsUtils.KeyUtils.TEL_NUMBER, tableName + "." + DBConstantsUtils.KeyUtils.COMM_CONSENT,
+                tableName + "." + DBConstantsUtils.KeyUtils.REMINDER_MESSAGE, tableName + "." + DBConstantsUtils.KeyUtils.EDD,
+                tableName + "." + DBConstantsUtils.KeyUtils.RED_FLAG_COUNT, tableName + "." + DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT,
+                tableName + "." + DBConstantsUtils.KeyUtils.CONTACT_STATUS, tableName + "." + DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS,
+                tableName + "." + DBConstantsUtils.KeyUtils.NEXT_CONTACT, tableName + "." + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE,
+                tableName + "." + DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE, tableName + "." + DBConstantsUtils.KeyUtils.VISIT_START_DATE
+
+                /*, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.PHONE_NUMBER,
                 getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.ALT_NAME,
                 getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.EDD, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.RED_FLAG_COUNT,
                 getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT, getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.CONTACT_STATUS,
