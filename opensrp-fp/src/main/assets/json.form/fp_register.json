@@ -370,21 +370,21 @@
         "label": "Gender",
         "options": [
           {
-            "key": "Female",
+            "key": "female",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
             "text": "Female"
           },
           {
-            "key": "Male",
+            "key": "male",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
             "text": "Male"
           },
           {
-            "key": "Other",
+            "key": "other",
             "openmrs_entity": "",
             "openmrs_entity_id": "NA",
             "openmrs_entity_parent": "",
@@ -407,14 +407,14 @@
         "label": "Biological sex",
         "options": [
           {
-            "key": "Female",
+            "key": "female",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
             "text": "Female"
           },
           {
-            "key": "Male",
+            "key": "male",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
@@ -428,7 +428,7 @@
         "relevance": {
           "step1:gender": {
             "type": "string",
-            "ex": "equalTo(.,\"Other\")"
+            "ex": "equalTo(.,\"other\")"
           }
         },
         "is_visible": false
