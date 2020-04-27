@@ -124,12 +124,10 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         ProfileViewPagerAdapter adapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
 
         ProfileOverviewFragment profileOverviewFragment = ProfileOverviewFragment.newInstance(this.getIntent().getExtras());
-        //ProfileContactsFragment profileContactsFragment = ProfileContactsFragment.newInstance(this.getIntent().getExtras());
-        ProfileTasksFragment profileTasksFragment = ProfileTasksFragment.newInstance(this.getIntent().getExtras());
+        ClientHistoryFragment clientHistoryFragment = ClientHistoryFragment.newInstance(this.getIntent().getExtras());
 
         adapter.addFragment(profileOverviewFragment, this.getString(R.string.overview));
-        //adapter.addFragment(profileContactsFragment, this.getString(R.string.contacts));
-        adapter.addFragment(profileTasksFragment, this.getString(R.string.history));
+        adapter.addFragment(clientHistoryFragment, this.getString(R.string.history));
 
         viewPager.setAdapter(adapter);
         return viewPager;

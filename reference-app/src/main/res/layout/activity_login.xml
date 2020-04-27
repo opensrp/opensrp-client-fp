@@ -85,7 +85,8 @@
                 android:textColorHint="@color/silver"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/login_edit_text_textSize"
-                android:typeface="sans"/>
+                android:typeface="sans"
+                android:text="demo"/>
 
             <EditText
                 android:id="@+id/login_password_edit_text"
@@ -107,7 +108,8 @@
                 android:textColorHint="@color/silver"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/login_edit_text_textSize"
-                android:typeface="sans"/>
+                android:typeface="sans"
+                android:text="Amani123"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
