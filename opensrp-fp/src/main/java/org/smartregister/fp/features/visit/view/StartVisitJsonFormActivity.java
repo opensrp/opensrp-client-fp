@@ -245,12 +245,6 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
         int contactNo = getIntent().getIntExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, 0);
         String baseEntityId = getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID);
 
-        /*Intent intent = new Intent(this, LoginActivity.class);
-        intent.putExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID, baseEntityId);
-        intent.putExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP, getIntent().getSerializableExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP));
-        intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME));
-        intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, contactNo);*/
-
         new FinalizeVisitFormTask(this, baseEntityId, contactNo, getContact(), currentJsonState()).execute();
     }
 

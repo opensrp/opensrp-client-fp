@@ -25,10 +25,10 @@ import androidx.appcompat.app.ActionBar;
 import com.vijay.jsonwizard.activities.JsonFormActivity;
 import com.vijay.jsonwizard.fragments.JsonWizardFormFragment;
 import com.vijay.jsonwizard.interactors.JsonFormInteractor;
+import com.vijay.jsonwizard.task.NextProgressDialogTask;
 
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.domain.Contact;
-import org.smartregister.fp.common.task.FPNextProgressDialogTask;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.viewstate.ContactJsonFormFragmentViewState;
@@ -322,11 +322,11 @@ public class StartVisitJsonWizardFormFragment extends JsonWizardFormFragment {
             if (view.getId() == com.vijay.jsonwizard.R.id.next || view.getId() == com.vijay.jsonwizard.R.id.next_icon) {
                 Object tag = view.getTag(com.vijay.jsonwizard.R.id.NEXT_STATE);
                 if (tag == null) {
-                    new FPNextProgressDialogTask(getJsonFormFragment()).execute();
+                    new NextProgressDialogTask(getJsonFormFragment()).execute();
                 } else {
                     boolean next = (boolean) tag;
                     if (next) {
-                        new FPNextProgressDialogTask(getJsonFormFragment()).execute();
+                        new NextProgressDialogTask(getJsonFormFragment()).execute();
                     } else {
                         savePartial = true;
                         save();

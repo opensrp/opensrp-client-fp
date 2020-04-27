@@ -1,7 +1,6 @@
 package org.smartregister.fp.features.visit.presenter;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.vijay.jsonwizard.constants.JsonFormConstants;
@@ -13,6 +12,8 @@ import com.vijay.jsonwizard.widgets.NativeRadioButtonFactory;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.FPFormUtils;
 import org.smartregister.fp.features.visit.view.StartVisitJsonWizardFormFragment;
+
+import timber.log.Timber;
 
 /**
  * Created by keyman on 04/08/18.
@@ -67,7 +68,7 @@ public class StartVisitWizardJsonFormFragmentPresenter extends JsonWizardFormFra
     protected void nativeRadioButtonClickActions(View view) {
         String type = (String) view.getTag(com.vijay.jsonwizard.R.id.specify_type);
         String specifyWidget = (String) view.getTag(com.vijay.jsonwizard.R.id.specify_widget);
-        Log.i(TAG, "The dialog content widget is this: " + specifyWidget);
+        Timber.i(TAG, "The dialog content widget is this: %s", specifyWidget);
         if (JsonFormConstants.CONTENT_INFO.equals(type) && specifyWidget.equals(JsonFormConstants.DATE_PICKER)) {
             NativeRadioButtonFactory.showDateDialog(view);
         } else if (JsonFormConstants.CONTENT_INFO.equals(type) && !specifyWidget.equals(JsonFormConstants.DATE_PICKER)) {

@@ -32,7 +32,7 @@ import timber.log.Timber;
 
 import static org.smartregister.fp.common.util.Utils.isCheckboxValueEmpty;
 
-public class FinalizeVisitFormTask extends AsyncTask<Void, Void, Void> {
+public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String, String>> {
 
     private final Context context;
     private final String baseEntityId;
@@ -41,7 +41,6 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, Void> {
     private final String jsonCurrentState;
     private final FPFormUtils fpFormUtils;
     private final ProgressDialog progressDialog;
-    private HashMap<String, String> clientProfileDetail;
 
     public FinalizeVisitFormTask(Context context, String baseEntityId, int contactNo, Contact contact, String jsonCurrentState) {
         this.context = context;
@@ -55,11 +54,16 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, Void> {
         progressDialog.setCancelable(false);
         progressDialog.setTitle(context.getString(com.vijay.jsonwizard.R.string.loading));
         progressDialog.setMessage(context.getString(R.string.finalizing_form_message));
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
         progressDialog.show();
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected HashMap<String, String> doInBackground(Void... voids) {
 
         contact.setJsonForm(fpFormUtils.addFormDetails(jsonCurrentState));
         contact.setContactNumber(contactNo);
@@ -69,7 +73,8 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, Void> {
         ContactInteractor contactInteractor = new ContactInteractor();
         contactInteractor.finalizeContactForm(clientProfileDetail, this);*/
 
-        clientProfileDetail = PatientRepository.getClientProfileDetails(baseEntityId);
+        HashMap<String, String> clientProfileDetail = PatientRepository.getClientProfileDetails(baseEntityId);
+        if (clientProfileDetail == null) return null;
 
         int gestationAge = getGestationAge(clientProfileDetail);
         boolean isFirst = TextUtils.equals("1", clientProfileDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
@@ -98,19 +103,19 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
+    protected void onPostExecute(HashMap<String, String> result) {
+        super.onPostExecute(result);
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
-        Utils.navigateToProfile(context, clientProfileDetail);
+        Utils.navigateToProfile(context, result);
     }
 
 
     private int getNextContact(Map<String, String> details) {
-        int nextContact = details.containsKey(DBConstantsUtils.KeyUtils.NEXT_CONTACT) && details.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT) != null ? Integer.valueOf(details.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)) : 1;
-        nextContact += 1;
-        return nextContact;
+        String nextContactRaw = details.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
+        int nextContact = nextContactRaw == null ? 1 : Integer.parseInt(nextContactRaw);
+        return ++nextContact;
     }
 
     public int getGestationAge(Map<String, String> details) {
