@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
 
@@ -17,6 +19,7 @@ import org.smartregister.fp.common.util.Utils;
 import org.smartregister.repository.BaseRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import timber.log.Timber;
@@ -398,5 +401,36 @@ public class PreviousContactRepository extends BaseRepository {
         }
 
         return schedule;
+    }
+
+    public List<HashMap<String, String>> getVisitHistory(@NonNull  String baseEntityId) {
+        List<HashMap<String, String>> data = new ArrayList<>();
+
+        try {
+
+            String query = "SELECT DISTINCT pc._id, pc.contact_no, pc.base_entity_id, pc.`value` as visit_date, (" +
+                    "SELECT spc.value FROM previous_contact AS spc WHERE spc.contact_no = pc.contact_no AND spc.key = 'method_exit'" +
+                    ") as method_exit " +
+                    "FROM previous_contact AS pc " +
+                    "WHERE pc.base_entity_id='" + baseEntityId + "' AND pc.key = 'visit_date' " +
+                    "ORDER BY pc.`value` DESC";
+            Cursor cursor = getReadableDatabase().rawQuery(query, null);
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    HashMap<String, String> historyMap = new HashMap<>();
+                    historyMap.put("_id", cursor.getString(cursor.getColumnIndex("_id")));
+                    historyMap.put("contact_no", cursor.getString(cursor.getColumnIndex("contact_no")));
+                    historyMap.put("base_entity_id", cursor.getString(cursor.getColumnIndex("base_entity_id")));
+                    historyMap.put("visit_date", cursor.getString(cursor.getColumnIndex("visit_date")));
+                    historyMap.put("method_exit", cursor.getString(cursor.getColumnIndex("method_exit")));
+                    data.add(historyMap);
+                }
+            }
+        }
+        catch (Exception ex) {
+            Timber.e(ex);
+        }
+
+        return data;
     }
 }

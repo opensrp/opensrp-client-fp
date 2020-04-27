@@ -92,10 +92,38 @@ public class Utils extends org.smartregister.util.Utils {
     private static final DateTimeFormatter SQLITE_DATE_DF = DateTimeFormat.forPattern(ConstantsUtils.SQLITE_DATE_TIME_FORMAT);
     private static final String OTHER_SUFFIX = ", other]";
 
+    private static final HashMap<String, String> METHODS;
+
     static {
         ALLOWED_LEVELS = new ArrayList<>();
         ALLOWED_LEVELS.add(DEFAULT_LOCATION_LEVEL);
         ALLOWED_LEVELS.add(FACILITY);
+
+        METHODS = new HashMap<>();
+        METHODS.put("cu_iud", "Copper-bearing intrauterine devices (Cu-IUDs)");
+        METHODS.put("lng_iud", "Levonorgestrel IUD (LNG-IUD)");
+        METHODS.put("etg_onerod", "Etonogestrel (ETG) one-rod");
+        METHODS.put("lng_tworod", "Levonorgestrel (LNG) two-rod");
+        METHODS.put("dmpa_im", "DMPA-IM (DMPA, administered intramuscularly)");
+        METHODS.put("dmpa_sc", "DMPA-SC (DMPA, administered subcutaneously)");
+        METHODS.put("net_en", "NET-EN norethisterone enanthate");
+        METHODS.put("pop", "Progestogen-only pills (POP)");
+        METHODS.put("coc", "Combined oral contraceptives (COCs)");
+        METHODS.put("patch", "Combined contraceptive patch");
+        METHODS.put("cvr", "Combined contraceptive vaginal ring (CVR)");
+        METHODS.put("pvr", "Progesterone-releasing vaginal ring (PVR)");
+        METHODS.put("lam", "Lactational amenorrhea method (LAM)");
+        METHODS.put("female_condoms", "Female condoms");
+        METHODS.put("male_condoms", "Male condoms");
+        METHODS.put("ecp", "Emergency contraceptive pills (ECPs)");
+        METHODS.put("fab", "Fertility awareness-based methods (FAB)");
+        METHODS.put("female_sterilization", "Female sterilization");
+        METHODS.put("male_method", "Female relying on male method");
+        METHODS.put("male_sterilization", "Male sterilization");
+        METHODS.put("withdrawal", "Withdrawal");
+        METHODS.put("female_method", "Male relying on female method");
+        METHODS.put("no_method", "No method");
+
     }
 
     public static void saveLanguage(String language) {
@@ -1008,5 +1036,9 @@ public class Utils extends org.smartregister.util.Utils {
         String currentValue = fieldObject.getString(JsonFormConstants.VALUE);
         return TextUtils.equals(currentValue, "[]") || (currentValue.length() == 2
                 && currentValue.startsWith("[") && currentValue.endsWith("]"));
+    }
+
+    public static String getMethodName(String key) {
+        return METHODS.containsKey(key) ? METHODS.get(key) : "";
     }
 }

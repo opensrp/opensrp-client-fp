@@ -59,6 +59,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     private Button dueButton;
     private TextView taskTabCount;
     private String contactNo;
+    private TextView btnStartFPVisit;
 
     @Override
     protected void onCreation() {
@@ -92,13 +93,14 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     @Override
     protected void setupViews() {
         super.setupViews();
-//        getButtonAlertStatus();
+        getButtonAlertStatus();
         ageView = findViewById(R.id.textview_detail_two);
         gestationAgeView = findViewById(R.id.textview_detail_three);
         ancIdView = findViewById(R.id.textview_detail_one);
         nameView = findViewById(R.id.textview_name);
         imageView = findViewById(R.id.imageview_profile);
         dueButton = findViewById(R.id.profile_overview_due_button);
+        btnStartFPVisit = findViewById(R.id.btn_start_visit);
         updateTasksTabTitle();
     }
 
@@ -130,6 +132,27 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         adapter.addFragment(clientHistoryFragment, this.getString(R.string.history));
 
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1 && clientHistoryFragment.hasRecords()) {
+                    getBtnStartFPVisit().setVisibility(View.GONE);
+                }
+                else {
+                    getBtnStartFPVisit().setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         return viewPager;
     }
 
@@ -338,6 +361,11 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
 
     public ProfilePresenter getProfilePresenter() {
         return (ProfilePresenter) presenter;
+    }
+
+    @NonNull
+    public TextView getBtnStartFPVisit() {
+        return btnStartFPVisit;
     }
 }
 
