@@ -16,7 +16,6 @@ import org.smartregister.view.activity.DrishtiApplication;
 
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Map;
 
 import timber.log.Timber;
 
@@ -34,12 +33,17 @@ public class PatientRepository extends BaseRepository {
                     DBConstantsUtils.KeyUtils.AGE, DBConstantsUtils.KeyUtils.GENDER, DBConstantsUtils.KeyUtils.BIOLOGICAL_SEX,
                     DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, DBConstantsUtils.KeyUtils.MARITAL_STATUS, DBConstantsUtils.KeyUtils.ADMIN_AREA,
                     DBConstantsUtils.KeyUtils.CLIENT_ADDRESS, DBConstantsUtils.KeyUtils.TEL_NUMBER, DBConstantsUtils.KeyUtils.COMM_CONSENT,
-                    DBConstantsUtils.KeyUtils.REMINDER_MESSAGE, DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH, DBConstantsUtils.KeyUtils.DATE_REMOVED};
+                    DBConstantsUtils.KeyUtils.REMINDER_MESSAGE, DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH, DBConstantsUtils.KeyUtils.DATE_REMOVED,
+                    DBConstantsUtils.KeyUtils.CONTACT_STATUS, DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS,
+                    DBConstantsUtils.KeyUtils.NEXT_CONTACT, DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE,
+                    DBConstantsUtils.KeyUtils.VISIT_START_DATE, DBConstantsUtils.KeyUtils.RED_FLAG_COUNT,
+                    DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT, DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE,
+                    DBConstantsUtils.KeyUtils.EDD};
 
-    public static Map<String, String> getClientProfileDetails(String baseEntityId) {
+    public static HashMap<String, String> getClientProfileDetails(String baseEntityId) {
         Cursor cursor = null;
 
-        Map<String, String> detailsMap = null;
+        HashMap<String, String> detailsMap = null;
         try {
             SQLiteDatabase db = getMasterRepository().getReadableDatabase();
             String query =
@@ -49,6 +53,7 @@ public class PatientRepository extends BaseRepository {
                             DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?";
             cursor = db.rawQuery(query, new String[]{baseEntityId});
             if (cursor != null && cursor.moveToFirst()) {
+                String nextContact = cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
                 detailsMap = new HashMap<>();
                 detailsMap.put(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID)));
                 detailsMap.put(DBConstantsUtils.KeyUtils.CLIENT_ID, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.CLIENT_ID)));
@@ -77,6 +82,15 @@ public class PatientRepository extends BaseRepository {
                 detailsMap.put(DBConstantsUtils.KeyUtils.REMINDER_MESSAGE, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.REMINDER_MESSAGE)));
                 detailsMap.put(DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH)));
                 detailsMap.put(DBConstantsUtils.KeyUtils.DATE_REMOVED, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.DATE_REMOVED)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.EDD, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.EDD)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.CONTACT_STATUS, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.CONTACT_STATUS)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, nextContact == null ? "1" : nextContact);
+                detailsMap.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.VISIT_START_DATE, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.VISIT_START_DATE)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.RED_FLAG_COUNT, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.RED_FLAG_COUNT)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT)));
+                detailsMap.put(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE)));
             }
             return detailsMap;
         } catch (Exception e) {
@@ -102,7 +116,7 @@ public class PatientRepository extends BaseRepository {
         contentValues.put(DBConstantsUtils.KeyUtils.CONTACT_STATUS, alertStatus);
 
         getMasterRepository().getWritableDatabase()
-                .update(getRegisterQueryProvider().getDetailsTable(), contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
+                .update(getRegisterQueryProvider().getDemographicTable(), contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
                         new String[]{baseEntityId});
 
         updateLastInteractedWith(baseEntityId);
@@ -135,7 +149,7 @@ public class PatientRepository extends BaseRepository {
             }
         }
 
-        getMasterRepository().getWritableDatabase().update(getRegisterQueryProvider().getDetailsTable(), contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
+        getMasterRepository().getWritableDatabase().update(getRegisterQueryProvider().getDemographicTable(), contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
                 new String[]{patientDetail.getBaseEntityId()});
 
         updateLastInteractedWith(patientDetail.getBaseEntityId());
@@ -150,7 +164,7 @@ public class PatientRepository extends BaseRepository {
             contentValues.putNull(DBConstantsUtils.KeyUtils.EDD);
         }
         getMasterRepository().getWritableDatabase()
-                .update(getRegisterQueryProvider().getDetailsTable(), contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
+                .update(getRegisterQueryProvider().getDemographicTable(), contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
                         new String[]{baseEntityId});
     }
 
@@ -163,7 +177,7 @@ public class PatientRepository extends BaseRepository {
             contentValues.putNull(DBConstantsUtils.KeyUtils.VISIT_START_DATE);
         }
         getMasterRepository().getWritableDatabase()
-                .update(getRegisterQueryProvider().getDetailsTable(), contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
+                .update(getRegisterQueryProvider().getDemographicTable(), contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
                         new String[]{baseEntityId});
     }
 

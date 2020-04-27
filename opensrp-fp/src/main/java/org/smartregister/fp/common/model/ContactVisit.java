@@ -86,7 +86,7 @@ public class ContactVisit {
         facts = new Facts();
         formSubmissionIDs = new ArrayList<>();
 
-        getCurrentClientsTasks(baseEntityId);
+        //getCurrentClientsTasks(baseEntityId);
         updateEventAndRequiredStepsField(baseEntityId, partialContactRepository, partialContactList, facts, formSubmissionIDs);
 
         womanDetail = getWomanDetail(baseEntityId, nextContactVisitDate, nextContact);
@@ -160,7 +160,7 @@ public class ContactVisit {
                     eventJson.put(JsonFormConstants.Properties.DETAILS, JsonFormUtils.getJSONObject(formObject, JsonFormConstants.Properties.DETAILS));
                     FPLibrary.getInstance().getEcSyncHelper().addEvent(baseEntityId, eventJson);
 
-                    processTasks(formObject);
+                    //processTasks(formObject);
                 }
 
                 //Remove partial contact
@@ -186,7 +186,7 @@ public class ContactVisit {
             YamlConfig attentionFlagConfig = (YamlConfig) ruleObject;
 
             for (YamlConfigItem yamlConfigItem : attentionFlagConfig.getFields()) {
-                if (FPLibrary.getInstance().getAncRulesEngineHelper().getRelevance(facts, yamlConfigItem.getRelevance())) {
+                if (FPLibrary.getInstance().getFPRulesEngineHelper().getRelevance(facts, yamlConfigItem.getRelevance())) {
                     Integer requiredFieldCount = attentionFlagCountMap.get(attentionFlagConfig.getGroup());
                     requiredFieldCount = requiredFieldCount == null ? 1 : ++requiredFieldCount;
                     attentionFlagCountMap.put(attentionFlagConfig.getGroup(), requiredFieldCount);

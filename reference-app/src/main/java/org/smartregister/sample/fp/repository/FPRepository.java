@@ -7,6 +7,9 @@ import net.sqlcipher.database.SQLiteDatabase;
 import org.smartregister.AllConstants;
 import org.smartregister.CoreLibrary;
 import org.smartregister.configurableviews.repository.ConfigurableViewsRepository;
+import org.smartregister.fp.common.repository.PreviousContactRepository;
+import org.smartregister.fp.features.home.repository.ContactTasksRepository;
+import org.smartregister.fp.features.home.repository.PartialContactRepository;
 import org.smartregister.repository.EventClientRepository;
 import org.smartregister.repository.Repository;
 import org.smartregister.repository.SettingsRepository;
@@ -40,6 +43,9 @@ public class FPRepository extends Repository {
 
         UniqueIdRepository.createTable(database);
         SettingsRepository.onUpgrade(database);
+        PartialContactRepository.createTable(database);
+        PreviousContactRepository.createTable(database);
+        ContactTasksRepository.createTable(database);
     }
 
     @Override

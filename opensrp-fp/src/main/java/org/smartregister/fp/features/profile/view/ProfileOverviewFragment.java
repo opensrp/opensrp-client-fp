@@ -96,7 +96,7 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
                 List<YamlConfigItem> configItems = yamlConfig.getFields();
 
                 for (YamlConfigItem configItem : configItems) {
-                    if (FPLibrary.getInstance().getAncRulesEngineHelper().getRelevance(facts, configItem.getRelevance())) {
+                    if (FPLibrary.getInstance().getFPRulesEngineHelper().getRelevance(facts, configItem.getRelevance())) {
                         yamlConfigList.add(new YamlConfigWrapper(null, null, configItem));
                         valueCount += 1;
                     }

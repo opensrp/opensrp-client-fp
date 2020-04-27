@@ -70,7 +70,7 @@ public class FPFormUtils extends FormUtils {
         PartialContact partialContact = new PartialContact();
         partialContact.setBaseEntityId(baseEntityId);
         partialContact.setContactNo(contact.getContactNumber());
-        partialContact.setFinalized(false);
+        partialContact.setFinalized(true);
         partialContact.setType(contact.getFormName());
 
         partialContact.setFormJsonDraft(contact.getJsonForm());

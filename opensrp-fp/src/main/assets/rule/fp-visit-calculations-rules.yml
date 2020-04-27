@@ -1,0 +1,227 @@
+---
+name: step2_toaster1
+description: This is bmi field  which is calculated by height and weight.
+priority: 1
+condition: "true"
+actions:
+  - "calculation = ['bmi': (step2_weight / ((step2_height/100)^2))]"
+
+
+
+---
+name: step3_method_at_intake
+description: method at intake
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (global_method_gender_type == 'Female' ? step3_method_at_intake_f : step3_method_at_intake_m)"
+---
+name: step3_on_another_method
+description: method at intake
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (global_method_gender_type == 'Female' ? step3_on_another_method_f : step3_on_another_method_m)"
+---
+name: step3_method_on_file
+description: Field to pre-populate the client's current method(s) on file, if any.
+priority: 1
+condition: "true"
+actions:
+  - "calculation = global_current_method"
+---
+name: step3_still_on_method
+description: Whether or not the client is currently using the system's method on file.
+priority: 1
+condition: "true"
+actions:
+  - "calculation = ['method_on_file': step3_method_on_file]"
+---
+name: step3_current_method
+description: Whether or not the client is currently using the system's method on file.
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (step3_method_on_file == '' || step3_method_on_file == 'no_method') ? step3_method_at_intake : (step3_still_on_method == 'yes' ? step3_method_on_file : step3_on_another_method)"
+---
+name: step3_prior_methods_used
+description: set prior method depend on gender
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (global_method_gender_type == 'Female' ? step3_prior_methods_used_f : step3_prior_methods_used_m)"
+---
+name: step3_postpartum
+description: Calculated field to determine if the woman is postpartum (less than 6 weeks since delivery).
+priority: 1
+condition: "(step3_delivered_last_six_months == 'yes')"
+actions:
+  - "calculation = (helper.getDifferenceDays(step3_delivery_date) < 42 ? 1 : 0)"
+---
+name: step3_days_postpartum
+description: Calculated field to determine the number of days postpartum the woman is.
+priority: 1
+condition: "(step3_delivered_last_six_months == 'yes')"
+actions:
+  - "calculation = (helper.getDifferenceDays(step3_delivery_date))"
+---
+name: step3_days_since_last_menses
+description: Calculated field to determine the number of days since the woman's last normal period started.
+priority: 1
+condition: "(global_gender == 'Female')"
+actions:
+  - "calculation = (helper.getDifferenceDays(step3_start_date_last_menses))"
+
+
+
+
+
+---
+name: step5_issues_concerns
+description: NA
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (global_method_gender_type == 'Female' ? step5_issues_concerns_f : step5_issues_concerns_m)"
+---
+name: step5_issues_concerns_other
+description: NA
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (global_method_gender_type == 'Female' ? step5_issues_concerns_other_f : step5_issues_concerns_other_m)"
+
+
+
+
+
+
+---
+name: step6_method_removal
+description: For clients who wish to stop their method, this is a calculated field to determine whether the client needs the method to be removed (e.g. IUDs, Implants).
+priority: 1
+condition: "true"
+actions:
+  - "calculation = ((step6_keeping_method == 'stop_method' || step6_keeping_method == 'switch_method') && (step3_current_method == 'iud' || step3_current_method == 'cu_iud' || step3_current_method == 'lng_iud' || step3_current_method == 'implants' || step3_current_method == 'etg_onerod' || step3_current_method == 'lng_tworod')) ? 1 : 0"
+---
+name: step6_method_requested
+description: For clients who wish to stop their method, this is a calculated field to determine whether the client needs the method to be removed (e.g. IUDs, Implants).
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (global_method_gender_type == 'Female' ? step6_method_requested_f : step6_method_requested_m)"
+---
+name: step6_method_chosen
+description: For clients who wish to stop their method, this is a calculated field to determine whether the client needs the method to be removed (e.g. IUDs, Implants).
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (global_method_gender_type == 'Female' ? step6_method_chosen_f : step6_method_chosen_m)"
+---
+name: step6_needs_pregnancy_checklist
+description: Calculated field to determine whether, based on the woman's chosen method, the pregnancy checklist is required.
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (step6_method_chosen == 'cu_iud' || step6_method_chosen == 'lng_iud' || step6_method_chosen == 'etg_onerod' || step6_method_chosen == 'lng_tworod' || step6_method_chosen == 'dmpa_im' || step6_method_chosen == 'dmpa_sc' || step6_method_chosen == 'net_en' || step6_method_chosen == 'pop' || step6_method_chosen == 'coc' || step6_method_chosen == 'patch' || step6_method_chosen == 'cvr' || step6_method_chosen == 'pvr' || step6_method_chosen == 'ecp' || step6_method_chosen == 'female_sterilization') ? 1 : 0"
+---
+name: step6_informed_consent_required
+description: Calculated field to determine whether, based on the woman's chosen method, voluntary informed consent needs to be obtained.
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (step6_method_chosen == 'cu_iud' || step6_method_chosen == 'lng_iud' || step6_method_chosen == 'etg_onerod' || step6_method_chosen == 'lng_tworod' || step6_method_chosen == 'dmpa_im' || step6_method_chosen == 'dmpa_sc' || step6_method_chosen == 'net_en' || step6_method_chosen == 'female_sterilization' || step6_method_chosen == 'male_sterilization') ? 1 : 0"
+---
+name: step6_referral
+description: Calculated field to determine whether the client is being referred.
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (step6_how_method_removed == 'off_site' || step6_provide_method_location == 'provided_off_site') ? 'Yes' : 'No'"
+
+
+
+
+
+
+
+
+
+
+---
+name: step7_pregnancy_ruled_out
+description: Calculated field to determine whether pregnancy can be ruled out based on the inputs to the pregnancy checklist.
+priority: 1
+condition: "(step6_needs_pregnancy_checklist == 1 && step6_provide_method_location == 'provided_on_site')"
+actions:
+  - "calculation = (step7_menses_7days == 'yes' || step7_abstained == 'yes' || step7_correct_method_use == 'yes' || step7_delivered_4weeks == 'yes' || step7_lam == 'yes' || (step7_miscarriage_abortion_7days == 'yes' || step7_miscarriage_abortion_12days == 'yes')) ? 1 : 0"
+---
+name: step7_method_exit
+description: NA
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (global_method_gender_type == 'Female' ? step7_method_exit_f : step7_method_exit_m)"
+---
+name: step7_methods_exit_secondary
+description: NA
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (global_method_gender_type == 'Female' ? step7_methods_exit_secondaryf : step7_methods_exit_secondary_m)"
+---
+name: step7_lng_iud_start_other
+description: Calculated field to determine whether the woman who is being provided with an LNG-IUD can start the method now.
+priority: 1
+condition: "global_method_gender_type == 'Female' && step7_method_exit == 'lng_iud'"
+actions:
+  - "calculation = (((step3_current_method == 'ecp' || step3_current_method == 'dmpa_im' || step3_current_method == 'dmpa_sc' || step3_current_method == 'net_en') || (step3_postpartum == 1 && step3_days_postpartum <= 2)) ? 1 : 0)"
+---
+name: step7_lng_iud_backup_needed
+description: Calculated field to determine whether the woman who is being provided with an LNG-IUD right now, requires a back-up method.
+priority: 1
+condition: "step7_lng_iud_start_other == 0"
+actions:
+  - "calculation = ((step7_menses_7days == 'no' || (step3_postpartum == 0 && step3_amenorrhea == 'yes') || (step3_postpartum == 1 && step3_days_postpartum > 28 && step3_amenorrhea == 'no' && step7_menses_7days == 'no')) || (step3_recent_miscarriage_abortion == 'yes' && step7_miscarriage_abortion_7days == 'no' && step3_miscarriage_abortion_preg_stage == 'septic_abortion')) ? 1 : 0"
+---
+name: step7_implant_start_other
+description: Calculated field to determine whether the woman who is being provided with an implant can start the method now.
+priority: 1
+condition: "step7_method_exit == 'etg_onerod' || step7_method_exit == 'lng_tworod'"
+actions:
+  - "calculation = (step3_current_method == 'ecp' || step3_current_method == 'dmpa_im' || step3_current_method == 'dmpa_sc' || step3_current_method == 'net_en') ? 1 : 0"
+---
+name: step7_implant_backup_needed
+description: Calculated field to determine whether the woman who is being provided with an implant right now, requires a back-up method.
+priority: 1
+condition: "step7_implant_start_other == 0"
+actions:
+  - "calculation = (step7_menses_7days == 'no' || (step3_postpartum == 0 && step3_amenorrhea == 'yes') || (step3_days_postpartum > 21 && step3_breastfeeding == 'no' && step3_amenorrhea == 'yes') || ((step3_current_method == 'cu_iud' || step3_current_method == 'lng_iud') && (step3_amenorrhea == 'yes' || step5_issues_concerns.contains('irregular_bleeding'))) || (step3_recent_miscarriage_abortion == 'yes' && step7_miscarriage_abortion_7days == 'no')) ? 1 : 0"
+---
+name: step7_injectable_start_other
+description: Calculated field to determine whether the woman who is being provided with an injectable can start the method now.
+priority: 1
+condition: "(step7_method_exit == 'dmpa_im' || step7_method_exit == 'dmpa_sc' || step7_method_exit == 'net_en')"
+actions:
+  - "calculation = (step3_current_method == 'ecp') ? 1 : 0"
+---
+name: step7_injectable_backup_needed
+description: Calculated field to determine whether the woman who is being provided with an injectable right now, requires a back-up method.
+priority: 1
+condition: "step7_injectable_start_other == 0"
+actions:
+  - "calculation = (step7_menses_7days == 'no' || step3_amenorrhea == 'yes') || ((step3_current_method == 'cu_iud' || step3_current_method == 'lng_iud') && (step3_amenorrhea == 'yes' || step5_issues_concerns.contains('irregular_bleeding')) || (step3_recent_miscarriage_abortion == 'yes' && step7_miscarriage_abortion_7days == 'no')) ? 1 : 0"
+---
+name: step7_pop_combined_method_backup_needed
+description: Calculated field to determine whether the woman who is being provided with POP or a combined method right now, requires a back-up method.
+priority: 1
+condition: "(step7_method_exit == 'pop' || step7_method_exit == 'coc' || step7_method_exit == 'patch' || step7_method_exit == 'cvr')"
+actions:
+  - "calculation = (step3_days_since_last_menses > 5 || step3_amenorrhea == 'yes' || (step3_recent_miscarriage_abortion == 'yes' && step7_miscarriage_abortion_7days == 'no') || step3_current_method == 'ecp' || ((step3_current_method == 'cu_iud' || step3_current_method == 'lng_iud') && (step3_amenorrhea == 'yes' || step5_issues_concerns.contains('irregular_bleeding')))) ? 1 : 0"
+---
+name: step7_method_exit_start_date
+description: This calculates the family planning method at exit start date, regardless of which method was selected.
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (step7_method_exit == 'cu_iud' || step7_method_exit == 'lng_iud') ? step7_iud_insertion_date : (step7_method_exit == 'etg_onerod' || step7_method_exit == 'lng_tworod' ? step7_implant_date : (step7_method_exit == 'dmpa_im' || step7_method_exit == 'dmpa_sc' || step7_method_exit == 'net_en'? step7_last_injection_date : (step7_method_exit == 'female_sterilization' || step7_method_exit == 'male_sterilization' ? step7_sterilization_date : step1_visit_date)))"

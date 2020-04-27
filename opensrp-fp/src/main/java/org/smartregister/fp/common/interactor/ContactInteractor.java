@@ -74,7 +74,7 @@ public class ContactInteractor extends BaseContactInteractor implements ContactC
                     isFirst = TextUtils.equals("1", details.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
                     ContactRule contactRule = new ContactRule(gestationAge, isFirst, baseEntityId);
 
-                    List<Integer> integerList = FPLibrary.getInstance().getAncRulesEngineHelper()
+                    List<Integer> integerList = FPLibrary.getInstance().getFPRulesEngineHelper()
                             .getContactVisitSchedule(contactRule, ConstantsUtils.RulesFileUtils.CONTACT_RULES);
 
                     int nextContactVisitWeeks = integerList.get(0);

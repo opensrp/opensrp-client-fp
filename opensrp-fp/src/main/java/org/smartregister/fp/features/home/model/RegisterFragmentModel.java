@@ -73,7 +73,11 @@ public class RegisterFragmentModel implements RegisterFragmentContract.Model {
                         tableName + "." + DBConstantsUtils.KeyUtils.MARITAL_STATUS, tableName + "." + DBConstantsUtils.KeyUtils.ADMIN_AREA,
                         tableName + "." + DBConstantsUtils.KeyUtils.CLIENT_ADDRESS, tableName + "." + DBConstantsUtils.KeyUtils.TEL_NUMBER,
                         tableName + "." + DBConstantsUtils.KeyUtils.COMM_CONSENT, tableName + "." + DBConstantsUtils.KeyUtils.REMINDER_MESSAGE,
-                        tableName + "." + DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH, tableName + "." + DBConstantsUtils.KeyUtils.DATE_REMOVED};
+                        tableName + "." + DBConstantsUtils.KeyUtils.DATE_REMOVED, tableName + "." + DBConstantsUtils.KeyUtils.EDD,
+                        tableName + "." + DBConstantsUtils.KeyUtils.RED_FLAG_COUNT, tableName + "." + DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT,
+                        tableName + "." + DBConstantsUtils.KeyUtils.CONTACT_STATUS, tableName + "." + DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS,
+                        tableName + "." + DBConstantsUtils.KeyUtils.NEXT_CONTACT, tableName + "." + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE,
+                        tableName + "." + DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE, tableName + "." + DBConstantsUtils.KeyUtils.VISIT_START_DATE};
         queryBuilder.SelectInitiateMainTable(tableName, columns);
         /*queryBuilder.customJoin(" join " + getRegisterQueryProvider().getDetailsTable()
                 + " on " + getRegisterQueryProvider().getDemographicTable() + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + "= " + getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID); */

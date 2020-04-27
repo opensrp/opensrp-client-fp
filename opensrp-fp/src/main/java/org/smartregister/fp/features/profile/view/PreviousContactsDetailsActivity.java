@@ -191,7 +191,7 @@ public class PreviousContactsDetailsActivity extends AppCompatActivity implement
             List<YamlConfigItem> configItems = yamlConfig.getFields();
 
             for (YamlConfigItem configItem : configItems) {
-                if (FPLibrary.getInstance().getAncRulesEngineHelper().getRelevance(facts, configItem.getRelevance())) {
+                if (FPLibrary.getInstance().getFPRulesEngineHelper().getRelevance(facts, configItem.getRelevance())) {
                     yamlConfigList.add(new YamlConfigWrapper(null, null, configItem));
                     valueCount += 1;
                 }
@@ -209,7 +209,7 @@ public class PreviousContactsDetailsActivity extends AppCompatActivity implement
         for (Object ruleObject : ruleObjects) {
             YamlConfig attentionFlagConfig = (YamlConfig) ruleObject;
             for (YamlConfigItem yamlConfigItem : attentionFlagConfig.getFields()) {
-                if (FPLibrary.getInstance().getAncRulesEngineHelper()
+                if (FPLibrary.getInstance().getFPRulesEngineHelper()
                         .getRelevance(facts, yamlConfigItem.getRelevance())) {
                     lastContactDetails.add(new YamlConfigWrapper(null, null, yamlConfigItem));
                 }

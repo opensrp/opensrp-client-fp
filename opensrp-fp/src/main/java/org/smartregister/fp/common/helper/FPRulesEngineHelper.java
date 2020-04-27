@@ -44,7 +44,7 @@ import java.util.UUID;
 
 import timber.log.Timber;
 
-public class AncRulesEngineHelper extends RulesEngineHelper {
+public class FPRulesEngineHelper extends RulesEngineHelper {
     private final String RULE_FOLDER_PATH = "rule/";
     private Context context;
     private RulesEngine inferentialRulesEngine;
@@ -54,7 +54,7 @@ public class AncRulesEngineHelper extends RulesEngineHelper {
     private YamlRuleDefinitionReader yamlRuleDefinitionReader = new YamlRuleDefinitionReader();
     private MVELRuleFactory mvelRuleFactory = new MVELRuleFactory(yamlRuleDefinitionReader);
 
-    public AncRulesEngineHelper(Context context) {
+    public FPRulesEngineHelper(Context context) {
         this.context = context;
         this.inferentialRulesEngine = new InferenceRulesEngine();
         RulesEngineParameters parameters = new RulesEngineParameters().skipOnFirstAppliedRule(true);
