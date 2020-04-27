@@ -142,7 +142,7 @@
 
     <string name="call">Call</string>
     <string name="start_contact">Start Follow UP</string>
-    <string name="close_anc_record">Close ANC Record</string>
+    <string name="close_fp_record">Close FP Record</string>
     <string name="copy_to_clipboard">Copy to clipboard</string>
     <string name="no_matching_woman_found_on_this_device">No matching woman found on this device.</string>
     <string name="go_to_advanced_search">Go to advanced search</string>

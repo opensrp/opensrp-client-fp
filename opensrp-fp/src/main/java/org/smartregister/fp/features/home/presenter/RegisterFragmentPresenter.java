@@ -20,7 +20,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class RegisterFragmentPresenter implements RegisterFragmentContract.Presenter, AdvancedSearchContract.InteractorCallBack {
+public class RegisterFragmentPresenter
+        implements RegisterFragmentContract.Presenter, AdvancedSearchContract.InteractorCallBack {
 
     protected AdvancedSearchContract.Interactor interactor;
     protected AdvancedMatrixCursor matrixCursor;

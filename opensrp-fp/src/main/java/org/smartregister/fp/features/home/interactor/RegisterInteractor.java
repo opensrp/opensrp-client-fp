@@ -92,11 +92,11 @@ public class RegisterInteractor implements RegisterContract.Interactor {
     }
 
     @Override
-    public void removeWomanFromANCRegister(final String closeFormJsonString, final String providerId) {
+    public void removeClientFromFPRegister(final String closeFormJsonString, final String providerId) {
         Runnable runnable = () -> {
             try {
                 Triple<Boolean, Event, Event> triple = FPJsonFormUtils
-                        .saveRemovedFromANCRegister(getAllSharedPreferences(), closeFormJsonString, providerId);
+                        .saveRemovedFromFPRegister(getAllSharedPreferences(), closeFormJsonString, providerId);
 
                 if (triple == null) {
                     return;
@@ -137,7 +137,7 @@ public class RegisterInteractor implements RegisterContract.Interactor {
 
                 }
             } catch (Exception e) {
-                Timber.e(e, " --> removeWomanFromANCRegister");
+                Timber.e(e, " --> removeClientFromFPRegister");
             } finally {
                 Utils.postStickyEvent(new PatientRemovedEvent());
             }

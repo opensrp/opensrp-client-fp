@@ -18,6 +18,7 @@ import org.smartregister.cursoradapter.RecyclerViewFragment;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
 import org.smartregister.cursoradapter.SmartRegisterQueryBuilder;
 import org.smartregister.domain.FetchStatus;
+import org.smartregister.domain.ResponseErrorStatus;
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.cursor.AdvancedMatrixCursor;
 import org.smartregister.fp.common.event.SyncEvent;
@@ -48,10 +49,6 @@ import java.util.Set;
 
 import timber.log.Timber;
 
-/**
- * Created by keyman on 26/06/2018.
- */
-
 public class HomeRegisterFragment extends BaseRegisterFragment implements RegisterFragmentContract.View, SyncStatusBroadcastReceiver.SyncStatusListener {
     public static final String CLICK_VIEW_NORMAL = "click_view_normal";
     public static final String CLICK_VIEW_ALERT_STATUS = "click_view_alert_status";
@@ -71,10 +68,12 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
     }
 
     @Override
-    public void setUniqueID(String qrCode) { }
+    public void setUniqueID(String qrCode) {
+    }
 
     @Override
-    public void setAdvancedSearchFormData(HashMap<String, String> formData) { }
+    public void setAdvancedSearchFormData(HashMap<String, String> formData) {
+    }
 
     @Override
     public void setupViews(View view) {
@@ -146,11 +145,9 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
             new AttentionFlagsTask(baseHomeRegisterActivity, pc).execute();
         } else if (view.getId() == R.id.filter_text_view) {
             baseHomeRegisterActivity.switchToFragment(BaseRegisterActivity.SORT_FILTER_POSITION);
-        }
-        else if (view.getId() == R.id.due_only_text_view) {
+        } else if (view.getId() == R.id.due_only_text_view) {
 
-        }
-        else if (view.getId() == R.id.popup_menu) {
+        } else if (view.getId() == R.id.popup_menu) {
 
             if (popupMenu == null) {
                 popupMenu = new PopupMenu(getActivity(), view);
@@ -161,8 +158,7 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
                     if (item.getItemId() == R.id.btn_sync) {
                         SyncServiceJob.scheduleJobImmediately(SyncServiceJob.TAG);
                         SyncSettingsServiceJob.scheduleJobImmediately(SyncSettingsServiceJob.TAG);
-                    }
-                    else if (item.getItemId() == R.id.btn_logout) {
+                    } else if (item.getItemId() == R.id.btn_logout) {
                         DrishtiApplication.getInstance().logoutCurrentUser();
                     }
 
@@ -215,17 +211,7 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         final AdvancedMatrixCursor matrixCursor = ((RegisterFragmentPresenter) presenter).getMatrixCursor();
         if (!globalQrSearch || matrixCursor == null) {
-            if (id == LOADER_ID) {
-                return new CursorLoader(getActivity()) {
-                    @Override
-                    public Cursor loadInBackground() {
-                        String query = filterAndSortQuery();
-                        return commonRepository().rawCustomQueryForAdapter(query);
-                    }
-                };
-            } else {
-                return null;
-            }
+            return super.onCreateLoader(id, args);
         } else {
             globalQrSearch = false;
             if (id == RecyclerViewFragment.LOADER_ID) {// Returns a new CursorLoader
@@ -240,51 +226,70 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
         }
     }
 
-    private String filterAndSortQuery() {
-        SmartRegisterQueryBuilder registerQueryBuilder = new SmartRegisterQueryBuilder(mainSelect);
-
-        String query = "";
-        try {
-            if (isValidFilterForFts(commonRepository())) {
-                String sql = FPLibrary.getInstance().getRegisterQueryProvider().getObjectIdsQuery(mainCondition, filters) + (StringUtils.isBlank(getDefaultSortQuery()) ? "" : " order by " + getDefaultSortQuery());
-                sql = registerQueryBuilder.addlimitandOffset(sql, clientAdapter.getCurrentlimit(), clientAdapter.getCurrentoffset());
-                //List<String> ids = commonRepository().findSearchIds(sql);
-                query = FPLibrary.getInstance().getRegisterQueryProvider().mainRegisterQuery() + " order by " + getDefaultSortQuery();
-
-                //String joinedIds = "'" + StringUtils.join(ids, "','") + "'";
-                //return query.replace("%s", joinedIds);
-                return query;
-            } else {
-                if (!TextUtils.isEmpty(filters) && TextUtils.isEmpty(Sortqueries)) {
-                    registerQueryBuilder.addCondition(filters);
-                    query = registerQueryBuilder.orderbyCondition(Sortqueries);
-                    query = registerQueryBuilder.Endquery(registerQueryBuilder.addlimitandOffset(query
-                            , clientAdapter.getCurrentlimit()
-                            , clientAdapter.getCurrentoffset()));
-                }
-                return query;
-            }
-        } catch (Exception e) {
-            Timber.e(e);
-        }
-
-        return query;
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        // block super call due to the bug
-        //super.onLoaderReset(loader);
-    }
-
     @Override
     public void onSyncComplete(FetchStatus fetchStatus) {
-        if (fetchStatus == FetchStatus.fetched || fetchStatus == FetchStatus.nothingFetched) {
-
-        }
+        refreshSyncStatusViews(fetchStatus);
         if (popupMenu != null) {
             popupMenu.getMenu().findItem(R.id.btn_sync).setTitle(String.format(getString(R.string.last_synced), new SimpleDateFormat("hh:mm a", Utils.getDefaultLocale()).format(new Date()), new SimpleDateFormat("MMM dd", Utils.getDefaultLocale()).format(new Date())));
         }
+    }
+
+    private void refreshSyncStatusViews(FetchStatus fetchStatus) {
+
+        if (SyncStatusBroadcastReceiver.getInstance().isSyncing()) {
+            org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.syncing));
+            Timber.i( getString(org.smartregister.R.string.syncing));
+        } else {
+            if (fetchStatus != null) {
+
+                if (fetchStatus.equals(FetchStatus.fetchedFailed)) {
+                    if(fetchStatus.displayValue().equals(ResponseErrorStatus.malformed_url.name())) {
+                        org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_failed_malformed_url));
+                        Timber.i( getString(org.smartregister.R.string.sync_failed_malformed_url));
+                    }
+                    else if (fetchStatus.displayValue().equals(ResponseErrorStatus.timeout.name())) {
+                        org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_failed_timeout_error));
+                        Timber.i(getString(org.smartregister.R.string.sync_failed_timeout_error));
+                    }
+                    else {
+                        org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_failed));
+                        Timber.i(getString(org.smartregister.R.string.sync_failed));
+                    }
+
+                } else if (fetchStatus.equals(FetchStatus.fetched)
+                        || fetchStatus.equals(FetchStatus.nothingFetched)) {
+
+                    setRefreshList(true);
+                    renderView();
+
+                    org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
+                    Timber.i( getString(org.smartregister.R.string.sync_complete));
+
+                } else if (fetchStatus.equals(FetchStatus.noConnection)) {
+
+                    org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_failed_no_internet));
+                    Timber.i( getString(org.smartregister.R.string.sync_failed_no_internet));
+                }
+            }
+            else{
+                Timber.i("Fetch Status NULL");
+            }
+
+        }
+
+        refreshSyncProgressSpinner();
+    }
+
+    private void renderView() {
+        getDefaultOptionsProvider();
+        if (isPausedOrRefreshList()) {
+            presenter.initializeQueries(getMainCondition());
+        }
+        updateSearchView();
+        presenter.processViewConfigurations();
+        // updateLocationText();
+        refreshSyncProgressSpinner();
+        setTotalPatients();
     }
 }
 

@@ -64,7 +64,7 @@ public interface RegisterContract {
         void saveRegistration(final Pair<Client, Event> pair, final String jsonString, final boolean isEditMode,
                               final RegisterContract.InteractorCallBack callBack);
 
-        void removeWomanFromANCRegister(String closeFormJsonString, String providerId);
+        void removeClientFromFPRegister(String closeFormJsonString, String providerId);
 
     }
 

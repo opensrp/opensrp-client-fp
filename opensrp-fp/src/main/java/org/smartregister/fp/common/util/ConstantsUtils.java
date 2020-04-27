@@ -102,7 +102,7 @@ public abstract class ConstantsUtils {
         public static final String REGISTRATION = "Client Registration";
         public static final String UPDATE_REGISTRATION = "Edit Client Registration";
         public static final String QUICK_CHECK = "Quick Check";
-        public static final String CLOSE = "ANC Close";
+        public static final String CLOSE = "Close FP Record";
         public static final String SITE_CHARACTERISTICS = "Site Characteristics";
         public static final String CONTACT_VISIT = "Contact Visit";
     }
@@ -131,10 +131,9 @@ public abstract class ConstantsUtils {
         public static final String ATTRIBUTES = "attributes";
         public static final String DEATH_DATE = "deathdate";
         public static final String DEATH_DATE_APPROX = "deathdateApprox";
-        public static final String ANC_CLOSE_REASON = "anc_close_reason";
+        public static final String RECORD_CLOSE_REASON = "record_close_reason";
         public static final String DOB_ENTERED = "dob_entered";
         public static final String AGE_ENTERED = "age_entered";
-
         //
         public static final String CLIENT_ID = "client_id";
         public static final String STEP1 = "step1";
@@ -240,6 +239,5 @@ public abstract class ConstantsUtils {
 
     public static class ClientUtils {
         public static final String FP_ID = "client_id";
-        public static final String OPENSRP_ID = "opensrp_id";
     }
 }

@@ -123,7 +123,7 @@ public class ProfilePresenter implements ProfileContract.Presenter, RegisterCont
                     Pair<Client, Event> values = FPJsonFormUtils.processRegistrationForm(allSharedPreferences, jsonString);
                     mRegisterInteractor.saveRegistration(values, jsonString, true, this);
                 } else if (form.getString(FPJsonFormUtils.ENCOUNTER_TYPE).equals(ConstantsUtils.EventTypeUtils.CLOSE)) {
-                    mRegisterInteractor.removeWomanFromANCRegister(jsonString, allSharedPreferences.fetchRegisteredANM());
+                    mRegisterInteractor.removeClientFromFPRegister(jsonString, allSharedPreferences.fetchRegisteredANM());
                 } else {
                     getProfileView().hideProgressDialog();
                 }

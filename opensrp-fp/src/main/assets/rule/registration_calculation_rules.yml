@@ -25,7 +25,7 @@ description: A calculated field to determine which type of methods (female or ma
 priority: 1
 condition: "true"
 actions:
-  - 'calculation = (gender == "Other" ? biological_sex : gender)'
+  - 'calculation = (gender == "other" ? biological_sex : gender)'
 ---
 name: step1_client_id_note
 description: The client's unique OpenSRP ID should be populated into the form.

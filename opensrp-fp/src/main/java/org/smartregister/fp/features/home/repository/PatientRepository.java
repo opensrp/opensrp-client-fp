@@ -29,7 +29,7 @@ public class PatientRepository extends BaseRepository {
                     DBConstantsUtils.KeyUtils.FIRST_NAME, DBConstantsUtils.KeyUtils.LAST_NAME, DBConstantsUtils.KeyUtils.DOB,
                     DBConstantsUtils.KeyUtils.AGE_ENTERED, DBConstantsUtils.KeyUtils.DOB_UNKNOWN, DBConstantsUtils.KeyUtils.REGISTRATION_DATE,
                     DBConstantsUtils.KeyUtils.REFERRAL, DBConstantsUtils.KeyUtils.REFERRED_BY, DBConstantsUtils.KeyUtils.UNIVERSAL_ID,
-                    DBConstantsUtils.KeyUtils.AGE_FROM_DOB, DBConstantsUtils.KeyUtils.DOB_ENTERED, DBConstantsUtils.KeyUtils.DOB_FROM_AGE,
+                    DBConstantsUtils.KeyUtils.AGE_FROM_DOB, /*DBConstantsUtils.KeyUtils.DOB_ENTERED,*/ DBConstantsUtils.KeyUtils.DOB_FROM_AGE,
                     DBConstantsUtils.KeyUtils.AGE, DBConstantsUtils.KeyUtils.GENDER, DBConstantsUtils.KeyUtils.BIOLOGICAL_SEX,
                     DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, DBConstantsUtils.KeyUtils.MARITAL_STATUS, DBConstantsUtils.KeyUtils.ADMIN_AREA,
                     DBConstantsUtils.KeyUtils.CLIENT_ADDRESS, DBConstantsUtils.KeyUtils.TEL_NUMBER, DBConstantsUtils.KeyUtils.COMM_CONSENT,
@@ -68,7 +68,7 @@ public class PatientRepository extends BaseRepository {
                 detailsMap.put(DBConstantsUtils.KeyUtils.REFERRED_BY, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.REFERRED_BY)));
                 detailsMap.put(DBConstantsUtils.KeyUtils.UNIVERSAL_ID, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.UNIVERSAL_ID)));
                 detailsMap.put(DBConstantsUtils.KeyUtils.AGE_FROM_DOB, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.AGE_FROM_DOB)));
-                detailsMap.put(DBConstantsUtils.KeyUtils.DOB_ENTERED, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.DOB_ENTERED)));
+                //detailsMap.put(DBConstantsUtils.KeyUtils.DOB_ENTERED, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.DOB_ENTERED)));
                 detailsMap.put(DBConstantsUtils.KeyUtils.DOB_FROM_AGE, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.DOB_FROM_AGE)));
                 detailsMap.put(DBConstantsUtils.KeyUtils.AGE, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.AGE)));
                 detailsMap.put(DBConstantsUtils.KeyUtils.GENDER, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.GENDER)));

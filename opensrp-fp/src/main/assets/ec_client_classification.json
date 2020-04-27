@@ -7,7 +7,7 @@
         "fields": [
           {
             "field": "eventType",
-            "field_value": "FP Close",
+            "field_value": "Close FP Record",
             "closes_case": [
               "ec_client"
             ]
