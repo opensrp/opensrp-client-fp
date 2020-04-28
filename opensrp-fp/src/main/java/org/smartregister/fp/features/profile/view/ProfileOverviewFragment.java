@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +21,7 @@ import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.FilePathUtils;
 import org.smartregister.fp.common.util.Utils;
+import org.smartregister.fp.databinding.FragmentProfileOverviewBinding;
 import org.smartregister.fp.features.profile.adapter.ProfileOverviewAdapter;
 import org.smartregister.view.fragment.BaseProfileFragment;
 
@@ -111,13 +113,13 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
 
             attachRecyclerView(facts);
 
-            if (yamlConfigListGlobal.isEmpty()) {
+            /*if (yamlConfigListGlobal.isEmpty()) {
                 noHealthRecordLayout.setVisibility(View.VISIBLE);
                 profileOverviewRecycler.setVisibility(View.GONE);
             } else {
                 noHealthRecordLayout.setVisibility(View.GONE);
                 profileOverviewRecycler.setVisibility(View.VISIBLE);
-            }
+            }*/
         } catch (Exception e) {
             Timber.e(e, " --> onResumption");
         }
@@ -130,11 +132,15 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
         profileOverviewRecycler.setAdapter(adapter);
     }
 
+    private FragmentProfileOverviewBinding fragmentProfileBinding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.fragment_profile_overview, container, false);
-        noHealthRecordLayout = fragmentView.findViewById(R.id.no_health_data_recorded_profile_overview_layout);
-        profileOverviewRecycler = fragmentView.findViewById(R.id.profile_overview_recycler);
+        fragmentProfileBinding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_profile_overview, container, false);
+
+//        noHealthRecordLayout = fragmentView.findViewById(R.id.no_health_data_recorded_profile_overview_layout);
+//        profileOverviewRecycler = fragmentView.findViewById(R.id.profile_overview_recycler);
         dueButton = ((ProfileActivity) getActivity()).getDueButton();
         if (!ConstantsUtils.AlertStatusUtils.TODAY.equals(buttonAlertStatus.buttonAlertStatus)) {
             dueButton.setOnClickListener((ProfileActivity) getActivity());
@@ -142,6 +148,7 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
             dueButton.setEnabled(false);
         }
 
-        return fragmentView;
+        fragmentProfileBinding.profileOverviewLayoutsGroup.setVisibility(View.GONE);
+        return fragmentProfileBinding.getRoot();
     }
 }

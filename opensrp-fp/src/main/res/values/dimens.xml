@@ -150,4 +150,7 @@
 
     <dimen name="expansion_panel_dialog_padding">20dp</dimen>
     <dimen name="avatar_margin">24dp</dimen>
+    <dimen name="profile_overview_label_margin_top">24dp</dimen>
+    <dimen name="profile_overview_text_margin_start">12dp</dimen>
+    <dimen name="profile_overview_label_margin_start">24dp</dimen>
 </resources>

@@ -115,6 +115,9 @@ android {
             includeAndroidResources = true
         }
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 tasks.withType(Test) {

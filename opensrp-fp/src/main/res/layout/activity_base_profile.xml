@@ -171,7 +171,7 @@
                 android:layout_marginBottom="60dp"
                 android:textAlignment="center" />
         </FrameLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <org.smartregister.view.customcontrols.CustomFontTextView
         android:id="@+id/btn_start_visit"

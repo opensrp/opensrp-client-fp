@@ -13,7 +13,7 @@
     <color name="customAppThemeDarkest">#272727</color>
     <color name="customAppThemeDark">#373737</color>
     <color name="customAppThemeGray">#EEEEEE</color>
-
+    <color name="dark_silver">#707070</color>
     <color name="text_color_primary">#737373</color>
 
     <color name="light_grey">#cccccc</color>
