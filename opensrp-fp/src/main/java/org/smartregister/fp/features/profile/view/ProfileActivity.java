@@ -98,13 +98,16 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     protected void setupViews() {
         super.setupViews();
         getButtonAlertStatus();
-        ageView = findViewById(R.id.textview_detail_two);
-        gestationAgeView = findViewById(R.id.textview_detail_three);
-        ancIdView = findViewById(R.id.textview_detail_one);
+        genderView = findViewById(R.id.textview_detail_two);
+        ageView = findViewById(R.id.textview_detail_three);
+        clientIdView = findViewById(R.id.textview_detail_one);
         nameView = findViewById(R.id.textview_name);
         imageView = findViewById(R.id.imageview_profile);
         dueButton = findViewById(R.id.profile_overview_due_button);
         btnStartFPVisit = findViewById(R.id.btn_start_visit);
+        btnStartFPVisit.setOnClickListener((v) -> {
+            continueToContact();
+        });
         updateTasksTabTitle();
     }
 

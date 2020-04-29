@@ -63,7 +63,6 @@ public class ClientHistoryFragment extends BaseProfileFragment implements Client
 
         if (! data.isEmpty()) {
             noHealthRecord.setVisibility(View.GONE);
-            ((ProfileActivity) getActivity()).getBtnStartFPVisit().setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
             recyclerView.setAdapter(new ClientHistoryAdapter(data, this));
