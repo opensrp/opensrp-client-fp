@@ -19,148 +19,153 @@
         <include
             android:id="@+id/no_health_data_recorded_profile_overview_layout"
             layout="@layout/no_health_data_record"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/tv_label_chosen_method"
-            style="@style/ProfileOverviewLabelStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/profile_overview_label_margin_start"
-            android:layout_marginTop="@dimen/profile_overview_label_margin_top"
-            android:text="@string/chosen_method"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:id="@+id/tv_label_method_at_exit"
-            style="@style/ProfileOverviewLabelStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/profile_overview_label_margin_top"
-            android:text="@string/method_at_exit"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="@+id/tv_label_chosen_method"
-            app:layout_constraintTop_toBottomOf="@+id/tv_label_chosen_method" />
-
-
-        <TextView
-            android:id="@+id/tv_label_method_start_date"
-            style="@style/ProfileOverviewLabelStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/profile_overview_label_margin_top"
-            android:text="@string/method_start_date"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="@+id/tv_label_method_at_exit"
-            app:layout_constraintTop_toBottomOf="@+id/tv_label_method_at_exit" />
-
-
-        <TextView
-            android:id="@+id/tv_label_referred"
-            style="@style/ProfileOverviewLabelStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/profile_overview_label_margin_top"
-            android:text="@string/referred"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="@+id/tv_label_method_start_date"
-            app:layout_constraintTop_toBottomOf="@+id/tv_label_method_start_date" />
-
-        <TextView
-            android:id="@+id/tv_label_reason_for_no_method_at_exit"
-            style="@style/ProfileOverviewLabelStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/profile_overview_label_margin_top"
-            android:text="@string/reason_for_no_method_at_exit"
-            android:visibility="@{clientProfileModel.reasonForNoMethodAtExit != null ? View.VISIBLE : View.GONE}"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="@+id/tv_label_referred"
-            app:layout_constraintTop_toBottomOf="@+id/tv_label_referred" />
-
-        <TextView
-            android:id="@+id/tv_chosen_method"
-            style="@style/ProfileOverviewTextStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/profile_overview_text_margin_start"
-            android:text="@{clientProfileModel.chosenMethod}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="@+id/tv_label_chosen_method"
-            tools:text="@string/chosen_method" />
-
-
-        <TextView
-            android:id="@+id/tv_method_at_exit"
-            style="@style/ProfileOverviewTextStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/profile_overview_text_margin_start"
-            android:text="@{clientProfileModel.methodAtExit}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="@+id/tv_label_method_at_exit"
-            tools:text="@string/method_at_exit" />
-
-
-        <TextView
-            android:id="@+id/tv_method_start_date"
-            style="@style/ProfileOverviewTextStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/profile_overview_text_margin_start"
-            android:text="@{clientProfileModel.methodStartDate}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="@+id/tv_label_method_start_date"
-            tools:text="@string/method_start_date" />
-
-
-        <TextView
-            android:id="@+id/tv_referred"
-            style="@style/ProfileOverviewTextStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/profile_overview_text_margin_start"
-            android:text="@{clientProfileModel.referred}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="@+id/tv_label_referred"
-            tools:text="@string/referred" />
-
-        <TextView
-            android:id="@+id/tv_reason_for_no_method_at_exit"
-            style="@style/ProfileOverviewTextStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/profile_overview_text_margin_start"
-            android:text="@{clientProfileModel.reasonForNoMethodAtExit}"
-            android:visibility="@{clientProfileModel.reasonForNoMethodAtExit != null ? View.VISIBLE : View.GONE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="@+id/tv_label_reason_for_no_method_at_exit"
-            tools:text="@string/reason_for_no_method_at_exit"
+            android:visibility="visible"
             tools:visibility="gone" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_profile_overview"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.4" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/profile_overview_layouts_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:constraint_referenced_ids="tv_label_method_at_exit,tv_label_reason_for_no_method_at_exit,tv_label_method_start_date,tv_referred,tv_label_chosen_method,tv_reason_for_no_method_at_exit,tv_method_start_date,tv_label_referred,tv_method_at_exit,tv_chosen_method" />
+            <TextView
+                android:id="@+id/tv_label_chosen_method"
+                style="@style/ProfileOverviewLabelStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/profile_overview_label_margin_start"
+                android:layout_marginTop="@dimen/profile_overview_label_margin_top"
+                android:text="@string/chosen_method"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
+            <TextView
+                android:id="@+id/tv_label_method_at_exit"
+                style="@style/ProfileOverviewLabelStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/profile_overview_label_margin_start"
+                android:layout_marginTop="@dimen/profile_overview_label_margin_top"
+                android:text="@string/method_at_exit"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_label_chosen_method" />
+
+
+            <TextView
+                android:id="@+id/tv_label_method_start_date"
+                style="@style/ProfileOverviewLabelStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/profile_overview_label_margin_start"
+                android:layout_marginTop="@dimen/profile_overview_label_margin_top"
+                android:text="@string/method_start_date"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_label_method_at_exit" />
+
+
+            <TextView
+                android:id="@+id/tv_label_referred"
+                style="@style/ProfileOverviewLabelStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/profile_overview_label_margin_start"
+                android:layout_marginTop="@dimen/profile_overview_label_margin_top"
+                android:text="@string/referred"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_label_method_start_date" />
+
+            <TextView
+                android:id="@+id/tv_label_reason_for_no_method_at_exit"
+                style="@style/ProfileOverviewLabelStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/profile_overview_label_margin_start"
+                android:layout_marginTop="@dimen/profile_overview_label_margin_top"
+                android:text="@string/reason_for_no_method_at_exit"
+                android:visibility="@{clientProfileModel.reasonForNoMethodAtExit != null ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_label_referred" />
+
+            <TextView
+                android:id="@+id/tv_chosen_method"
+                style="@style/ProfileOverviewTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/profile_overview_text_margin_start"
+                android:text="@{clientProfileModel.chosenMethod}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/tv_label_chosen_method"
+                tools:text="@string/chosen_method" />
+
+
+            <TextView
+                android:id="@+id/tv_method_at_exit"
+                style="@style/ProfileOverviewTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/profile_overview_text_margin_start"
+                android:text="@{clientProfileModel.methodAtExit}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/tv_label_method_at_exit"
+                tools:text="@string/method_at_exit" />
+
+
+            <TextView
+                android:id="@+id/tv_method_start_date"
+                style="@style/ProfileOverviewTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/profile_overview_text_margin_start"
+                android:text="@{clientProfileModel.methodStartDate}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/tv_label_method_start_date"
+                tools:text="@string/method_start_date" />
+
+
+            <TextView
+                android:id="@+id/tv_referred"
+                style="@style/ProfileOverviewTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/profile_overview_text_margin_start"
+                android:text="@{clientProfileModel.referred}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/tv_label_referred"
+                tools:text="@string/referred" />
+
+            <TextView
+                android:id="@+id/tv_reason_for_no_method_at_exit"
+                style="@style/ProfileOverviewTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/profile_overview_text_margin_start"
+                android:text="@{clientProfileModel.reasonForNoMethodAtExit}"
+                android:visibility="@{clientProfileModel.reasonForNoMethodAtExit != null ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/tv_label_reason_for_no_method_at_exit"
+                tools:text="@string/reason_for_no_method_at_exit" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.4" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

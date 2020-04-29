@@ -81,11 +81,12 @@
                 android:inputType="text"
                 android:lines="1"
                 android:paddingStart="10dp"
+                android:text="demo"
                 android:textColor="@color/gray"
                 android:textColorHint="@color/silver"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/login_edit_text_textSize"
-                android:typeface="sans"/>
+                android:typeface="sans" />
 
             <EditText
                 android:id="@+id/login_password_edit_text"
@@ -103,11 +104,12 @@
                 android:inputType="textPassword"
                 android:lines="1"
                 android:paddingStart="10dp"
+                android:text="Amani123"
                 android:textColor="@color/gray"
                 android:textColorHint="@color/silver"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/login_edit_text_textSize"
-                android:typeface="sans"/>
+                android:typeface="sans" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

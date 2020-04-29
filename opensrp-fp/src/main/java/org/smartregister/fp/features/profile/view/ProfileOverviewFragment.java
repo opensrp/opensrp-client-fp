@@ -7,25 +7,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import org.jeasy.rules.api.Facts;
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.domain.ButtonAlertStatus;
-import org.smartregister.fp.common.domain.YamlConfig;
-import org.smartregister.fp.common.domain.YamlConfigItem;
-import org.smartregister.fp.common.domain.YamlConfigWrapper;
 import org.smartregister.fp.common.library.FPLibrary;
+import org.smartregister.fp.common.model.ClientProfileModel;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
-import org.smartregister.fp.common.util.FilePathUtils;
 import org.smartregister.fp.common.util.Utils;
 import org.smartregister.fp.databinding.FragmentProfileOverviewBinding;
-import org.smartregister.fp.features.profile.adapter.ProfileOverviewAdapter;
 import org.smartregister.view.fragment.BaseProfileFragment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,16 +30,17 @@ import timber.log.Timber;
  * Created by ndegwamartin on 12/07/2018.
  */
 public class ProfileOverviewFragment extends BaseProfileFragment {
-    private List<YamlConfigWrapper> yamlConfigListGlobal;
+    private static final String METHOD_CHOSEN = "method_chosen";
+    private static final String METHOD_EXIT = "method_exit";
+    private static final String METHOD_EXIT_START_DATE = "method_exit_start_date";
+    private static final String REFERRAL = "referral";
+    private static final String REASON_NO_METHOD_EXIT = "reason_no_method_exit";
     private Button dueButton;
     private ButtonAlertStatus buttonAlertStatus;
     private String baseEntityId;
     private String contactNo;
-    private View noHealthRecordLayout;
-    private RecyclerView profileOverviewRecycler;
-    private Utils utils = new Utils();
 
-    public static ProfileOverviewFragment newInstance(Bundle bundle) {
+    static ProfileOverviewFragment newInstance(Bundle bundle) {
         Bundle bundles = bundle;
         ProfileOverviewFragment fragment = new ProfileOverviewFragment();
         if (bundles == null) {
@@ -68,7 +64,6 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
                 buttonAlertStatus = Utils.getButtonAlertStatus(clientDetails, getActivity().getApplicationContext(), true);
                 contactNo = String.valueOf(Utils.getTodayContact(clientDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
             }
-            yamlConfigListGlobal = new ArrayList<>();
             baseEntityId = getActivity().getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID);
         } else {
             Timber.d("getIntent or getActivity might be null");
@@ -78,58 +73,35 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
     @Override
     protected void onResumption() {
         try {
-            yamlConfigListGlobal = new ArrayList<>(); //This makes sure no data duplication happens
-            Facts facts = FPLibrary.getInstance().getPreviousContactRepository().getPreviousContactFacts(baseEntityId, contactNo, false);
-            Iterable<Object> ruleObjects = utils.loadRulesFiles(FilePathUtils.FileUtils.PROFILE_OVERVIEW);
-
-            for (Object ruleObject : ruleObjects) {
-                List<YamlConfigWrapper> yamlConfigList = new ArrayList<>();
-                int valueCount = 0;
-
-                YamlConfig yamlConfig = (YamlConfig) ruleObject;
-                if (yamlConfig.getGroup() != null) {
-                    yamlConfigList.add(new YamlConfigWrapper(yamlConfig.getGroup(), null, null));
-                }
-
-                if (yamlConfig.getSubGroup() != null) {
-                    yamlConfigList.add(new YamlConfigWrapper(null, yamlConfig.getSubGroup(), null));
-                }
-
-                List<YamlConfigItem> configItems = yamlConfig.getFields();
-
-                for (YamlConfigItem configItem : configItems) {
-                    if (FPLibrary.getInstance().getFPRulesEngineHelper().getRelevance(facts, configItem.getRelevance())) {
-                        yamlConfigList.add(new YamlConfigWrapper(null, null, configItem));
-                        valueCount += 1;
-                    }
-                }
-
-                if (valueCount > 0) {
-                    yamlConfigListGlobal.addAll(yamlConfigList);
-                }
-            }
-
-            Utils.processButtonAlertStatus(getActivity(), dueButton, buttonAlertStatus);
-
-            attachRecyclerView(facts);
-
-            /*if (yamlConfigListGlobal.isEmpty()) {
-                noHealthRecordLayout.setVisibility(View.VISIBLE);
-                profileOverviewRecycler.setVisibility(View.GONE);
-            } else {
-                noHealthRecordLayout.setVisibility(View.GONE);
-                profileOverviewRecycler.setVisibility(View.VISIBLE);
-            }*/
+            List<String> keys = new ArrayList<>(Arrays.asList(METHOD_CHOSEN, METHOD_EXIT, METHOD_EXIT_START_DATE, REFERRAL, REASON_NO_METHOD_EXIT));
+            Facts result = FPLibrary.getInstance().getPreviousContactRepository().getProfileOverviewDetails(baseEntityId, contactNo, keys);
+            if (result.asMap().size() > 0) {
+                ClientProfileModel clientProfileModel = new ClientProfileModel();
+                clientProfileModel.setChosenMethod(result.get(METHOD_CHOSEN));
+                clientProfileModel.setMethodAtExit(result.get(METHOD_EXIT));
+                clientProfileModel.setMethodStartDate(result.get(METHOD_EXIT_START_DATE));
+                clientProfileModel.setReferred(result.get(REFERRAL));
+                clientProfileModel.setReasonForNoMethodAtExit(result.get(REASON_NO_METHOD_EXIT));
+                showClientProfileOverview();
+                populateUi(clientProfileModel);
+            } else showNoDataRecorded();
         } catch (Exception e) {
             Timber.e(e, " --> onResumption");
         }
     }
 
-    private void attachRecyclerView(Facts facts) {
-        ProfileOverviewAdapter adapter = new ProfileOverviewAdapter(getActivity(), yamlConfigListGlobal, facts);
-        adapter.notifyDataSetChanged();
-        profileOverviewRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        profileOverviewRecycler.setAdapter(adapter);
+    private void showNoDataRecorded() {
+        fragmentProfileBinding.clProfileOverview.setVisibility(View.GONE);
+        fragmentProfileBinding.noHealthDataRecordedProfileOverviewLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void showClientProfileOverview() {
+        fragmentProfileBinding.clProfileOverview.setVisibility(View.VISIBLE);
+        fragmentProfileBinding.noHealthDataRecordedProfileOverviewLayout.setVisibility(View.GONE);
+    }
+
+    private void populateUi(ClientProfileModel clientProfileModel) {
+        fragmentProfileBinding.setClientProfileModel(clientProfileModel);
     }
 
     private FragmentProfileOverviewBinding fragmentProfileBinding;
@@ -139,8 +111,6 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
         fragmentProfileBinding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_profile_overview, container, false);
 
-//        noHealthRecordLayout = fragmentView.findViewById(R.id.no_health_data_recorded_profile_overview_layout);
-//        profileOverviewRecycler = fragmentView.findViewById(R.id.profile_overview_recycler);
         dueButton = ((ProfileActivity) getActivity()).getDueButton();
         if (!ConstantsUtils.AlertStatusUtils.TODAY.equals(buttonAlertStatus.buttonAlertStatus)) {
             dueButton.setOnClickListener((ProfileActivity) getActivity());
@@ -148,7 +118,6 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
             dueButton.setEnabled(false);
         }
 
-        fragmentProfileBinding.profileOverviewLayoutsGroup.setVisibility(View.GONE);
         return fragmentProfileBinding.getRoot();
     }
 }
