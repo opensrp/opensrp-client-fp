@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.library.FPLibrary;
+import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
+import org.smartregister.fp.common.util.Utils;
+import org.smartregister.fp.features.home.repository.PatientRepository;
 import org.smartregister.fp.features.profile.adapter.ClientHistoryAdapter;
 import org.smartregister.view.fragment.BaseProfileFragment;
 
@@ -73,12 +76,12 @@ public class ClientHistoryFragment extends BaseProfileFragment implements Client
 
     @Override
     public void onItemClicked(HashMap<String, String> item, int position) {
-        /*HashMap<String, String> details = PatientRepository.getClientProfileDetails(baseEntityId);
+        HashMap<String, String> details = PatientRepository.getClientProfileDetails(baseEntityId);
         String rawContactNo = details.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
         int contactNo = rawContactNo == null ? 1 : Integer.parseInt(rawContactNo) - 1;
         details.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, String.valueOf(contactNo));
         details.put(ConstantsUtils.FORM_STATE, ConstantsUtils.FormState.READ_ONLY);
-        Utils.proceedToContact(baseEntityId, details, getActivity());*/
+        Utils.proceedToContact(baseEntityId, details, getActivity());
     }
 
     static ClientHistoryFragment newInstance(Bundle bundle) {
