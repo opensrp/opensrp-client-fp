@@ -37,6 +37,7 @@ import java.util.Set;
 
 import timber.log.Timber;
 
+@SuppressWarnings({"ConstantConditions", "unchecked"})
 public class StartVisitJsonFormActivity extends JsonFormActivity {
 
     protected FPRulesEngineFactory rulesEngineFactory = null;
@@ -44,6 +45,7 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
     private String formName;
     private FPFormUtils FPFormUtils = new FPFormUtils();
     private Yaml yaml = new Yaml();
+    private HashMap<String, String> clientDetails;
 
     private Map<String, List<String>> formGlobalKeys = new HashMap<>();
     private Map<String, String> formGlobalValues = new HashMap<>();
@@ -55,12 +57,11 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
         if (getIntent() != null) {
             formName = getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME);
         }
+        clientDetails = (HashMap<String, String>) getIntent().getSerializableExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP);
         super.onCreate(savedInstanceState);
 
         ///new Handler().postDelayed(this::updateViewsProperties, 200);
     }
-
-
 
     private void loadGlobals() {
         try {
@@ -253,9 +254,21 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
      *
      * @author dubdabasoduba
      */
-    public void finishInitialQuickCheck() {
+    public void powerFinish() {
         StartVisitJsonFormActivity.this.finish();
     }
 
+    public HashMap<String, String> getClientDetails() {
+        return clientDetails;
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (ConstantsUtils.FormState.READ_ONLY.equals(clientDetails.get(ConstantsUtils.FORM_STATE))) {
+            powerFinish();
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
 }

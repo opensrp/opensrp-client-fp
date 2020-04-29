@@ -1,12 +1,19 @@
 ---
+name: step1_visit_date
+description: This is bmi field  which is calculated by height and weight.
+priority: 1
+condition: "true"
+actions:
+  - "calculation = helper.getDateToday()"
+
+
+---
 name: step2_toaster1
 description: This is bmi field  which is calculated by height and weight.
 priority: 1
 condition: "true"
 actions:
   - "calculation = ['bmi': (step2_weight / ((step2_height/100)^2))]"
-
-
 
 ---
 name: step3_method_at_intake
@@ -225,3 +232,12 @@ priority: 1
 condition: "true"
 actions:
   - "calculation = (step7_method_exit == 'cu_iud' || step7_method_exit == 'lng_iud') ? step7_iud_insertion_date : (step7_method_exit == 'etg_onerod' || step7_method_exit == 'lng_tworod' ? step7_implant_date : (step7_method_exit == 'dmpa_im' || step7_method_exit == 'dmpa_sc' || step7_method_exit == 'net_en'? step7_last_injection_date : (step7_method_exit == 'female_sterilization' || step7_method_exit == 'male_sterilization' ? step7_sterilization_date : step1_visit_date)))"
+
+
+---
+name: step7_dummy
+description: This is bmi field  which is calculated by height and weight.
+priority: 1
+condition: "true"
+actions:
+  - "calculation = step7_method_exit"

@@ -61,6 +61,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     private Button dueButton;
     private TextView taskTabCount;
     private String contactNo;
+    private TextView btnStartFPVisit;
 
     @Override
     protected void onCreation() {
@@ -96,14 +97,14 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     @Override
     protected void setupViews() {
         super.setupViews();
-//        getButtonAlertStatus();
-        ageView = findViewById(R.id.textview_detail_three);
-        genderView = findViewById(R.id.textview_detail_two);
-        clientIdView = findViewById(R.id.textview_detail_one);
+        getButtonAlertStatus();
+        ageView = findViewById(R.id.textview_detail_two);
+        gestationAgeView = findViewById(R.id.textview_detail_three);
+        ancIdView = findViewById(R.id.textview_detail_one);
         nameView = findViewById(R.id.textview_name);
         imageView = findViewById(R.id.imageview_profile);
         dueButton = findViewById(R.id.profile_overview_due_button);
-        findViewById(R.id.btn_start_visit).setOnClickListener(v -> continueToContact());
+        btnStartFPVisit = findViewById(R.id.btn_start_visit);
         updateTasksTabTitle();
     }
 
@@ -129,14 +130,33 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         ProfileViewPagerAdapter adapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
 
         ProfileOverviewFragment profileOverviewFragment = ProfileOverviewFragment.newInstance(this.getIntent().getExtras());
-        //ProfileContactsFragment profileContactsFragment = ProfileContactsFragment.newInstance(this.getIntent().getExtras());
-        ProfileTasksFragment profileTasksFragment = ProfileTasksFragment.newInstance(this.getIntent().getExtras());
+        ClientHistoryFragment clientHistoryFragment = ClientHistoryFragment.newInstance(this.getIntent().getExtras());
 
         adapter.addFragment(profileOverviewFragment, this.getString(R.string.overview));
-        //adapter.addFragment(profileContactsFragment, this.getString(R.string.contacts));
-        adapter.addFragment(profileTasksFragment, this.getString(R.string.history));
+        adapter.addFragment(clientHistoryFragment, this.getString(R.string.history));
 
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1 && clientHistoryFragment.hasRecords()) {
+                    getBtnStartFPVisit().setVisibility(View.GONE);
+                }
+                else {
+                    getBtnStartFPVisit().setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         return viewPager;
     }
 
@@ -345,6 +365,11 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
 
     public ProfilePresenter getProfilePresenter() {
         return (ProfilePresenter) presenter;
+    }
+
+    @NonNull
+    public TextView getBtnStartFPVisit() {
+        return btnStartFPVisit;
     }
 }
 
