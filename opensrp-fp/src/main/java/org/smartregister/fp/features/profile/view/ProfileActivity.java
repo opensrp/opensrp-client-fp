@@ -20,6 +20,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+
 import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,8 +52,8 @@ import timber.log.Timber;
 public class ProfileActivity extends BaseProfileActivity implements ProfileContract.View {
     private TextView nameView;
     private TextView ageView;
-    private TextView gestationAgeView;
-    private TextView ancIdView;
+    private TextView genderView;
+    private TextView clientIdView;
     private ImageView imageView;
     private String phoneNumber;
     private HashMap<String, String> detailMap;
@@ -63,6 +65,8 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     @Override
     protected void onCreation() {
         super.onCreation();
+        CollapsingToolbarLayout collapsingToolbarLayout = appBarLayout.findViewById(org.smartregister.R.id.collapsing_toolbar_layout);
+        collapsingToolbarLayout.setTitleEnabled(false);
     }
 
     @Override
@@ -93,12 +97,13 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     protected void setupViews() {
         super.setupViews();
 //        getButtonAlertStatus();
-        ageView = findViewById(R.id.textview_detail_two);
-        gestationAgeView = findViewById(R.id.textview_detail_three);
-        ancIdView = findViewById(R.id.textview_detail_one);
+        ageView = findViewById(R.id.textview_detail_three);
+        genderView = findViewById(R.id.textview_detail_two);
+        clientIdView = findViewById(R.id.textview_detail_one);
         nameView = findViewById(R.id.textview_name);
         imageView = findViewById(R.id.imageview_profile);
         dueButton = findViewById(R.id.profile_overview_due_button);
+        findViewById(R.id.btn_start_visit).setOnClickListener(v -> continueToContact());
         updateTasksTabTitle();
     }
 
@@ -300,19 +305,19 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     }
 
     @Override
-    public void setProfileID(String ancId) {
-        ancIdView.setText("ID: " + ancId);
+    public void setProfileID(String clientId) {
+        clientIdView.setText("ID: " + clientId);
     }
 
     @Override
     public void setProfileAge(String age) {
-        ageView.setText("AGE " + age);
+        ageView.setText("Age: " + age);
 
     }
 
     @Override
-    public void setProfileGestationAge(String gestationAge) {
-        gestationAgeView.setText(gestationAge != null ? "GA: " + gestationAge + " WEEKS" : "GA");
+    public void setProfileGender(String gender) {
+        genderView.setText(StringUtils.capitalize(gender));
     }
 
     @Override

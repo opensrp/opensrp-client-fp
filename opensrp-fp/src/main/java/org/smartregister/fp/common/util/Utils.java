@@ -183,7 +183,7 @@ public class Utils extends org.smartregister.util.Utils {
     }
 
     public static int getProfileImageResourceIdentifier() {
-        return R.drawable.avatar_woman;
+        return R.drawable.user_avatar;
     }
 
     public static List<String> getListFromString(String stringArray) {
