@@ -34,8 +34,11 @@ import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.viewstate.ContactJsonFormFragmentViewState;
 import org.smartregister.fp.features.visit.presenter.StartVisitWizardJsonFormFragmentPresenter;
 
+import java.util.HashMap;
+
 import timber.log.Timber;
 
+@SuppressWarnings({"ConstantConditions"})
 public class StartVisitJsonWizardFormFragment extends JsonWizardFormFragment {
     public static final String TAG = StartVisitJsonWizardFormFragment.class.getName();
     private static final int MENU_NAVIGATION = 100001;
@@ -43,6 +46,8 @@ public class StartVisitJsonWizardFormFragment extends JsonWizardFormFragment {
     private TextView contactTitle;
     private BottomNavigationListener navigationListener = new BottomNavigationListener();
     private StartVisitJsonWizardFormFragment formFragment;
+    private HashMap<String, String> clientDetails;
+    private Button nextButton;
 
     public static JsonWizardFormFragment getFormFragment(String stepName) {
         StartVisitJsonWizardFormFragment jsonFormFragment = new StartVisitJsonWizardFormFragment();
@@ -55,6 +60,7 @@ public class StartVisitJsonWizardFormFragment extends JsonWizardFormFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.contact_json_form_fragment_wizard, null);
+        clientDetails = ((StartVisitJsonFormActivity) getActivity()).getClientDetails();
         this.mMainView = rootView.findViewById(com.vijay.jsonwizard.R.id.main_layout);
         this.mScrollView = rootView.findViewById(com.vijay.jsonwizard.R.id.scroll_view);
 
@@ -86,7 +92,7 @@ public class StartVisitJsonWizardFormFragment extends JsonWizardFormFragment {
         previousButton.setOnClickListener(navigationListener);
         previousIcon.setOnClickListener(navigationListener);
 
-        Button nextButton = rootView.findViewById(com.vijay.jsonwizard.R.id.next);
+        nextButton = rootView.findViewById(com.vijay.jsonwizard.R.id.next);
         ImageView nextIcon = rootView.findViewById(com.vijay.jsonwizard.R.id.next_icon);
 
         nextButton.setOnClickListener(navigationListener);
@@ -97,6 +103,7 @@ public class StartVisitJsonWizardFormFragment extends JsonWizardFormFragment {
 
         Button proceed = proceedLayout.findViewById(R.id.proceed);
         proceed.setOnClickListener(navigationListener);
+
     }
 
     @Override
@@ -146,7 +153,12 @@ public class StartVisitJsonWizardFormFragment extends JsonWizardFormFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_save && getActivity() != null) {
-            ((StartVisitJsonFormActivity) getActivity()).proceedToMainContactPage();
+            if (ConstantsUtils.FormState.READ_ONLY.equals(clientDetails.get(ConstantsUtils.FORM_STATE))) {
+                ((StartVisitJsonFormActivity) getActivity()).powerFinish();
+            }
+            else {
+                ((StartVisitJsonFormActivity) getActivity()).proceedToMainContactPage();
+            }
         }
 
         if (item.getItemId() == MENU_NAVIGATION) {
@@ -154,6 +166,22 @@ public class StartVisitJsonWizardFormFragment extends JsonWizardFormFragment {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void updateVisibilityOfNextAndSave(boolean next, boolean save) {
+        super.updateVisibilityOfNextAndSave(next, save);
+
+        if ((save || !next) && ConstantsUtils.FormState.READ_ONLY.equals(clientDetails.get(ConstantsUtils.FORM_STATE))) {
+            nextButton.setText(R.string.exit);
+            nextButton.setOnClickListener(v -> {
+                ((StartVisitJsonFormActivity) getActivity()).powerFinish();
+            });
+            getMenu().findItem(com.vijay.jsonwizard.R.id.action_save).setTitle(R.string.exit);
+        }
+        else {
+            nextButton.setOnClickListener(navigationListener);
+        }
     }
 
     @Override
@@ -346,10 +374,15 @@ public class StartVisitJsonWizardFormFragment extends JsonWizardFormFragment {
     }
 
     private void startVisitClose() {
-        AlertDialog dialog = new AlertDialog.Builder(getContext(), R.style.AppThemeAlertDialog)
-                .setTitle(getJsonApi().getConfirmCloseTitle()).setMessage(getJsonApi().getConfirmCloseMessage())
-                .setNegativeButton(R.string.yes, (dialog1, which) -> ((StartVisitJsonFormActivity) getActivity()).finishInitialQuickCheck()).setPositiveButton(R.string.no, (dialog12, which) -> Timber.d("No button on dialog in %s", JsonFormActivity.class.getCanonicalName())).create();
+        if (ConstantsUtils.FormState.READ_ONLY.equals(clientDetails.get(ConstantsUtils.FORM_STATE))) {
+            ((StartVisitJsonFormActivity) getActivity()).powerFinish();
+        }
+        else {
+            AlertDialog dialog = new AlertDialog.Builder(getContext(), R.style.AppThemeAlertDialog)
+                    .setTitle(getJsonApi().getConfirmCloseTitle()).setMessage(getJsonApi().getConfirmCloseMessage())
+                    .setNegativeButton(R.string.yes, (dialog1, which) -> ((StartVisitJsonFormActivity) getActivity()).powerFinish()).setPositiveButton(R.string.no, (dialog12, which) -> Timber.d("No button on dialog in %s", JsonFormActivity.class.getCanonicalName())).create();
 
-        dialog.show();
+            dialog.show();
+        }
     }
 }

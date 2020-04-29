@@ -55,7 +55,7 @@ public class ClientHistoryAdapter extends RecyclerView.Adapter<ClientHistoryAdap
     }
 
     private String getFormattedData(String currentDate) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         try {
             Date date = formatter.parse(currentDate);
             currentDate = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date);

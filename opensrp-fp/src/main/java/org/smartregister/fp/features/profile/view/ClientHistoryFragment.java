@@ -22,6 +22,7 @@ import java.util.List;
 @SuppressWarnings("ConstantConditions")
 public class ClientHistoryFragment extends BaseProfileFragment implements ClientHistoryAdapter.HistoryItemClickListener {
 
+    private String baseEntityId;
     private View noHealthRecord;
     private RecyclerView recyclerView;
 
@@ -49,7 +50,7 @@ public class ClientHistoryFragment extends BaseProfileFragment implements Client
         super.onViewCreated(view, savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            String baseEntityId = args.getString(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, "");
+            baseEntityId = args.getString(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, "");
             List<HashMap<String, String>> data = FPLibrary.getInstance().getPreviousContactRepository().getVisitHistory(baseEntityId);
             populateTheData(data);
         }
@@ -66,16 +67,21 @@ public class ClientHistoryFragment extends BaseProfileFragment implements Client
         }
     }
 
-    public boolean hasRecords() {
-        return recyclerView.getAdapter().getItemCount() > 0;
+    boolean hasRecords() {
+        return (recyclerView.getAdapter() != null) && recyclerView.getAdapter().getItemCount() > 0;
     }
 
     @Override
     public void onItemClicked(HashMap<String, String> item, int position) {
-
+        /*HashMap<String, String> details = PatientRepository.getClientProfileDetails(baseEntityId);
+        String rawContactNo = details.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
+        int contactNo = rawContactNo == null ? 1 : Integer.parseInt(rawContactNo) - 1;
+        details.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, String.valueOf(contactNo));
+        details.put(ConstantsUtils.FORM_STATE, ConstantsUtils.FormState.READ_ONLY);
+        Utils.proceedToContact(baseEntityId, details, getActivity());*/
     }
 
-    public static ClientHistoryFragment newInstance(Bundle bundle) {
+    static ClientHistoryFragment newInstance(Bundle bundle) {
         Bundle bundles = bundle;
         ClientHistoryFragment fragment = new ClientHistoryFragment();
         if (bundles == null) {

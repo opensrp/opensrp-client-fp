@@ -224,8 +224,8 @@ public class Utils extends org.smartregister.util.Utils {
     }
 
     /**
-     * Check for the quick check form then finds whether it still has pending required fields, If it has pending fields if so
-     * it redirects to the quick check page. If not pending required fields then it redirects to the main contact page
+     * Check for the visit form then finds whether it still has pending required fields, If it has pending fields if so
+     * it redirects to the visit page. If not pending required fields then it redirects to the client profile
      *
      * @param baseEntityId       {@link String}
      * @param personObjectClient {@link CommonPersonObjectClient}
@@ -234,20 +234,6 @@ public class Utils extends org.smartregister.util.Utils {
      */
     public static void proceedToContact(String baseEntityId, HashMap<String, String> personObjectClient, Context context) {
         try {
-            /*baseEntityId = "ba9b0b5c-4453-4fc3-8d62-f13fbaf0a342";
-            personObjectClient = new HashMap<>();
-            personObjectClient.put("dob", "1995-12-18T05:00:00.000+05:00");
-            personObjectClient.put("last_interacted_with", "1587569732782");
-            personObjectClient.put("base_entity_id", "ba9b0b5c-4453-4fc3-8d62-f13fbaf0a342");
-            personObjectClient.put("data_removed", null);
-            personObjectClient.put("last_name", "Wilson");
-            personObjectClient.put("_id", "ba9b0b5c-4453-4fc3-8d62-f13fbaf0a342");
-            personObjectClient.put("first_name", "Jimmy");
-            personObjectClient.put("relationid", null);
-            personObjectClient.put("client_id", "1341502");
-            personObjectClient.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, "1");
-            personObjectClient.put(DBConstantsUtils.KeyUtils.GENDER, "Female");
-            personObjectClient.put(DBConstantsUtils.KeyUtils.REFERRAL, "yes");*/
 
             personObjectClient.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER));
             String nextContact = personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
@@ -290,11 +276,14 @@ public class Utils extends org.smartregister.util.Utils {
             }
             form.put(JsonFormConstants.JSON_FORM_KEY.GLOBAL, defaultGlobal);
 
+
             String processedForm = FPFormUtils.getFormJsonCore(partialContactRequest, form).toString();
 
-
-
-
+            if (ConstantsUtils.FormState.READ_ONLY.equals(personObjectClient.get(ConstantsUtils.FORM_STATE))) {
+                JSONObject modifiedForm = new JSONObject(processedForm);
+                makeTheFormReadOnly(modifiedForm, 1);
+                processedForm = modifiedForm.toString();
+            }
 
             intent.putExtra(ConstantsUtils.JsonFormExtraUtils.JSON, processedForm);
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, startVisit);
@@ -306,23 +295,31 @@ public class Utils extends org.smartregister.util.Utils {
             activity.startActivityForResult(intent, FPJsonFormUtils.REQUEST_CODE_GET_JSON);
 
 
-            /*if (hasPendingRequiredFields(new JSONObject(processedForm))) {
-
-            } else {
-                intent = new Intent(context, StartVisitJsonFormActivity.class);
-                intent.putExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID, baseEntityId);
-                intent.putExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP, personObjectClient);
-                intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, partialContactRequest.getType());
-                intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO,
-                        Integer.valueOf(personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
-                context.startActivity(intent);
-            }*/
-
-
         } catch (Exception e) {
             Timber.e(e, " --> proceedToContact");
             Utils.showToast(context,
                     "Error proceeding to contact for client " + personObjectClient.get(DBConstantsUtils.KeyUtils.FIRST_NAME));
+        }
+    }
+
+    private static void makeTheFormReadOnly(JSONObject form, int stepNo) {
+
+        String step = "step" + stepNo;
+        if (form.has(step)) {
+            try {
+                JSONObject stepObject = form.getJSONObject(step);
+                JSONArray fields = stepObject.getJSONArray("fields");
+
+                for (int i = 0; i < fields.length(); i++) {
+                    JSONObject field = fields.getJSONObject(i);
+                    field.put("read_only", true);
+                }
+            }
+            catch (JSONException ex) {
+                Timber.e(ex);
+            }
+
+            makeTheFormReadOnly(form, ++stepNo);
         }
     }
 
