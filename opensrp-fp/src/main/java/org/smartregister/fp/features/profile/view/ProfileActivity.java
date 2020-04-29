@@ -123,8 +123,6 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         TextView taskTabTitle = taskTabTitleLayout.findViewById(R.id.tasks_title);
         taskTabTitle.setText(this.getString(R.string.tasks));
         taskTabCount = taskTabTitleLayout.findViewById(R.id.tasks_count);
-
-        //getTabLayout().getTabAt(1).setCustomView(taskTabTitleLayout);
     }
 
     @Override
