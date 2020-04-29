@@ -20,6 +20,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+
 import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,8 +52,8 @@ import timber.log.Timber;
 public class ProfileActivity extends BaseProfileActivity implements ProfileContract.View {
     private TextView nameView;
     private TextView ageView;
-    private TextView gestationAgeView;
-    private TextView ancIdView;
+    private TextView genderView;
+    private TextView clientIdView;
     private ImageView imageView;
     private String phoneNumber;
     private HashMap<String, String> detailMap;
@@ -64,6 +66,8 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     @Override
     protected void onCreation() {
         super.onCreation();
+        CollapsingToolbarLayout collapsingToolbarLayout = appBarLayout.findViewById(org.smartregister.R.id.collapsing_toolbar_layout);
+        collapsingToolbarLayout.setTitleEnabled(false);
     }
 
     @Override
@@ -95,8 +99,9 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         super.setupViews();
         getButtonAlertStatus();
         ageView = findViewById(R.id.textview_detail_two);
-        gestationAgeView = findViewById(R.id.textview_detail_three);
-        ancIdView = findViewById(R.id.textview_detail_one);
+        genderView = findViewById(R.id.textview_detail_two);
+        ageView = findViewById(R.id.textview_detail_three);
+        clientIdView = findViewById(R.id.textview_detail_one);
         nameView = findViewById(R.id.textview_name);
         imageView = findViewById(R.id.imageview_profile);
         dueButton = findViewById(R.id.profile_overview_due_button);
@@ -127,14 +132,33 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         ProfileViewPagerAdapter adapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
 
         ProfileOverviewFragment profileOverviewFragment = ProfileOverviewFragment.newInstance(this.getIntent().getExtras());
-        //ProfileContactsFragment profileContactsFragment = ProfileContactsFragment.newInstance(this.getIntent().getExtras());
-        ProfileTasksFragment profileTasksFragment = ProfileTasksFragment.newInstance(this.getIntent().getExtras());
+        ClientHistoryFragment clientHistoryFragment = ClientHistoryFragment.newInstance(this.getIntent().getExtras());
 
         adapter.addFragment(profileOverviewFragment, this.getString(R.string.overview));
-        //adapter.addFragment(profileContactsFragment, this.getString(R.string.contacts));
-        adapter.addFragment(profileTasksFragment, this.getString(R.string.history));
+        adapter.addFragment(clientHistoryFragment, this.getString(R.string.history));
 
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1 && clientHistoryFragment.hasRecords()) {
+                    getBtnStartFPVisit().setVisibility(View.GONE);
+                }
+                else {
+                    getBtnStartFPVisit().setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         return viewPager;
     }
 
@@ -302,19 +326,19 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     }
 
     @Override
-    public void setProfileID(String ancId) {
-        ancIdView.setText("ID: " + ancId);
+    public void setProfileID(String clientId) {
+        clientIdView.setText("ID: " + clientId);
     }
 
     @Override
     public void setProfileAge(String age) {
-        ageView.setText("AGE " + age);
+        ageView.setText("Age: " + age);
 
     }
 
     @Override
-    public void setProfileGestationAge(String gestationAge) {
-        gestationAgeView.setText(gestationAge != null ? "GA: " + gestationAge + " WEEKS" : "GA");
+    public void setProfileGender(String gender) {
+        genderView.setText(StringUtils.capitalize(gender));
     }
 
     @Override
@@ -342,6 +366,11 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
 
     public ProfilePresenter getProfilePresenter() {
         return (ProfilePresenter) presenter;
+    }
+
+    @NonNull
+    public TextView getBtnStartFPVisit() {
+        return btnStartFPVisit;
     }
 }
 

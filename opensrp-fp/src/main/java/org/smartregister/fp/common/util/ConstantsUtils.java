@@ -67,6 +67,7 @@ public abstract class ConstantsUtils {
     public static final String DUE = "Due";
     public static final String OPEN_TEST_TASKS = "open_test_tasks";
     public static final String ANDROID_SWITCHER = "android:switcher:";
+    public static final String FORM_STATE = "form_state";
 
     public interface Properties {
         String CAN_SAVE_SITE_INITIAL_SETTING = "CAN_SAVE_INITIAL_SITE_SETTING";
@@ -239,5 +240,10 @@ public abstract class ConstantsUtils {
 
     public static class ClientUtils {
         public static final String FP_ID = "client_id";
+    }
+
+    public static final class FormState {
+        public static final String READ_ONLY = "read_only";
+        public static final String EDITABLE = "editable";
     }
 }
