@@ -9,10 +9,13 @@ import android.widget.Button;
 import androidx.databinding.DataBindingUtil;
 
 import org.jeasy.rules.api.Facts;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.domain.ButtonAlertStatus;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.ClientProfileModel;
+import org.smartregister.fp.common.model.PartialContact;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.Utils;
@@ -30,11 +33,13 @@ import timber.log.Timber;
  * Created by ndegwamartin on 12/07/2018.
  */
 public class ProfileOverviewFragment extends BaseProfileFragment {
-    private static final String METHOD_CHOSEN = "method_chosen";
-    private static final String METHOD_EXIT = "method_exit";
-    private static final String METHOD_EXIT_START_DATE = "method_exit_start_date";
-    private static final String REFERRAL = "referral";
-    private static final String REASON_NO_METHOD_EXIT = "reason_no_method_exit";
+    public static final String METHOD_CHOSEN = "method_chosen";
+    public static final String METHOD_EXIT = "method_exit";
+    public static final String METHOD_EXIT_START_DATE = "method_exit_start_date";
+    public static final String REFERRAL = "referral";
+    public static final String REASON_NO_METHOD_EXIT = "reason_no_method_exit";
+    public static final String FORM_TYPE = "fp_start_visit";
+
     private Button dueButton;
     private ButtonAlertStatus buttonAlertStatus;
     private String baseEntityId;
@@ -73,15 +78,11 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
     @Override
     protected void onResumption() {
         try {
-            List<String> keys = new ArrayList<>(Arrays.asList(METHOD_CHOSEN, METHOD_EXIT, METHOD_EXIT_START_DATE, REFERRAL, REASON_NO_METHOD_EXIT));
-            Facts result = FPLibrary.getInstance().getPreviousContactRepository().getProfileOverviewDetails(baseEntityId, contactNo, keys);
-            if (result.asMap().size() > 0) {
-                ClientProfileModel clientProfileModel = new ClientProfileModel();
-                clientProfileModel.setChosenMethod(result.get(METHOD_CHOSEN));
-                clientProfileModel.setMethodAtExit(result.get(METHOD_EXIT));
-                clientProfileModel.setMethodStartDate(result.get(METHOD_EXIT_START_DATE));
-                clientProfileModel.setReferred(result.get(REFERRAL));
-                clientProfileModel.setReasonForNoMethodAtExit(result.get(REASON_NO_METHOD_EXIT));
+            PartialContact partialContact = FPLibrary.getInstance().getPartialContactRepository().getPartialContact(
+                    new PartialContact(FORM_TYPE, baseEntityId, Integer.parseInt(contactNo)));
+
+            if (partialContact != null && partialContact.getFormJsonDraft() != null) {
+                ClientProfileModel clientProfileModel = Utils.getClientProfileValuesFromJson(partialContact.getFormJsonDraft());
                 showClientProfileOverview();
                 populateUi(clientProfileModel);
             } else showNoDataRecorded();

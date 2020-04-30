@@ -13,6 +13,14 @@ public abstract class Contact {
     private Long createdAt;
     private Long updatedAt;
 
+    public Contact(String baseEntityId, String type, Integer contactNo) {
+        this.baseEntityId = baseEntityId;
+        this.type = type;
+        this.contactNo = contactNo;
+    }
+
+    public Contact() {
+    }
 
     public Long getId() {
         return id;
