@@ -101,9 +101,9 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
                         Intent intent = getPackageManager().getLaunchIntentForPackage(pkgName);
                         if (intent == null) {
                             try {
-                                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$pkgName"));
+                                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + pkgName));
                             } catch (Exception ex) {
-                                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$pkgName"));
+                                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + pkgName));
                             }
                         }
                         startActivity(intent);
