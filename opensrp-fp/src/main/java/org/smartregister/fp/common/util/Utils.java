@@ -372,7 +372,7 @@ public class Utils extends org.smartregister.util.Utils {
                 globals.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE));
                 globals.put(DBConstantsUtils.KeyUtils.GENDER, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER));
                 globals.put(DBConstantsUtils.KeyUtils.REFERRAL, personObjectClient.get(DBConstantsUtils.KeyUtils.REFERRAL));
-                globals.put(ConstantsUtils.JsonFormFieldUtils.CURRENT_METHOD, currentMethod == null ? "" : currentMethod);
+                globals.put(ConstantsUtils.JsonFormFieldUtils.CURRENT_METHOD, currentMethod == null ? "0" : currentMethod);
 
 
                 String lastContactDate = personObjectClient.get(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE);

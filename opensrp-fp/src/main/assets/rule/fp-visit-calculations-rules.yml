@@ -1,10 +1,3 @@
----
-name: step1_visit_date
-description: This is bmi field  which is calculated by height and weight.
-priority: 1
-condition: "true"
-actions:
-  - "calculation = helper.getDateToday()"
 
 
 ---
@@ -40,7 +33,7 @@ actions:
 name: step3_still_on_method
 description: Whether or not the client is currently using the system's method on file.
 priority: 1
-condition: "true"
+condition: "(step3_method_on_file != '0')"
 actions:
   - "calculation = ['method_on_file': step3_method_on_file]"
 ---
@@ -49,7 +42,7 @@ description: Whether or not the client is currently using the system's method on
 priority: 1
 condition: "true"
 actions:
-  - "calculation = (step3_method_on_file == '' || step3_method_on_file == 'no_method') ? step3_method_at_intake : (step3_still_on_method == 'yes' ? step3_method_on_file : step3_on_another_method)"
+  - "calculation = (step3_method_on_file == '0' || step3_method_on_file == 'no_method') ? step3_method_at_intake : (step3_still_on_method == 'yes' ? step3_method_on_file : step3_on_another_method)"
 ---
 name: step3_prior_methods_used
 description: set prior method depend on gender
@@ -232,12 +225,3 @@ priority: 1
 condition: "true"
 actions:
   - "calculation = (step7_method_exit == 'cu_iud' || step7_method_exit == 'lng_iud') ? step7_iud_insertion_date : (step7_method_exit == 'etg_onerod' || step7_method_exit == 'lng_tworod' ? step7_implant_date : (step7_method_exit == 'dmpa_im' || step7_method_exit == 'dmpa_sc' || step7_method_exit == 'net_en'? step7_last_injection_date : (step7_method_exit == 'female_sterilization' || step7_method_exit == 'male_sterilization' ? step7_sterilization_date : step1_visit_date)))"
-
-
----
-name: step7_dummy
-description: This is bmi field  which is calculated by height and weight.
-priority: 1
-condition: "true"
-actions:
-  - "calculation = step7_method_exit"

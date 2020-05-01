@@ -1,22 +1,32 @@
+
+---
+name: step1_pregnancy_intention
+description: Reported use of method at intake
+priority: 1
+condition: "global_gender == 'Female'"
+actions:
+  - "isRelevant = true"
+
+
 ---
 name: step3_method_at_intake_m
 description: Reported use of method at intake
 priority: 1
-condition: "(step3_method_on_file == '' || step3_method_on_file == 'no_method') && global_method_gender_type == 'Male'"
+condition: "(step3_method_on_file == '0' || step3_method_on_file == 'no_method') && global_method_gender_type == 'Male'"
 actions:
   - "isRelevant = true"
 ---
 name: step3_method_at_intake_f
 description: Reported use of method at intake
 priority: 1
-condition: "(step3_method_on_file == '' || step3_method_on_file == 'no_method') && global_method_gender_type == 'Female'"
+condition: "(step3_method_on_file == '0' || step3_method_on_file == 'no_method') && global_method_gender_type == 'Female'"
 actions:
   - "isRelevant = true"
 ---
 name: step3_still_on_method
 description: Reported use of method at intake
 priority: 1
-condition: "(step3_method_on_file != '' && step3_method_on_file != 'no_method')"
+condition: "(step3_method_on_file != '0')"
 actions:
   - "isRelevant = true"
 ---
@@ -309,7 +319,7 @@ actions:
 name: step6_how_method_removed
 description: For clients needing an IUD/Implant removal, whether the service is being provided on site or off-site (i.e. referral).
 priority: 1
-condition: "(step6_method_removal != 1)"
+condition: "(step6_method_removal == '1')"
 actions:
   - "isRelevant = true"
 ---

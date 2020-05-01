@@ -60,37 +60,15 @@
         "next": "step2",
         "fields": [
             {
-                "key": "label",
-                "type": "label",
-                "openmrs_entity": "",
-                "openmrs_entity_id": "",
-                "openmrs_entity_parent": "",
-                "text": "Visit date (required)",
-                "text_color": "black",
-                "top_margin": "20dp",
-                "label_text_style": "bold",
-                "text_size": "8sp"
-            },
-            {
                 "key": "visit_date",
                 "type": "date_picker",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "padding_left": "10dp",
-                "margin_left": "10dp",
-                "hint": "",
-                "value": "",
+                "hint": "Visit date (required)",
                 "max_date": "today",
-                "calculation": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-calculations-rules.yml"
-                        }
-                    }
-                },
                 "v_required": {
-                    "value": true,
+                    "value": "true",
                     "err": "Please select the client visit date."
                 }
             },
@@ -287,7 +265,14 @@
                         "openmrs_entity_parent": "",
                         "text": "Client is unsure"
                     }
-                ]
+                ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
             }
         ]
     },
@@ -5196,35 +5181,35 @@
                 "options": [
                     {
                         "key": "male_condoms",
-                        "value": "Male condoms",
+                        "text": "Male condoms",
                         "openmrs_entity": "",
                         "openmrs_entity_id": "",
                         "openmrs_entity_parent": ""
                     },
                     {
                         "key": "male_sterilization",
-                        "value": "Male sterilization",
+                        "text": "Male sterilization",
                         "openmrs_entity": "",
                         "openmrs_entity_id": "",
                         "openmrs_entity_parent": ""
                     },
                     {
                         "key": "withdrawal",
-                        "value": "Withdrawal",
+                        "text": "Withdrawal",
                         "openmrs_entity": "",
                         "openmrs_entity_id": "",
                         "openmrs_entity_parent": ""
                     },
                     {
                         "key": "female_method",
-                        "value": "Male relying on female method",
+                        "text": "Male relying on female method",
                         "openmrs_entity": "",
                         "openmrs_entity_id": "",
                         "openmrs_entity_parent": ""
                     },
                     {
                         "key": "no_method",
-                        "value": "No method",
+                        "text": "No method",
                         "openmrs_entity": "",
                         "openmrs_entity_id": "",
                         "openmrs_entity_parent": ""
@@ -5977,21 +5962,6 @@
                 "openmrs_entity_parent": "",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
-                "calculation": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-calculations-rules.yml"
-                        }
-                    }
-                }
-            },
-            {
-                "key": "dummy",
-                "type": "edit_text",
-                "openmrs_entity": "",
-                "openmrs_entity_id": "",
-                "openmrs_entity_parent": "",
-                "hint": "hint method exit",
                 "calculation": {
                     "rules-engine": {
                         "ex-rules": {
