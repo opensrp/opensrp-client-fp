@@ -80,4 +80,6 @@ public class StartVisitWizardJsonFormFragmentPresenter extends JsonWizardFormFra
             showInformationDialog(view);
         }
     }
+
+
 }

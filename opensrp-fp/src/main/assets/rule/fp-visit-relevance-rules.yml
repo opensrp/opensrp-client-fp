@@ -351,6 +351,13 @@ condition: "(step6_method_in_mind == 'yes' && global_method_gender_type == 'Male
 actions:
   - "isRelevant = true"
 ---
+name: step6_mec_tool
+description: Button to launch the MEC wheel app.
+priority: 1
+condition: "(step3_current_method == 'no_method' || step6_keeping_method == 'switch_method')"
+actions:
+  - "isRelevant = true"
+---
 name: step6_method_chosen_f
 description: The first pick of method desired by the client, prior to medical eligibility tests. This may be the method in mind or the method selected after discussing the full range of methods.
 priority: 1

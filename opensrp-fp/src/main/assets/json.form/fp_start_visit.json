@@ -3374,13 +3374,18 @@
             },
             {
                 "key": "mec_tool",
-                "type": "label",
+                "type": "button",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "text": "Medical Eligibility Criteria (MEC)",
-                "label_text_color": "#000000",
-                "label_text_style": "bold"
+                "hint": "Medical Eligibility Criteria (MEC)",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
             },
             {
                 "key": "method_chosen_f",

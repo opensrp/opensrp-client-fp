@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -1037,5 +1038,18 @@ public class Utils extends org.smartregister.util.Utils {
 
     public static String getMethodName(String key) {
         return METHODS.containsKey(key) ? METHODS.get(key) : "";
+    }
+
+    public static void openMECWheelApp(Context context) {
+        String pkgName = "com.who.mecwheel";
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(pkgName);
+        if (intent == null) {
+            try {
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + pkgName));
+            } catch (Exception ex) {
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + pkgName));
+            }
+        }
+        context.startActivity(intent);
     }
 }
