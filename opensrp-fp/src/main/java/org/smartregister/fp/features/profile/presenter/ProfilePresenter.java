@@ -139,9 +139,10 @@ public class ProfilePresenter implements ProfileContract.Presenter, RegisterCont
         if (client != null) {
             getProfileView()
                     .setProfileName(client.get(DBConstantsUtils.KeyUtils.FIRST_NAME) + " " + client.get(DBConstantsUtils.KeyUtils.LAST_NAME));
-            if (client.get(DBConstantsUtils.KeyUtils.DOB) != null && !client.get(DBConstantsUtils.KeyUtils.DOB).isEmpty())
+            if (client.get(DBConstantsUtils.KeyUtils.DOB_UNKNOWN) != null && client.get(DBConstantsUtils.KeyUtils.DOB_UNKNOWN).equalsIgnoreCase("true"))
+                getProfileView().setProfileAge(client.get(DBConstantsUtils.KeyUtils.AGE_ENTERED));
+            else
                 getProfileView().setProfileAge(String.valueOf(Utils.getAgeFromDate(client.get(DBConstantsUtils.KeyUtils.DOB))));
-            else getProfileView().setProfileAge(client.get(DBConstantsUtils.KeyUtils.AGE_ENTERED));
             getProfileView().setProfileGender(client.get(DBConstantsUtils.KeyUtils.GENDER));
             getProfileView().setProfileID(client.get(DBConstantsUtils.KeyUtils.FP_ID));
             getProfileView().setProfileImage(client.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID));

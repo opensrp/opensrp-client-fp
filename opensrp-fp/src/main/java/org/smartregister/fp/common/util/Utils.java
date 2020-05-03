@@ -263,8 +263,6 @@ public class Utils extends org.smartregister.util.Utils {
             startVisit.setGlobals(globals);
 
 
-
-
             //partial contact exists?
             PartialContact partialContactRequest = new PartialContact();
             partialContactRequest.setBaseEntityId(baseEntityId);
@@ -321,8 +319,7 @@ public class Utils extends org.smartregister.util.Utils {
                     JSONObject field = fields.getJSONObject(i);
                     field.put("read_only", true);
                 }
-            }
-            catch (JSONException ex) {
+            } catch (JSONException ex) {
                 Timber.e(ex);
             }
 
@@ -330,7 +327,7 @@ public class Utils extends org.smartregister.util.Utils {
         }
     }
 
-    public static Map<String, String>  loadGlobalConfig(Context context, HashMap<String, String> personObjectClient, String baseEntityId, int contactNo, String formName) {
+    public static Map<String, String> loadGlobalConfig(Context context, HashMap<String, String> personObjectClient, String baseEntityId, int contactNo, String formName) {
         Map<String, String> globals = new HashMap<>();
         Set<String> defaultValueFields = new HashSet<>();
         JSONObject mainJson;
@@ -502,7 +499,6 @@ public class Utils extends org.smartregister.util.Utils {
         }
 
     }*/
-
     public static String fillTemplate(String stringValue, Facts facts) {
         String stringValueResult = stringValue;
         while (stringValueResult.contains("{")) {
@@ -996,7 +992,6 @@ public class Utils extends org.smartregister.util.Utils {
     }
 
 
-
     /**
      * Returns a map of the expansion panel values
      *
@@ -1035,7 +1030,6 @@ public class Utils extends org.smartregister.util.Utils {
         }
         return fields;
     }
-
 
 
     /**

@@ -98,7 +98,6 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     protected void setupViews() {
         super.setupViews();
         getButtonAlertStatus();
-        ageView = findViewById(R.id.textview_detail_two);
         genderView = findViewById(R.id.textview_detail_two);
         ageView = findViewById(R.id.textview_detail_three);
         clientIdView = findViewById(R.id.textview_detail_one);

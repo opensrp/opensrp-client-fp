@@ -12,7 +12,7 @@ public class ClientProfileModel {
     }
 
     public void setChosenMethod(String chosenMethod) {
-        this.chosenMethod = chosenMethod;
+        this.chosenMethod = processUnderscore(chosenMethod);
     }
 
     public String getMethodAtExit() {
@@ -20,7 +20,7 @@ public class ClientProfileModel {
     }
 
     public void setMethodAtExit(String methodAtExit) {
-        this.methodAtExit = methodAtExit;
+        this.methodAtExit = processUnderscore(methodAtExit);
     }
 
     public String getMethodStartDate() {
@@ -28,7 +28,7 @@ public class ClientProfileModel {
     }
 
     public void setMethodStartDate(String methodStartDate) {
-        this.methodStartDate = methodStartDate;
+        this.methodStartDate = processUnderscore(methodStartDate);
     }
 
     public String getReferred() {
@@ -36,7 +36,7 @@ public class ClientProfileModel {
     }
 
     public void setReferred(String referred) {
-        this.referred = referred;
+        this.referred = processUnderscore(referred);
     }
 
     public String getReasonForNoMethodAtExit() {
@@ -44,6 +44,13 @@ public class ClientProfileModel {
     }
 
     public void setReasonForNoMethodAtExit(String reasonForNoMethodAtExit) {
-        this.reasonForNoMethodAtExit = reasonForNoMethodAtExit;
+        this.reasonForNoMethodAtExit = processUnderscore(reasonForNoMethodAtExit);
+    }
+
+    private String processUnderscore(String str) {
+        if (str != null && !str.isEmpty()) {
+            String noUnderscore = str.replace("_", " ");
+            return noUnderscore.substring(0, 1).toUpperCase() + noUnderscore.substring(1);
+        } else return str;
     }
 }

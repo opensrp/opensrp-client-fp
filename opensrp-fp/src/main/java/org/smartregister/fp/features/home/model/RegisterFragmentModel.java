@@ -68,7 +68,7 @@ public class RegisterFragmentModel implements RegisterFragmentContract.Model {
                         tableName + "." + DBConstantsUtils.KeyUtils.REGISTRATION_DATE, tableName + "." + DBConstantsUtils.KeyUtils.REFERRAL,
                         tableName + "." + DBConstantsUtils.KeyUtils.REFERRED_BY, tableName + "." + DBConstantsUtils.KeyUtils.UNIVERSAL_ID,
                         tableName + "." + DBConstantsUtils.KeyUtils.AGE_FROM_DOB, tableName + "." + DBConstantsUtils.KeyUtils.DOB_FROM_AGE,
-                        tableName + "." + DBConstantsUtils.KeyUtils.AGE, tableName + "." + DBConstantsUtils.KeyUtils.GENDER,
+                        tableName + "." + DBConstantsUtils.KeyUtils.GENDER,
                         tableName + "." + DBConstantsUtils.KeyUtils.BIOLOGICAL_SEX, tableName + "." + DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE,
                         tableName + "." + DBConstantsUtils.KeyUtils.MARITAL_STATUS, tableName + "." + DBConstantsUtils.KeyUtils.ADMIN_AREA,
                         tableName + "." + DBConstantsUtils.KeyUtils.CLIENT_ADDRESS, tableName + "." + DBConstantsUtils.KeyUtils.TEL_NUMBER,

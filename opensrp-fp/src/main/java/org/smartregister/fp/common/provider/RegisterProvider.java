@@ -128,10 +128,16 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         String patientName = Utils.getName(firstName, lastName);
 
 
+        String dobString;
 
-        String dobString = Utils.getDuration(Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.DOB, false));
-        dobString = dobString.contains("y") ? dobString.substring(0, dobString.indexOf("y")) : dobString;
-        //fillValue((viewHolder.age), String.format(context.getString(R.string.age_text), dobString));
+        String DOBUnknown = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.DOB_UNKNOWN, false);
+        if (DOBUnknown != null && DOBUnknown.equalsIgnoreCase("true"))
+            dobString = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.AGE_ENTERED, false);
+        else {
+            String DOB = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.DOB, false);
+            dobString = DOB.isEmpty() ? "" : String.valueOf(Utils.getAgeFromDate(DOB));
+        }
+
         fillValue(viewHolder.patientName, WordUtils.capitalize(patientName) + ", " + dobString);
 
         /*String edd = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.EDD, false);
@@ -231,9 +237,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
 
     public static class RegisterViewHolder extends RecyclerView.ViewHolder {
         private TextView patientName;
-        private TextView age;
-        private TextView period;
-        private TextView ga;
         private TextView ancId;
         private TextView risk;
         private Button dueButton;
@@ -244,9 +247,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         public RegisterViewHolder(View itemView) {
             super(itemView);
             patientName = itemView.findViewById(R.id.patient_name);
-            age = itemView.findViewById(R.id.age);
-            ga = itemView.findViewById(R.id.ga);
-            period = itemView.findViewById(R.id.period);
             ancId = itemView.findViewById(R.id.fp_id);
             //risk = itemView.findViewById(R.id.risk);
             dueButton = itemView.findViewById(R.id.due_button);
