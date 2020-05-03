@@ -3,6 +3,7 @@ package org.smartregister.fp.features.home.view;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -96,7 +97,16 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     if (item.getItemId() == R.string.action_mec_wheel) {
-                        Utils.openMECWheelApp(HomeRegisterActivity.this);
+                        String pkgName = "com.who.mecwheel";
+                        Intent intent = getPackageManager().getLaunchIntentForPackage(pkgName);
+                        if (intent == null) {
+                            try {
+                                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + pkgName));
+                            } catch (Exception ex) {
+                                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + pkgName));
+                            }
+                        }
+                        startActivity(intent);
                         return false;
                     } else {
                         return super.onNavigationItemSelected(item);
