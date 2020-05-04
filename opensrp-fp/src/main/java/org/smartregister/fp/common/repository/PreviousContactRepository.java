@@ -433,4 +433,8 @@ public class PreviousContactRepository extends BaseRepository {
 
         return data;
     }
+
+    public void execRawQuery(@NonNull String query) {
+        getWritableDatabase().execSQL(query);
+    }
 }

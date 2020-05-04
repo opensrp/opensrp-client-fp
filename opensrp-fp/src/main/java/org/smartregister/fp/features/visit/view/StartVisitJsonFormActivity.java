@@ -2,6 +2,7 @@ package org.smartregister.fp.features.visit.view;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -25,6 +26,7 @@ import org.smartregister.fp.common.task.FinalizeVisitFormTask;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.FPFormUtils;
 import org.smartregister.fp.common.util.FilePathUtils;
+import org.smartregister.fp.common.util.Utils;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
@@ -121,6 +123,17 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
             localBroadcastManager = LocalBroadcastManager.getInstance(this);
         } catch (JSONException e) {
             Timber.e(e, "Initialization error. Json passed is invalid : ");
+        }
+    }
+
+    @Override
+    public void addFormDataView(View view) {
+        super.addFormDataView(view);
+        if ("mec_tool".equals(view.getTag(com.vijay.jsonwizard.R.id.key))) {
+            view.setEnabled(true);
+            view.setOnClickListener(v -> {
+                Utils.openMECWheelApp(StartVisitJsonFormActivity.this);
+            });
         }
     }
 

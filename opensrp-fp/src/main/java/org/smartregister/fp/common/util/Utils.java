@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -372,7 +373,7 @@ public class Utils extends org.smartregister.util.Utils {
                 globals.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE));
                 globals.put(DBConstantsUtils.KeyUtils.GENDER, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER));
                 globals.put(DBConstantsUtils.KeyUtils.REFERRAL, personObjectClient.get(DBConstantsUtils.KeyUtils.REFERRAL));
-                globals.put(ConstantsUtils.JsonFormFieldUtils.CURRENT_METHOD, currentMethod == null ? "" : currentMethod);
+                globals.put(ConstantsUtils.JsonFormFieldUtils.CURRENT_METHOD, currentMethod == null ? "0" : currentMethod);
 
 
                 String lastContactDate = personObjectClient.get(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE);
@@ -1037,5 +1038,18 @@ public class Utils extends org.smartregister.util.Utils {
 
     public static String getMethodName(String key) {
         return METHODS.containsKey(key) ? METHODS.get(key) : "";
+    }
+
+    public static void openMECWheelApp(Context context) {
+        String pkgName = "com.who.mecwheel";
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(pkgName);
+        if (intent == null) {
+            try {
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + pkgName));
+            } catch (Exception ex) {
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + pkgName));
+            }
+        }
+        context.startActivity(intent);
     }
 }
