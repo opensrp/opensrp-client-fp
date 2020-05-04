@@ -6,4 +6,5 @@
     <string name="family_planning_module">Family Planning Module</string>
     <string name="show_password_text">Show password</string>
     <string name="login_text">Log In</string>
+    <string name="return_to_clients">Return to Clients</string>
 </resources>

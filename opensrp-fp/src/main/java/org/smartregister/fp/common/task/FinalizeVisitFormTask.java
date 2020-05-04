@@ -99,7 +99,7 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
             Timber.e(ex);
         }
 
-        return null;
+        return clientProfileDetail;
     }
 
     @Override
@@ -108,7 +108,9 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
-        Utils.navigateToProfile(context, result);
+        if (result != null) {
+            Utils.navigateToProfile(context, result);
+        }
     }
 
 

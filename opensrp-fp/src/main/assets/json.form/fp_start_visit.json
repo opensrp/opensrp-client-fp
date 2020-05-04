@@ -80,8 +80,15 @@
                 "padding_left": "10dp",
                 "margin_left": "10dp",
                 "hint": "",
-                "value": "today",
+                "value": "",
                 "max_date": "today",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                },
                 "v_required": {
                     "value": true,
                     "err": "Please select the client visit date."
@@ -4886,7 +4893,7 @@
                         "text": "Combined contraceptive vaginal ring (CVR)"
                     },
                     {
-                        "key": "\"Emergency contraceptive pills (ECPs)\"",
+                        "key": "pvr",
                         "openmrs_entity": "",
                         "openmrs_entity_id": "",
                         "openmrs_entity_parent": "",
@@ -5970,6 +5977,21 @@
                 "openmrs_entity_parent": "",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "dummy",
+                "type": "edit_text",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "hint": "hint method exit",
                 "calculation": {
                     "rules-engine": {
                         "ex-rules": {
