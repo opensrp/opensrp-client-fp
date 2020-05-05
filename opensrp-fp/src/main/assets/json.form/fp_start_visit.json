@@ -1382,7 +1382,7 @@
                         }
                     }
                 },
-                "hint": "Reason for no contraceptive method"
+                "label": "Reason for no contraceptive method"
             },
             {
                 "key": "reason_no_method_other",
@@ -1473,7 +1473,7 @@
                         "openmrs_entity_parent": ""
                     }
                 ],
-                "hint": "Prior methods used",
+                "label": "Prior methods used",
                 "label_info_text": "Please select any methods that the client has used in the past.",
                 "label_text_style": "normal",
                 "relevance": {
@@ -1657,7 +1657,7 @@
                         "openmrs_entity_parent": ""
                     }
                 ],
-                "hint": "Prior methods used",
+                "label": "Prior methods used",
                 "label_info_text": "Please select any methods that the client has used in the past.",
                 "label_text_style": "normal",
                 "relevance": {
@@ -4490,7 +4490,7 @@
                         }
                     }
                 },
-                "hint": "Reason pelvic/genital examination was not done",
+                "label": "Reason pelvic/genital examination was not done",
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -4574,7 +4574,7 @@
                         }
                     }
                 },
-                "hint": "Reason STI risk assessment: medical history and physical examination was not done",
+                "label": "Reason STI risk assessment: medical history and physical examination was not done",
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -4658,7 +4658,7 @@
                         }
                     }
                 },
-                "hint": "Reason STI/HIV screening: laboratory tests were not done",
+                "label": "Reason STI/HIV screening: laboratory tests were not done",
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -4742,7 +4742,7 @@
                         }
                     }
                 },
-                "hint": "Reason haemoglobin test was not done",
+                "label": "Reason haemoglobin test was not done",
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -4826,7 +4826,7 @@
                         }
                     }
                 },
-                "hint": "Reason blood pressure screening was not done",
+                "label": "Reason blood pressure screening was not done",
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -5794,7 +5794,7 @@
                         "openmrs_entity_parent": ""
                     }
                 ],
-                "hint": "Reason for why method at exit is not the same as chosen method",
+                "label": "Reason for why method at exit is not the same as chosen method",
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
@@ -5852,7 +5852,7 @@
                         "openmrs_entity_parent": ""
                     }
                 ],
-                "hint": "Reason for no method at exit",
+                "label": "Reason for no method at exit",
                 "v_required": {
                     "value": "true",
                     "err": "Field required"

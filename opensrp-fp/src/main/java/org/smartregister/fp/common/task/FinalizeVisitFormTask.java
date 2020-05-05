@@ -94,6 +94,7 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
         WomanDetail womanDetail = getWomanDetail(baseEntityId, nextContactVisitDate, nextContact);
 
         PatientRepository.updateContactVisitDetails(womanDetail, true);
+        PatientRepository.updateNextContactDate(nextContactVisitDate, baseEntityId);
 
         try {
             processFormFieldKeyValues(baseEntityId, new JSONObject(contact.getJsonForm()), String.valueOf(contactNo));
