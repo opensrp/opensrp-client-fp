@@ -4,4 +4,4 @@ fields:
   - "gender"
   - "method_gender_type"
   - "referral"
-  - "current_method"
+  - "method_exit"
