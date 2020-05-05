@@ -142,7 +142,7 @@ public abstract class ConstantsUtils {
     }
 
     public static class JsonFormFieldUtils {
-        public static final String CURRENT_METHOD = "current_method";
+        public static final String METHOD_EXIT = "method_exit";
     }
 
     public static class JsonFormExtraUtils {
@@ -181,6 +181,7 @@ public abstract class ConstantsUtils {
         public static final String FORM_NAME = "form_name";
         public static final String CLIENT_MAP = "client_map";
         public static final String UNDONE_VALUES = "undone_values";
+        public static final String GLOBAL = "form_global";
     }
 
     public static class DetailsKeyUtils {
