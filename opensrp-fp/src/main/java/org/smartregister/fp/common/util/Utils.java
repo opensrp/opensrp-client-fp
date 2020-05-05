@@ -367,7 +367,7 @@ public class Utils extends org.smartregister.util.Utils {
                     }
                 }
 
-                String methodExit = getMapValue(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, baseEntityId, contactNo);
+                String methodExit = Utils.getMapValue(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, baseEntityId, contactNo);
 
                 //Inject some form defaults from client details
                 globals.put(ConstantsUtils.KeyUtils.CONTACT_NO, String.valueOf(contactNo));

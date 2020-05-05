@@ -409,7 +409,7 @@ public class PreviousContactRepository extends BaseRepository {
         try {
 
             String query = "SELECT DISTINCT pc._id, pc.contact_no, pc.base_entity_id, pc.`value` as visit_date, (" +
-                    "SELECT spc.value FROM previous_contact AS spc WHERE spc.contact_no = pc.contact_no AND spc.key = 'method_exit'" +
+                    "SELECT spc.value FROM previous_contact AS spc WHERE spc.contact_no = pc.contact_no AND spc.key = 'method_exit' AND spc.base_entity_id = '" + baseEntityId + "'" +
                     ") as method_exit " +
                     "FROM previous_contact AS pc " +
                     "WHERE pc.base_entity_id='" + baseEntityId + "' AND pc.key = 'visit_date' " +
