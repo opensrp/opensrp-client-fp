@@ -303,6 +303,13 @@
                 "v_max": {
                     "value": "250",
                     "err": "Height must be equal or less than 250"
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
                 }
             },
             {
@@ -327,11 +334,32 @@
                 },
                 "v_max": {
                     "value": "400",
-                    "err": "Weight must be equal or less than 250"
+                    "err": "Weight must be equal or less than 400"
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
                 }
             },
             {
-                "key": "toaster1",
+                "key": "bmi",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "type": "hidden",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "bmi_note",
                 "openmrs_entity_parent": "",
                 "openmrs_entity": "Body mass Index",
                 "openmrs_entity_id": "1432",
@@ -343,6 +371,13 @@
                     "rules-engine": {
                         "ex-rules": {
                             "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
                         }
                     }
                 }
@@ -391,12 +426,10 @@
                     "err": "Field systolic is required"
                 },
                 "relevance": {
-                    "step2:cant_record_bp": {
-                        "ex-checkbox": [
-                            {
-                                "not": ["cant_record_bp"]
-                            }
-                        ]
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
                     }
                 }
             },
@@ -425,12 +458,10 @@
                     "err": "Field diastolic is required"
                 },
                 "relevance": {
-                    "step2:cant_record_bp": {
-                        "ex-checkbox": [
-                            {
-                                "not": ["cant_record_bp"]
-                            }
-                        ]
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
                     }
                 }
             },
@@ -444,13 +475,19 @@
                     {
                         "key": "cant_record_bp",
                         "text": "Blood pressure cannot be taken",
-                        "text_size": "7sp",
                         "value": false,
                         "openmrs_entity_parent": "",
                         "openmrs_entity": "",
                         "openmrs_entity_id": ""
                     }
-                ]
+                ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
             },
             {
                 "key": "allergies",
@@ -779,12 +816,27 @@
                 }
             },
             {
+                "key": "still_on_method_heading",
+                "type": "label",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "text": "Is the client still on {method_on_file}?",
+                "text_color": "#000000",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
                 "key": "still_on_method",
                 "type": "native_radio",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "label": "Is the client still on {method_on_file}?",
                 "options": [
                     {
                         "key": "yes",
@@ -804,13 +856,6 @@
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
-                },
-                "calculation": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-calculations-rules.yml"
-                        }
-                    }
                 },
                 "relevance": {
                     "rules-engine": {
@@ -2174,6 +2219,7 @@
             {
                 "key": "sti_risk_factors",
                 "type": "check_box",
+                "label": "STI risk factors",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
@@ -2470,7 +2516,7 @@
                         "openmrs_entity_parent": ""
                     }
                 ],
-                "hint": "Risk factors for intimate partner violence or sexual assault",
+                "label": "Risk factors for intimate partner violence or sexual assault",
                 "relevance": {
                     "step4:gbv_assessment_conducted": {
                         "type": "string",

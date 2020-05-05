@@ -32,6 +32,7 @@ import org.smartregister.fp.common.domain.Contact;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.viewstate.ContactJsonFormFragmentViewState;
+import org.smartregister.fp.features.visit.interactor.StartVisitFormInteractor;
 import org.smartregister.fp.features.visit.presenter.StartVisitWizardJsonFormFragmentPresenter;
 
 import java.util.HashMap;
@@ -191,7 +192,7 @@ public class StartVisitJsonWizardFormFragment extends JsonWizardFormFragment {
 
     @Override
     protected StartVisitWizardJsonFormFragmentPresenter createPresenter() {
-        return new StartVisitWizardJsonFormFragmentPresenter(this, JsonFormInteractor.getInstance());
+        return new StartVisitWizardJsonFormFragmentPresenter(this, new StartVisitFormInteractor());
     }
 
     @Override
