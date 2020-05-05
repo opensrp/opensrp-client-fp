@@ -13,17 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.vijay.jsonwizard.views.CustomTextView;
 
 import org.apache.commons.text.WordUtils;
+import org.slf4j.helpers.Util;
 import org.smartregister.commonregistry.CommonPersonObject;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.commonregistry.CommonRepository;
 import org.smartregister.cursoradapter.RecyclerViewProvider;
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.domain.ButtonAlertStatus;
+import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.Utils;
 import org.smartregister.fp.features.home.view.HomeRegisterFragment;
 import org.smartregister.view.contract.SmartRegisterClient;
 import org.smartregister.view.contract.SmartRegisterClients;
+import org.smartregister.view.customcontrols.CustomFontTextView;
 import org.smartregister.view.dialog.FilterOption;
 import org.smartregister.view.dialog.ServiceModeOption;
 import org.smartregister.view.dialog.SortOption;
@@ -66,7 +69,14 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
             populatePatientColumn(pc, client, viewHolder);
             populateIdentifierColumn(pc, viewHolder);
             populateLastColumn(pc, viewHolder);
+            populateMethodExitColumn(pc, viewHolder);
         }
+    }
+
+    private void populateMethodExitColumn(CommonPersonObjectClient pc, RegisterViewHolder viewHolder) {
+        /*String baseEntityId = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, false);
+        String nextContact = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.NEXT_CONTACT, false);
+        String methodExit = Utils.getMapValue(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, baseEntityId, Integer.parseInt(nextContact));*/
     }
 
     @Override
@@ -140,22 +150,11 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
 
         fillValue(viewHolder.patientName, WordUtils.capitalize(patientName) + ", " + dobString);
 
-        /*String edd = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.EDD, false);
-
-        if (StringUtils.isNotBlank(edd)) {
-            fillValue((viewHolder.ga),
-                    String.format(context.getString(R.string.ga_text), Utils.getGestationAgeFromEDDate(edd)));
-            viewHolder.period.setVisibility(View.VISIBLE);
-        } else {
-
-            fillValue((viewHolder.ga), "");
-        }*/
-
         View patient = viewHolder.patientColumn;
         attachPatientOnclickListener(patient, client);
 
 
-        View dueButton = viewHolder.dueButton;
+        View dueButton = viewHolder.followupBtn;
         attachAlertButtonOnclickListener(dueButton, client);
 
         /*
@@ -189,17 +188,16 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         if (commonRepository != null) {
             CommonPersonObject commonPersonObject = commonRepository.findByBaseEntityId(pc.entityId());
             if (commonPersonObject != null) {
-                viewHolder.sync.setVisibility(View.GONE);
                 ButtonAlertStatus buttonAlertStatus = Utils.getButtonAlertStatus(pc.getColumnmaps(), context, false);
-                Utils.processButtonAlertStatus(context, viewHolder.dueButton, viewHolder.contactDoneTodayButton, buttonAlertStatus);
+                Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus);
 
             } else {
-                viewHolder.dueButton.setVisibility(View.GONE);
-                viewHolder.sync.setVisibility(View.VISIBLE);
+                viewHolder.followupBtn.setVisibility(View.GONE);
 
-                attachSyncOnclickListener(viewHolder.sync, pc);
             }
         }
+
+//     attachSyncOnclickListener(viewHolder.sync, pc);
     }
 
     public static void fillValue(TextView v, String value) {
@@ -239,20 +237,19 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         private TextView patientName;
         private TextView ancId;
         private TextView risk;
-        private Button dueButton;
         private Button sync;
         private View patientColumn;
-        private CustomTextView contactDoneTodayButton;
+        private Button followupBtn;
+        private CustomFontTextView methodExitTv;
 
         public RegisterViewHolder(View itemView) {
             super(itemView);
             patientName = itemView.findViewById(R.id.patient_name);
             ancId = itemView.findViewById(R.id.fp_id);
-            //risk = itemView.findViewById(R.id.risk);
-            dueButton = itemView.findViewById(R.id.due_button);
             sync = itemView.findViewById(R.id.sync);
             patientColumn = itemView.findViewById(R.id.patient_column);
-            contactDoneTodayButton = itemView.findViewById(R.id.contact_today_text);
+            followupBtn = itemView.findViewById(R.id.btn_followup);
+            methodExitTv = itemView.findViewById(R.id.tv_method_exit);
         }
     }
 

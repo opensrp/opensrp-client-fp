@@ -118,5 +118,30 @@
         <item name="android:lineSpacingMultiplier">1.19</item>
     </style>
 
-    <dimen name="profile_overview_text_size">16sp</dimen>
+    <style name="followupNotDue">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textColor">@color/spanish_grey</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:text">@string/followup_date</item>
+        <item name="android:lineSpacingMultiplier">1.23</item>
+    </style>
+
+    <style name="followupDue">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textColor">@color/text_color_scooter</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:text">@string/followup_due</item>
+        <item name="android:lineSpacingMultiplier">1.23</item>
+    </style>
+
+    <style name="followupOverdue">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:text">@string/followup_overdue</item>
+        <item name="android:lineSpacingMultiplier">1.23</item>
+    </style>
+
 </resources>

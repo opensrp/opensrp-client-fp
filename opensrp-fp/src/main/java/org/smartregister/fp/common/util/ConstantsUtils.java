@@ -143,6 +143,7 @@ public abstract class ConstantsUtils {
 
     public static class JsonFormFieldUtils {
         public static final String CURRENT_METHOD = "current_method";
+        public static final String METHOD_EXIT = "method_exit";
     }
 
     public static class JsonFormExtraUtils {

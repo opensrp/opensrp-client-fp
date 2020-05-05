@@ -488,7 +488,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
         if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(ConstantsUtils.JsonFormKeyUtils.DOB_ENTERED)) {
             getDobUsingEdd(client, jsonObject, DBConstantsUtils.KeyUtils.DOB);
-
+            jsonObject.put(FPJsonFormUtils.READ_ONLY, false);
         } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(DBConstantsUtils.KeyUtils.HOME_ADDRESS)) {
             String homeAddress = client.get(DBConstantsUtils.KeyUtils.HOME_ADDRESS);
             jsonObject.put(FPJsonFormUtils.VALUE, homeAddress);
@@ -502,7 +502,6 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
             jsonObject.put(FPJsonFormUtils.READ_ONLY, false);
             if (StringUtils.isNotBlank(client.get(DBConstantsUtils.KeyUtils.AGE_ENTERED))) {
                 jsonObject.put(FPJsonFormUtils.VALUE, client.get(DBConstantsUtils.KeyUtils.AGE_ENTERED));
-//                jsonObject.put(FPJsonFormUtils.VALUE, Utils.getAgeFromDate(client.get(DBConstantsUtils.KeyUtils.AGE_ENTERED)));
             }
         } else if (jsonObject.getString(FPJsonFormUtils.KEY).equalsIgnoreCase(ConstantsUtils.JsonFormKeyUtils.CLIENT_ID)) {
             jsonObject.put(FPJsonFormUtils.READ_ONLY, true);

@@ -15,8 +15,11 @@
     <color name="customAppThemeGray">#EEEEEE</color>
     <color name="dark_silver">#707070</color>
     <color name="text_color_primary">#737373</color>
+    <color name="text_color_scooter">#FF3DA9DA</color>
+    <color name="light_blue">#FF42AADF</color>
 
     <color name="light_grey">#cccccc</color>
+    <color name="spanish_grey">#FF959595</color>
     <color name="light_grey_background">#EEEEED</color>
     <color name="light_grey_text">#7f7f7f</color>
     <color name="lighter_grey">#e5e5e5</color>
@@ -114,4 +117,5 @@
     <color name="light_gray">#D2D2D2</color>
     <color name="translucent_very_light_gray">#D2D2D2</color>
     <color name="dark_tangerine">#FFFCA917</color>
+    <color name="jasper">#FFD13F3F</color>
 </resources>

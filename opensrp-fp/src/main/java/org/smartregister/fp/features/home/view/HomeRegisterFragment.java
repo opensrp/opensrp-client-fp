@@ -90,7 +90,7 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
         }
 
         // Due Button
-        View contactButton = view.findViewById(R.id.due_button);
+        View contactButton = view.findViewById(R.id.btn_followup);
         if (contactButton != null) {
             contactButton.setOnClickListener(registerActionHandler);
         }
