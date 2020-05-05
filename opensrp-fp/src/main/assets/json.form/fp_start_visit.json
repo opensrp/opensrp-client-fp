@@ -60,37 +60,15 @@
         "next": "step2",
         "fields": [
             {
-                "key": "label",
-                "type": "label",
-                "openmrs_entity": "",
-                "openmrs_entity_id": "",
-                "openmrs_entity_parent": "",
-                "text": "Visit date (required)",
-                "text_color": "black",
-                "top_margin": "20dp",
-                "label_text_style": "bold",
-                "text_size": "8sp"
-            },
-            {
                 "key": "visit_date",
                 "type": "date_picker",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "padding_left": "10dp",
-                "margin_left": "10dp",
-                "hint": "",
-                "value": "",
+                "hint": "Visit date (required)",
                 "max_date": "today",
-                "calculation": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-calculations-rules.yml"
-                        }
-                    }
-                },
                 "v_required": {
-                    "value": true,
+                    "value": "true",
                     "err": "Please select the client visit date."
                 }
             },
@@ -287,7 +265,14 @@
                         "openmrs_entity_parent": "",
                         "text": "Client is unsure"
                     }
-                ]
+                ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
             }
         ]
     },
@@ -318,6 +303,13 @@
                 "v_max": {
                     "value": "250",
                     "err": "Height must be equal or less than 250"
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
                 }
             },
             {
@@ -342,11 +334,32 @@
                 },
                 "v_max": {
                     "value": "400",
-                    "err": "Weight must be equal or less than 250"
+                    "err": "Weight must be equal or less than 400"
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
                 }
             },
             {
-                "key": "toaster1",
+                "key": "bmi",
+                "openmrs_entity_parent": "",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "type": "hidden",
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
+                "key": "bmi_note",
                 "openmrs_entity_parent": "",
                 "openmrs_entity": "Body mass Index",
                 "openmrs_entity_id": "1432",
@@ -358,6 +371,13 @@
                     "rules-engine": {
                         "ex-rules": {
                             "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
+                },
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
                         }
                     }
                 }
@@ -406,12 +426,10 @@
                     "err": "Field systolic is required"
                 },
                 "relevance": {
-                    "step2:cant_record_bp": {
-                        "ex-checkbox": [
-                            {
-                                "not": ["cant_record_bp"]
-                            }
-                        ]
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
                     }
                 }
             },
@@ -440,12 +458,10 @@
                     "err": "Field diastolic is required"
                 },
                 "relevance": {
-                    "step2:cant_record_bp": {
-                        "ex-checkbox": [
-                            {
-                                "not": ["cant_record_bp"]
-                            }
-                        ]
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
                     }
                 }
             },
@@ -459,13 +475,19 @@
                     {
                         "key": "cant_record_bp",
                         "text": "Blood pressure cannot be taken",
-                        "text_size": "7sp",
                         "value": false,
                         "openmrs_entity_parent": "",
                         "openmrs_entity": "",
                         "openmrs_entity_id": ""
                     }
-                ]
+                ],
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
             },
             {
                 "key": "allergies",
@@ -794,12 +816,27 @@
                 }
             },
             {
+                "key": "still_on_method_heading",
+                "type": "label",
+                "openmrs_entity": "",
+                "openmrs_entity_id": "",
+                "openmrs_entity_parent": "",
+                "text": "Is the client still on {method_on_file}?",
+                "text_color": "#000000",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
+            },
+            {
                 "key": "still_on_method",
                 "type": "native_radio",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "label": "Is the client still on {method_on_file}?",
                 "options": [
                     {
                         "key": "yes",
@@ -819,13 +856,6 @@
                 "v_required": {
                     "value": "true",
                     "err": "Field required"
-                },
-                "calculation": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-calculations-rules.yml"
-                        }
-                    }
                 },
                 "relevance": {
                     "rules-engine": {
@@ -2189,6 +2219,7 @@
             {
                 "key": "sti_risk_factors",
                 "type": "check_box",
+                "label": "STI risk factors",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
@@ -2485,7 +2516,7 @@
                         "openmrs_entity_parent": ""
                     }
                 ],
-                "hint": "Risk factors for intimate partner violence or sexual assault",
+                "label": "Risk factors for intimate partner violence or sexual assault",
                 "relevance": {
                     "step4:gbv_assessment_conducted": {
                         "type": "string",
@@ -3389,13 +3420,18 @@
             },
             {
                 "key": "mec_tool",
-                "type": "label",
+                "type": "button",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "text": "Medical Eligibility Criteria (MEC)",
-                "label_text_color": "#000000",
-                "label_text_style": "bold"
+                "hint": "Medical Eligibility Criteria (MEC)",
+                "relevance": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-relevance-rules.yml"
+                        }
+                    }
+                }
             },
             {
                 "key": "method_chosen_f",
@@ -5196,35 +5232,35 @@
                 "options": [
                     {
                         "key": "male_condoms",
-                        "value": "Male condoms",
+                        "text": "Male condoms",
                         "openmrs_entity": "",
                         "openmrs_entity_id": "",
                         "openmrs_entity_parent": ""
                     },
                     {
                         "key": "male_sterilization",
-                        "value": "Male sterilization",
+                        "text": "Male sterilization",
                         "openmrs_entity": "",
                         "openmrs_entity_id": "",
                         "openmrs_entity_parent": ""
                     },
                     {
                         "key": "withdrawal",
-                        "value": "Withdrawal",
+                        "text": "Withdrawal",
                         "openmrs_entity": "",
                         "openmrs_entity_id": "",
                         "openmrs_entity_parent": ""
                     },
                     {
                         "key": "female_method",
-                        "value": "Male relying on female method",
+                        "text": "Male relying on female method",
                         "openmrs_entity": "",
                         "openmrs_entity_id": "",
                         "openmrs_entity_parent": ""
                     },
                     {
                         "key": "no_method",
-                        "value": "No method",
+                        "text": "No method",
                         "openmrs_entity": "",
                         "openmrs_entity_id": "",
                         "openmrs_entity_parent": ""
@@ -5977,21 +6013,6 @@
                 "openmrs_entity_parent": "",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
-                "calculation": {
-                    "rules-engine": {
-                        "ex-rules": {
-                            "rules-file": "fp-visit-calculations-rules.yml"
-                        }
-                    }
-                }
-            },
-            {
-                "key": "dummy",
-                "type": "edit_text",
-                "openmrs_entity": "",
-                "openmrs_entity_id": "",
-                "openmrs_entity_parent": "",
-                "hint": "hint method exit",
                 "calculation": {
                     "rules-engine": {
                         "ex-rules": {

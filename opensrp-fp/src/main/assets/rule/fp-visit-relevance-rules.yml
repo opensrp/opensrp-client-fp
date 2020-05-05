@@ -1,36 +1,100 @@
+
+---
+name: step1_pregnancy_intention
+description: Reported use of method at intake
+priority: 1
+condition: "global_gender == 'female'"
+actions:
+  - "isRelevant = true"
+
+
+---
+name: step2_height
+description: Reported use of method at intake
+priority: 1
+condition: "global_gender == 'female'"
+actions:
+  - "isRelevant = true"
+---
+name: step2_weight
+description: Reported use of method at intake
+priority: 1
+condition: "global_gender == 'female'"
+actions:
+  - "isRelevant = true"
+---
+name: step2_bmi_note
+description: Reported use of method at intake
+priority: 1
+condition: "global_gender == 'female'"
+actions:
+  - "isRelevant = true"
+---
+name: step2_sys_bp
+description: Reported use of method at intake
+priority: 1
+condition: "!step2_cant_record_bp.contains('cant_record_bp') && global_gender == 'female'"
+actions:
+  - "isRelevant = true"
+---
+name: step2_dia_bp
+description: Reported use of method at intake
+priority: 1
+condition: "!step2_cant_record_bp.contains('cant_record_bp') && global_gender == 'female'"
+actions:
+  - "isRelevant = true"
+---
+name: step2_cant_record_bp
+description: Reported use of method at intake
+priority: 1
+condition: "global_gender == 'female'"
+actions:
+  - "isRelevant = true"
+
+
+
+
+
 ---
 name: step3_method_at_intake_m
 description: Reported use of method at intake
 priority: 1
-condition: "(step3_method_on_file == '' || step3_method_on_file == 'no_method') && global_method_gender_type == 'Male'"
+condition: "(step3_method_on_file == '0' || step3_method_on_file == 'no_method') && global_method_gender_type == 'male'"
 actions:
   - "isRelevant = true"
 ---
 name: step3_method_at_intake_f
 description: Reported use of method at intake
 priority: 1
-condition: "(step3_method_on_file == '' || step3_method_on_file == 'no_method') && global_method_gender_type == 'Female'"
+condition: "(step3_method_on_file == '0' || step3_method_on_file == 'no_method') && global_method_gender_type == 'female'"
+actions:
+  - "isRelevant = true"
+---
+name: step3_still_on_method_heading
+description: Reported use of method at intake
+priority: 1
+condition: "(step3_method_on_file != '0' && step3_method_on_file != 'no_method')"
 actions:
   - "isRelevant = true"
 ---
 name: step3_still_on_method
 description: Reported use of method at intake
 priority: 1
-condition: "(step3_method_on_file != '' && step3_method_on_file != 'no_method')"
+condition: "(step3_method_on_file != '0' && step3_method_on_file != 'no_method')"
 actions:
   - "isRelevant = true"
 ---
 name: step3_on_another_method_m
 description: Reported use of method at intake
 priority: 1
-condition: "(step3_still_on_method == 'no' && global_method_gender_type == 'Male')"
+condition: "(step3_still_on_method == 'no' && global_method_gender_type == 'male')"
 actions:
   - "isRelevant = true"
 ---
 name: step3_on_another_method_f
 description: Reported use of method at intake
 priority: 1
-condition: "(step3_still_on_method == 'no' && global_method_gender_type == 'Female')"
+condition: "(step3_still_on_method == 'no' && global_method_gender_type == 'female')"
 actions:
   - "isRelevant = true"
 ---
@@ -86,14 +150,14 @@ actions:
 name: step3_prior_methods_used_m
 description: Contraceptive methods the client has a history of using
 priority: 1
-condition: "(step3_never_used_contraception == 'no' && global_method_gender_type == 'Male')"
+condition: "(step3_never_used_contraception == 'no' && global_method_gender_type == 'male')"
 actions:
   - "isRelevant = true"
 ---
 name: step3_prior_methods_used_f
 description: Contraceptive methods the client has a history of using
 priority: 1
-condition: "(step3_never_used_contraception == 'no' && global_method_gender_type == 'Female')"
+condition: "(step3_never_used_contraception == 'no' && global_method_gender_type == 'female')"
 actions:
   - "isRelevant = true"
 ---
@@ -107,28 +171,28 @@ actions:
 name: step3_days_unprotect_sex
 description: Days since unprotected sex
 priority: 1
-condition: "(global_gender == 'Female' && step1_reason_for_visit.contains('emergency_contraception'))"
+condition: "(global_gender == 'female' && step1_reason_for_visit.contains('emergency_contraception'))"
 actions:
   - "isRelevant = true"
 ---
 name: step3_gravida
 description: The number of pregnancies, current and past, regardless of pregnancy outcome.
 priority: 1
-condition: "(global_gender == 'Female' && step3_ever_had_sex == 'yes')"
+condition: "(global_gender == 'female' && step3_ever_had_sex == 'yes')"
 actions:
   - "isRelevant = true"
 ---
 name: step3_parity
 description: The number of pregnancies reaching parity. Zero births is defined as nulliparous. 1 or more births, the client is parous.
 priority: 1
-condition: "(global_gender == 'Female' && step3_gravida > 0)"
+condition: "(global_gender == 'female' && step3_gravida != '' && step3_gravida > 0)"
 actions:
   - "isRelevant = true"
 ---
 name: step3_delivered_last_six_months
 description: Whether the client has deliverd a baby within the past 6 months.
 priority: 1
-condition: "(global_gender == 'Female' && step3_parity > 0)"
+condition: "(global_gender == 'female' && step3_parity != '' && step3_parity > 0)"
 actions:
   - "isRelevant = true"
 ---
@@ -142,7 +206,7 @@ actions:
 name: step3_breastfeeding
 description: Select if a woman is currently breastfeeding.
 priority: 1
-condition: "(global_gender == 'Female')"
+condition: "(global_gender == 'female')"
 actions:
   - "isRelevant = true"
 ---
@@ -156,7 +220,7 @@ actions:
 name: step3_recent_miscarriage_abortion
 description: Select if the woman had an abortion or a miscarriage within the past 4 weeks
 priority: 1
-condition: "(global_gender == 'Female')"
+condition: "(global_gender == 'female')"
 actions:
   - "isRelevant = true"
 ---
@@ -177,21 +241,21 @@ actions:
 name: step3_start_date_last_menses
 description: First day of last normal menses.
 priority: 1
-condition: "(global_gender == 'Female')"
+condition: "(global_gender == 'female')"
 actions:
   - "isRelevant = true"
 ---
 name: step3_missed_menses
 description: Calculated field to determine the number of days since the woman's last normal period started.
 priority: 1
-condition: "(global_gender == 'Female')"
+condition: "(global_gender == 'female')"
 actions:
   - "isRelevant = true"
 ---
 name: step3_amenorrhea
 description: Calculated field to determine the number of days since the woman's last normal period started.
 priority: 1
-condition: "(global_gender == 'Female')"
+condition: "(global_gender == 'female')"
 actions:
   - "isRelevant = true"
 
@@ -205,14 +269,14 @@ actions:
 name: step5_issues_concerns_f
 description: This field will be shown if reason for visit contains issues & concerns and method_gender_type female
 priority: 1
-condition: "step1_reason_for_visit.contains('issues_concerns') && global_method_gender_type == 'Female'"
+condition: "step1_reason_for_visit.contains('issues_concerns') && global_method_gender_type == 'female'"
 actions:
   - "isRelevant = true"
 ---
 name: step5_issues_concerns_m
 description: This field will be shown if reason for visit contains issues & concerns and method_gender_type male
 priority: 1
-condition: "step1_reason_for_visit.contains('issues_concerns') && global_method_gender_type == 'Male'"
+condition: "step1_reason_for_visit.contains('issues_concerns') && global_method_gender_type == 'male'"
 actions:
   - "isRelevant = true"
 ---
@@ -309,7 +373,7 @@ actions:
 name: step6_how_method_removed
 description: For clients needing an IUD/Implant removal, whether the service is being provided on site or off-site (i.e. referral).
 priority: 1
-condition: "(step6_method_removal != 1)"
+condition: "(step6_method_removal == '1')"
 actions:
   - "isRelevant = true"
 ---
@@ -330,28 +394,35 @@ actions:
 name: step6_method_requested_f
 description: The first pick of method desired by the client, prior to medical eligibility tests. This may be the method in mind or the method selected after discussing the full range of methods.
 priority: 1
-condition: "step6_method_in_mind == 'yes' && global_method_gender_type == 'Female'"
+condition: "step6_method_in_mind == 'yes' && global_method_gender_type == 'female'"
 actions:
   - "isRelevant = true"
 ---
 name: step6_method_requested_m
 description: The first pick of method desired by the client, prior to medical eligibility tests. This may be the method in mind or the method selected after discussing the full range of methods.
 priority: 1
-condition: "(step6_method_in_mind == 'yes' && global_method_gender_type == 'Male')"
+condition: "(step6_method_in_mind == 'yes' && global_method_gender_type == 'male')"
+actions:
+  - "isRelevant = true"
+---
+name: step6_mec_tool
+description: Button to launch the MEC wheel app.
+priority: 1
+condition: "(step3_current_method == 'no_method' || step6_keeping_method == 'switch_method')"
 actions:
   - "isRelevant = true"
 ---
 name: step6_method_chosen_f
 description: The first pick of method desired by the client, prior to medical eligibility tests. This may be the method in mind or the method selected after discussing the full range of methods.
 priority: 1
-condition: "((step3_current_method == 'no_method' || step6_keeping_method == 'switch_method') && global_method_gender_type == 'Female')"
+condition: "((step3_current_method == 'no_method' || step6_keeping_method == 'switch_method') && global_method_gender_type == 'female')"
 actions:
   - "isRelevant = true"
 ---
 name: step6_method_chosen_m
 description: The first pick of method desired by the client, prior to medical eligibility tests. This may be the method in mind or the method selected after discussing the full range of methods.
 priority: 1
-condition: "((step3_current_method == 'no_method' || step6_keeping_method == 'switch_method') && global_method_gender_type == 'Male')"
+condition: "((step3_current_method == 'no_method' || step6_keeping_method == 'switch_method') && global_method_gender_type == 'male')"
 actions:
   - "isRelevant = true"
 ---
@@ -633,28 +704,28 @@ actions:
 name: step7_method_exit_f
 description: Contraceptive method at exit.
 priority: 1
-condition: "global_method_gender_type == 'Female'"
+condition: "global_method_gender_type == 'female'"
 actions:
   - "isRelevant = true"
 ---
 name: step7_methods_exit_secondaryf
 description: Secondary contraceptive method at exit.
 priority: 1
-condition: "step7_method_exit != 'no_method' && global_method_gender_type == 'Female'"
+condition: "step7_method_exit != 'no_method' && global_method_gender_type == 'female'"
 actions:
   - "isRelevant = true"
 ---
 name: step7_method_exit_m
 description: Contraceptive method at exit.
 priority: 1
-condition: "global_method_gender_type == 'Male'"
+condition: "global_method_gender_type == 'male'"
 actions:
   - "isRelevant = true"
 ---
 name: step7_methods_exit_secondary_m
 description: Secondary contraceptive method at exit.
 priority: 1
-condition: "global_method_gender_type == 'Male' && step7_method_exit != 'no_method'"
+condition: "global_method_gender_type == 'male' && step7_method_exit != 'no_method'"
 actions:
   - "isRelevant = true"
 ---

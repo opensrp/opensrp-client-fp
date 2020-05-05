@@ -1,7 +1,9 @@
 package org.smartregister.fp.features.visit.view;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -14,6 +16,7 @@ import com.vijay.jsonwizard.activities.JsonFormActivity;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.domain.Form;
 import com.vijay.jsonwizard.fragments.JsonWizardFormFragment;
+import com.vijay.jsonwizard.views.CustomTextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +28,7 @@ import org.smartregister.fp.common.task.FinalizeVisitFormTask;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.FPFormUtils;
 import org.smartregister.fp.common.util.FilePathUtils;
+import org.smartregister.fp.common.util.Utils;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
@@ -46,10 +50,11 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
     private FPFormUtils FPFormUtils = new FPFormUtils();
     private Yaml yaml = new Yaml();
     private HashMap<String, String> clientDetails;
+    private HashMap<String, String> globals;
 
-    private Map<String, List<String>> formGlobalKeys = new HashMap<>();
+    /*private Map<String, List<String>> formGlobalKeys = new HashMap<>();
     private Map<String, String> formGlobalValues = new HashMap<>();
-    private Set<String> globalKeys = new HashSet<>();
+    private Set<String> globalKeys = new HashSet<>();*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,25 +63,26 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
             formName = getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME);
         }
         clientDetails = (HashMap<String, String>) getIntent().getSerializableExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP);
+        globals = (HashMap<String, String>) getIntent().getSerializableExtra(ConstantsUtils.IntentKeyUtils.GLOBAL);
         super.onCreate(savedInstanceState);
 
         ///new Handler().postDelayed(this::updateViewsProperties, 200);
     }
 
-    private void loadGlobals() {
+    /*private void loadGlobals() {
         try {
             loadContactGlobalsConfig();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
-    private void updateViewsProperties() {
+    /*private void updateViewsProperties() {
         RelativeLayout rv = (RelativeLayout) findViewById(R.id.duration).getParent();
         ((LinearLayout.LayoutParams) rv.getLayoutParams()).setMargins(0, -80, 0, 0);
         rv.requestLayout();
-    }
+    }*/
 
     @Override
     public void onPause() {
@@ -124,6 +130,32 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
         }
     }
 
+    @Override
+    public void addFormDataView(View view) {
+        Object key = view.getTag(com.vijay.jsonwizard.R.id.key);
+
+        if (!"still_on_method_heading".equals(key)) {
+            super.addFormDataView(view);
+        }
+
+        if ("mec_tool".equals(key)) {
+            view.setEnabled(true);
+            view.setOnClickListener(v -> {
+                Utils.openMECWheelApp(StartVisitJsonFormActivity.this);
+            });
+        }
+        else if ("still_on_method_heading".equals(key)) {
+            String methodExit = globals.get(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT);
+            if (!methodExit.equals("0") && !methodExit.equals("no_method")) {
+                CustomTextView tvLabel = (CustomTextView) view;
+                String formattedMethodExit = Utils.getMethodName(methodExit);
+                String updatedLabel = tvLabel.getText().toString().replace("{method_on_file}", formattedMethodExit);
+                tvLabel.setText(updatedLabel);
+                tvLabel.setTextColor(Color.BLACK);
+            }
+        }
+    }
+
     public Contact getContact() {
         Form form = getForm();
         if (form instanceof Contact) {
@@ -132,7 +164,7 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
         return null;
     }
 
-    private void loadContactGlobalsConfig() throws IOException {
+    /*private void loadContactGlobalsConfig() throws IOException {
         Iterable<Object> contactGlobals = readYaml(FilePathUtils.FileUtils.VISIT_GLOBALS);
 
         for (Object ruleObject : contactGlobals) {
@@ -140,7 +172,7 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
             formGlobalKeys.put(map.get(ConstantsUtils.FORM).toString(), (List<String>) map.get(JsonFormConstants.FIELDS));
             globalKeys.addAll((List<String>) map.get(JsonFormConstants.FIELDS));
         }
-    }
+    }*/
 
     public Iterable<Object> readYaml(String filename) throws IOException {
         InputStreamReader inputStreamReader =

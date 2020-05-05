@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -259,7 +260,7 @@ public class Utils extends org.smartregister.util.Utils {
             startVisit.setBackIcon(R.drawable.ic_clear);
             startVisit.setWizard(true);
             //quickCheck.setHideSaveLabel(true);
-            Map<String, String> globals = loadGlobalConfig(context, personObjectClient, baseEntityId, Integer.valueOf(personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)), ConstantsUtils.JsonFormUtils.FP_START_VISIT);
+            HashMap<String, String> globals = loadGlobalConfig(context, personObjectClient, baseEntityId, Integer.valueOf(personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)), ConstantsUtils.JsonFormUtils.FP_START_VISIT);
             startVisit.setGlobals(globals);
 
 
@@ -296,6 +297,7 @@ public class Utils extends org.smartregister.util.Utils {
             intent.putExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP, personObjectClient);
             intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, partialContactRequest.getType());
             intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, partialContactRequest.getContactNo());
+            intent.putExtra(ConstantsUtils.IntentKeyUtils.GLOBAL, globals);
             Activity activity = (Activity) context;
             activity.startActivityForResult(intent, FPJsonFormUtils.REQUEST_CODE_GET_JSON);
 
@@ -327,8 +329,10 @@ public class Utils extends org.smartregister.util.Utils {
         }
     }
 
-    public static Map<String, String> loadGlobalConfig(Context context, HashMap<String, String> personObjectClient, String baseEntityId, int contactNo, String formName) {
-        Map<String, String> globals = new HashMap<>();
+
+    @SuppressWarnings("ConstantConditions")
+    public static HashMap<String, String>  loadGlobalConfig(Context context, HashMap<String, String> personObjectClient, String baseEntityId, int contactNo, String formName) {
+        HashMap<String, String> globals = new HashMap<>();
         Set<String> defaultValueFields = new HashSet<>();
         JSONObject mainJson;
         try {
@@ -368,15 +372,15 @@ public class Utils extends org.smartregister.util.Utils {
                     }
                 }
 
-                String currentMethod = getMapValue(ConstantsUtils.JsonFormFieldUtils.CURRENT_METHOD, baseEntityId, contactNo);
+                String methodExit = getMapValue(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, baseEntityId, contactNo);
 
                 //Inject some form defaults from client details
                 globals.put(ConstantsUtils.KeyUtils.CONTACT_NO, String.valueOf(contactNo));
                 globals.put(ConstantsUtils.PREVIOUS_CONTACT_NO, contactNo > 1 ? String.valueOf(contactNo - 1) : "0");
-                globals.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE));
-                globals.put(DBConstantsUtils.KeyUtils.GENDER, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER));
-                globals.put(DBConstantsUtils.KeyUtils.REFERRAL, personObjectClient.get(DBConstantsUtils.KeyUtils.REFERRAL));
-                globals.put(ConstantsUtils.JsonFormFieldUtils.CURRENT_METHOD, currentMethod == null ? "" : currentMethod);
+                globals.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE).toLowerCase());
+                globals.put(DBConstantsUtils.KeyUtils.GENDER, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER).toLowerCase());
+                globals.put(DBConstantsUtils.KeyUtils.REFERRAL, personObjectClient.get(DBConstantsUtils.KeyUtils.REFERRAL).toLowerCase());
+                globals.put(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, methodExit == null ? "0" : methodExit);
 
 
                 String lastContactDate = personObjectClient.get(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE);
@@ -1106,5 +1110,18 @@ public class Utils extends org.smartregister.util.Utils {
 
     public static String getMethodName(String key) {
         return METHODS.containsKey(key) ? METHODS.get(key) : "";
+    }
+
+    public static void openMECWheelApp(Context context) {
+        String pkgName = "com.who.mecwheel";
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(pkgName);
+        if (intent == null) {
+            try {
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + pkgName));
+            } catch (Exception ex) {
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + pkgName));
+            }
+        }
+        context.startActivity(intent);
     }
 }

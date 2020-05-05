@@ -1,62 +1,58 @@
+
+
 ---
-name: step1_visit_date
+name: step2_bmi
 description: This is bmi field  which is calculated by height and weight.
 priority: 1
-condition: "true"
+condition: "global_gender == 'female' && step2_weight > 0 && step2_height > 0"
 actions:
-  - "calculation = helper.getDateToday()"
-
-
+  - "calculation = (step2_weight / (Math.pow((step2_height / 100), 2d)))"
 ---
-name: step2_toaster1
+name: step2_bmi_note
 description: This is bmi field  which is calculated by height and weight.
 priority: 1
-condition: "true"
+condition: "global_gender == 'female' && step2_weight > 0 && step2_height > 0"
 actions:
-  - "calculation = ['bmi': (step2_weight / ((step2_height/100)^2))]"
+  - "calculation = ['bmi': step2_bmi]"
 
----
-name: step3_method_at_intake
-description: method at intake
-priority: 1
-condition: "true"
-actions:
-  - "calculation = (global_method_gender_type == 'Female' ? step3_method_at_intake_f : step3_method_at_intake_m)"
----
-name: step3_on_another_method
-description: method at intake
-priority: 1
-condition: "true"
-actions:
-  - "calculation = (global_method_gender_type == 'Female' ? step3_on_another_method_f : step3_on_another_method_m)"
+
+
+
 ---
 name: step3_method_on_file
 description: Field to pre-populate the client's current method(s) on file, if any.
 priority: 1
 condition: "true"
 actions:
-  - "calculation = global_current_method"
+  - "calculation = global_method_exit"
 ---
-name: step3_still_on_method
-description: Whether or not the client is currently using the system's method on file.
+name: step3_method_at_intake
+description: method at intake
 priority: 1
 condition: "true"
 actions:
-  - "calculation = ['method_on_file': step3_method_on_file]"
+  - "calculation = (global_method_gender_type == 'female' ? step3_method_at_intake_f : step3_method_at_intake_m)"
+---
+name: step3_on_another_method
+description: method at intake
+priority: 1
+condition: "true"
+actions:
+  - "calculation = (global_method_gender_type == 'female' ? step3_on_another_method_f : step3_on_another_method_m)"
 ---
 name: step3_current_method
 description: Whether or not the client is currently using the system's method on file.
 priority: 1
 condition: "true"
 actions:
-  - "calculation = (step3_method_on_file == '' || step3_method_on_file == 'no_method') ? step3_method_at_intake : (step3_still_on_method == 'yes' ? step3_method_on_file : step3_on_another_method)"
+  - "calculation = (step3_method_on_file == '0' || step3_method_on_file == 'no_method') ? step3_method_at_intake : (step3_still_on_method == 'yes' ? step3_method_on_file : step3_on_another_method)"
 ---
 name: step3_prior_methods_used
 description: set prior method depend on gender
 priority: 1
 condition: "true"
 actions:
-  - "calculation = (global_method_gender_type == 'Female' ? step3_prior_methods_used_f : step3_prior_methods_used_m)"
+  - "calculation = (global_method_gender_type == 'female' ? step3_prior_methods_used_f : step3_prior_methods_used_m)"
 ---
 name: step3_postpartum
 description: Calculated field to determine if the woman is postpartum (less than 6 weeks since delivery).
@@ -75,7 +71,7 @@ actions:
 name: step3_days_since_last_menses
 description: Calculated field to determine the number of days since the woman's last normal period started.
 priority: 1
-condition: "(global_gender == 'Female')"
+condition: "(global_gender == 'female')"
 actions:
   - "calculation = (helper.getDifferenceDays(step3_start_date_last_menses))"
 
@@ -89,14 +85,14 @@ description: NA
 priority: 1
 condition: "true"
 actions:
-  - "calculation = (global_method_gender_type == 'Female' ? step5_issues_concerns_f : step5_issues_concerns_m)"
+  - "calculation = (global_method_gender_type == 'female' ? step5_issues_concerns_f : step5_issues_concerns_m)"
 ---
 name: step5_issues_concerns_other
 description: NA
 priority: 1
 condition: "true"
 actions:
-  - "calculation = (global_method_gender_type == 'Female' ? step5_issues_concerns_other_f : step5_issues_concerns_other_m)"
+  - "calculation = (global_method_gender_type == 'female' ? step5_issues_concerns_other_f : step5_issues_concerns_other_m)"
 
 
 
@@ -116,14 +112,14 @@ description: For clients who wish to stop their method, this is a calculated fie
 priority: 1
 condition: "true"
 actions:
-  - "calculation = (global_method_gender_type == 'Female' ? step6_method_requested_f : step6_method_requested_m)"
+  - "calculation = (global_method_gender_type == 'female' ? step6_method_requested_f : step6_method_requested_m)"
 ---
 name: step6_method_chosen
 description: For clients who wish to stop their method, this is a calculated field to determine whether the client needs the method to be removed (e.g. IUDs, Implants).
 priority: 1
 condition: "true"
 actions:
-  - "calculation = (global_method_gender_type == 'Female' ? step6_method_chosen_f : step6_method_chosen_m)"
+  - "calculation = (global_method_gender_type == 'female' ? step6_method_chosen_f : step6_method_chosen_m)"
 ---
 name: step6_needs_pregnancy_checklist
 description: Calculated field to determine whether, based on the woman's chosen method, the pregnancy checklist is required.
@@ -144,7 +140,7 @@ description: Calculated field to determine whether the client is being referred.
 priority: 1
 condition: "true"
 actions:
-  - "calculation = (step6_how_method_removed == 'off_site' || step6_provide_method_location == 'provided_off_site') ? 'Yes' : 'No'"
+  - "calculation = (step6_how_method_removed == 'off_site' || step6_provide_method_location == 'provided_off_site') ? 'yes' : 'no'"
 
 
 
@@ -168,19 +164,19 @@ description: NA
 priority: 1
 condition: "true"
 actions:
-  - "calculation = (global_method_gender_type == 'Female' ? step7_method_exit_f : step7_method_exit_m)"
+  - "calculation = (global_method_gender_type == 'female' ? step7_method_exit_f : step7_method_exit_m)"
 ---
 name: step7_methods_exit_secondary
 description: NA
 priority: 1
 condition: "true"
 actions:
-  - "calculation = (global_method_gender_type == 'Female' ? step7_methods_exit_secondaryf : step7_methods_exit_secondary_m)"
+  - "calculation = (global_method_gender_type == 'female' ? step7_methods_exit_secondaryf : step7_methods_exit_secondary_m)"
 ---
 name: step7_lng_iud_start_other
 description: Calculated field to determine whether the woman who is being provided with an LNG-IUD can start the method now.
 priority: 1
-condition: "global_method_gender_type == 'Female' && step7_method_exit == 'lng_iud'"
+condition: "global_method_gender_type == 'female' && step7_method_exit == 'lng_iud'"
 actions:
   - "calculation = (((step3_current_method == 'ecp' || step3_current_method == 'dmpa_im' || step3_current_method == 'dmpa_sc' || step3_current_method == 'net_en') || (step3_postpartum == 1 && step3_days_postpartum <= 2)) ? 1 : 0)"
 ---
@@ -232,12 +228,3 @@ priority: 1
 condition: "true"
 actions:
   - "calculation = (step7_method_exit == 'cu_iud' || step7_method_exit == 'lng_iud') ? step7_iud_insertion_date : (step7_method_exit == 'etg_onerod' || step7_method_exit == 'lng_tworod' ? step7_implant_date : (step7_method_exit == 'dmpa_im' || step7_method_exit == 'dmpa_sc' || step7_method_exit == 'net_en'? step7_last_injection_date : (step7_method_exit == 'female_sterilization' || step7_method_exit == 'male_sterilization' ? step7_sterilization_date : step1_visit_date)))"
-
-
----
-name: step7_dummy
-description: This is bmi field  which is calculated by height and weight.
-priority: 1
-condition: "true"
-actions:
-  - "calculation = step7_method_exit"

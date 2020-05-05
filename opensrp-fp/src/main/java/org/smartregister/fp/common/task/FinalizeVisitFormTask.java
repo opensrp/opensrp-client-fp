@@ -10,11 +10,13 @@ import com.vijay.jsonwizard.rules.RuleConstant;
 
 import org.joda.time.LocalDate;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.domain.Contact;
 import org.smartregister.fp.common.domain.WomanDetail;
 import org.smartregister.fp.common.library.FPLibrary;
+import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.repository.PreviousContactRepository;
 import org.smartregister.fp.common.rule.ContactRule;
 import org.smartregister.fp.common.util.ConstantsUtils;
@@ -23,6 +25,7 @@ import org.smartregister.fp.common.util.FPFormUtils;
 import org.smartregister.fp.common.util.Utils;
 import org.smartregister.fp.features.home.repository.PatientRepository;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -137,8 +140,22 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
     private void processFormFieldKeyValues(String baseEntityId, JSONObject object, String contactNo) throws Exception {
         if (object != null) {
             //persistRequiredInvisibleFields(baseEntityId, contactNo, object);
-            Iterator<String> keys = object.keys();
 
+            PreviousContact previousContact = new PreviousContact();
+            previousContact.setVisitDate(Utils.getDBDateToday());
+            boolean hasRecords = false;
+            StringBuilder sql = new StringBuilder("INSERT INTO " + PreviousContactRepository.TABLE_NAME + " (" + PreviousContactRepository.ID + ", " + PreviousContactRepository.CONTACT_NO + ", " + PreviousContactRepository.BASE_ENTITY_ID + ", " + PreviousContactRepository.KEY + ", " + PreviousContactRepository.VALUE + ", " + PreviousContactRepository.CREATED_AT + ") VALUES ");
+            /*
+            values.put(ID, PreviousContact.getId());
+        values.put(CONTACT_NO, PreviousContact.getContactNo());
+        values.put(BASE_ENTITY_ID, PreviousContact.getBaseEntityId());
+        values.put(VALUE, PreviousContact.getValue());
+        values.put(KEY, PreviousContact.getKey());
+        values.put(CREATED_AT, PreviousContact.getVisitDate());
+            */
+
+            Iterator<String> keys = object.keys();
+            boolean addPostFix = false;
             while (keys.hasNext()) {
                 String key = keys.next();
 
@@ -158,9 +175,22 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
                         if (fieldObject.has(JsonFormConstants.VALUE) &&
                                 !TextUtils.isEmpty(fieldObject.getString(JsonFormConstants.VALUE)) &&
                                 !isCheckboxValueEmpty(fieldObject)) {
+                            hasRecords = true;
 
                             fieldObject.put(PreviousContactRepository.CONTACT_NO, contactNo);
-                            fpFormUtils.savePreviousContactItem(baseEntityId, fieldObject);
+                            buildPreviousContact(previousContact, baseEntityId, fieldObject);
+
+                            if (addPostFix) sql.append(",");
+                            sql.append("(");
+                            sql.append(previousContact.getId()).append(",");
+                            sql.append(previousContact.getContactNo()).append(",");
+                            sql.append("'").append(previousContact.getBaseEntityId()).append("'").append(",");
+                            sql.append("'").append(previousContact.getKey()).append("'").append(",");
+                            sql.append("'").append(previousContact.getValue()).append("'").append(",");
+                            sql.append("'").append(previousContact.getVisitDate()).append("'");
+                            sql.append(")");
+
+                            addPostFix = true;
                         }
 
                         if (fieldObject.has(ConstantsUtils.KeyUtils.SECONDARY_VALUES) &&
@@ -175,7 +205,23 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
                     }
                 }
             }
+
+            if (hasRecords) {
+                FPLibrary.getInstance().getPreviousContactRepository().execRawQuery(sql.toString());
+            }
         }
     }
 
+    private void buildPreviousContact(PreviousContact previousContact, String baseEntityId, JSONObject fieldObject) throws JSONException {
+        String value = fieldObject.getString(JsonFormConstants.VALUE);
+        if ("today".equalsIgnoreCase(value)) {
+            value = Utils.convertDateFormat(Calendar.getInstance().getTime(), Utils.DB_DF);
+        }
+
+        previousContact.setId(previousContact.getId());
+        previousContact.setKey(fieldObject.getString(JsonFormConstants.KEY));
+        previousContact.setValue(value);
+        previousContact.setBaseEntityId(baseEntityId);
+        previousContact.setContactNo(fieldObject.getString(PreviousContactRepository.CONTACT_NO));
+    }
 }
