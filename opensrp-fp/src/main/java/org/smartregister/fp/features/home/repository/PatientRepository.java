@@ -6,6 +6,7 @@ import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import org.apache.commons.lang3.StringUtils;
+import org.smartregister.commonregistry.CommonFtsObject;
 import org.smartregister.fp.common.domain.WomanDetail;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.util.DBConstantsUtils;
@@ -173,6 +174,15 @@ public class PatientRepository extends BaseRepository {
         getMasterRepository().getWritableDatabase()
                 .update(getRegisterQueryProvider().getDemographicTable(), contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
                         new String[]{baseEntityId});
+    }
+
+    public static void updateNextContactDate(String nextContactDate, String baseEntityId) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE, nextContactDate);
+        getMasterRepository().getWritableDatabase().update(
+                CommonFtsObject.searchTableName(getRegisterQueryProvider().getDemographicTable()),
+                contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
+                new String[]{baseEntityId});
     }
 
 }
