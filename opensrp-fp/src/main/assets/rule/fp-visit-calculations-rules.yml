@@ -6,7 +6,7 @@ description: This is bmi field  which is calculated by height and weight.
 priority: 1
 condition: "global_gender == 'female' && step2_weight > 0 && step2_height > 0"
 actions:
-  - "calculation = (step2_weight / ((step2_height/100)^2))"
+  - "calculation = (step2_weight / (Math.pow((step2_height / 100), 2d)))"
 ---
 name: step2_bmi_note
 description: This is bmi field  which is calculated by height and weight.
