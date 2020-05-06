@@ -1,0 +1,21 @@
+---
+name: due
+description: due
+priority: 3
+condition: "alertRule.isFollowUpDue(alertRule.dueDays)"
+actions:
+  - "alertRule.buttonStatus = 'due'"
+---
+name: overdue
+description: overdue
+priority: 2
+condition: "alertRule.isOverdueWithDays(alertRule.overDueDays)"
+actions:
+  - "alertRule.buttonStatus = 'overdue'"
+---
+name: expired
+description: expired
+priority: 1
+condition: "alertRule.isExpiryWithDays(alertRule.expiryDays)"
+actions:
+  - "alertRule.buttonStatus = 'expired'"

@@ -151,6 +151,29 @@ public abstract class ConstantsUtils {
         public static final String JSON = "json";
     }
 
+    public static class SchedulesTriggerEvents {
+        public static final String COPPER_BEARING_INTRAUTERINE_DEVICES = "Copper-bearing intrauterine devices (Cu-IUDs)";
+        public static final String LEVONORGESTREL_IUD = "Levonorgestrel IUD (LNG-IUD)";
+        public static final String DMPA_IM = "DMPA-IM (DMPA, administered intramuscularly)";
+        public static final String DMPA_SC = "DMPA-SC (DMPA, administered subcutaneously)";
+        public static final String NET_EN_NORETHISTERONE_ENANTHATE = "NET-EN norethisterone enanthate";
+        public static final String PROGESTOGEN_ONLY_PILLS = "Progestogen-only pills (POP)";
+        public static final String COMBINED_ORAL_CONTRACEPTIVES = "Combined oral contraceptives (COCs)";
+        public static final String COMBINED_CONTRACEPTIVE_PATCH = "Combined contraceptive patch";
+        public static final String COMBINED_CONTRACEPTIVE_VAGINAL_RING = "Combined contraceptive vaginal ring (CVR)";
+        public static final String PROGESTERONE_RELEASING_VAGINAL_RING = "Progesterone-releasing vaginal ring (PVR)";
+        public static final String MALE_STERILIZATION = "Male sterilization";
+        public static final String FEMALE_STERILIZATION = "Female sterilization";
+    }
+
+    public static class SchedulesTriggerDates {
+        public static final String STERILIZATION_DATE = "sterilization_date";
+        public static final String VISIT_DATE = "visit_date";
+        public static final String LAST_INJECTION_DATE = "last_injection_date";
+        public static final String IUD_INSERTION_DATE = "iud_insertion_date";
+    }
+
+
     public static class PrefKeyUtils {
         public static final String SITE_CHARACTERISTICS = "site_characteristics";
         public static final String POPULATION_CHARACTERISTICS = "population_characteristics";
@@ -211,6 +234,7 @@ public abstract class ConstantsUtils {
     public static class RulesFileUtils {
         public static final String CONTACT_RULES = "contact-rules.yml";
         public static final String ALERT_RULES = "alert-rules.yml";
+        public static final String FP_ALERT_RULES = "fp-alert-rules.yml";
 
     }
 

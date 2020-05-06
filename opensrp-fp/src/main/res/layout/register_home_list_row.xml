@@ -148,11 +148,9 @@
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
                 android:gravity="center"
-                android:background="@drawable/not_due_button_bg"
-                style="@style/followupNotDue"
                 android:hapticFeedbackEnabled="true"
                 android:textAllCaps="false"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:text="@string/followup_date" />
 
             <Button

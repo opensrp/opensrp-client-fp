@@ -20,6 +20,7 @@ import org.smartregister.fp.common.domain.ButtonAlertStatus;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.Utils;
+import org.smartregister.fp.features.home.schedules.SchedulesEnum;
 import org.smartregister.fp.features.home.view.HomeRegisterFragment;
 import org.smartregister.view.contract.SmartRegisterClient;
 import org.smartregister.view.contract.SmartRegisterClients;
@@ -65,7 +66,7 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         if (visibleColumns.isEmpty()) {
             populatePatientColumn(pc, client, viewHolder);
             populateIdentifierColumn(pc, viewHolder);
-            populateAlertButton(pc, viewHolder);
+            populateAlertButtonAndMethodExit(pc, viewHolder);
             populateMethodExitColumn(pc, viewHolder);
         }
     }
@@ -186,21 +187,33 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         fillValue(viewHolder.ancId, String.format(context.getString(R.string.anc_id_text), fpId));
     }
 
-    private void populateAlertButton(CommonPersonObjectClient pc, RegisterViewHolder viewHolder) {
-        if (commonRepository != null) {
-            CommonPersonObject commonPersonObject = commonRepository.findByBaseEntityId(pc.entityId());
-            if (commonPersonObject != null) {
-                ButtonAlertStatus buttonAlertStatus = Utils.getButtonAlertStatus(pc.getColumnmaps(), context, false);
-                Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus);
+    private void populateAlertButtonAndMethodExit(CommonPersonObjectClient pc, RegisterViewHolder viewHolder) {
 
-            } else {
-                viewHolder.followupBtn.setVisibility(View.GONE);
+        String baseEntityId = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, false);
+        String nextContact = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.NEXT_CONTACT, false);
+        if (baseEntityId != null && !baseEntityId.isEmpty()
+                && nextContact != null && !nextContact.isEmpty()) {
+            // user visit exists
+            String methodExitKey = Utils.getMapValue(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, baseEntityId, Integer.parseInt(nextContact));
+            String methodName = Utils.getMethodName(methodExitKey);
+            // populate method exit
+            viewHolder.methodExitTv.setText(methodName);
+            //  populate alert status
+
+            for (SchedulesEnum schedulesEnum : SchedulesEnum.values()) {
+                if (schedulesEnum.getScheduleModel().getTriggerEventTag().equals(methodName)) {
+                    String triggerDate = Utils.getMapValue(schedulesEnum.getScheduleModel().getTriggerDateTag(), baseEntityId, Integer.parseInt(nextContact));
+                    ButtonAlertStatus buttonAlertStatus = Utils.getButtonFollowupStatus(triggerDate, schedulesEnum.getScheduleModel());
+                    Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus);
+                    break;
+                }
             }
+
         }
 
-//     attachSyncOnclickListener(viewHolder.sync, pc);
     }
 
+    //     attachSyncOnclickListener(viewHolder.sync, pc);
     public static void fillValue(TextView v, String value) {
         if (v != null) v.setText(value);
 

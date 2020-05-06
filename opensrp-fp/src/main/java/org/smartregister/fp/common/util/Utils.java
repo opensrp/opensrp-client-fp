@@ -53,7 +53,9 @@ import org.smartregister.fp.common.model.PartialContact;
 import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.model.Task;
 import org.smartregister.fp.common.rule.AlertRule;
+import org.smartregister.fp.common.rule.FPAlertRule;
 import org.smartregister.fp.features.home.repository.ContactTasksRepository;
+import org.smartregister.fp.features.home.schedules.model.ScheduleModel;
 import org.smartregister.fp.features.home.view.HomeRegisterActivity;
 import org.smartregister.fp.features.profile.view.ProfileActivity;
 import org.smartregister.fp.features.visit.view.StartVisitJsonFormActivity;
@@ -79,6 +81,7 @@ import java.util.Set;
 
 import timber.log.Timber;
 
+import static org.smartregister.fp.common.util.ConstantsUtils.RulesFileUtils.FP_ALERT_RULES;
 import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.METHOD_CHOSEN;
 import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.METHOD_EXIT;
 import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.METHOD_EXIT_START_DATE;
@@ -331,7 +334,7 @@ public class Utils extends org.smartregister.util.Utils {
 
 
     @SuppressWarnings("ConstantConditions")
-    public static HashMap<String, String>  loadGlobalConfig(Context context, HashMap<String, String> personObjectClient, String baseEntityId, int contactNo, String formName) {
+    public static HashMap<String, String> loadGlobalConfig(Context context, HashMap<String, String> personObjectClient, String baseEntityId, int contactNo, String formName) {
         HashMap<String, String> globals = new HashMap<>();
         Set<String> defaultValueFields = new HashSet<>();
         JSONObject mainJson;
@@ -613,6 +616,44 @@ public class Utils extends org.smartregister.util.Utils {
         return buttonAlertStatus;
     }
 
+    public static ButtonAlertStatus getButtonFollowupStatus(String triggerDate, ScheduleModel scheduleModel) {
+        ButtonAlertStatus buttonAlertStatus = new ButtonAlertStatus();
+        buttonAlertStatus.triggerDate = triggerDate;
+
+        triggerDate = formatDateForFPAlertRule(triggerDate);
+
+        FPAlertRule fpAlertRule = new FPAlertRule(scheduleModel.getDueDays(), scheduleModel.getOverdueDays(), scheduleModel.getExpiryDays(), triggerDate);
+
+        buttonAlertStatus.buttonAlertStatus = FPLibrary.getInstance().getFPRulesEngineHelper()
+                .getFPAlertStatus(fpAlertRule, FP_ALERT_RULES);
+
+        return buttonAlertStatus;
+    }
+
+    private static String formatDateForFPAlertRule(String triggerDate) {
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        Date newDate = null;
+        try {
+            newDate = format.parse(triggerDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(newDate);
+    }
+
+    private static String formatDateForVisitButton(String triggerDate) {
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        Date newDate = null;
+        try {
+            newDate = format.parse(triggerDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        format = new SimpleDateFormat("dd MMM yyyy");
+        return format.format(newDate);
+    }
+
     public static int getGestationAgeFromEDDate(String expectedDeliveryDate) {
         try {
             if (!"0".equals(expectedDeliveryDate)) {
@@ -755,26 +796,29 @@ public class Utils extends org.smartregister.util.Utils {
     public static void processFollowupVisitButton(Context context, Button followUpBtn, ButtonAlertStatus buttonAlertStatus) {
         if (followUpBtn != null) {
             followUpBtn.setVisibility(View.VISIBLE);
-            followUpBtn.setText(buttonAlertStatus.buttonText);
-
+            String triggerDate = buttonAlertStatus.triggerDate;
+            triggerDate = formatDateForVisitButton(triggerDate);
             if (buttonAlertStatus.buttonAlertStatus != null) {
                 switch (buttonAlertStatus.buttonAlertStatus) {
                     case ConstantsUtils.AlertStatusUtils.NOT_DUE:
-                        followUpBtn.setBackgroundColor(context.getResources().getColor(R.color.progress_orange));
-                        followUpBtn.setTextColor(context.getResources().getColor(R.color.white));
+                        followUpBtn.setBackgroundResource(R.drawable.not_due_button_bg);
+                        followUpBtn.setTextAppearance(context, R.style.followupNotDue);
+                        String followupDate = context.getString(R.string.followup_date, triggerDate);
+                        followUpBtn.setText(followupDate);
                         break;
                     case ConstantsUtils.AlertStatusUtils.DUE:
-                        followUpBtn.setBackground(context.getResources().getDrawable(R.drawable.contact_due));
-                        followUpBtn.setTextColor(context.getResources().getColor(R.color.vaccine_blue_bg_st));
+                        followUpBtn.setBackgroundResource(R.drawable.due_button_bg);
+                        followUpBtn.setTextAppearance(context, R.style.followupDue);
+                        followUpBtn.setText(R.string.followup_due);
                         break;
                     case ConstantsUtils.AlertStatusUtils.OVERDUE:
-                        followUpBtn.setBackgroundColor(context.getResources().getColor(R.color.vaccine_red_bg_st));
-                        followUpBtn.setTextColor(context.getResources().getColor(R.color.white));
+                        followUpBtn.setBackgroundResource(R.drawable.overdue_button_bg);
+                        followUpBtn.setTextAppearance(context, R.style.followupOverdue);
+                        followUpBtn.setText(R.string.followup_overdue);
                         break;
-                    /*case ConstantsUtils.AlertStatusUtils.EXPIRED:
-                        followUpBtn.setBackground(context.getResources().getDrawable(R.drawable.contact_not_due));
-                        followUpBtn.setTextColor(context.getResources().getColor(R.color.dark_grey));
-                        break;*/
+                    case ConstantsUtils.AlertStatusUtils.EXPIRED:
+                        followUpBtn.setVisibility(View.GONE);
+                        break;
                 }
             }
         }
@@ -887,6 +931,10 @@ public class Utils extends org.smartregister.util.Utils {
             }
         }
         return clientProfileModel;
+    }
+
+    public static Integer calculateTotalDays(Integer days, Integer weeks, Integer years) {
+        return (years * 365) + (weeks * 7) + days;
     }
 
     /**

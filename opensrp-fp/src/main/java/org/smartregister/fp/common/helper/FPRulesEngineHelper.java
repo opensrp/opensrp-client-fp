@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.fp.common.rule.AlertRule;
 import org.smartregister.fp.common.rule.ContactRule;
+import org.smartregister.fp.common.rule.FPAlertRule;
 import org.smartregister.fp.common.util.FPFormUtils;
 
 import java.io.BufferedReader;
@@ -107,6 +108,20 @@ public class FPRulesEngineHelper extends RulesEngineHelper {
     }
 
     public String getButtonAlertStatus(AlertRule alertRule, String rulesFile) {
+        Facts facts = new Facts();
+        facts.put(AlertRule.RULE_KEY, alertRule);
+
+        Rules rules = getRulesFromAsset(RULE_FOLDER_PATH + rulesFile);
+        if (rules == null) {
+            return null;
+        }
+
+        processDefaultRules(rules, facts);
+
+        return alertRule.buttonStatus;
+    }
+
+    public String getFPAlertStatus(FPAlertRule alertRule, String rulesFile) {
         Facts facts = new Facts();
         facts.put(AlertRule.RULE_KEY, alertRule);
 

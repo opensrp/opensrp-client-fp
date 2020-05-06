@@ -439,7 +439,7 @@
     <string name="method_start_date">Method start date</string>
     <string name="reason_for_no_method_at_exit">Reason for no method at exit</string>
     <string name="method_at_exit">Method at exit</string>
-    <string name="followup_date">FOLLOWUP\n 20 MAY 2020</string>
+    <string name="followup_date">FOLLOWUP\n %1$s</string>
     <string name="followup_due">FOLLOWUP\nDUE</string>
     <string name="followup_overdue">followup\nOverdue</string>
 </resources>
