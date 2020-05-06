@@ -372,7 +372,7 @@ public class Utils extends org.smartregister.util.Utils {
                     }
                 }
 
-                String methodExit = getMapValue(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, baseEntityId, contactNo);
+                String methodExit = Utils.getMapValue(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, baseEntityId, contactNo);
 
                 //Inject some form defaults from client details
                 globals.put(ConstantsUtils.KeyUtils.CONTACT_NO, String.valueOf(contactNo));
@@ -747,6 +747,34 @@ public class Utils extends org.smartregister.util.Utils {
                         dueButton.setVisibility(View.GONE);
                         contactTextView.setVisibility(View.VISIBLE);
                     }
+                }
+            }
+        }
+    }
+
+    public static void processFollowupVisitButton(Context context, Button followUpBtn, ButtonAlertStatus buttonAlertStatus) {
+        if (followUpBtn != null) {
+            followUpBtn.setVisibility(View.VISIBLE);
+            followUpBtn.setText(buttonAlertStatus.buttonText);
+
+            if (buttonAlertStatus.buttonAlertStatus != null) {
+                switch (buttonAlertStatus.buttonAlertStatus) {
+                    case ConstantsUtils.AlertStatusUtils.NOT_DUE:
+                        followUpBtn.setBackgroundColor(context.getResources().getColor(R.color.progress_orange));
+                        followUpBtn.setTextColor(context.getResources().getColor(R.color.white));
+                        break;
+                    case ConstantsUtils.AlertStatusUtils.DUE:
+                        followUpBtn.setBackground(context.getResources().getDrawable(R.drawable.contact_due));
+                        followUpBtn.setTextColor(context.getResources().getColor(R.color.vaccine_blue_bg_st));
+                        break;
+                    case ConstantsUtils.AlertStatusUtils.OVERDUE:
+                        followUpBtn.setBackgroundColor(context.getResources().getColor(R.color.vaccine_red_bg_st));
+                        followUpBtn.setTextColor(context.getResources().getColor(R.color.white));
+                        break;
+                    /*case ConstantsUtils.AlertStatusUtils.EXPIRED:
+                        followUpBtn.setBackground(context.getResources().getDrawable(R.drawable.contact_not_due));
+                        followUpBtn.setTextColor(context.getResources().getColor(R.color.dark_grey));
+                        break;*/
                 }
             }
         }

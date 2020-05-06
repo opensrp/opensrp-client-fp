@@ -6,10 +6,12 @@ import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import org.apache.commons.lang3.StringUtils;
+import org.smartregister.commonregistry.CommonFtsObject;
 import org.smartregister.fp.common.domain.WomanDetail;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.Utils;
+import org.smartregister.fp.features.home.schedules.SchedulesEnum;
 import org.smartregister.repository.BaseRepository;
 import org.smartregister.repository.Repository;
 import org.smartregister.view.activity.DrishtiApplication;
@@ -23,7 +25,6 @@ import timber.log.Timber;
  * Created by ndegwamartin on 14/07/2018.
  */
 public class PatientRepository extends BaseRepository {
-
     private static final String[] projection =
             new String[]{DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, DBConstantsUtils.KeyUtils.CLIENT_ID, DBConstantsUtils.KeyUtils.CLIENT_ID_NOTE,
                     DBConstantsUtils.KeyUtils.FIRST_NAME, DBConstantsUtils.KeyUtils.LAST_NAME, DBConstantsUtils.KeyUtils.DOB,
@@ -172,6 +173,15 @@ public class PatientRepository extends BaseRepository {
         getMasterRepository().getWritableDatabase()
                 .update(getRegisterQueryProvider().getDemographicTable(), contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
                         new String[]{baseEntityId});
+    }
+
+    public static void updateNextContactDate(String nextContactDate, String baseEntityId) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE, nextContactDate);
+        getMasterRepository().getWritableDatabase().update(
+                CommonFtsObject.searchTableName(getRegisterQueryProvider().getDemographicTable()),
+                contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
+                new String[]{baseEntityId});
     }
 
 }

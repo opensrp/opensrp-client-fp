@@ -3,10 +3,10 @@ package org.smartregister.fp.features.home.view;
 import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -16,7 +16,6 @@ import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.configurableviews.model.Field;
 import org.smartregister.cursoradapter.RecyclerViewFragment;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
-import org.smartregister.cursoradapter.SmartRegisterQueryBuilder;
 import org.smartregister.domain.FetchStatus;
 import org.smartregister.domain.ResponseErrorStatus;
 import org.smartregister.fp.R;
@@ -24,7 +23,6 @@ import org.smartregister.fp.common.cursor.AdvancedMatrixCursor;
 import org.smartregister.fp.common.event.SyncEvent;
 import org.smartregister.fp.common.fragment.NoMatchDialogFragment;
 import org.smartregister.fp.common.helper.DBQueryHelper;
-import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.provider.RegisterProvider;
 import org.smartregister.fp.common.task.AttentionFlagsTask;
 import org.smartregister.fp.common.util.ConstantsUtils;
@@ -54,6 +52,7 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
     public static final String CLICK_VIEW_ALERT_STATUS = "click_view_alert_status";
     public static final String CLICK_VIEW_SYNC = "click_view_sync";
     public static final String CLICK_VIEW_ATTENTION_FLAG = "click_view_attention_flag";
+    private boolean enableDueFilter;
 
     private PopupMenu popupMenu;
 
@@ -90,7 +89,7 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
         }
 
         // Due Button
-        View contactButton = view.findViewById(R.id.due_button);
+        View contactButton = view.findViewById(R.id.btn_followup);
         if (contactButton != null) {
             contactButton.setOnClickListener(registerActionHandler);
         }
@@ -107,7 +106,11 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
 
     @Override
     protected String getMainCondition() {
-        return DBQueryHelper.getHomePatientRegisterCondition();
+        String condition = DBQueryHelper.getHomePatientRegisterCondition();
+        if (enableDueFilter) {
+            condition +=  " AND (" + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE + " != '' AND date('now') > strftime('%Y-%m-%d', " + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE + "))";
+        }
+        return condition;
     }
 
     @Override
@@ -146,7 +149,10 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
         } else if (view.getId() == R.id.filter_text_view) {
             baseHomeRegisterActivity.switchToFragment(BaseRegisterActivity.SORT_FILTER_POSITION);
         } else if (view.getId() == R.id.due_only_text_view) {
-
+            TextView tv = (TextView) view;
+            enableDueFilter = !enableDueFilter;
+            tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, enableDueFilter ? R.drawable.ic_due_filter_on : R.drawable.ic_due_filter_off, 0);
+            filter(getSearchView().getText().toString(), "", getMainCondition(), false);
         } else if (view.getId() == R.id.popup_menu) {
 
             if (popupMenu == null) {

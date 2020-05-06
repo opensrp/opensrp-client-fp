@@ -4,8 +4,6 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -34,10 +32,7 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import timber.log.Timber;
 
@@ -134,7 +129,7 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
     public void addFormDataView(View view) {
         Object key = view.getTag(com.vijay.jsonwizard.R.id.key);
 
-        if (!"still_on_method_heading".equals(key)) {
+        if (!(view instanceof CustomTextView)) {
             super.addFormDataView(view);
         }
 
