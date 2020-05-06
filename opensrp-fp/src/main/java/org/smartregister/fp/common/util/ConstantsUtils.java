@@ -166,6 +166,17 @@ public abstract class ConstantsUtils {
         public static final String FEMALE_STERILIZATION = "Female sterilization";
     }
 
+    public static class SchedulesNonTriggerEvents {
+        public static final String ETONOGESTREL_ETG_ONE_RO = "Etonogestrel (ETG) one-rod";
+        public static final String LEVONORGESTREL_LNG_TWO_RO = "Levonorgestrel (LNG) two-rod";
+        public static final String LACTATIONAL_AMENORRHEA_METHOD_LAM = "Lactational amenorrhea method (LAM)";
+        public static final String MALE_CONDOM = "Male Condoms";
+        public static final String FEMALE_CONDOM = "Female Condoms";
+        public static final String EMERGENCY_CONTRACEPTIVE_PILLS_ECPS = "Emergency contraceptive pills (ECPs)";
+        public static final String FERTILITY_AWARENESS_BASED_METHODS_FAB = "Fertility awareness-based methods (FAB)";
+        public static final String WITHDRAWAL = "Withdrawal";
+    }
+
     public static class SchedulesTriggerDates {
         public static final String STERILIZATION_DATE = "sterilization_date";
         public static final String VISIT_DATE = "visit_date";

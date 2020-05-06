@@ -937,6 +937,18 @@ public class Utils extends org.smartregister.util.Utils {
         return (years * 365) + (weeks * 7) + days;
     }
 
+    public static boolean checkNonTriggerEvents(String methodName) {
+        return !Arrays.asList(ConstantsUtils.SchedulesNonTriggerEvents.ETONOGESTREL_ETG_ONE_RO,
+                ConstantsUtils.SchedulesNonTriggerEvents.LEVONORGESTREL_LNG_TWO_RO,
+                ConstantsUtils.SchedulesNonTriggerEvents.LACTATIONAL_AMENORRHEA_METHOD_LAM,
+                ConstantsUtils.SchedulesNonTriggerEvents.MALE_CONDOM,
+                ConstantsUtils.SchedulesNonTriggerEvents.FEMALE_CONDOM,
+                ConstantsUtils.SchedulesNonTriggerEvents.EMERGENCY_CONTRACEPTIVE_PILLS_ECPS,
+                ConstantsUtils.SchedulesNonTriggerEvents.FERTILITY_AWARENESS_BASED_METHODS_FAB,
+                ConstantsUtils.SchedulesNonTriggerEvents.WITHDRAWAL)
+                .contains(methodName);
+    }
+
     /**
      * Loads yaml files that contain rules for the profile displays
      *

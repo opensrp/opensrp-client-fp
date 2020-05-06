@@ -31,7 +31,9 @@ import org.smartregister.view.dialog.SortOption;
 import org.smartregister.view.viewholder.OnClickFormLauncher;
 
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * Created by keyman on 26/06/2018.
@@ -198,19 +200,19 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
             String methodName = Utils.getMethodName(methodExitKey);
             // populate method exit
             viewHolder.methodExitTv.setText(methodName);
-            //  populate alert status
-
-            for (SchedulesEnum schedulesEnum : SchedulesEnum.values()) {
-                if (schedulesEnum.getScheduleModel().getTriggerEventTag().equals(methodName)) {
-                    String triggerDate = Utils.getMapValue(schedulesEnum.getScheduleModel().getTriggerDateTag(), baseEntityId, Integer.parseInt(nextContact));
-                    ButtonAlertStatus buttonAlertStatus = Utils.getButtonFollowupStatus(triggerDate, schedulesEnum.getScheduleModel());
-                    Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus);
-                    break;
+            // check non trigger events
+            if (Utils.checkNonTriggerEvents(methodName)) {
+                //  populate alert status
+                for (SchedulesEnum schedulesEnum : SchedulesEnum.values()) {
+                    if (schedulesEnum.getScheduleModel().getTriggerEventTag().equals(methodName)) {
+                        String triggerDate = Utils.getMapValue(schedulesEnum.getScheduleModel().getTriggerDateTag(), baseEntityId, Integer.parseInt(nextContact));
+                        ButtonAlertStatus buttonAlertStatus = Utils.getButtonFollowupStatus(triggerDate, schedulesEnum.getScheduleModel());
+                        Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus);
+                        break;
+                    }
                 }
             }
-
         }
-
     }
 
     //     attachSyncOnclickListener(viewHolder.sync, pc);
