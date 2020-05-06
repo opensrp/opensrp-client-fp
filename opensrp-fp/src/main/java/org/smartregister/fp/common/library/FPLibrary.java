@@ -6,6 +6,8 @@ import androidx.annotation.Nullable;
 import com.google.gson.Gson;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.EventBusBuilder;
 import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,7 +17,10 @@ import org.smartregister.Context;
 import org.smartregister.CoreLibrary;
 import org.smartregister.configurableviews.helper.JsonSpecHelper;
 import org.smartregister.domain.Setting;
+import org.smartregister.fp.FPEventBusIndex;
 import org.smartregister.fp.common.config.ActivityConfiguration;
+import org.smartregister.fp.common.domain.YamlConfig;
+import org.smartregister.fp.common.domain.YamlConfigItem;
 import org.smartregister.fp.common.helper.FPRulesEngineHelper;
 import org.smartregister.fp.common.repository.PreviousContactRepository;
 import org.smartregister.fp.common.util.ConstantsUtils;
@@ -29,7 +34,9 @@ import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.view.activity.DrishtiApplication;
+import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -76,7 +83,33 @@ public class FPLibrary {
 
         //Initialize JsonSpec Helper
         this.jsonSpecHelper = new JsonSpecHelper(getApplicationContext());
+        setUpEventHandling();
 
+        //initialize configs processor
+        initializeYamlConfigs();
+    }
+
+    private void setUpEventHandling() {
+        try {
+            EventBusBuilder eventBusBuilder = EventBus.builder()
+                    .addIndex(new FPEventBusIndex());
+
+            if (subscriberInfoIndex != null) {
+                eventBusBuilder.addIndex(subscriberInfoIndex);
+            }
+
+            eventBusBuilder.installDefaultEventBus();
+        } catch (Exception e) {
+            Timber.e(e, " --> setUpEventHandling");
+        }
+    }
+
+    private void initializeYamlConfigs() {
+        Constructor constructor = new Constructor(YamlConfig.class);
+        TypeDescription customTypeDescription = new TypeDescription(YamlConfig.class);
+        customTypeDescription.addPropertyParameters(YamlConfigItem.FIELD_CONTACT_SUMMARY_ITEMS, YamlConfigItem.class);
+        constructor.addTypeDescription(customTypeDescription);
+        yaml = new Yaml(constructor);
     }
 
     public android.content.Context getApplicationContext() {

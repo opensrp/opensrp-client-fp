@@ -48,6 +48,7 @@ import org.smartregister.fp.common.domain.ButtonAlertStatus;
 import org.smartregister.fp.common.domain.Contact;
 import org.smartregister.fp.common.event.BaseEvent;
 import org.smartregister.fp.common.library.FPLibrary;
+import org.smartregister.fp.common.model.ClientProfileModel;
 import org.smartregister.fp.common.model.PartialContact;
 import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.model.Task;
@@ -77,6 +78,12 @@ import java.util.Map;
 import java.util.Set;
 
 import timber.log.Timber;
+
+import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.METHOD_CHOSEN;
+import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.METHOD_EXIT;
+import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.METHOD_EXIT_START_DATE;
+import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.REASON_NO_METHOD_EXIT;
+import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.REFERRAL;
 
 /**
  * Created by ndegwamartin on 14/03/2018.
@@ -257,8 +264,6 @@ public class Utils extends org.smartregister.util.Utils {
             startVisit.setGlobals(globals);
 
 
-
-
             //partial contact exists?
             PartialContact partialContactRequest = new PartialContact();
             partialContactRequest.setBaseEntityId(baseEntityId);
@@ -316,14 +321,14 @@ public class Utils extends org.smartregister.util.Utils {
                     JSONObject field = fields.getJSONObject(i);
                     field.put("read_only", true);
                 }
-            }
-            catch (JSONException ex) {
+            } catch (JSONException ex) {
                 Timber.e(ex);
             }
 
             makeTheFormReadOnly(form, ++stepNo);
         }
     }
+
 
     @SuppressWarnings("ConstantConditions")
     public static HashMap<String, String>  loadGlobalConfig(Context context, HashMap<String, String> personObjectClient, String baseEntityId, int contactNo, String formName) {
@@ -498,7 +503,6 @@ public class Utils extends org.smartregister.util.Utils {
         }
 
     }*/
-
     public static String fillTemplate(String stringValue, Facts facts) {
         String stringValueResult = stringValue;
         while (stringValueResult.contains("{")) {
@@ -821,6 +825,42 @@ public class Utils extends org.smartregister.util.Utils {
         return false;
     }
 
+    public static ClientProfileModel getClientProfileValuesFromJson(String formJsonDraft) throws JSONException {
+        ClientProfileModel clientProfileModel = new ClientProfileModel();
+        JSONObject jsonObject = new JSONObject(formJsonDraft);
+        JSONArray step6 = jsonObject.getJSONObject("step6").getJSONArray("fields");
+        JSONArray step7 = jsonObject.getJSONObject("step7").getJSONArray("fields");
+
+        for (int i = 0; i < step6.length(); i++) {
+            if (step6.getJSONObject(i).has("key") && step6.getJSONObject(i).has("value")) {
+                if (step6.getJSONObject(i).get("key").equals(METHOD_CHOSEN)) {
+                    clientProfileModel.setChosenMethod(step6.getJSONObject(i).get("value").toString());
+                } else if (step6.getJSONObject(i).get("key").equals(REFERRAL)) {
+                    clientProfileModel.setReferred(step6.getJSONObject(i).get("value").toString());
+                }
+                if (clientProfileModel.getReferred() != null && clientProfileModel.getChosenMethod() != null)
+                    break;
+            }
+        }
+
+        for (int i = 0; i < step7.length(); i++) {
+            if (step7.getJSONObject(i).has("key") && step7.getJSONObject(i).has("value")) {
+                if (step7.getJSONObject(i).get("key").equals(METHOD_EXIT)) {
+                    clientProfileModel.setMethodAtExit(step7.getJSONObject(i).get("value").toString());
+                } else if (step7.getJSONObject(i).get("key").equals(METHOD_EXIT_START_DATE)) {
+                    clientProfileModel.setMethodStartDate(step7.getJSONObject(i).get("value").toString());
+                } else if (step7.getJSONObject(i).get("key").equals(REASON_NO_METHOD_EXIT)) {
+                    clientProfileModel.setReasonForNoMethodAtExit(step7.getJSONObject(i).get("value").toString());
+                }
+                if (clientProfileModel.getMethodAtExit() != null &&
+                        clientProfileModel.getMethodStartDate() != null &&
+                        clientProfileModel.getReasonForNoMethodAtExit() != null)
+                    break;
+            }
+        }
+        return clientProfileModel;
+    }
+
     /**
      * Loads yaml files that contain rules for the profile displays
      *
@@ -956,7 +996,6 @@ public class Utils extends org.smartregister.util.Utils {
     }
 
 
-
     /**
      * Returns a map of the expansion panel values
      *
@@ -995,7 +1034,6 @@ public class Utils extends org.smartregister.util.Utils {
         }
         return fields;
     }
-
 
 
     /**

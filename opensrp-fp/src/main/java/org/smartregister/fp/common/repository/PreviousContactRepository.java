@@ -334,7 +334,51 @@ public class PreviousContactRepository extends BaseRepository {
                 return getPreviousContactFacts(baseEntityId, contactNo, false);
             }
         } catch (Exception e) {
-            Log.e(TAG, e.toString(), e);
+            Timber.e(e);
+        } finally {
+            if (mCursor != null) {
+                mCursor.close();
+            }
+        }
+
+        return previousContactFacts;
+    }
+
+    private String[] profileOverviewProjectionArgs = new String[]{ID, CONTACT_NO, KEY, VALUE, BASE_ENTITY_ID, CREATED_AT};
+
+    public Facts getProfileOverviewDetails(String baseEntityId, String contactNo, List<String> keys) {
+        Cursor mCursor = null;
+        String selection = "";
+        String[] selectionArgs = null;
+        Facts previousContactFacts = new Facts();
+        try {
+            SQLiteDatabase db = getWritableDatabase();
+
+            if (StringUtils.isNotBlank(baseEntityId) && StringUtils.isNotBlank(contactNo)) {
+                selection = BASE_ENTITY_ID + " = ? AND " + CONTACT_NO + " = ? AND " + KEY + " IN(";
+                selectionArgs = new String[keys.size() + 2];
+                selectionArgs[0] = baseEntityId;
+                selectionArgs[1] = contactNo;
+                for (int i = 0; i < keys.size(); i++) {
+                    selectionArgs[i + 2] = keys.get(i);
+                    if (i != keys.size() - 1) selection = selection.concat("?,");
+                    else selection = selection.concat("?)");
+                }
+            }
+
+            mCursor = db.query(TABLE_NAME, projectionArgs, selection, selectionArgs, null, null, null, null);
+            if (mCursor != null && mCursor.getCount() > 0) {
+                while (mCursor.moveToNext()) {
+                    previousContactFacts.put(mCursor.getString(mCursor.getColumnIndex(KEY)),
+                            mCursor.getString(mCursor.getColumnIndex(VALUE)));
+
+                }
+                return previousContactFacts;
+            } else if (Integer.parseInt(contactNo) > 0) {
+                return getPreviousContactFacts(baseEntityId, contactNo, false);
+            }
+        } catch (Exception e) {
+            Timber.e(e);
         } finally {
             if (mCursor != null) {
                 mCursor.close();

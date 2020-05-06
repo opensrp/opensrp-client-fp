@@ -6,6 +6,14 @@ public class PartialContact extends Contact {
     private Boolean isFinalized;
     private int sortOrder;
 
+    public PartialContact(String baseEntityId, String formType, int contactNo) {
+        super(formType, baseEntityId, contactNo);
+    }
+
+    public PartialContact() {
+        super();
+    }
+
     public Integer getSortOrder() {
         return sortOrder;
     }

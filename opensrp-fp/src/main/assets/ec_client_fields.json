@@ -102,13 +102,6 @@
           }
         },
         {
-          "column_name": "age",
-          "type": "Client",
-          "json_mapping": {
-            "field": "attributes.age"
-          }
-        },
-        {
           "column_name": "gender",
           "type": "Client",
           "json_mapping": {

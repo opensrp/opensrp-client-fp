@@ -4,7 +4,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.2'
+        classpath 'com.android.tools.build:gradle:3.6.3'
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.3'
         classpath 'com.google.gms:google-services:4.3.3'
     }
@@ -114,6 +114,9 @@ android {
             returnDefaultValues = true
             includeAndroidResources = true
         }
+    }
+    dataBinding {
+        enabled = true
     }
 }
 

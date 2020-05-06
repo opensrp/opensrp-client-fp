@@ -103,4 +103,20 @@
         <item name="android:textSize">14sp</item>
         <item name="android:lineSpacingMultiplier">1.21</item>
     </style>
+
+    <style name="ProfileOverviewLabelStyle">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textColor">@color/dark_silver</item>
+        <item name="android:textSize">@dimen/profile_overview_text_size</item>
+        <item name="android:lineSpacingMultiplier">1.19</item>
+    </style>
+
+    <style name="ProfileOverviewTextStyle">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/profile_overview_text_size</item>
+        <item name="android:lineSpacingMultiplier">1.19</item>
+    </style>
+
+    <dimen name="profile_overview_text_size">16sp</dimen>
 </resources>

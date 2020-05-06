@@ -105,9 +105,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         imageView = findViewById(R.id.imageview_profile);
         dueButton = findViewById(R.id.profile_overview_due_button);
         btnStartFPVisit = findViewById(R.id.btn_start_visit);
-        btnStartFPVisit.setOnClickListener((v) -> {
-            continueToContact();
-        });
+        btnStartFPVisit.setOnClickListener(this);
         updateTasksTabTitle();
     }
 
@@ -124,8 +122,6 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         TextView taskTabTitle = taskTabTitleLayout.findViewById(R.id.tasks_title);
         taskTabTitle.setText(this.getString(R.string.tasks));
         taskTabCount = taskTabTitleLayout.findViewById(R.id.tasks_count);
-
-        //getTabLayout().getTabAt(1).setCustomView(taskTabTitleLayout);
     }
 
     @Override
@@ -172,6 +168,8 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
                 Utils.proceedToContact(baseEntityId, detailMap, getActivity());
             }
 
+        } else if (view.getId() == R.id.btn_start_visit) {
+            continueToContact();
         } else {
             super.onClick(view);
         }
@@ -235,14 +233,11 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
             Utils.navigateToHomeRegister(this, false, FPLibrary.getInstance().getActivityConfiguration().getHomeRegisterActivityClass());
-        }
-        else if (itemId == R.id.menu_btn_call) {
+        } else if (itemId == R.id.menu_btn_call) {
             launchPhoneDialer(phoneNumber);
-        }
-        else if (itemId == R.id.menu_btn_start_visit) {
+        } else if (itemId == R.id.menu_btn_start_visit) {
             continueToContact();
-        }
-        else if (itemId == R.id.menu_btn_close_fp_record) {
+        } else if (itemId == R.id.menu_btn_close_fp_record) {
             FPJsonFormUtils.launchFPCloseForm(ProfileActivity.this);
         }
         return super.onOptionsItemSelected(item);
