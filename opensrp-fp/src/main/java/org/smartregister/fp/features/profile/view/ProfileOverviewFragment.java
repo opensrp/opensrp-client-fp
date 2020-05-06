@@ -43,7 +43,7 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
     private Button dueButton;
     private ButtonAlertStatus buttonAlertStatus;
     private String baseEntityId;
-    private String contactNo;
+    private int contactNo;
 
     static ProfileOverviewFragment newInstance(Bundle bundle) {
         Bundle bundles = bundle;
@@ -67,7 +67,7 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
                     (HashMap<String, String>) getActivity().getIntent().getSerializableExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP);
             if (clientDetails != null) {
                 buttonAlertStatus = Utils.getButtonAlertStatus(clientDetails, getActivity().getApplicationContext(), true);
-                contactNo = String.valueOf(Utils.getTodayContact(clientDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
+                contactNo = Utils.getTodayContact(clientDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
             }
             baseEntityId = getActivity().getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID);
         } else {
@@ -79,7 +79,7 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
     protected void onResumption() {
         try {
             PartialContact partialContact = FPLibrary.getInstance().getPartialContactRepository().getPartialContact(
-                    new PartialContact(FORM_TYPE, baseEntityId, Integer.parseInt(contactNo)));
+                    new PartialContact(FORM_TYPE, baseEntityId, contactNo));
 
             if (partialContact != null && partialContact.getFormJsonDraft() != null) {
                 ClientProfileModel clientProfileModel = Utils.getClientProfileValuesFromJson(partialContact.getFormJsonDraft());

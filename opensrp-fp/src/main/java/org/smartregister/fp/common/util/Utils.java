@@ -771,14 +771,10 @@ public class Utils extends org.smartregister.util.Utils {
                         followUpBtn.setBackgroundColor(context.getResources().getColor(R.color.vaccine_red_bg_st));
                         followUpBtn.setTextColor(context.getResources().getColor(R.color.white));
                         break;
-                    case ConstantsUtils.AlertStatusUtils.EXPIRED:
+                    /*case ConstantsUtils.AlertStatusUtils.EXPIRED:
                         followUpBtn.setBackground(context.getResources().getDrawable(R.drawable.contact_not_due));
                         followUpBtn.setTextColor(context.getResources().getColor(R.color.dark_grey));
-                        break;
-                    default:
-                        followUpBtn.setBackground(context.getResources().getDrawable(R.drawable.contact_due));
-                        followUpBtn.setTextColor(context.getResources().getColor(R.color.vaccine_blue_bg_st));
-                        break;
+                        break;*/
                 }
             }
         }

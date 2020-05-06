@@ -10,10 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.vijay.jsonwizard.views.CustomTextView;
-
 import org.apache.commons.text.WordUtils;
-import org.slf4j.helpers.Util;
 import org.smartregister.commonregistry.CommonPersonObject;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.commonregistry.CommonRepository;
@@ -68,15 +65,20 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         if (visibleColumns.isEmpty()) {
             populatePatientColumn(pc, client, viewHolder);
             populateIdentifierColumn(pc, viewHolder);
-            populateLastColumn(pc, viewHolder);
+            populateAlertButton(pc, viewHolder);
             populateMethodExitColumn(pc, viewHolder);
         }
     }
 
     private void populateMethodExitColumn(CommonPersonObjectClient pc, RegisterViewHolder viewHolder) {
-        /*String baseEntityId = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, false);
+        String baseEntityId = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, false);
         String nextContact = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.NEXT_CONTACT, false);
-        String methodExit = Utils.getMapValue(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, baseEntityId, Integer.parseInt(nextContact));*/
+        if (baseEntityId != null && !baseEntityId.isEmpty()
+                && nextContact != null && !nextContact.isEmpty()) {
+            String methodExitKey = Utils.getMapValue(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, baseEntityId, Integer.parseInt(nextContact));
+            String methodName = Utils.getMethodName(methodExitKey);
+            viewHolder.methodExitTv.setText(methodName);
+        }
     }
 
     @Override
@@ -184,7 +186,7 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         fillValue(viewHolder.ancId, String.format(context.getString(R.string.anc_id_text), fpId));
     }
 
-    private void populateLastColumn(CommonPersonObjectClient pc, RegisterViewHolder viewHolder) {
+    private void populateAlertButton(CommonPersonObjectClient pc, RegisterViewHolder viewHolder) {
         if (commonRepository != null) {
             CommonPersonObject commonPersonObject = commonRepository.findByBaseEntityId(pc.entityId());
             if (commonPersonObject != null) {
@@ -193,7 +195,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
 
             } else {
                 viewHolder.followupBtn.setVisibility(View.GONE);
-
             }
         }
 
