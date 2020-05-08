@@ -42,7 +42,6 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
     @Override
     public void goToHome(boolean remote) {
         gotToHomeRegister(remote);
-        throw new RuntimeException("Test Crash"); // Force a crash
     }
 
     private void gotToHomeRegister(boolean remote) {
