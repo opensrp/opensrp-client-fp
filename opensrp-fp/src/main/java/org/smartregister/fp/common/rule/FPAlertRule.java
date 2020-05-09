@@ -1,8 +1,11 @@
 package org.smartregister.fp.common.rule;
 
 import org.joda.time.LocalDate;
+import org.smartregister.fp.features.home.schedules.model.ScheduleModel;
 
 import static org.smartregister.fp.common.util.ConstantsUtils.AlertStatusUtils.NOT_DUE;
+import static org.smartregister.fp.common.util.ConstantsUtils.ScheduleUtils.ONCE_OFF;
+import static org.smartregister.fp.common.util.ConstantsUtils.ScheduleUtils.RECURRING;
 
 //All date formats ISO 8601 yyyy-mm-dd
 
@@ -16,13 +19,32 @@ public class FPAlertRule {
     public int overDueDays;
     public int expiryDays;
 
-    public FPAlertRule(int dueDays, int overDueDays, int expiryDays, String triggerDate) {
-
-        this.dueDays = dueDays;
-        this.overDueDays = overDueDays;
-        this.expiryDays = expiryDays;
+    public FPAlertRule(ScheduleModel scheduleModel, String triggerDate, boolean isFirst) {
+        if (scheduleModel.getFrequency().equals(ONCE_OFF)) {
+            if (isFirst)
+                populateDatesOnceOff(scheduleModel);
+        } else if (scheduleModel.getFrequency().equals(RECURRING)) {
+            if (isFirst) {
+                populateDatesOnceOff(scheduleModel);
+            } else {
+                if (scheduleModel.getRecurringDays() != null)
+                    populateDatesRecurring(scheduleModel);
+            }
+        }
         this.triggerDate = triggerDate;
         this.todayDate = new LocalDate();
+    }
+
+    private void populateDatesRecurring(ScheduleModel scheduleModel) {
+        this.dueDays = scheduleModel.getRecurringDays().getLeft();
+        this.overDueDays = scheduleModel.getRecurringDays().getMiddle();
+        this.expiryDays = scheduleModel.getRecurringDays().getRight();
+    }
+
+    private void populateDatesOnceOff(ScheduleModel scheduleModel) {
+        this.dueDays = scheduleModel.getNormalDays().getLeft();
+        this.overDueDays = scheduleModel.getNormalDays().getMiddle();
+        this.expiryDays = scheduleModel.getNormalDays().getRight();
     }
 
     public boolean isFollowUpDue(Integer dueDays) {

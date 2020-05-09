@@ -8,17 +8,17 @@ import android.text.TextUtils;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.rules.RuleConstant;
 
-import org.joda.time.LocalDate;
+import org.jeasy.rules.api.Facts;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.domain.Contact;
-import org.smartregister.fp.common.domain.WomanDetail;
+import org.smartregister.fp.common.domain.ClientDetail;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.repository.PreviousContactRepository;
-import org.smartregister.fp.common.rule.ContactRule;
+import org.smartregister.fp.common.rule.ScheduleRule;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.FPFormUtils;
@@ -26,6 +26,7 @@ import org.smartregister.fp.common.util.Utils;
 import org.smartregister.fp.features.home.repository.PatientRepository;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -33,6 +34,7 @@ import java.util.Map;
 
 import timber.log.Timber;
 
+import static org.smartregister.fp.common.util.ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT;
 import static org.smartregister.fp.common.util.Utils.isCheckboxValueEmpty;
 
 public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String, String>> {
@@ -72,6 +74,12 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
         contact.setContactNumber(contactNo);
         FPFormUtils.persistPartial(baseEntityId, contact);
 
+        try {
+            processFormFieldKeyValues(baseEntityId, new JSONObject(contact.getJsonForm()), String.valueOf(contactNo));
+        } catch (Exception ex) {
+            Timber.e(ex);
+        }
+
         /*Map<String, String> clientProfileDetail = PatientRepository.getClientProfileDetails(baseEntityId);
         ContactInteractor contactInteractor = new ContactInteractor();
         contactInteractor.finalizeContactForm(clientProfileDetail, this);*/
@@ -79,30 +87,23 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
         HashMap<String, String> clientProfileDetail = PatientRepository.getClientProfileDetails(baseEntityId);
         if (clientProfileDetail == null) return null;
 
-        int gestationAge = getGestationAge(clientProfileDetail);
+        String nextContactNo = clientProfileDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
         boolean isFirst = TextUtils.equals("1", clientProfileDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
-        ContactRule contactRule = new ContactRule(gestationAge, isFirst, baseEntityId);
+        if (!isFirst) {
+//            String stillOnMethod = fpFormUtils.extractStillOnMethodValue(jsonCurrentState);
+//            isFirst = !stillOnMethod.equalsIgnoreCase("yes");
 
-        List<Integer> integerList = FPLibrary.getInstance().getFPRulesEngineHelper()
-                .getContactVisitSchedule(contactRule, ConstantsUtils.RulesFileUtils.CONTACT_RULES);
+            isFirst = Utils.isUserFirstVisitForm(baseEntityId);
+        }
 
-        int nextContactVisitWeeks = integerList.get(0);
+        String methodExitKey = Utils.getMapValue(METHOD_EXIT, baseEntityId, Integer.parseInt(nextContactNo));
+        String methodName = Utils.getMethodName(methodExitKey);
 
-        LocalDate localDate = new LocalDate(clientProfileDetail.get(DBConstantsUtils.KeyUtils.EDD));
-        String nextContactVisitDate = localDate.minusWeeks(ConstantsUtils.DELIVERY_DATE_WEEKS).plusWeeks(nextContactVisitWeeks).toString();
-        int nextContact = getNextContact(clientProfileDetail);
-        WomanDetail womanDetail = getWomanDetail(baseEntityId, nextContactVisitDate, nextContact);
+        String nextContactVisitDate = Utils.getMethodScheduleDate(methodName, isFirst);
+        ClientDetail clientDetail = getClientDetails(baseEntityId, nextContactVisitDate, getNextContact(clientProfileDetail));
 
-        PatientRepository.updateContactVisitDetails(womanDetail, true);
+        PatientRepository.updateContactVisitDetails(clientDetail, true);
         PatientRepository.updateNextContactDate(nextContactVisitDate, baseEntityId);
-
-        try {
-            processFormFieldKeyValues(baseEntityId, new JSONObject(contact.getJsonForm()), String.valueOf(contactNo));
-        }
-        catch (Exception ex) {
-            Timber.e(ex);
-        }
-
         return clientProfileDetail;
     }
 
@@ -128,14 +129,14 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
         return details.containsKey(DBConstantsUtils.KeyUtils.EDD) && details.get(DBConstantsUtils.KeyUtils.EDD) != null ? Utils.getGestationAgeFromEDDate(details.get(DBConstantsUtils.KeyUtils.EDD)) : 4;
     }
 
-    private WomanDetail getWomanDetail(String baseEntityId, String nextContactVisitDate, Integer nextContact) {
-        WomanDetail womanDetail = new WomanDetail();
-        womanDetail.setBaseEntityId(baseEntityId);
-        womanDetail.setNextContact(nextContact);
-        womanDetail.setNextContactDate(nextContactVisitDate);
-        womanDetail.setContactStatus(ConstantsUtils.AlertStatusUtils.TODAY);
-        womanDetail.setPreviousContactStatus(ConstantsUtils.AlertStatusUtils.TODAY);
-        return womanDetail;
+    private ClientDetail getClientDetails(String baseEntityId, String nextContactVisitDate, Integer nextContact) {
+        ClientDetail clientDetail = new ClientDetail();
+        clientDetail.setBaseEntityId(baseEntityId);
+        clientDetail.setNextContact(nextContact);
+        clientDetail.setNextContactDate(nextContactVisitDate);
+        clientDetail.setContactStatus(ConstantsUtils.AlertStatusUtils.TODAY);
+        clientDetail.setPreviousContactStatus(ConstantsUtils.AlertStatusUtils.TODAY);
+        return clientDetail;
     }
 
     private void processFormFieldKeyValues(String baseEntityId, JSONObject object, String contactNo) throws Exception {

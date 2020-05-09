@@ -2,6 +2,7 @@ package org.smartregister.fp.common.provider;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,20 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.apache.commons.text.WordUtils;
+import org.jeasy.rules.api.Facts;
 import org.smartregister.commonregistry.CommonPersonObject;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.commonregistry.CommonRepository;
 import org.smartregister.cursoradapter.RecyclerViewProvider;
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.domain.ButtonAlertStatus;
+import org.smartregister.fp.common.library.FPLibrary;
+import org.smartregister.fp.common.repository.PreviousContactRepository;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
+import org.smartregister.fp.common.util.FPFormUtils;
 import org.smartregister.fp.common.util.Utils;
+import org.smartregister.fp.features.home.repository.PatientRepository;
 import org.smartregister.fp.features.home.schedules.SchedulesEnum;
 import org.smartregister.fp.features.home.view.HomeRegisterFragment;
 import org.smartregister.view.contract.SmartRegisterClient;
@@ -31,9 +37,15 @@ import org.smartregister.view.dialog.SortOption;
 import org.smartregister.view.viewholder.OnClickFormLauncher;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
+
+import static org.smartregister.fp.common.util.ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT;
 
 /**
  * Created by keyman on 26/06/2018.
@@ -193,22 +205,25 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
 
         String baseEntityId = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, false);
         String nextContact = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.NEXT_CONTACT, false);
-        if (baseEntityId != null && !baseEntityId.isEmpty()
-                && nextContact != null && !nextContact.isEmpty()) {
+        String nextContactDate = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE, false);
+
+        if (!baseEntityId.isEmpty() && nextContact != null && !nextContact.isEmpty()) {
             // user visit exists
             String methodExitKey = Utils.getMapValue(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, baseEntityId, Integer.parseInt(nextContact));
             String methodName = Utils.getMethodName(methodExitKey);
-            // populate method exit
-            viewHolder.methodExitTv.setText(methodName);
-            // check non trigger events
-            if (Utils.checkNonTriggerEvents(methodName)) {
-                //  populate alert status
-                for (SchedulesEnum schedulesEnum : SchedulesEnum.values()) {
-                    if (schedulesEnum.getScheduleModel().getTriggerEventTag().equals(methodName)) {
-                        String triggerDate = Utils.getMapValue(schedulesEnum.getScheduleModel().getTriggerDateTag(), baseEntityId, Integer.parseInt(nextContact));
-                        ButtonAlertStatus buttonAlertStatus = Utils.getButtonFollowupStatus(triggerDate, schedulesEnum.getScheduleModel());
-                        Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus);
-                        break;
+            if (methodName != null && !methodName.isEmpty()) {
+                // populate method exit
+                viewHolder.methodExitTv.setText(methodName);
+                // check non trigger events
+                if (Utils.checkNonTriggerEvents(methodName)) {
+                    //  populate alert status
+                    for (SchedulesEnum schedulesEnum : SchedulesEnum.values()) {
+                        if (schedulesEnum.getScheduleModel().getTriggerEventTag().equals(methodName)) {
+                            String triggerDate = Utils.getMapValue(schedulesEnum.getScheduleModel().getTriggerDateTag(), baseEntityId, Integer.parseInt(nextContact));
+                            ButtonAlertStatus buttonAlertStatus = Utils.getButtonFollowupStatus(triggerDate, schedulesEnum.getScheduleModel(),baseEntityId);
+                            Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus, nextContactDate);
+                            break;
+                        }
                     }
                 }
             }

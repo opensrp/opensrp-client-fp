@@ -23,7 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.fp.common.rule.AlertRule;
-import org.smartregister.fp.common.rule.ContactRule;
+import org.smartregister.fp.common.rule.ScheduleRule;
 import org.smartregister.fp.common.rule.FPAlertRule;
 import org.smartregister.fp.common.util.FPFormUtils;
 
@@ -68,9 +68,9 @@ public class FPRulesEngineHelper extends RulesEngineHelper {
         mJsonObject = jsonObject;
     }
 
-    public List<Integer> getContactVisitSchedule(ContactRule contactRule, String rulesFile) {
+    public String getFollowupVisitScheduleDate(ScheduleRule scheduleRule, String rulesFile) {
         Facts facts = new Facts();
-        facts.put(ContactRule.RULE_KEY, contactRule);
+        facts.put(ScheduleRule.RULE_KEY, scheduleRule);
 
         Rules rules = getRulesFromAsset(RULE_FOLDER_PATH + rulesFile);
         if (rules == null) {
@@ -78,13 +78,9 @@ public class FPRulesEngineHelper extends RulesEngineHelper {
         }
 
         processInferentialRules(rules, facts);
-
-        Set<Integer> contactList = contactRule.set;
-        List<Integer> list = new ArrayList<>(contactList);
-        Collections.sort(list);
-
-        return list;
+        return scheduleRule.getNextContactVisitDate();
     }
+
 
     private Rules getRulesFromAsset(String fileName) {
         try {
@@ -132,7 +128,7 @@ public class FPRulesEngineHelper extends RulesEngineHelper {
 
         processDefaultRules(rules, facts);
 
-        return alertRule.buttonStatus;
+        return alertRule.getButtonStatus();
     }
 
     public void processDefaultRules(Rules rules, Facts facts) {

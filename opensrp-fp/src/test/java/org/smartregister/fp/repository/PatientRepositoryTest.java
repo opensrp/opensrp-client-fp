@@ -20,7 +20,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.util.ReflectionHelpers;
-import org.smartregister.fp.common.domain.WomanDetail;
+import org.smartregister.fp.common.domain.ClientDetail;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.features.home.repository.PatientRepository;
@@ -121,18 +121,18 @@ public class PatientRepositoryTest {
         PowerMockito.when(drishtiApplication.getRepository()).thenReturn(repository);
         PowerMockito.when(repository.getWritableDatabase()).thenReturn(sqLiteDatabase);
 
-        WomanDetail womanDetail = new WomanDetail();
-        womanDetail.setRedFlagCount(200);
-        womanDetail.setRedFlags("234");
-        womanDetail.setNextContact(2);
-        womanDetail.setYellowFlagCount(2);
-        PatientRepository.updateContactVisitDetails(womanDetail, true);
+        ClientDetail clientDetail = new ClientDetail();
+        clientDetail.setRedFlagCount(200);
+        clientDetail.setRedFlags("234");
+        clientDetail.setNextContact(2);
+        clientDetail.setYellowFlagCount(2);
+        PatientRepository.updateContactVisitDetails(clientDetail, true);
         Mockito.verify(sqLiteDatabase).update(Mockito.eq("ec_mother_details"), (ContentValues) updateContactVisitDetailArgumentCaptor.capture(),
                 (String) updateContactVisitDetailArgumentCaptor.capture(), (String[]) updateContactVisitDetailArgumentCaptor.capture());
         ContentValues result = (ContentValues) updateContactVisitDetailArgumentCaptor.getAllValues().get(0);
-        Assert.assertEquals(womanDetail.getRedFlagCount(), result.get(DBConstantsUtils.KeyUtils.RED_FLAG_COUNT));
-        Assert.assertEquals(womanDetail.getYellowFlagCount(), result.get(DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT));
-        Assert.assertEquals(womanDetail.getNextContact(), result.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
+        Assert.assertEquals(clientDetail.getRedFlagCount(), result.get(DBConstantsUtils.KeyUtils.RED_FLAG_COUNT));
+        Assert.assertEquals(clientDetail.getYellowFlagCount(), result.get(DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT));
+        Assert.assertEquals(clientDetail.getNextContact(), result.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
     }
 
     @Test

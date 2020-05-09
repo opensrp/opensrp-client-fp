@@ -20,7 +20,7 @@ public class ClientProfileModel {
     }
 
     public void setMethodAtExit(String methodAtExit) {
-        this.methodAtExit = processUnderscore(methodAtExit);
+        this.methodAtExit = methodAtExit;
     }
 
     public String getMethodStartDate() {

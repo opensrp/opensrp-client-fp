@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.fp.common.contact.BaseContactContract;
 import org.smartregister.fp.common.contact.ContactContract;
-import org.smartregister.fp.common.domain.WomanDetail;
+import org.smartregister.fp.common.domain.ClientDetail;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.ContactVisit;
 import org.smartregister.fp.common.model.PartialContact;
@@ -21,7 +21,7 @@ import org.smartregister.fp.common.model.PartialContacts;
 import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.model.Task;
 import org.smartregister.fp.common.repository.PreviousContactRepository;
-import org.smartregister.fp.common.rule.ContactRule;
+import org.smartregister.fp.common.rule.ScheduleRule;
 import org.smartregister.fp.common.util.AppExecutors;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
@@ -59,7 +59,7 @@ public class ContactInteractor extends BaseContactInteractor implements ContactC
 
     @Override
     public HashMap<String, String> finalizeContactForm(final Map<String, String> details, Context context) {
-        if (details != null) {
+        /*if (details != null) {
             try {
                 String referral = details.get(ConstantsUtils.REFERRAL);
                 String baseEntityId = details.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID);
@@ -72,10 +72,10 @@ public class ContactInteractor extends BaseContactInteractor implements ContactC
 
                 if (referral == null) {
                     isFirst = TextUtils.equals("1", details.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
-                    ContactRule contactRule = new ContactRule(gestationAge, isFirst, baseEntityId);
+                    ScheduleRule scheduleRule = new ScheduleRule(gestationAge, isFirst, baseEntityId);
 
                     List<Integer> integerList = FPLibrary.getInstance().getFPRulesEngineHelper()
-                            .getContactVisitSchedule(contactRule, ConstantsUtils.RulesFileUtils.CONTACT_RULES);
+                            .getFollowupVisitScheduleDate(scheduleRule, ConstantsUtils.RulesFileUtils.VISIT_SCHEDULE_RULES);
 
                     int nextContactVisitWeeks = integerList.get(0);
 
@@ -110,7 +110,7 @@ public class ContactInteractor extends BaseContactInteractor implements ContactC
                                 partialContactRepository, partialContactList).invoke();
                 Facts facts = contactVisit.getFacts();
                 List<String> formSubmissionIDs = contactVisit.getFormSubmissionIDs();
-                WomanDetail womanDetail = contactVisit.getWomanDetail();
+                ClientDetail clientDetail = contactVisit.getClientDetail();
 
                 //Attention Flags
                 String attentionFlagsString;
@@ -125,7 +125,7 @@ public class ContactInteractor extends BaseContactInteractor implements ContactC
                         Calendar.getInstance().getTimeInMillis());
 
                 addTheContactDate(baseEntityId, details);
-                updateWomanDetails(details, womanDetail);
+                updateWomanDetails(details, clientDetail);
                 if (referral != null && !TextUtils.isEmpty(details.get(DBConstantsUtils.KeyUtils.EDD))) {
                     addReferralGa(baseEntityId, details);
                 }
@@ -139,7 +139,7 @@ public class ContactInteractor extends BaseContactInteractor implements ContactC
             } catch (Exception e) {
                 Timber.e(e, "%s --> finalizeContactForm", this.getClass().getCanonicalName());
             }
-        }
+        }*/
         return (HashMap<String, String>) details;
     }
 
@@ -182,24 +182,24 @@ public class ContactInteractor extends BaseContactInteractor implements ContactC
         FPLibrary.getInstance().getPreviousContactRepository().savePreviousContact(previousContact);
     }
 
-    private void updateWomanDetails(Map<String, String> details, WomanDetail womanDetail) {
+    private void updateWomanDetails(Map<String, String> details, ClientDetail clientDetail) {
         //update woman profile details
         if (details != null) {
             if (details.get(ConstantsUtils.REFERRAL) != null) {
                 details.put(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE, details.get(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE));
                 details.put(DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT, details.get(DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT));
                 details.put(DBConstantsUtils.KeyUtils.RED_FLAG_COUNT, details.get(DBConstantsUtils.KeyUtils.RED_FLAG_COUNT));
-                details.put(DBConstantsUtils.KeyUtils.CONTACT_STATUS, womanDetail.getContactStatus());
+                details.put(DBConstantsUtils.KeyUtils.CONTACT_STATUS, clientDetail.getContactStatus());
             } else {
-                details.put(DBConstantsUtils.KeyUtils.CONTACT_STATUS, womanDetail.getContactStatus());
+                details.put(DBConstantsUtils.KeyUtils.CONTACT_STATUS, clientDetail.getContactStatus());
                 details.put(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE, Utils.getDBDateToday());
-                details.put(DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT, womanDetail.getYellowFlagCount().toString());
-                details.put(DBConstantsUtils.KeyUtils.RED_FLAG_COUNT, womanDetail.getRedFlagCount().toString());
+                details.put(DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT, clientDetail.getYellowFlagCount().toString());
+                details.put(DBConstantsUtils.KeyUtils.RED_FLAG_COUNT, clientDetail.getRedFlagCount().toString());
 
             }
-            details.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, womanDetail.getNextContact().toString());
-            details.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE, womanDetail.getNextContactDate());
-            details.put(DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS, womanDetail.getPreviousContactStatus());
+            details.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, clientDetail.getNextContact().toString());
+            details.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE, clientDetail.getNextContactDate());
+            details.put(DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS, clientDetail.getPreviousContactStatus());
         }
     }
 

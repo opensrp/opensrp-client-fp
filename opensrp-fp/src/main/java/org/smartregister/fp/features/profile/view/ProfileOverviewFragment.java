@@ -84,6 +84,7 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
             if (partialContact != null && partialContact.getFormJsonDraft() != null) {
                 ClientProfileModel clientProfileModel = Utils.getClientProfileValuesFromJson(partialContact.getFormJsonDraft());
                 showClientProfileOverview();
+                clientProfileModel.setMethodAtExit(Utils.getMethodName(clientProfileModel.getMethodAtExit()));
                 populateUi(clientProfileModel);
             } else showNoDataRecorded();
         } catch (Exception e) {

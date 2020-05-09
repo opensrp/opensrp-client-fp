@@ -7,11 +7,10 @@ import net.sqlcipher.database.SQLiteDatabase;
 
 import org.apache.commons.lang3.StringUtils;
 import org.smartregister.commonregistry.CommonFtsObject;
-import org.smartregister.fp.common.domain.WomanDetail;
+import org.smartregister.fp.common.domain.ClientDetail;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.Utils;
-import org.smartregister.fp.features.home.schedules.SchedulesEnum;
 import org.smartregister.repository.BaseRepository;
 import org.smartregister.repository.Repository;
 import org.smartregister.view.activity.DrishtiApplication;
@@ -131,7 +130,7 @@ public class PatientRepository extends BaseRepository {
                 new String[]{baseEntityId});
     }
 
-    public static void updateContactVisitDetails(WomanDetail patientDetail, boolean isFinalize) {
+    public static void updateContactVisitDetails(ClientDetail patientDetail, boolean isFinalize) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, patientDetail.getNextContact());
         contentValues.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE, patientDetail.getNextContactDate());

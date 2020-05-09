@@ -31,6 +31,11 @@ import java.util.Map;
 
 import timber.log.Timber;
 
+import static org.smartregister.fp.common.util.ConstantsUtils.JsonFormKeyUtils.STILL_ON_METHOD;
+import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.METHOD_EXIT;
+import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.METHOD_EXIT_START_DATE;
+import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.REASON_NO_METHOD_EXIT;
+
 public class FPFormUtils extends FormUtils {
 
     public static String obtainValue(String key, JSONArray value) throws JSONException {
@@ -46,6 +51,25 @@ public class FPFormUtils extends FormUtils {
         }
         return result;
     }
+
+    public static String extractStillOnMethodValue(String formJsonDraft) {
+        try {
+            JSONObject jsonObject = new JSONObject(formJsonDraft);
+            JSONArray step3 = jsonObject.getJSONObject("step3").getJSONArray("fields");
+
+            for (int i = 0; i < step3.length(); i++) {
+                if (step3.getJSONObject(i).has("key") && step3.getJSONObject(i).has("value")) {
+                    if (step3.getJSONObject(i).get("key").equals(STILL_ON_METHOD)) {
+                        return step3.getJSONObject(i).get("value").toString();
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            return "";
+        }
+        return "";
+    }
+
 
     public static String extractItemValue(String type, JSONArray valueItemJSONArray) throws JSONException {
         String result = "";

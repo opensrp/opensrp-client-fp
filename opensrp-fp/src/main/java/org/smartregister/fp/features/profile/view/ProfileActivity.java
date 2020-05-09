@@ -244,13 +244,13 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     }
 
     private void continueToContact() {
-        if (!buttonAlertStatus.equals(ConstantsUtils.AlertStatusUtils.TODAY)) {
+//        if (!buttonAlertStatus.equals(ConstantsUtils.AlertStatusUtils.TODAY)) {
             String baseEntityId = detailMap.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID);
 
             if (StringUtils.isNotBlank(baseEntityId)) {
                 Utils.proceedToContact(baseEntityId, detailMap, ProfileActivity.this);
             }
-        }
+//        }
     }
 
     @Override

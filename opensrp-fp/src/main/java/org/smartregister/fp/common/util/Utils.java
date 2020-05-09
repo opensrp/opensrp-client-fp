@@ -55,6 +55,7 @@ import org.smartregister.fp.common.model.Task;
 import org.smartregister.fp.common.rule.AlertRule;
 import org.smartregister.fp.common.rule.FPAlertRule;
 import org.smartregister.fp.features.home.repository.ContactTasksRepository;
+import org.smartregister.fp.features.home.schedules.SchedulesEnum;
 import org.smartregister.fp.features.home.schedules.model.ScheduleModel;
 import org.smartregister.fp.features.home.view.HomeRegisterActivity;
 import org.smartregister.fp.features.profile.view.ProfileActivity;
@@ -82,6 +83,8 @@ import java.util.Set;
 import timber.log.Timber;
 
 import static org.smartregister.fp.common.util.ConstantsUtils.RulesFileUtils.FP_ALERT_RULES;
+import static org.smartregister.fp.common.util.ConstantsUtils.ScheduleUtils.ONCE_OFF;
+import static org.smartregister.fp.common.util.ConstantsUtils.ScheduleUtils.RECURRING;
 import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.METHOD_CHOSEN;
 import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.METHOD_EXIT;
 import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.METHOD_EXIT_START_DATE;
@@ -616,13 +619,15 @@ public class Utils extends org.smartregister.util.Utils {
         return buttonAlertStatus;
     }
 
-    public static ButtonAlertStatus getButtonFollowupStatus(String triggerDate, ScheduleModel scheduleModel) {
+    public static ButtonAlertStatus getButtonFollowupStatus(String triggerDate, ScheduleModel scheduleModel, String baseEntityId) {
         ButtonAlertStatus buttonAlertStatus = new ButtonAlertStatus();
         buttonAlertStatus.triggerDate = triggerDate;
 
         triggerDate = formatDateForFPAlertRule(triggerDate);
 
-        FPAlertRule fpAlertRule = new FPAlertRule(scheduleModel.getDueDays(), scheduleModel.getOverdueDays(), scheduleModel.getExpiryDays(), triggerDate);
+
+        boolean isFirst = Utils.isUserFirstVisitForm(baseEntityId);
+        FPAlertRule fpAlertRule = new FPAlertRule(scheduleModel, triggerDate, isFirst);
 
         buttonAlertStatus.buttonAlertStatus = FPLibrary.getInstance().getFPRulesEngineHelper()
                 .getFPAlertStatus(fpAlertRule, FP_ALERT_RULES);
@@ -793,7 +798,7 @@ public class Utils extends org.smartregister.util.Utils {
         }
     }
 
-    public static void processFollowupVisitButton(Context context, Button followUpBtn, ButtonAlertStatus buttonAlertStatus) {
+    public static void processFollowupVisitButton(Context context, Button followUpBtn, ButtonAlertStatus buttonAlertStatus, String nextContactDate) {
         if (followUpBtn != null) {
             followUpBtn.setVisibility(View.VISIBLE);
             String triggerDate = buttonAlertStatus.triggerDate;
@@ -803,7 +808,7 @@ public class Utils extends org.smartregister.util.Utils {
                     case ConstantsUtils.AlertStatusUtils.NOT_DUE:
                         followUpBtn.setBackgroundResource(R.drawable.not_due_button_bg);
                         followUpBtn.setTextAppearance(context, R.style.followupNotDue);
-                        String followupDate = context.getString(R.string.followup_date, triggerDate);
+                        String followupDate = context.getString(R.string.followup_date, nextContactDate);
                         followUpBtn.setText(followupDate);
                         break;
                     case ConstantsUtils.AlertStatusUtils.DUE:
@@ -933,7 +938,7 @@ public class Utils extends org.smartregister.util.Utils {
         return clientProfileModel;
     }
 
-    public static Integer calculateTotalDays(Integer days, Integer weeks, Integer years) {
+    public static Integer calculateTotalNoOfDays(Integer days, Integer weeks, Integer years) {
         return (years * 365) + (weeks * 7) + days;
     }
 
@@ -947,6 +952,45 @@ public class Utils extends org.smartregister.util.Utils {
                 ConstantsUtils.SchedulesNonTriggerEvents.FERTILITY_AWARENESS_BASED_METHODS_FAB,
                 ConstantsUtils.SchedulesNonTriggerEvents.WITHDRAWAL)
                 .contains(methodName);
+    }
+
+    public static String getMethodScheduleDate(String methodName, boolean isFirst) {
+        if (Utils.checkNonTriggerEvents(methodName)) {
+            for (SchedulesEnum schedulesEnum : SchedulesEnum.values()) {
+                if (schedulesEnum.getScheduleModel().getTriggerEventTag().equals(methodName)) {
+                    ScheduleModel scheduleModel = schedulesEnum.getScheduleModel();
+                    LocalDate todayDate = new LocalDate();
+                    if (scheduleModel.getFrequency().equals(ONCE_OFF)) {
+                        if (isFirst)
+                            return todayDate.plusDays(scheduleModel.getNormalDays().getLeft()).toString();
+                    } else if (scheduleModel.getFrequency().equals(RECURRING)) {
+                        if (isFirst) {
+                            return todayDate.plusDays(scheduleModel.getNormalDays().getLeft()).toString();
+                        } else {
+                            if (scheduleModel.getRecurringDays() != null)
+                                return todayDate.plusDays(scheduleModel.getRecurringDays().getLeft()).toString();
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return "";
+    }
+
+    public static boolean isUserFirstVisitForm(String baseEntityId) {
+        boolean isFirst;
+        List<HashMap<String, String>> data = FPLibrary.getInstance().getPreviousContactRepository().getVisitHistory(baseEntityId);
+        if (data != null && data.size() > 1) {
+
+            String methodExit = data.get(data.size() - 1).get(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT);
+            String methodExitPrevious = data.get(data.size() - 2).get(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT);
+
+            if (methodExit != null && !methodExit.isEmpty() && methodExitPrevious != null && !methodExitPrevious.isEmpty()) {
+                isFirst = methodExit.equals(methodExitPrevious);
+            } else isFirst = true;
+        } else isFirst = true;
+        return isFirst;
     }
 
     /**

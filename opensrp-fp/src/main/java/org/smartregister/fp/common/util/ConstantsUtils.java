@@ -139,6 +139,7 @@ public abstract class ConstantsUtils {
         public static final String CLIENT_ID = "client_id";
         public static final String STEP1 = "step1";
         public static final String FIELDS = "fields";
+        public static final String STILL_ON_METHOD = "still_on_method";
     }
 
     public static class JsonFormFieldUtils {
@@ -182,6 +183,10 @@ public abstract class ConstantsUtils {
         public static final String VISIT_DATE = "visit_date";
         public static final String LAST_INJECTION_DATE = "last_injection_date";
         public static final String IUD_INSERTION_DATE = "iud_insertion_date";
+    }
+    public static class ScheduleUtils {
+        public static final String ONCE_OFF = "once_off";
+        public static final String RECURRING = "recurring";
     }
 
 
@@ -243,7 +248,7 @@ public abstract class ConstantsUtils {
     }
 
     public static class RulesFileUtils {
-        public static final String CONTACT_RULES = "contact-rules.yml";
+        public static final String VISIT_SCHEDULE_RULES = "visit-schedule-rules.yml";
         public static final String ALERT_RULES = "alert-rules.yml";
         public static final String FP_ALERT_RULES = "fp-alert-rules.yml";
 
