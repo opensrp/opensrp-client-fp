@@ -621,10 +621,8 @@ public class Utils extends org.smartregister.util.Utils {
 
     public static ButtonAlertStatus getButtonFollowupStatus(String triggerDate, ScheduleModel scheduleModel, String baseEntityId) {
         ButtonAlertStatus buttonAlertStatus = new ButtonAlertStatus();
-        buttonAlertStatus.triggerDate = triggerDate;
 
         triggerDate = formatDateForFPAlertRule(triggerDate);
-
 
         boolean isFirst = Utils.isUserFirstVisitForm(baseEntityId);
         FPAlertRule fpAlertRule = new FPAlertRule(scheduleModel, triggerDate, isFirst);
@@ -648,7 +646,7 @@ public class Utils extends org.smartregister.util.Utils {
     }
 
     private static String formatDateForVisitButton(String triggerDate) {
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date newDate = null;
         try {
             newDate = format.parse(triggerDate);
@@ -801,8 +799,7 @@ public class Utils extends org.smartregister.util.Utils {
     public static void processFollowupVisitButton(Context context, Button followUpBtn, ButtonAlertStatus buttonAlertStatus, String nextContactDate) {
         if (followUpBtn != null) {
             followUpBtn.setVisibility(View.VISIBLE);
-            String triggerDate = buttonAlertStatus.triggerDate;
-            triggerDate = formatDateForVisitButton(triggerDate);
+            nextContactDate = formatDateForVisitButton(nextContactDate);
             if (buttonAlertStatus.buttonAlertStatus != null) {
                 switch (buttonAlertStatus.buttonAlertStatus) {
                     case ConstantsUtils.AlertStatusUtils.NOT_DUE:
@@ -961,8 +958,7 @@ public class Utils extends org.smartregister.util.Utils {
                     ScheduleModel scheduleModel = schedulesEnum.getScheduleModel();
                     LocalDate todayDate = new LocalDate();
                     if (scheduleModel.getFrequency().equals(ONCE_OFF)) {
-                        if (isFirst)
-                            return todayDate.plusDays(scheduleModel.getNormalDays().getLeft()).toString();
+                        return todayDate.plusDays(scheduleModel.getNormalDays().getLeft()).toString();
                     } else if (scheduleModel.getFrequency().equals(RECURRING)) {
                         if (isFirst) {
                             return todayDate.plusDays(scheduleModel.getNormalDays().getLeft()).toString();
@@ -987,7 +983,7 @@ public class Utils extends org.smartregister.util.Utils {
             String methodExitPrevious = data.get(data.size() - 2).get(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT);
 
             if (methodExit != null && !methodExit.isEmpty() && methodExitPrevious != null && !methodExitPrevious.isEmpty()) {
-                isFirst = methodExit.equals(methodExitPrevious);
+                isFirst = !methodExit.equals(methodExitPrevious);
             } else isFirst = true;
         } else isFirst = true;
         return isFirst;

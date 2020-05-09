@@ -21,7 +21,6 @@ public class FPAlertRule {
 
     public FPAlertRule(ScheduleModel scheduleModel, String triggerDate, boolean isFirst) {
         if (scheduleModel.getFrequency().equals(ONCE_OFF)) {
-            if (isFirst)
                 populateDatesOnceOff(scheduleModel);
         } else if (scheduleModel.getFrequency().equals(RECURRING)) {
             if (isFirst) {

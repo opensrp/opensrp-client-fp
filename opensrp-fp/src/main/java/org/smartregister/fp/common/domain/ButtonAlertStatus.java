@@ -6,5 +6,4 @@ public class ButtonAlertStatus {
     public String buttonAlertStatus;
     public Integer gestationAge;
     public String buttonText;
-    public String triggerDate;
 }
