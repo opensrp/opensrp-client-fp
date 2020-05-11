@@ -32,9 +32,9 @@ import org.smartregister.view.viewholder.OnClickFormLauncher;
 import java.text.MessageFormat;
 import java.util.Set;
 
-/**
- * Created by keyman on 26/06/2018.
- */
+import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.DAY_MONTH_YEAR_FORMAT;
+import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.FP_ALERT_RULE_FORMAT;
+
 
 public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.RegisterViewHolder> {
     private final LayoutInflater inflater;
@@ -202,9 +202,9 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
                     for (SchedulesEnum schedulesEnum : SchedulesEnum.values()) {
                         if (schedulesEnum.getScheduleModel().getTriggerEventTag().equals(methodName)) {
                             String triggerDate = Utils.getMapValue(schedulesEnum.getScheduleModel().getTriggerDateTag(), baseEntityId, Integer.parseInt(nextContact));
-                            triggerDate = Utils.getFormatedDateForFPAlertRule(triggerDate);
-                            ButtonAlertStatus buttonAlertStatus = Utils.getButtonFollowupStatus(triggerDate, schedulesEnum.getScheduleModel(),baseEntityId,nextContactDate);
-                            Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus,baseEntityId,pc.getColumnmaps());
+                            triggerDate = Utils.formatDateToPattern(triggerDate, DAY_MONTH_YEAR_FORMAT, FP_ALERT_RULE_FORMAT);
+                            ButtonAlertStatus buttonAlertStatus = Utils.getButtonFollowupStatus(triggerDate, schedulesEnum.getScheduleModel(), baseEntityId, nextContactDate);
+                            Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus, baseEntityId, pc.getColumnmaps());
                             break;
                         }
                     }

@@ -247,6 +247,12 @@ public abstract class ConstantsUtils {
 
     }
 
+    public static class DateFormatPatternUtils {
+        public static final String DAY_MONTH_YEAR_FORMAT = "dd-MM-yyyy";
+        public static final String FOLLOWUP_VISIT_BUTTON_FORMAT = "dd MMM yyyy";
+        public static final String FP_ALERT_RULE_FORMAT = "yyyy-MM-dd";
+    }
+
     public static class RulesFileUtils {
         public static final String VISIT_SCHEDULE_RULES = "visit-schedule-rules.yml";
         public static final String ALERT_RULES = "alert-rules.yml";

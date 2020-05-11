@@ -82,6 +82,8 @@ import java.util.Set;
 
 import timber.log.Timber;
 
+import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.FOLLOWUP_VISIT_BUTTON_FORMAT;
+import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.FP_ALERT_RULE_FORMAT;
 import static org.smartregister.fp.common.util.ConstantsUtils.RulesFileUtils.FP_ALERT_RULES;
 import static org.smartregister.fp.common.util.ConstantsUtils.ScheduleUtils.ONCE_OFF;
 import static org.smartregister.fp.common.util.ConstantsUtils.ScheduleUtils.RECURRING;
@@ -628,32 +630,19 @@ public class Utils extends org.smartregister.util.Utils {
         buttonAlertStatus.buttonAlertStatus = FPLibrary.getInstance().getFPRulesEngineHelper()
                 .getFPAlertStatus(fpAlertRule, FP_ALERT_RULES);
 
-
-        buttonAlertStatus.nextContactDate = getFormatDateForVisitButton(nextContactDate);
+        buttonAlertStatus.nextContactDate = formatDateToPattern(nextContactDate, FP_ALERT_RULE_FORMAT, FOLLOWUP_VISIT_BUTTON_FORMAT);
         return buttonAlertStatus;
     }
 
-    public static String getFormatedDateForFPAlertRule(String triggerDate) {
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+    public static String formatDateToPattern(String date, String inputFormat, String outputFormat) {
+        SimpleDateFormat format = new SimpleDateFormat(inputFormat);
         Date newDate = null;
         try {
-            newDate = format.parse(triggerDate);
+            newDate = format.parse(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        format = new SimpleDateFormat("yyyy-MM-dd");
-        return format.format(newDate);
-    }
-
-    private static String getFormatDateForVisitButton(String triggerDate) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date newDate = null;
-        try {
-            newDate = format.parse(triggerDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        format = new SimpleDateFormat("dd MMM yyyy");
+        format = new SimpleDateFormat(outputFormat);
         return format.format(newDate);
     }
 

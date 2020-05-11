@@ -85,12 +85,7 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
 
         String nextContactNo = clientProfileDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
         boolean isFirst = TextUtils.equals("1", clientProfileDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
-        if (!isFirst) {
-//            String stillOnMethod = fpFormUtils.extractStillOnMethodValue(jsonCurrentState);
-//            isFirst = !stillOnMethod.equalsIgnoreCase("yes");
-
-            isFirst = Utils.isUserFirstVisitForm(baseEntityId);
-        }
+        if (!isFirst) isFirst = Utils.isUserFirstVisitForm(baseEntityId);
 
         String methodExitKey = Utils.getMapValue(METHOD_EXIT, baseEntityId, Integer.parseInt(nextContactNo));
         String methodName = Utils.getMethodName(methodExitKey);

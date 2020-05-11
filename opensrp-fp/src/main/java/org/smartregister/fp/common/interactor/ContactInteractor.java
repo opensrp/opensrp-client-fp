@@ -26,9 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by keyman 30/07/2018.
- */
 public class ContactInteractor extends BaseContactInteractor implements ContactContract.Interactor {
     private Utils utils = new Utils();
 
