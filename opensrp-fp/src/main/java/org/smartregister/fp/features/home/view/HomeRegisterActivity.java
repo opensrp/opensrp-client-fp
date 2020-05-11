@@ -139,7 +139,7 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
     }
 
     @Override
-    protected void initializePresenter() {
+    public void initializePresenter() {
         presenter = new RegisterPresenter(this);
     }
 
@@ -149,7 +149,7 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
     }
 
     @Override
-    protected Fragment[] getOtherFragments() {
+    public Fragment[] getOtherFragments() {
         Fragment[] fragments = new Fragment[0];
         return fragments;
     }

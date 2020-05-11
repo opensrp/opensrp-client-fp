@@ -140,6 +140,7 @@ public abstract class ConstantsUtils {
         public static final String STEP1 = "step1";
         public static final String FIELDS = "fields";
         public static final String STILL_ON_METHOD = "still_on_method";
+        public static final String FP_ID = "client_id";
     }
 
     public static class JsonFormFieldUtils {
@@ -184,9 +185,17 @@ public abstract class ConstantsUtils {
         public static final String LAST_INJECTION_DATE = "last_injection_date";
         public static final String IUD_INSERTION_DATE = "iud_insertion_date";
     }
+
     public static class ScheduleUtils {
         public static final String ONCE_OFF = "once_off";
         public static final String RECURRING = "recurring";
+    }
+
+    public static class ProfileDateStatusUtils {
+        public static final int BOTH_DATE_EQUAL = 0;
+        public static final int FIRST_DATE_IS_GREATER = -1;
+        public static final int SECOND_DATE_IS_GREATER = 1;
+        public static final int ANY_NULL_DATE = -2;
     }
 
 
@@ -248,9 +257,9 @@ public abstract class ConstantsUtils {
     }
 
     public static class DateFormatPatternUtils {
-        public static final String DAY_MONTH_YEAR_FORMAT = "dd-MM-yyyy";
+        public static final String DD_MM_YYYY = "dd-MM-yyyy";
         public static final String FOLLOWUP_VISIT_BUTTON_FORMAT = "dd MMM yyyy";
-        public static final String FP_ALERT_RULE_FORMAT = "yyyy-MM-dd";
+        public static final String YYYY_MM_DD = "yyyy-MM-dd";
     }
 
     public static class RulesFileUtils {

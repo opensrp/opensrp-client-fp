@@ -32,8 +32,8 @@ import org.smartregister.view.viewholder.OnClickFormLauncher;
 import java.text.MessageFormat;
 import java.util.Set;
 
-import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.DAY_MONTH_YEAR_FORMAT;
-import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.FP_ALERT_RULE_FORMAT;
+import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.DD_MM_YYYY;
+import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.YYYY_MM_DD;
 
 
 public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.RegisterViewHolder> {
@@ -155,27 +155,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
 
         View patient = viewHolder.patientColumn;
         attachPatientOnclickListener(patient, client);
-
-        /*
-        String redFlagCountRaw = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.RED_FLAG_COUNT, false);
-        String yellowFlagCountRaw = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT, false);
-
-        int redFlagCount = !TextUtils.isEmpty(redFlagCountRaw) ? Integer.valueOf(redFlagCountRaw) : 0;
-        int yellowFlagCount = !TextUtils.isEmpty(yellowFlagCountRaw) ? Integer.valueOf(yellowFlagCountRaw) : 0;
-        int totalFlagCount = yellowFlagCount + redFlagCount;
-
-        TextView riskLayout = viewHolder.risk;
-
-        if (totalFlagCount > 0) {
-            riskLayout.setCompoundDrawablesWithIntrinsicBounds(
-                    redFlagCount > 0 ? R.drawable.ic_red_flag : R.drawable.ic_yellow_flag, 0, 0, 0);
-            riskLayout.setText(String.valueOf(totalFlagCount));
-            riskLayout.setVisibility(View.VISIBLE);
-
-            attachRiskLayoutOnclickListener(riskLayout, client);
-        } else {
-            riskLayout.setVisibility(View.GONE);
-        }*/
     }
 
     private void populateIdentifierColumn(CommonPersonObjectClient pc, RegisterViewHolder viewHolder) {
@@ -202,7 +181,7 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
                     for (SchedulesEnum schedulesEnum : SchedulesEnum.values()) {
                         if (schedulesEnum.getScheduleModel().getTriggerEventTag().equals(methodName)) {
                             String triggerDate = Utils.getMapValue(schedulesEnum.getScheduleModel().getTriggerDateTag(), baseEntityId, Integer.parseInt(nextContact));
-                            triggerDate = Utils.formatDateToPattern(triggerDate, DAY_MONTH_YEAR_FORMAT, FP_ALERT_RULE_FORMAT);
+                            triggerDate = Utils.formatDateToPattern(triggerDate, DD_MM_YYYY, YYYY_MM_DD);
                             ButtonAlertStatus buttonAlertStatus = Utils.getButtonFollowupStatus(triggerDate, schedulesEnum.getScheduleModel(), baseEntityId, nextContactDate);
                             Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus, baseEntityId, pc.getColumnmaps());
                             break;

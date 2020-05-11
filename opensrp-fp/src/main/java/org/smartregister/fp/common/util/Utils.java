@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -26,6 +25,7 @@ import com.google.gson.reflect.TypeToken;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.domain.ExpansionPanelValuesModel;
 import com.vijay.jsonwizard.rules.RuleConstant;
+import com.vijay.jsonwizard.utils.FormUtils;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
@@ -52,7 +52,6 @@ import org.smartregister.fp.common.model.ClientProfileModel;
 import org.smartregister.fp.common.model.PartialContact;
 import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.model.Task;
-import org.smartregister.fp.common.rule.AlertRule;
 import org.smartregister.fp.common.rule.FPAlertRule;
 import org.smartregister.fp.features.home.repository.ContactTasksRepository;
 import org.smartregister.fp.features.home.schedules.SchedulesEnum;
@@ -83,7 +82,11 @@ import java.util.Set;
 import timber.log.Timber;
 
 import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.FOLLOWUP_VISIT_BUTTON_FORMAT;
-import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.FP_ALERT_RULE_FORMAT;
+import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.YYYY_MM_DD;
+import static org.smartregister.fp.common.util.ConstantsUtils.ProfileDateStatusUtils.ANY_NULL_DATE;
+import static org.smartregister.fp.common.util.ConstantsUtils.ProfileDateStatusUtils.BOTH_DATE_EQUAL;
+import static org.smartregister.fp.common.util.ConstantsUtils.ProfileDateStatusUtils.FIRST_DATE_IS_GREATER;
+import static org.smartregister.fp.common.util.ConstantsUtils.ProfileDateStatusUtils.SECOND_DATE_IS_GREATER;
 import static org.smartregister.fp.common.util.ConstantsUtils.RulesFileUtils.FP_ALERT_RULES;
 import static org.smartregister.fp.common.util.ConstantsUtils.ScheduleUtils.ONCE_OFF;
 import static org.smartregister.fp.common.util.ConstantsUtils.ScheduleUtils.RECURRING;
@@ -99,7 +102,6 @@ import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment
 
 public class Utils extends org.smartregister.util.Utils {
     public static final SimpleDateFormat DB_DF = new SimpleDateFormat(ConstantsUtils.SQLITE_DATE_TIME_FORMAT);
-    public static final SimpleDateFormat CONTACT_DF = new SimpleDateFormat(ConstantsUtils.CONTACT_DATE_FORMAT);
     public static final SimpleDateFormat CONTACT_SUMMARY_DF = new SimpleDateFormat(ConstantsUtils.CONTACT_SUMMARY_DATE_FORMAT);
     public static final ArrayList<String> ALLOWED_LEVELS;
     public static final String DEFAULT_LOCATION_LEVEL = "Health Facility";
@@ -580,47 +582,6 @@ public class Utils extends org.smartregister.util.Utils {
         return (new LocalDate()).toString(SQLITE_DATE_DF);
     }
 
-    public static ButtonAlertStatus getButtonAlertStatus(Map<String, String> details, Context context, boolean isProfile) {
-        String contactStatus = details.get(DBConstantsUtils.KeyUtils.CONTACT_STATUS);
-
-        String nextContactDate = details.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE);
-        String edd = details.get(DBConstantsUtils.KeyUtils.EDD);
-        String alertStatus;
-        Integer gestationAge = 0;
-        if (StringUtils.isNotBlank(edd)) {
-            gestationAge = Utils.getGestationAgeFromEDDate(edd);
-            AlertRule alertRule = new AlertRule(gestationAge, nextContactDate);
-            alertStatus =
-                    StringUtils.isNotBlank(contactStatus) && ConstantsUtils.AlertStatusUtils.ACTIVE.equals(contactStatus) ?
-                            ConstantsUtils.AlertStatusUtils.IN_PROGRESS : FPLibrary.getInstance().getFPRulesEngineHelper()
-                            .getButtonAlertStatus(alertRule, ConstantsUtils.RulesFileUtils.ALERT_RULES);
-        } else {
-            alertStatus = StringUtils.isNotBlank(contactStatus) ? ConstantsUtils.AlertStatusUtils.IN_PROGRESS : "DEAD";
-        }
-
-        ButtonAlertStatus buttonAlertStatus = new ButtonAlertStatus();
-
-        //Set text first
-        String nextContactRaw = details.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
-        Integer nextContact = StringUtils.isNotBlank(nextContactRaw) ? Integer.valueOf(nextContactRaw) : 1;
-
-        nextContactDate =
-                StringUtils.isNotBlank(nextContactDate) ? Utils.reverseHyphenSeperatedValues(nextContactDate, "/") : null;
-
-        buttonAlertStatus.buttonText = String.format(getDisplayTemplate(context, alertStatus, isProfile), nextContact, (nextContactDate != null ? nextContactDate :
-                Utils.convertDateFormat(Calendar.getInstance().getTime(), Utils.CONTACT_DF)));
-
-        alertStatus =
-                Utils.processContactDoneToday(details.get(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE), alertStatus);
-
-        buttonAlertStatus.buttonAlertStatus = alertStatus;
-        buttonAlertStatus.gestationAge = gestationAge;
-        buttonAlertStatus.nextContact = nextContact;
-        buttonAlertStatus.nextContactDate = nextContactDate;
-
-        return buttonAlertStatus;
-    }
-
     public static ButtonAlertStatus getButtonFollowupStatus(String triggerDate, ScheduleModel scheduleModel, String baseEntityId, String nextContactDate) {
         ButtonAlertStatus buttonAlertStatus = new ButtonAlertStatus();
 
@@ -630,11 +591,12 @@ public class Utils extends org.smartregister.util.Utils {
         buttonAlertStatus.buttonAlertStatus = FPLibrary.getInstance().getFPRulesEngineHelper()
                 .getFPAlertStatus(fpAlertRule, FP_ALERT_RULES);
 
-        buttonAlertStatus.nextContactDate = formatDateToPattern(nextContactDate, FP_ALERT_RULE_FORMAT, FOLLOWUP_VISIT_BUTTON_FORMAT);
+        buttonAlertStatus.nextContactDate = formatDateToPattern(nextContactDate, YYYY_MM_DD, FOLLOWUP_VISIT_BUTTON_FORMAT);
         return buttonAlertStatus;
     }
 
     public static String formatDateToPattern(String date, String inputFormat, String outputFormat) {
+        if (StringUtils.isEmpty(date)) return "";
         SimpleDateFormat format = new SimpleDateFormat(inputFormat);
         Date newDate = null;
         try {
@@ -671,50 +633,6 @@ public class Utils extends org.smartregister.util.Utils {
             return resultString;
         }
         return "";
-    }
-
-    private static String getDisplayTemplate(Context context, String alertStatus, boolean isProfile) {
-        String displayTemplate;
-        if (StringUtils.isNotBlank(alertStatus) && !isProfile) {
-            switch (alertStatus) {
-                case ConstantsUtils.AlertStatusUtils.IN_PROGRESS:
-                    displayTemplate = context.getString(R.string.contact_in_progress);
-                    break;
-                case ConstantsUtils.AlertStatusUtils.NOT_DUE:
-                    displayTemplate = context.getString(R.string.contact_number_due);
-                    break;
-                default:
-                    displayTemplate = context.getString(R.string.contact_weeks);
-                    break;
-            }
-        } else {
-            switch (alertStatus) {
-                case ConstantsUtils.AlertStatusUtils.IN_PROGRESS:
-                    displayTemplate = context.getString(R.string.contact_in_progress_no_break);
-                    break;
-                case ConstantsUtils.AlertStatusUtils.NOT_DUE:
-                    displayTemplate = context.getString(R.string.contact_number_due_no_break);
-                    break;
-                default:
-                    displayTemplate = context.getString(R.string.contact_weeks_no_break);
-                    break;
-            }
-        }
-        return displayTemplate;
-    }
-
-    public static String processContactDoneToday(String lastContactDate, String alertStatus) {
-        String result = alertStatus;
-
-        if (!TextUtils.isEmpty(lastContactDate)) {
-            try {
-                result = DateUtils.isToday(DB_DF.parse(lastContactDate).getTime()) ? ConstantsUtils.AlertStatusUtils.TODAY : alertStatus;
-            } catch (ParseException e) {
-                Timber.e(e, " --> processContactDoneToday");
-            }
-        }
-
-        return result;
     }
 
     public static void processButtonAlertStatus(Context context, Button dueButton, ButtonAlertStatus buttonAlertStatus) {
@@ -983,6 +901,38 @@ public class Utils extends org.smartregister.util.Utils {
         return isFirst;
     }
 
+    public static void updateBtnStartVisit(int compareTwoDatesResult, TextView btnStartFPVisit, String nextContactDate, Context context) {
+        switch (compareTwoDatesResult) {
+            case BOTH_DATE_EQUAL: {
+                btnStartFPVisit.setBackgroundResource(R.drawable.btn_start_visit_due_bg);
+                btnStartFPVisit.setTextAppearance(context, R.style.btnStartVisitDueStyle);
+                String followupDate = context.getString(R.string.start_visit_date, nextContactDate);
+                btnStartFPVisit.setText(followupDate);
+                break;
+            }
+            case FIRST_DATE_IS_GREATER: {
+                btnStartFPVisit.setBackgroundResource(R.drawable.btn_start_visit_bg);
+                btnStartFPVisit.setTextAppearance(context, R.style.btnStartVisitStyle);
+                String followupDate = context.getString(R.string.start_visit_date, nextContactDate);
+                btnStartFPVisit.setText(followupDate);
+                break;
+            }
+            case SECOND_DATE_IS_GREATER: {
+                btnStartFPVisit.setBackgroundResource(R.drawable.btn_start_visit_original_due_bg);
+                btnStartFPVisit.setTextAppearance(context, R.style.btnStartVisitOriginalDueStyle);
+                String followupDate = context.getString(R.string.start_visit_date, nextContactDate);
+                btnStartFPVisit.setText(followupDate);
+                break;
+            }
+            case ANY_NULL_DATE: {
+                btnStartFPVisit.setBackgroundResource(R.drawable.btn_start_visit_bg);
+                btnStartFPVisit.setTextAppearance(context, R.style.btnStartVisitStyle);
+                btnStartFPVisit.setText(context.getString(R.string.start_visit));
+                break;
+            }
+        }
+    }
+
     /**
      * Loads yaml files that contain rules for the profile displays
      *
@@ -1214,4 +1164,29 @@ public class Utils extends org.smartregister.util.Utils {
         }
         context.startActivity(intent);
     }
+
+    /**
+     * Given two dates compare if they are equal
+     *
+     * @param firstDate  the first date entered
+     * @param secondDate the second date entered
+     * @return returns {-1} when first date occurs before second date, {0} when both dates are equal
+     * {1} when second date is greater than first date and {-2} if any of the dates passed is null
+     * or is empty
+     */
+    public static int compareTwoDates(String firstDate, String secondDate) {
+        if (!TextUtils.isEmpty(firstDate) && !TextUtils.isEmpty(secondDate)) {
+            Calendar dateOne = FormUtils.getDate(firstDate);
+            Calendar dateTwo = FormUtils.getDate(secondDate);
+            if (dateOne.before(dateTwo)) {
+                return -1;
+            } else if (dateOne.equals(dateTwo)) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+        return -2;
+    }
+
 }

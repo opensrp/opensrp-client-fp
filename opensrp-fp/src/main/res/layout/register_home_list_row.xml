@@ -122,7 +122,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
-            android:layout_width="2px"
+            android:layout_width="2dp"
             android:layout_height="match_parent"
             android:background="@color/vaccine_na_bg_end"
             app:layout_constraintBottom_toBottomOf="parent"
