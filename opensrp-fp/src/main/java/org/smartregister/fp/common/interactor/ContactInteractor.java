@@ -132,7 +132,7 @@ public class ContactInteractor extends BaseContactInteractor implements ContactC
         return (HashMap<String, String>) details;
     }
 
-    private void addThePreviousContactSchedule(String baseEntityId, Map<String, String> details, List<Integer> integerList) {
+    public void addThePreviousContactSchedule(String baseEntityId, Map<String, String> details, List<Integer> integerList) {
         PreviousContact previousContact = preLoadPreviousContact(baseEntityId, details);
         previousContact.setKey(ConstantsUtils.DetailsKeyUtils.CONTACT_SCHEDULE);
         previousContact.setValue(String.valueOf(integerList));
@@ -143,20 +143,20 @@ public class ContactInteractor extends BaseContactInteractor implements ContactC
         return FPLibrary.getInstance().getDetailsRepository();
     }
 
-    private int getNextContact(Map<String, String> details) {
+    public int getNextContact(Map<String, String> details) {
         int nextContact = details.containsKey(DBConstantsUtils.KeyUtils.NEXT_CONTACT) && details.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT) != null ? Integer.valueOf(details.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)) : 1;
         nextContact += 1;
         return nextContact;
     }
 
-    private void removeAllDoneTasks(List<Task> doneTasks) {
+    public void removeAllDoneTasks(List<Task> doneTasks) {
         for (Task task : doneTasks) {
             Long taskId = task.getId();
             utils.getContactTasksRepositoryHelper().deleteContactTask(taskId);
         }
     }
 
-    private void addAttentionFlags(String baseEntityId, Map<String, String> details,
+    public void addAttentionFlags(String baseEntityId, Map<String, String> details,
                                    String attentionFlagsString) {
         PreviousContact previousContact = preLoadPreviousContact(baseEntityId, details);
         previousContact.setKey(ConstantsUtils.DetailsKeyUtils.ATTENTION_FLAG_FACTS);
@@ -164,14 +164,14 @@ public class ContactInteractor extends BaseContactInteractor implements ContactC
         FPLibrary.getInstance().getPreviousContactRepository().savePreviousContact(previousContact);
     }
 
-    private void addTheContactDate(String baseEntityId, Map<String, String> details) {
+    public void addTheContactDate(String baseEntityId, Map<String, String> details) {
         PreviousContact previousContact = preLoadPreviousContact(baseEntityId, details);
         previousContact.setKey(ConstantsUtils.CONTACT_DATE);
         previousContact.setValue(Utils.getDBDateToday());
         FPLibrary.getInstance().getPreviousContactRepository().savePreviousContact(previousContact);
     }
 
-    private void updateWomanDetails(Map<String, String> details, ClientDetail clientDetail) {
+    public void updateWomanDetails(Map<String, String> details, ClientDetail clientDetail) {
         //update woman profile details
         if (details != null) {
             if (details.get(ConstantsUtils.REFERRAL) != null) {
@@ -192,7 +192,7 @@ public class ContactInteractor extends BaseContactInteractor implements ContactC
         }
     }
 
-    private void addReferralGa(String baseEntityId, Map<String, String> details) {
+    public void addReferralGa(String baseEntityId, Map<String, String> details) {
         PreviousContact previousContact = preLoadPreviousContact(baseEntityId, details);
         previousContact.setKey(ConstantsUtils.GEST_AGE_OPENMRS);
         String edd = details.get(DBConstantsUtils.KeyUtils.EDD);
@@ -200,7 +200,7 @@ public class ContactInteractor extends BaseContactInteractor implements ContactC
         FPLibrary.getInstance().getPreviousContactRepository().savePreviousContact(previousContact);
     }
 
-    private void createEvent(String baseEntityId, String attentionFlagsString, Pair<Event, Event> eventPair,
+    public void createEvent(String baseEntityId, String attentionFlagsString, Pair<Event, Event> eventPair,
                              String referral)
             throws JSONException {
         Event event = eventPair.first;
@@ -213,7 +213,7 @@ public class ContactInteractor extends BaseContactInteractor implements ContactC
         FPLibrary.getInstance().getEcSyncHelper().addEvent(baseEntityId, eventJson);
     }
 
-    private PreviousContact preLoadPreviousContact(String baseEntityId, Map<String, String> details) {
+    public PreviousContact preLoadPreviousContact(String baseEntityId, Map<String, String> details) {
         PreviousContact previousContact = new PreviousContact();
         previousContact.setBaseEntityId(baseEntityId);
         String contactNo = details.containsKey(ConstantsUtils.REFERRAL) ? details.get(ConstantsUtils.REFERRAL) :
@@ -222,7 +222,7 @@ public class ContactInteractor extends BaseContactInteractor implements ContactC
         return previousContact;
     }
 
-    private String getCurrentContactState(String baseEntityId) throws JSONException {
+    public String getCurrentContactState(String baseEntityId) throws JSONException {
         List<PreviousContact> previousContactList = getPreviousContactRepository().getPreviousContacts(baseEntityId, null);
         JSONObject stateObject = null;
         if (previousContactList != null) {
