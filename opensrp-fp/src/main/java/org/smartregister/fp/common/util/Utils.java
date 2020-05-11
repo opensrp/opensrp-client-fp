@@ -622,8 +622,6 @@ public class Utils extends org.smartregister.util.Utils {
     public static ButtonAlertStatus getButtonFollowupStatus(String triggerDate, ScheduleModel scheduleModel, String baseEntityId, String nextContactDate) {
         ButtonAlertStatus buttonAlertStatus = new ButtonAlertStatus();
 
-        triggerDate = formatDateForFPAlertRule(triggerDate);
-
         boolean isFirst = Utils.isUserFirstVisitForm(baseEntityId);
         FPAlertRule fpAlertRule = new FPAlertRule(scheduleModel, triggerDate, isFirst);
 
@@ -635,7 +633,7 @@ public class Utils extends org.smartregister.util.Utils {
         return buttonAlertStatus;
     }
 
-    private static String formatDateForFPAlertRule(String triggerDate) {
+    public static String formatDateForFPAlertRule(String triggerDate) {
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Date newDate = null;
         try {

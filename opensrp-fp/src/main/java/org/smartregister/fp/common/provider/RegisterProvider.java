@@ -205,6 +205,7 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
                     for (SchedulesEnum schedulesEnum : SchedulesEnum.values()) {
                         if (schedulesEnum.getScheduleModel().getTriggerEventTag().equals(methodName)) {
                             String triggerDate = Utils.getMapValue(schedulesEnum.getScheduleModel().getTriggerDateTag(), baseEntityId, Integer.parseInt(nextContact));
+                            triggerDate = Utils.formatDateForFPAlertRule(triggerDate);
                             ButtonAlertStatus buttonAlertStatus = Utils.getButtonFollowupStatus(triggerDate, schedulesEnum.getScheduleModel(),baseEntityId,nextContactDate);
                             Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus);
                             break;

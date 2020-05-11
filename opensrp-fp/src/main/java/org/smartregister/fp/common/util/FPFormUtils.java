@@ -32,9 +32,6 @@ import java.util.Map;
 import timber.log.Timber;
 
 import static org.smartregister.fp.common.util.ConstantsUtils.JsonFormKeyUtils.STILL_ON_METHOD;
-import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.METHOD_EXIT;
-import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.METHOD_EXIT_START_DATE;
-import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.REASON_NO_METHOD_EXIT;
 
 public class FPFormUtils extends FormUtils {
 
