@@ -3,8 +3,6 @@ package org.smartregister.fp.common.rule;
 import org.joda.time.LocalDate;
 import org.smartregister.fp.common.util.ConstantsUtils;
 
-import static org.smartregister.fp.common.util.ConstantsUtils.AlertStatusUtils.NOT_DUE;
-
 //All date formats ISO 8601 yyyy-mm-dd
 
 public class AlertRule {

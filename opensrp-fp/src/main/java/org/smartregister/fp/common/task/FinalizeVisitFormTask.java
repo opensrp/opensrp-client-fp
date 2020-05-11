@@ -8,17 +8,15 @@ import android.text.TextUtils;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.rules.RuleConstant;
 
-import org.jeasy.rules.api.Facts;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.fp.R;
-import org.smartregister.fp.common.domain.Contact;
 import org.smartregister.fp.common.domain.ClientDetail;
+import org.smartregister.fp.common.domain.Contact;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.repository.PreviousContactRepository;
-import org.smartregister.fp.common.rule.ScheduleRule;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.FPFormUtils;
@@ -26,10 +24,8 @@ import org.smartregister.fp.common.util.Utils;
 import org.smartregister.fp.features.home.repository.PatientRepository;
 
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import timber.log.Timber;

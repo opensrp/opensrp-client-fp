@@ -3,9 +3,6 @@ package org.smartregister.fp.common.rule;
 import org.joda.time.LocalDate;
 import org.smartregister.fp.features.home.schedules.model.ScheduleModel;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class ScheduleRule {
 
     public static final String RULE_KEY = "scheduleRule";

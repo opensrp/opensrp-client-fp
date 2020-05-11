@@ -1,13 +1,10 @@
 package org.smartregister.fp.common.interactor;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Pair;
 
 import androidx.annotation.VisibleForTesting;
 
-import org.jeasy.rules.api.Facts;
-import org.joda.time.LocalDate;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.clientandeventmodel.Event;
@@ -15,27 +12,19 @@ import org.smartregister.fp.common.contact.BaseContactContract;
 import org.smartregister.fp.common.contact.ContactContract;
 import org.smartregister.fp.common.domain.ClientDetail;
 import org.smartregister.fp.common.library.FPLibrary;
-import org.smartregister.fp.common.model.ContactVisit;
-import org.smartregister.fp.common.model.PartialContact;
-import org.smartregister.fp.common.model.PartialContacts;
 import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.model.Task;
 import org.smartregister.fp.common.repository.PreviousContactRepository;
-import org.smartregister.fp.common.rule.ScheduleRule;
 import org.smartregister.fp.common.util.AppExecutors;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.FPJsonFormUtils;
 import org.smartregister.fp.common.util.Utils;
-import org.smartregister.fp.features.home.repository.PartialContactRepository;
 import org.smartregister.repository.DetailsRepository;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import timber.log.Timber;
 
 /**
  * Created by keyman 30/07/2018.

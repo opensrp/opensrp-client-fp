@@ -58,10 +58,9 @@ public class FPFormUtils extends FormUtils {
             JSONArray step3 = jsonObject.getJSONObject("step3").getJSONArray("fields");
 
             for (int i = 0; i < step3.length(); i++) {
-                if (step3.getJSONObject(i).has("key") && step3.getJSONObject(i).has("value")) {
-                    if (step3.getJSONObject(i).get("key").equals(STILL_ON_METHOD)) {
-                        return step3.getJSONObject(i).get("value").toString();
-                    }
+                if (step3.getJSONObject(i).has("key") && step3.getJSONObject(i).has("value") &&
+                        step3.getJSONObject(i).get("key").equals(STILL_ON_METHOD)) {
+                    return step3.getJSONObject(i).get("value").toString();
                 }
             }
         } catch (JSONException e) {

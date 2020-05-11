@@ -152,7 +152,7 @@ public abstract class ConstantsUtils {
         public static final String JSON = "json";
     }
 
-    public static class SchedulesTriggerEvents {
+    public static class SchedulesTriggerEventsUtils {
         public static final String COPPER_BEARING_INTRAUTERINE_DEVICES = "Copper-bearing intrauterine devices (Cu-IUDs)";
         public static final String LEVONORGESTREL_IUD = "Levonorgestrel IUD (LNG-IUD)";
         public static final String DMPA_IM = "DMPA-IM (DMPA, administered intramuscularly)";
@@ -167,7 +167,7 @@ public abstract class ConstantsUtils {
         public static final String FEMALE_STERILIZATION = "Female sterilization";
     }
 
-    public static class SchedulesNonTriggerEvents {
+    public static class SchedulesNonTriggerEventsUtils {
         public static final String ETONOGESTREL_ETG_ONE_RO = "Etonogestrel (ETG) one-rod";
         public static final String LEVONORGESTREL_LNG_TWO_RO = "Levonorgestrel (LNG) two-rod";
         public static final String LACTATIONAL_AMENORRHEA_METHOD_LAM = "Lactational amenorrhea method (LAM)";
@@ -178,7 +178,7 @@ public abstract class ConstantsUtils {
         public static final String WITHDRAWAL = "Withdrawal";
     }
 
-    public static class SchedulesTriggerDates {
+    public static class SchedulesTriggerDatesUtils {
         public static final String STERILIZATION_DATE = "sterilization_date";
         public static final String VISIT_DATE = "visit_date";
         public static final String LAST_INJECTION_DATE = "last_injection_date";

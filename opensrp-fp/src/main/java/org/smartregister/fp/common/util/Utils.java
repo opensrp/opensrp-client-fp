@@ -619,7 +619,7 @@ public class Utils extends org.smartregister.util.Utils {
         return buttonAlertStatus;
     }
 
-    public static ButtonAlertStatus getButtonFollowupStatus(String triggerDate, ScheduleModel scheduleModel, String baseEntityId) {
+    public static ButtonAlertStatus getButtonFollowupStatus(String triggerDate, ScheduleModel scheduleModel, String baseEntityId, String nextContactDate) {
         ButtonAlertStatus buttonAlertStatus = new ButtonAlertStatus();
 
         triggerDate = formatDateForFPAlertRule(triggerDate);
@@ -630,6 +630,8 @@ public class Utils extends org.smartregister.util.Utils {
         buttonAlertStatus.buttonAlertStatus = FPLibrary.getInstance().getFPRulesEngineHelper()
                 .getFPAlertStatus(fpAlertRule, FP_ALERT_RULES);
 
+
+        buttonAlertStatus.nextContactDate = formatDateForVisitButton(nextContactDate);
         return buttonAlertStatus;
     }
 
@@ -796,16 +798,15 @@ public class Utils extends org.smartregister.util.Utils {
         }
     }
 
-    public static void processFollowupVisitButton(Context context, Button followUpBtn, ButtonAlertStatus buttonAlertStatus, String nextContactDate) {
+    public static void processFollowupVisitButton(Context context, Button followUpBtn, ButtonAlertStatus buttonAlertStatus) {
         if (followUpBtn != null) {
             followUpBtn.setVisibility(View.VISIBLE);
-            nextContactDate = formatDateForVisitButton(nextContactDate);
             if (buttonAlertStatus.buttonAlertStatus != null) {
                 switch (buttonAlertStatus.buttonAlertStatus) {
                     case ConstantsUtils.AlertStatusUtils.NOT_DUE:
                         followUpBtn.setBackgroundResource(R.drawable.not_due_button_bg);
                         followUpBtn.setTextAppearance(context, R.style.followupNotDue);
-                        String followupDate = context.getString(R.string.followup_date, nextContactDate);
+                        String followupDate = context.getString(R.string.followup_date, buttonAlertStatus.nextContactDate);
                         followUpBtn.setText(followupDate);
                         break;
                     case ConstantsUtils.AlertStatusUtils.DUE:
@@ -940,14 +941,14 @@ public class Utils extends org.smartregister.util.Utils {
     }
 
     public static boolean checkNonTriggerEvents(String methodName) {
-        return !Arrays.asList(ConstantsUtils.SchedulesNonTriggerEvents.ETONOGESTREL_ETG_ONE_RO,
-                ConstantsUtils.SchedulesNonTriggerEvents.LEVONORGESTREL_LNG_TWO_RO,
-                ConstantsUtils.SchedulesNonTriggerEvents.LACTATIONAL_AMENORRHEA_METHOD_LAM,
-                ConstantsUtils.SchedulesNonTriggerEvents.MALE_CONDOM,
-                ConstantsUtils.SchedulesNonTriggerEvents.FEMALE_CONDOM,
-                ConstantsUtils.SchedulesNonTriggerEvents.EMERGENCY_CONTRACEPTIVE_PILLS_ECPS,
-                ConstantsUtils.SchedulesNonTriggerEvents.FERTILITY_AWARENESS_BASED_METHODS_FAB,
-                ConstantsUtils.SchedulesNonTriggerEvents.WITHDRAWAL)
+        return !Arrays.asList(ConstantsUtils.SchedulesNonTriggerEventsUtils.ETONOGESTREL_ETG_ONE_RO,
+                ConstantsUtils.SchedulesNonTriggerEventsUtils.LEVONORGESTREL_LNG_TWO_RO,
+                ConstantsUtils.SchedulesNonTriggerEventsUtils.LACTATIONAL_AMENORRHEA_METHOD_LAM,
+                ConstantsUtils.SchedulesNonTriggerEventsUtils.MALE_CONDOM,
+                ConstantsUtils.SchedulesNonTriggerEventsUtils.FEMALE_CONDOM,
+                ConstantsUtils.SchedulesNonTriggerEventsUtils.EMERGENCY_CONTRACEPTIVE_PILLS_ECPS,
+                ConstantsUtils.SchedulesNonTriggerEventsUtils.FERTILITY_AWARENESS_BASED_METHODS_FAB,
+                ConstantsUtils.SchedulesNonTriggerEventsUtils.WITHDRAWAL)
                 .contains(methodName);
     }
 

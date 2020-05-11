@@ -1,6 +1,5 @@
 package org.smartregister.fp.features.home.schedules.model;
 
-import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 
 public class ScheduleModel {
