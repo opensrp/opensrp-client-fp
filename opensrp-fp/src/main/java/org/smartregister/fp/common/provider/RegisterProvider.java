@@ -67,6 +67,7 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
             populateIdentifierColumn(pc, viewHolder);
             populateAlertButtonAndMethodExit(pc, viewHolder);
             populateMethodExitColumn(pc, viewHolder);
+
         }
     }
 
@@ -155,10 +156,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         View patient = viewHolder.patientColumn;
         attachPatientOnclickListener(patient, client);
 
-
-        View dueButton = viewHolder.followupBtn;
-        attachAlertButtonOnclickListener(dueButton, client);
-
         /*
         String redFlagCountRaw = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.RED_FLAG_COUNT, false);
         String yellowFlagCountRaw = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT, false);
@@ -205,9 +202,9 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
                     for (SchedulesEnum schedulesEnum : SchedulesEnum.values()) {
                         if (schedulesEnum.getScheduleModel().getTriggerEventTag().equals(methodName)) {
                             String triggerDate = Utils.getMapValue(schedulesEnum.getScheduleModel().getTriggerDateTag(), baseEntityId, Integer.parseInt(nextContact));
-                            triggerDate = Utils.formatDateForFPAlertRule(triggerDate);
+                            triggerDate = Utils.getFormatedDateForFPAlertRule(triggerDate);
                             ButtonAlertStatus buttonAlertStatus = Utils.getButtonFollowupStatus(triggerDate, schedulesEnum.getScheduleModel(),baseEntityId,nextContactDate);
-                            Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus);
+                            Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus,baseEntityId,pc.getColumnmaps());
                             break;
                         }
                     }
@@ -226,12 +223,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         view.setOnClickListener(onClickListener);
         view.setTag(client);
         view.setTag(R.id.VIEW_ID, HomeRegisterFragment.CLICK_VIEW_NORMAL);
-    }
-
-    private void attachAlertButtonOnclickListener(View view, SmartRegisterClient client) {
-        view.setOnClickListener(onClickListener);
-        view.setTag(client);
-        view.setTag(R.id.VIEW_ID, HomeRegisterFragment.CLICK_VIEW_ALERT_STATUS);
     }
 
     private void attachRiskLayoutOnclickListener(View view, SmartRegisterClient client) {

@@ -629,11 +629,11 @@ public class Utils extends org.smartregister.util.Utils {
                 .getFPAlertStatus(fpAlertRule, FP_ALERT_RULES);
 
 
-        buttonAlertStatus.nextContactDate = formatDateForVisitButton(nextContactDate);
+        buttonAlertStatus.nextContactDate = getFormatDateForVisitButton(nextContactDate);
         return buttonAlertStatus;
     }
 
-    public static String formatDateForFPAlertRule(String triggerDate) {
+    public static String getFormatedDateForFPAlertRule(String triggerDate) {
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Date newDate = null;
         try {
@@ -645,7 +645,7 @@ public class Utils extends org.smartregister.util.Utils {
         return format.format(newDate);
     }
 
-    private static String formatDateForVisitButton(String triggerDate) {
+    private static String getFormatDateForVisitButton(String triggerDate) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date newDate = null;
         try {
@@ -796,7 +796,7 @@ public class Utils extends org.smartregister.util.Utils {
         }
     }
 
-    public static void processFollowupVisitButton(Context context, Button followUpBtn, ButtonAlertStatus buttonAlertStatus) {
+    public static void processFollowupVisitButton(Context context, Button followUpBtn, ButtonAlertStatus buttonAlertStatus, String baseEntityId, Map<String, String> pc) {
         if (followUpBtn != null) {
             followUpBtn.setVisibility(View.VISIBLE);
             if (buttonAlertStatus.buttonAlertStatus != null) {
@@ -811,11 +811,13 @@ public class Utils extends org.smartregister.util.Utils {
                         followUpBtn.setBackgroundResource(R.drawable.due_button_bg);
                         followUpBtn.setTextAppearance(context, R.style.followupDue);
                         followUpBtn.setText(R.string.followup_due);
+                        addFollowUpClickListener(followUpBtn, context, baseEntityId, pc);
                         break;
                     case ConstantsUtils.AlertStatusUtils.OVERDUE:
                         followUpBtn.setBackgroundResource(R.drawable.overdue_button_bg);
                         followUpBtn.setTextAppearance(context, R.style.followupOverdue);
                         followUpBtn.setText(R.string.followup_overdue);
+                        addFollowUpClickListener(followUpBtn, context, baseEntityId, pc);
                         break;
                     case ConstantsUtils.AlertStatusUtils.EXPIRED:
                         followUpBtn.setVisibility(View.GONE);
@@ -823,6 +825,10 @@ public class Utils extends org.smartregister.util.Utils {
                 }
             }
         }
+    }
+
+    private static void addFollowUpClickListener(Button followUpBtn, Context context, String baseEntityId, Map<String, String> pc) {
+        followUpBtn.setOnClickListener(v -> proceedToContact(baseEntityId, (HashMap<String, String>) pc, context));
     }
 
     public static Integer getTodayContact(String nextContact) {
