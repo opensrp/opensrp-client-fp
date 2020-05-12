@@ -82,6 +82,7 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
             String formattedDate = nextContactVisitDate == null ? null : nextContactVisitDate.toString();
             WomanDetail patientDetail = getWomanDetail(baseEntityId, formattedDate, nextContact);
             PatientRepository.updateContactVisitDetails(patientDetail, true);
+            PatientRepository.updateNextContactDate(formattedDate, baseEntityId);
         }
         catch (Exception ex) {
             Timber.e(ex);
