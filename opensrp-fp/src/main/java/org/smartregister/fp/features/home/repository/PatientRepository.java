@@ -11,7 +11,6 @@ import org.smartregister.fp.common.domain.WomanDetail;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.Utils;
-import org.smartregister.fp.features.home.schedules.SchedulesEnum;
 import org.smartregister.repository.BaseRepository;
 import org.smartregister.repository.Repository;
 import org.smartregister.view.activity.DrishtiApplication;
@@ -184,4 +183,20 @@ public class PatientRepository extends BaseRepository {
                 new String[]{baseEntityId});
     }
 
+    public static void doArchive(String baseEntityId) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBConstantsUtils.KeyUtils.ARCHIVED, "yes");
+
+        // main table
+        getMasterRepository().getWritableDatabase().update(
+                getRegisterQueryProvider().getDemographicTable(),
+                contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
+                new String[]{baseEntityId});
+
+        // search table
+        getMasterRepository().getWritableDatabase().update(
+                CommonFtsObject.searchTableName(getRegisterQueryProvider().getDemographicTable()),
+                contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
+                new String[]{baseEntityId});
+    }
 }

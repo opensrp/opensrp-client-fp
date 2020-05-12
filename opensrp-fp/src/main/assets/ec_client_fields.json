@@ -240,6 +240,13 @@
           "json_mapping": {
             "field": "attributes.visit_start_date"
           }
+        },
+        {
+          "column_name": "archived",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.archived"
+          }
         }
       ]
     }

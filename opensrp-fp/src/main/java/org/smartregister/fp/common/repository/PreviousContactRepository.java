@@ -478,6 +478,36 @@ public class PreviousContactRepository extends BaseRepository {
         return data;
     }
 
+    public List<HashMap<String, String>> getLatestSterilizeContacts() {
+        List<HashMap<String, String>> data = new ArrayList<>();
+
+        try {
+
+            String query = "SELECT pc._id, MAX(pc.contact_no) as contact_no, pc.base_entity_id,\n " +
+                    "(SELECT ipc.value FROM previous_contact AS ipc WHERE ipc.base_entity_id = pc.base_entity_id AND ipc.key = 'sterilization_date') AS sterilize_date\n " +
+                    "FROM previous_contact AS pc\n " +
+                    "LEFT JOIN ec_client AS ec ON ec.base_entity_id = pc.base_entity_id\n " +
+                    "WHERE pc.key = 'method_exit' AND (pc.value = 'male_sterilization' OR pc.value = 'female_sterilization') AND ec.archived IS NULL\n " +
+                    "GROUP BY pc.base_entity_id";
+            Cursor cursor = getReadableDatabase().rawQuery(query, null);
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    HashMap<String, String> historyMap = new HashMap<>();
+                    historyMap.put("_id", cursor.getString(cursor.getColumnIndex("_id")));
+                    historyMap.put("contact_no", cursor.getString(cursor.getColumnIndex("contact_no")));
+                    historyMap.put("base_entity_id", cursor.getString(cursor.getColumnIndex("base_entity_id")));
+                    historyMap.put("sterilize_date", cursor.getString(cursor.getColumnIndex("sterilize_date")));
+                    data.add(historyMap);
+                }
+            }
+        }
+        catch (Exception ex) {
+            Timber.e(ex);
+        }
+
+        return data;
+    }
+
     public void execRawQuery(@NonNull String query) {
         getWritableDatabase().execSQL(query);
     }
