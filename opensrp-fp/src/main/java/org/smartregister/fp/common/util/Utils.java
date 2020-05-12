@@ -1148,6 +1148,9 @@ public class Utils extends org.smartregister.util.Utils {
             case "female_sterilization":
                 nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject,"step7", "sterilization_date"), pattern);
                 break;
+
+            default:
+                break;
         }
 
         return nextContactDate;
