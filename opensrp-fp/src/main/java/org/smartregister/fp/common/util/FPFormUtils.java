@@ -31,8 +31,6 @@ import java.util.Map;
 
 import timber.log.Timber;
 
-import static org.smartregister.fp.common.util.ConstantsUtils.JsonFormKeyUtils.STILL_ON_METHOD;
-
 public class FPFormUtils extends FormUtils {
 
     public static String obtainValue(String key, JSONArray value) throws JSONException {

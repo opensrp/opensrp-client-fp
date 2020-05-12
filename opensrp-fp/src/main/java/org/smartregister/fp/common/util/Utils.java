@@ -930,6 +930,13 @@ public class Utils extends org.smartregister.util.Utils {
                 btnStartFPVisit.setText(context.getString(R.string.start_visit));
                 break;
             }
+            default: {
+                btnStartFPVisit.setBackgroundResource(R.drawable.btn_start_visit_bg);
+                btnStartFPVisit.setTextAppearance(context, R.style.btnStartVisitStyle);
+                btnStartFPVisit.setText(context.getString(R.string.start_visit));
+                break;
+            }
+
         }
     }
 

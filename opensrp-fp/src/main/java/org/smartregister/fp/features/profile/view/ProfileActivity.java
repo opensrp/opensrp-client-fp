@@ -49,9 +49,6 @@ import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternU
 import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.FOLLOWUP_VISIT_BUTTON_FORMAT;
 import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.YYYY_MM_DD;
 
-/**
- * Created by ndegwamartin on 10/07/2018.
- */
 public class ProfileActivity extends BaseProfileActivity implements ProfileContract.View {
     private TextView nameView;
     private TextView ageView;
@@ -170,10 +167,6 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     protected void fetchProfileData() {
         String baseEntityId = getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID);
         ((ProfilePresenter) presenter).fetchProfileData(baseEntityId);
-    }
-
-    private Activity getActivity() {
-        return this;
     }
 
     @Override

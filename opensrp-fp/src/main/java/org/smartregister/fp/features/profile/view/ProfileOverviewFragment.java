@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.databinding.DataBindingUtil;
 
@@ -22,9 +21,6 @@ import java.util.HashMap;
 
 import timber.log.Timber;
 
-/**
- * Created by ndegwamartin on 12/07/2018.
- */
 public class ProfileOverviewFragment extends BaseProfileFragment {
     public static final String METHOD_CHOSEN = "method_chosen";
     public static final String METHOD_EXIT = "method_exit";

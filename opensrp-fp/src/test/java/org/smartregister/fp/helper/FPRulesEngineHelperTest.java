@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -20,20 +19,15 @@ import org.robolectric.RuntimeEnvironment;
 import org.smartregister.fp.activity.BaseUnitTest;
 import org.smartregister.fp.common.helper.FPRulesEngineHelper;
 import org.smartregister.fp.common.rule.AlertRule;
-import org.smartregister.fp.common.rule.ScheduleRule;
 import org.smartregister.fp.common.util.ConstantsUtils;
 
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by ndegwamartin on 09/11/2018.
- */
+
 public class FPRulesEngineHelperTest extends BaseUnitTest {
 
     private static final String ALERT_RULE_FIELD_TODAY_DATE = "todayDate";

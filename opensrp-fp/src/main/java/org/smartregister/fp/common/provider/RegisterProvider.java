@@ -44,7 +44,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
     private View.OnClickListener paginationClickListener;
 
     private Context context;
-    private CommonRepository commonRepository;
 
     public RegisterProvider(Context context, CommonRepository commonRepository, Set visibleColumns,
                             View.OnClickListener onClickListener, View.OnClickListener paginationClickListener) {
@@ -56,7 +55,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         this.paginationClickListener = paginationClickListener;
 
         this.context = context;
-        this.commonRepository = commonRepository;
     }
 
     @Override

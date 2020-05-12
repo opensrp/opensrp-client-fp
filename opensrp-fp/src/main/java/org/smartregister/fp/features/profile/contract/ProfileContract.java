@@ -1,12 +1,10 @@
 package org.smartregister.fp.features.profile.contract;
 
-import android.content.Context;
 import android.content.Intent;
 
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.view.contract.BaseProfileContract;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,8 +22,6 @@ public interface ProfileContract {
         void processFormDetailsSave(Intent data, AllSharedPreferences allSharedPreferences);
 
         void refreshProfileTopSection(Map<String, String> client);
-
-        HashMap<String, String> saveFinishForm(Map<String, String> client, Context context);
 
         void getTaskCount(String baseEntityId);
     }

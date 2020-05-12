@@ -76,10 +76,6 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
             Timber.e(ex);
         }
 
-        /*Map<String, String> clientProfileDetail = PatientRepository.getClientProfileDetails(baseEntityId);
-        ContactInteractor contactInteractor = new ContactInteractor();
-        contactInteractor.finalizeContactForm(clientProfileDetail, this);*/
-
         HashMap<String, String> clientProfileDetail = PatientRepository.getClientProfileDetails(baseEntityId);
         if (clientProfileDetail == null) return null;
 

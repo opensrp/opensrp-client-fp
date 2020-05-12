@@ -1,9 +1,5 @@
 package org.smartregister.fp.common.util;
 
-/**
- * Created by ndegwamartin on 14/03/2018.
- */
-
 public abstract class ConstantsUtils {
     public static final String SQLITE_DATE_TIME_FORMAT = "yyyy-MM-dd";
     public static final String CONTACT_DATE_FORMAT = "dd/MM/yyyy";
