@@ -136,7 +136,7 @@ actions:
 name: step3_reason_no_method_other
 description: The other reason for no contraceptive method.
 priority: 1
-condition: "(step3_reason_no_method == 'other')"
+condition: "(step3_reason_no_method.contains('other'))"
 actions:
   - "isRelevant = true"
 ---
@@ -429,7 +429,7 @@ actions:
 name: step6_provide_method_location
 description: Where the client will be receiving the method. This depends on the available stock and the skill of the health worker present.
 priority: 1
-condition: "(step6_method_chosen != 'no_method')"
+condition: "(step6_method_chosen != 'no_method' && step6_method_chosen != '0' && step6_method_chosen != '')"
 actions:
   - "isRelevant = true"
 
@@ -921,7 +921,7 @@ actions:
 name: step7_reason_different_chosen_exit_method
 description: The date that the sterilization procedure was done.
 priority: 1
-condition: "(step7_method_exit != step6_method_chosen_f || step7_method_exit == step6_method_chosen_m)"
+condition: "(step6_method_chosen != 0 && step7_method_exit != step6_method_chosen)"
 actions:
   - "isRelevant = true"
 ---
@@ -954,74 +954,62 @@ actions:
 name: step8_emergency_referral
 description: Referral for urgent care
 priority: 1
-condition: "global_referral == 'yes'"
+condition: "step6_how_method_removed == 'off_site' || step6_provide_method_location == 'provided_off_site'"
 actions:
   - "isRelevant = true"
 ---
 name: step8_referral_reason
 description: Reason why the patient is being referred. If diagnosed, this may include the reason for the diagnosis.
 priority: 1
-condition: "global_referral == 'yes'"
+condition: "step6_how_method_removed == 'off_site' || step6_provide_method_location == 'provided_off_site'"
 actions:
   - "isRelevant = true"
 ---
 name: step8_scheduled_referral_date
 description: When the referral is scheduled
 priority: 1
-condition: "global_referral == 'yes'"
+condition: "step6_how_method_removed == 'off_site' || step6_provide_method_location == 'provided_off_site'"
 actions:
   - "isRelevant = true"
 ---
 name: step8_scheduled_referral_location
 description: Where the client is being referred to
 priority: 1
-condition: "global_referral == 'yes'"
+condition: "step6_how_method_removed == 'off_site' || step6_provide_method_location == 'provided_off_site'"
 actions:
   - "isRelevant = true"
 ---
 name: step8_referral_date
 description: The date the referral was made.
 priority: 1
-condition: "global_referral == 'yes'"
+condition: "step6_how_method_removed == 'off_site' || step6_provide_method_location == 'provided_off_site'"
 actions:
   - "isRelevant = true"
 ---
 name: step8_referral_provider
 description: The name of the provider who made the referral
 priority: 1
-condition: "global_referral == 'yes'"
+condition: "step6_how_method_removed == 'off_site' || step6_provide_method_location == 'provided_off_site'"
 actions:
   - "isRelevant = true"
 ---
 name: step8_provider_facility
 description: Facility client is being referred from
 priority: 1
-condition: "global_referral == 'yes'"
+condition: "step6_how_method_removed == 'off_site' || step6_provide_method_location == 'provided_off_site'"
 actions:
   - "isRelevant = true"
 ---
 name: step8_provider_tel_number
 description: The contact details of the provider making the referral.
 priority: 1
-condition: "global_referral == 'yes'"
+condition: "step6_how_method_removed == 'off_site' || step6_provide_method_location == 'provided_off_site'"
 actions:
   - "isRelevant = true"
 ---
 name: step8_referral_notes
 description: Any additional relevant details of clinical significance for the referral facility to provide quality care.
 priority: 1
-condition: "global_referral == 'yes'"
+condition: "step6_how_method_removed == 'off_site' || step6_provide_method_location == 'provided_off_site'"
 actions:
   - "isRelevant = true"
-
-
-
-
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -

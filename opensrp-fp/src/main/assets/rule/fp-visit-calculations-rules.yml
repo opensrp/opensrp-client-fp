@@ -74,6 +74,13 @@ priority: 1
 condition: "(global_gender == 'female')"
 actions:
   - "calculation = (helper.getDifferenceDays(step3_start_date_last_menses))"
+---
+name: step3_parity
+description: Calculated field to determine the number of days since the woman's last normal period started.
+priority: 1
+condition: "step3_parity > step3_gravida"
+actions:
+  - "calculation = step3_gravida"
 
 
 

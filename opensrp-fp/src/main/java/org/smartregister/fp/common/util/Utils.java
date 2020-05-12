@@ -243,7 +243,6 @@ public class Utils extends org.smartregister.util.Utils {
     public static void proceedToContact(String baseEntityId, HashMap<String, String> personObjectClient, Context context) {
         try {
 
-            personObjectClient.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER));
             String nextContact = personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
             personObjectClient.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, nextContact == null ? "1" : nextContact);
 
@@ -379,7 +378,6 @@ public class Utils extends org.smartregister.util.Utils {
                 globals.put(ConstantsUtils.PREVIOUS_CONTACT_NO, contactNo > 1 ? String.valueOf(contactNo - 1) : "0");
                 globals.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE).toLowerCase());
                 globals.put(DBConstantsUtils.KeyUtils.GENDER, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER).toLowerCase());
-                globals.put(DBConstantsUtils.KeyUtils.REFERRAL, personObjectClient.get(DBConstantsUtils.KeyUtils.REFERRAL).toLowerCase());
                 globals.put(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, methodExit == null ? "0" : methodExit);
 
 
@@ -1119,5 +1117,59 @@ public class Utils extends org.smartregister.util.Utils {
             }
         }
         context.startActivity(intent);
+    }
+
+    public static LocalDate getNextContactVisitDate(JSONObject jsonObject) {
+        String methodExit = getJsonFieldValue(jsonObject, "step7", "method_exit");
+
+        DateTimeFormatter pattern = DateTimeFormat.forPattern(("dd-MM-yyyy"));
+        LocalDate nextContactDate = null;
+        switch (methodExit) {
+            case "cu_iud":
+            case "lng_iud":
+                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject,"step7", "iud_insertion_date"), pattern);
+                break;
+
+            case "dmpa_im":
+            case "dmpa_sc":
+            case "net_en":
+                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject,"step7", "last_injection_date"), pattern);
+                break;
+
+            case "pop":
+            case "coc":
+            case "patch":
+            case "cvr":
+            case "pvr":
+                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject,"step1", "visit_date"), pattern);
+                break;
+
+            case "male_sterilization":
+            case "female_sterilization":
+                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject,"step7", "sterilization_date"), pattern);
+                break;
+        }
+
+        return nextContactDate;
+    }
+
+    private static String getJsonFieldValue(JSONObject jsonObject, String stepKey, String fieldKey) {
+        String value = "";
+
+        try {
+            JSONArray jsonArray = jsonObject.getJSONObject(stepKey).getJSONArray("fields");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject obj = jsonArray.getJSONObject(i);
+                if (obj.getString("key").equals(fieldKey)) {
+                    value = obj.optString("value", "");
+                    break;
+                }
+            }
+        }
+        catch (JSONException ex) {
+            Timber.e(ex);
+        }
+
+        return value;
     }
 }

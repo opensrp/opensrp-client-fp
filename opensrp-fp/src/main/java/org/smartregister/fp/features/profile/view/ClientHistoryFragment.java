@@ -36,7 +36,12 @@ public class ClientHistoryFragment extends BaseProfileFragment implements Client
 
     @Override
     protected void onResumption() {
-
+        Bundle args = getArguments();
+        if (args != null) {
+            baseEntityId = args.getString(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, "");
+            List<HashMap<String, String>> data = FPLibrary.getInstance().getPreviousContactRepository().getVisitHistory(baseEntityId);
+            populateTheData(data);
+        }
     }
 
     @Nullable
@@ -46,17 +51,6 @@ public class ClientHistoryFragment extends BaseProfileFragment implements Client
         recyclerView = fragmentView.findViewById(R.id.profile_history_recycler);
         noHealthRecord = fragmentView.findViewById(R.id.no_health_data_recorded_profile_overview_layout);
         return fragmentView;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Bundle args = getArguments();
-        if (args != null) {
-            baseEntityId = args.getString(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, "");
-            List<HashMap<String, String>> data = FPLibrary.getInstance().getPreviousContactRepository().getVisitHistory(baseEntityId);
-            populateTheData(data);
-        }
     }
 
     private void populateTheData(List<HashMap<String, String>> data) {

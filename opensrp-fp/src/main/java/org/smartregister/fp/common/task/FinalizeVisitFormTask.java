@@ -18,7 +18,6 @@ import org.smartregister.fp.common.domain.WomanDetail;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.repository.PreviousContactRepository;
-import org.smartregister.fp.common.rule.ContactRule;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.FPFormUtils;
@@ -28,7 +27,6 @@ import org.smartregister.fp.features.home.repository.PatientRepository;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import timber.log.Timber;
@@ -72,32 +70,18 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
         contact.setContactNumber(contactNo);
         FPFormUtils.persistPartial(baseEntityId, contact);
 
-        /*Map<String, String> clientProfileDetail = PatientRepository.getClientProfileDetails(baseEntityId);
-        ContactInteractor contactInteractor = new ContactInteractor();
-        contactInteractor.finalizeContactForm(clientProfileDetail, this);*/
-
         HashMap<String, String> clientProfileDetail = PatientRepository.getClientProfileDetails(baseEntityId);
         if (clientProfileDetail == null) return null;
 
-        int gestationAge = getGestationAge(clientProfileDetail);
-        boolean isFirst = TextUtils.equals("1", clientProfileDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
-        ContactRule contactRule = new ContactRule(gestationAge, isFirst, baseEntityId);
-
-        List<Integer> integerList = FPLibrary.getInstance().getFPRulesEngineHelper()
-                .getContactVisitSchedule(contactRule, ConstantsUtils.RulesFileUtils.CONTACT_RULES);
-
-        int nextContactVisitWeeks = integerList.get(0);
-
-        LocalDate localDate = new LocalDate(clientProfileDetail.get(DBConstantsUtils.KeyUtils.EDD));
-        String nextContactVisitDate = localDate.minusWeeks(ConstantsUtils.DELIVERY_DATE_WEEKS).plusWeeks(nextContactVisitWeeks).toString();
-        int nextContact = getNextContact(clientProfileDetail);
-        WomanDetail womanDetail = getWomanDetail(baseEntityId, nextContactVisitDate, nextContact);
-
-        PatientRepository.updateContactVisitDetails(womanDetail, true);
-        PatientRepository.updateNextContactDate(nextContactVisitDate, baseEntityId);
-
         try {
+            JSONObject formObject = new JSONObject(jsonCurrentState);
             processFormFieldKeyValues(baseEntityId, new JSONObject(contact.getJsonForm()), String.valueOf(contactNo));
+
+            int nextContact = getNextContact(clientProfileDetail);
+            LocalDate nextContactVisitDate = Utils.getNextContactVisitDate(formObject);
+            String formattedDate = nextContactVisitDate == null ? null : nextContactVisitDate.toString();
+            WomanDetail patientDetail = getWomanDetail(baseEntityId, formattedDate, nextContact);
+            PatientRepository.updateContactVisitDetails(patientDetail, true);
         }
         catch (Exception ex) {
             Timber.e(ex);
