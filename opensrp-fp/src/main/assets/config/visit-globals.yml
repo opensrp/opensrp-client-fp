@@ -3,5 +3,4 @@ form: fp_start_visit
 fields:
   - "gender"
   - "method_gender_type"
-  - "referral"
   - "method_exit"
