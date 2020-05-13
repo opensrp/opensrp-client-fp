@@ -145,7 +145,9 @@ public abstract class ConstantsUtils {
     public static class JsonFormFieldUtils {
         public static final String CURRENT_METHOD = "current_method";
         public static final String METHOD_EXIT = "method_exit";
-        public static final String STERILIZATION_DATE = "sterilize_date";
+        public static final String STERILIZATION_DATE = "sterilization_date";
+        public static final String MALE_STERILIZATION = "male_sterilization";
+        public static final String FEMALE_STERILIZATION = "female_sterilization";
     }
 
     public static class JsonFormExtraUtils {

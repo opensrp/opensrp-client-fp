@@ -11,6 +11,7 @@ import net.sqlcipher.database.SQLiteDatabase;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jeasy.rules.api.Facts;
+import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.model.PreviousContactsSummaryModel;
 import org.smartregister.fp.common.util.ConstantsUtils;
@@ -484,12 +485,13 @@ public class PreviousContactRepository extends BaseRepository {
 
         try {
 
-            String query = "SELECT pc._id, MAX(pc.contact_no) as contact_no, pc.base_entity_id,\n " +
-                    "(SELECT ipc.value FROM previous_contact AS ipc WHERE ipc.base_entity_id = pc.base_entity_id AND ipc.key = 'sterilization_date') AS sterilize_date\n " +
-                    "FROM previous_contact AS pc\n " +
-                    "LEFT JOIN ec_client AS ec ON ec.base_entity_id = pc.base_entity_id\n " +
-                    "WHERE pc.key = 'method_exit' AND (pc.value = 'male_sterilization' OR pc.value = 'female_sterilization') AND ec.archived IS NULL\n " +
-                    "GROUP BY pc.base_entity_id";
+            String query = "SELECT pc." + DBConstantsUtils.KeyUtils.ID_LOWER_CASE + ", MAX(pc." + ConstantsUtils.CONTACT_NO + ") as " + ConstantsUtils.CONTACT_NO + ", pc." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + ", " +
+                    "(SELECT ipc." + ConstantsUtils.KeyUtils.VALUE + " FROM " + TABLE_NAME + " AS ipc WHERE ipc." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = pc." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " AND ipc." + ConstantsUtils.KeyUtils.KEY + " = '" + ConstantsUtils.JsonFormFieldUtils.STERILIZATION_DATE + "') AS " + ConstantsUtils.JsonFormFieldUtils.STERILIZATION_DATE + " " +
+                    "FROM " + TABLE_NAME + " AS pc " +
+                    "LEFT JOIN " + FPLibrary.getInstance().getRegisterQueryProvider().getDemographicTable() + " AS ec ON ec." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = pc." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " " +
+                    "WHERE pc." + ConstantsUtils.KeyUtils.KEY + " = '" + ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT + "' AND (pc." + ConstantsUtils.KeyUtils.VALUE + " = '" + ConstantsUtils.JsonFormFieldUtils.MALE_STERILIZATION + "' OR pc." + ConstantsUtils.KeyUtils.VALUE + " = '" + ConstantsUtils.JsonFormFieldUtils.FEMALE_STERILIZATION + "') AND ec." + DBConstantsUtils.KeyUtils.ARCHIVED + " IS NULL " +
+                    "GROUP BY pc." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID;
+            Timber.d(query);
             Cursor cursor = getReadableDatabase().rawQuery(query, null);
             if (cursor != null) {
                 while (cursor.moveToNext()) {
