@@ -1,6 +1,5 @@
 package org.smartregister.fp.features.profile.presenter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.util.Pair;
 
@@ -9,7 +8,6 @@ import org.json.JSONObject;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.fp.R;
-import org.smartregister.fp.common.interactor.ContactInteractor;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.FPJsonFormUtils;
@@ -21,25 +19,19 @@ import org.smartregister.fp.features.profile.interactor.ProfileInteractor;
 import org.smartregister.repository.AllSharedPreferences;
 
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
 import java.util.Map;
 
 import timber.log.Timber;
 
-/**
- * Created by ndegwamartin on 13/07/2018.
- */
 public class ProfilePresenter implements ProfileContract.Presenter, RegisterContract.InteractorCallBack {
     private WeakReference<ProfileContract.View> mProfileView;
     private ProfileContract.Interactor mProfileInteractor;
     private RegisterContract.Interactor mRegisterInteractor;
-    private ContactInteractor contactInteractor;
 
     public ProfilePresenter(ProfileContract.View profileView) {
         mProfileView = new WeakReference<>(profileView);
         mProfileInteractor = new ProfileInteractor(this);
         mRegisterInteractor = new RegisterInteractor();
-        contactInteractor = new ContactInteractor();
     }
 
     @Override
@@ -60,7 +52,6 @@ public class ProfilePresenter implements ProfileContract.Presenter, RegisterCont
         if (!isChangingConfiguration) {
             mProfileInteractor = null;
             mRegisterInteractor = null;
-            contactInteractor = null;
         }
 
     }
@@ -149,11 +140,6 @@ public class ProfilePresenter implements ProfileContract.Presenter, RegisterCont
             if (client.get(DBConstantsUtils.KeyUtils.TEL_NUMBER) != null && !client.get(DBConstantsUtils.KeyUtils.TEL_NUMBER).isEmpty())
                 getProfileView().setPhoneNumber(client.get(DBConstantsUtils.KeyUtils.TEL_NUMBER));
         }
-    }
-
-    @Override
-    public HashMap<String, String> saveFinishForm(Map<String, String> client, Context context) {
-        return contactInteractor.finalizeContactForm(client, context);
     }
 
     @Override

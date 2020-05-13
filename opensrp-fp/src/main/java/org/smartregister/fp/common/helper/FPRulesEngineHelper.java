@@ -23,7 +23,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.fp.common.rule.AlertRule;
-import org.smartregister.fp.common.rule.ContactRule;
+import org.smartregister.fp.common.rule.FPAlertRule;
+import org.smartregister.fp.common.rule.ScheduleRule;
 import org.smartregister.fp.common.util.FPFormUtils;
 
 import java.io.BufferedReader;
@@ -31,15 +32,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 import timber.log.Timber;
@@ -67,9 +64,9 @@ public class FPRulesEngineHelper extends RulesEngineHelper {
         mJsonObject = jsonObject;
     }
 
-    public List<Integer> getContactVisitSchedule(ContactRule contactRule, String rulesFile) {
+    public String getFollowupVisitScheduleDate(ScheduleRule scheduleRule, String rulesFile) {
         Facts facts = new Facts();
-        facts.put(ContactRule.RULE_KEY, contactRule);
+        facts.put(ScheduleRule.RULE_KEY, scheduleRule);
 
         Rules rules = getRulesFromAsset(RULE_FOLDER_PATH + rulesFile);
         if (rules == null) {
@@ -77,13 +74,9 @@ public class FPRulesEngineHelper extends RulesEngineHelper {
         }
 
         processInferentialRules(rules, facts);
-
-        Set<Integer> contactList = contactRule.set;
-        List<Integer> list = new ArrayList<>(contactList);
-        Collections.sort(list);
-
-        return list;
+        return scheduleRule.getNextContactVisitDate();
     }
+
 
     private Rules getRulesFromAsset(String fileName) {
         try {
@@ -118,6 +111,20 @@ public class FPRulesEngineHelper extends RulesEngineHelper {
         processDefaultRules(rules, facts);
 
         return alertRule.buttonStatus;
+    }
+
+    public String getFPAlertStatus(FPAlertRule alertRule, String rulesFile) {
+        Facts facts = new Facts();
+        facts.put(AlertRule.RULE_KEY, alertRule);
+
+        Rules rules = getRulesFromAsset(RULE_FOLDER_PATH + rulesFile);
+        if (rules == null) {
+            return null;
+        }
+
+        processDefaultRules(rules, facts);
+
+        return alertRule.getButtonStatus();
     }
 
     public void processDefaultRules(Rules rules, Facts facts) {
