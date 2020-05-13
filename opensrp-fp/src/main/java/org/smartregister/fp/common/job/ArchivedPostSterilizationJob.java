@@ -6,6 +6,8 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.smartregister.fp.common.library.FPLibrary;
+import org.smartregister.fp.common.util.ConstantsUtils;
+import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.features.home.repository.PatientRepository;
 import org.smartregister.job.BaseJob;
 
@@ -29,8 +31,8 @@ public class ArchivedPostSterilizationJob extends BaseJob {
             LocalDate todayDate = LocalDate.now();
             DateTimeFormatter pattern = DateTimeFormat.forPattern("dd-MM-yyyy");
             for (HashMap<String, String> map : data) {
-                String baseEntityId = map.get("base_entity_id");
-                LocalDate sterilizeDate = LocalDate.parse(map.get("sterilize_date"), pattern).plusMonths(6);
+                String baseEntityId = map.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID);
+                LocalDate sterilizeDate = LocalDate.parse(map.get(ConstantsUtils.JsonFormFieldUtils.STERILIZATION_DATE), pattern).plusMonths(6);
                 if (todayDate.isAfter(sterilizeDate)) {
                     PatientRepository.doArchive(baseEntityId);
                     Timber.d("patient with base_entity_id: %s successfully archived.", baseEntityId);

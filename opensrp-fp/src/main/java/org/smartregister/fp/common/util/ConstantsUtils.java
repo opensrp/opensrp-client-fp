@@ -14,6 +14,7 @@ public abstract class ConstantsUtils {
     public static final String ACCORDION_INFO_TITLE = "accordion_info_title";
     public static final String DISPLAY_BOTTOM_SECTION = "display_bottom_section";
     public static final String NEXT = "next";
+    public static final String YES = "yes";
 
     public static final String GLOBAL_IDENTIFIER = "identifier";
     public static final int DELIVERY_DATE_WEEKS = 40;
@@ -144,6 +145,7 @@ public abstract class ConstantsUtils {
     public static class JsonFormFieldUtils {
         public static final String CURRENT_METHOD = "current_method";
         public static final String METHOD_EXIT = "method_exit";
+        public static final String STERILIZATION_DATE = "sterilize_date";
     }
 
     public static class JsonFormExtraUtils {

@@ -1,7 +1,6 @@
 package org.smartregister.sample.fp.login.interactor;
 
-import org.smartregister.domain.LoginResponse;
-import org.smartregister.fp.common.library.FPLibrary;
+import org.smartregister.fp.common.job.ArchivedPostSterilizationJob;
 import org.smartregister.job.ImageUploadServiceJob;
 import org.smartregister.job.PullUniqueIdsServiceJob;
 import org.smartregister.job.SyncServiceJob;
@@ -33,5 +32,6 @@ public class LoginInteractor extends BaseLoginInteractor implements BaseLoginCon
         SyncSettingsServiceJob
                 .scheduleJob(SyncSettingsServiceJob.TAG, TimeUnit.MINUTES.toMillis(BuildConfig.CLIENT_SETTINGS_SYNC_MINUTES),
                         getFlexValue(BuildConfig.CLIENT_SETTINGS_SYNC_MINUTES));
+        ArchivedPostSterilizationJob.makeSchedule();
     }
 }

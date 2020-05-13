@@ -4,7 +4,6 @@ import android.content.Intent;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.smartregister.fp.common.job.ArchivedPostSterilizationJob;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.features.home.view.HomeRegisterActivity;
 import org.smartregister.sample.fp.R;
@@ -42,7 +41,6 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
     }
 
     private void gotToHomeRegister(boolean remote) {
-        ArchivedPostSterilizationJob.makeSchedule();
         Intent intent = new Intent(this, HomeRegisterActivity.class);
         intent.putExtra(ConstantsUtils.IntentKeyUtils.IS_REMOTE_LOGIN, remote);
         startActivity(intent);
