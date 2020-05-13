@@ -34,7 +34,7 @@ public abstract class ConstantsUtils {
     public static final String DOB = "dob";
     public static final String PHONE_NUMBER = "phoneNumber";
     public static final String ALT_CONTACT_NAME = "altContactName";
-    public static final String CONTACT = "Contact";
+    public static final String SCHEDULE = "Schedule";
     public static final String CURRENT_OPENSRP_ID = "current_opensrp_id";
     public static final String FORM_SUBMISSION_IDS = "form_submission_ids";
     public static final String REFERRAL = "referral";
@@ -101,7 +101,7 @@ public abstract class ConstantsUtils {
         public static final String QUICK_CHECK = "Quick Check";
         public static final String CLOSE = "Close FP Record";
         public static final String SITE_CHARACTERISTICS = "Site Characteristics";
-        public static final String CONTACT_VISIT = "Contact Visit";
+        public static final String SCHEDULE_VISIT = "Schedule Visit";
     }
 
     public static class JsonFormUtils {

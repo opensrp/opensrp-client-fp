@@ -583,6 +583,7 @@ public class Utils extends org.smartregister.util.Utils {
     }
 
     public static ButtonAlertStatus getButtonFollowupStatus(String triggerDate, ScheduleModel scheduleModel, String baseEntityId, String nextContactDate) {
+
         ButtonAlertStatus buttonAlertStatus = new ButtonAlertStatus();
 
         boolean isFirst = Utils.isUserFirstVisitForm(baseEntityId);
@@ -901,13 +902,14 @@ public class Utils extends org.smartregister.util.Utils {
         return isFirst;
     }
 
-    public static void updateBtnStartVisit(int compareTwoDatesResult, TextView btnStartFPVisit, String nextContactDate, Context context) {
+    public static void updateBtnStartVisit(int compareTwoDatesResult, TextView btnStartFPVisit, String nextContactDate, Context context, HashMap<String, String> detailMap) {
         switch (compareTwoDatesResult) {
             case BOTH_DATE_EQUAL: {
                 btnStartFPVisit.setBackgroundResource(R.drawable.btn_start_visit_due_bg);
                 btnStartFPVisit.setTextAppearance(context, R.style.btnStartVisitDueStyle);
                 String followupDate = context.getString(R.string.start_visit_date, nextContactDate);
                 btnStartFPVisit.setText(followupDate);
+                btnStartFPVisit.setOnClickListener(v -> continueToContact(detailMap, context));
                 break;
             }
             case FIRST_DATE_IS_GREATER: {
@@ -915,6 +917,7 @@ public class Utils extends org.smartregister.util.Utils {
                 btnStartFPVisit.setTextAppearance(context, R.style.btnStartVisitStyle);
                 String followupDate = context.getString(R.string.start_visit_date, nextContactDate);
                 btnStartFPVisit.setText(followupDate);
+                btnStartFPVisit.setOnClickListener(null);
                 break;
             }
             case SECOND_DATE_IS_GREATER: {
@@ -922,21 +925,32 @@ public class Utils extends org.smartregister.util.Utils {
                 btnStartFPVisit.setTextAppearance(context, R.style.btnStartVisitOriginalDueStyle);
                 String followupDate = context.getString(R.string.start_visit_date, nextContactDate);
                 btnStartFPVisit.setText(followupDate);
+                btnStartFPVisit.setOnClickListener(v -> continueToContact(detailMap, context));
                 break;
             }
             case ANY_NULL_DATE: {
                 btnStartFPVisit.setBackgroundResource(R.drawable.btn_start_visit_bg);
                 btnStartFPVisit.setTextAppearance(context, R.style.btnStartVisitStyle);
                 btnStartFPVisit.setText(context.getString(R.string.start_visit));
+                btnStartFPVisit.setOnClickListener(v -> continueToContact(detailMap, context));
                 break;
             }
             default: {
                 btnStartFPVisit.setBackgroundResource(R.drawable.btn_start_visit_bg);
                 btnStartFPVisit.setTextAppearance(context, R.style.btnStartVisitStyle);
                 btnStartFPVisit.setText(context.getString(R.string.start_visit));
+                btnStartFPVisit.setOnClickListener(v -> continueToContact(detailMap, context));
                 break;
             }
 
+        }
+    }
+
+    public static void continueToContact(HashMap<String, String> detailMap, Context context) {
+        String baseEntityId = detailMap.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID);
+
+        if (StringUtils.isNotBlank(baseEntityId)) {
+            Utils.proceedToContact(baseEntityId, detailMap, context);
         }
     }
 

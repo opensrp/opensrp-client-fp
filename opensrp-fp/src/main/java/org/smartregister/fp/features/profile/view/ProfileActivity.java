@@ -104,7 +104,6 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         imageView = findViewById(R.id.imageview_profile);
         dueButton = findViewById(R.id.profile_overview_due_button);
         btnStartFPVisit = findViewById(R.id.btn_start_visit);
-        btnStartFPVisit.setOnClickListener(this);
         updateTasksTabTitle();
         updateBtnStartFPVisit();
     }
@@ -114,7 +113,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         String todayDate = Utils.getTodaysDate();
         int compareTwoDatesResult = Utils.compareTwoDates(Utils.formatDateToPattern(todayDate, YYYY_MM_DD, DD_MM_YYYY), Utils.formatDateToPattern(nextContactDate, YYYY_MM_DD, DD_MM_YYYY));
         String formattedNextContactDate = Utils.formatDateToPattern(nextContactDate, YYYY_MM_DD, FOLLOWUP_VISIT_BUTTON_FORMAT);
-        Utils.updateBtnStartVisit(compareTwoDatesResult, btnStartFPVisit, formattedNextContactDate, this);
+        Utils.updateBtnStartVisit(compareTwoDatesResult, btnStartFPVisit, formattedNextContactDate, this, detailMap);
     }
 
     private void getButtonAlertStatus() {
@@ -220,19 +219,11 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         } else if (itemId == R.id.menu_btn_call) {
             launchPhoneDialer(phoneNumber);
         } else if (itemId == R.id.menu_btn_start_visit) {
-            continueToContact();
+            Utils.continueToContact(detailMap, this);
         } else if (itemId == R.id.menu_btn_close_fp_record) {
             FPJsonFormUtils.launchFPCloseForm(ProfileActivity.this);
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void continueToContact() {
-        String baseEntityId = detailMap.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID);
-
-        if (StringUtils.isNotBlank(baseEntityId)) {
-            Utils.proceedToContact(baseEntityId, detailMap, ProfileActivity.this);
-        }
     }
 
     @Override

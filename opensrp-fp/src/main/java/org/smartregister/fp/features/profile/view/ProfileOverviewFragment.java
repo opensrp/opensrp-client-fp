@@ -49,21 +49,22 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
 
     @Override
     protected void onCreation() {
-        if (getActivity() != null && getActivity().getIntent() != null) {
-            HashMap<String, String> clientDetails =
-                    (HashMap<String, String>) getActivity().getIntent().getSerializableExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP);
-            if (clientDetails != null) {
-                contactNo = Utils.getTodayContact(clientDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
-            }
-            baseEntityId = getActivity().getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID);
-        } else {
-            Timber.d("getIntent or getActivity might be null");
-        }
     }
 
     @Override
     protected void onResumption() {
         try {
+            if (getActivity() != null && getActivity().getIntent() != null) {
+                HashMap<String, String> clientDetails =
+                        (HashMap<String, String>) getActivity().getIntent().getSerializableExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP);
+                if (clientDetails != null) {
+                    contactNo = Utils.getTodayContact(clientDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
+                }
+                baseEntityId = getActivity().getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID);
+            } else {
+                Timber.d("getIntent or getActivity might be null");
+            }
+
             PartialContact partialContact = FPLibrary.getInstance().getPartialContactRepository().getPartialContact(
                     new PartialContact(FORM_TYPE, baseEntityId, contactNo));
 

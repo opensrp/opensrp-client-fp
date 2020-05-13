@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.commonregistry.CommonRepository;
@@ -181,7 +182,8 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
                             String triggerDate = Utils.getMapValue(schedulesEnum.getScheduleModel().getTriggerDateTag(), baseEntityId, Integer.parseInt(nextContact));
                             triggerDate = Utils.formatDateToPattern(triggerDate, DD_MM_YYYY, YYYY_MM_DD);
                             ButtonAlertStatus buttonAlertStatus = Utils.getButtonFollowupStatus(triggerDate, schedulesEnum.getScheduleModel(), baseEntityId, nextContactDate);
-                            Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus, baseEntityId, pc.getColumnmaps());
+                            if (StringUtils.isNotEmpty(nextContactDate))
+                                Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus, baseEntityId, pc.getColumnmaps());
                             break;
                         }
                     }

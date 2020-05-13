@@ -66,10 +66,12 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
     @Override
     protected HashMap<String, String> doInBackground(Void... voids) {
 
+        // add record to partial contact table
         contact.setJsonForm(fpFormUtils.addFormDetails(jsonCurrentState));
         contact.setContactNumber(contactNo);
         FPFormUtils.persistPartial(baseEntityId, contact);
 
+        // add record to previous contact table
         try {
             processFormFieldKeyValues(baseEntityId, new JSONObject(contact.getJsonForm()), String.valueOf(contactNo));
         } catch (Exception ex) {
@@ -77,20 +79,26 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
         }
 
         HashMap<String, String> clientProfileDetail = PatientRepository.getClientProfileDetails(baseEntityId);
-        if (clientProfileDetail == null) return null;
+        try {
+            if (clientProfileDetail == null) return null;
 
-        String nextContactNo = clientProfileDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
-        boolean isFirst = TextUtils.equals("1", clientProfileDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
-        if (!isFirst) isFirst = Utils.isUserFirstVisitForm(baseEntityId);
+            String nextContactNo = clientProfileDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
+            boolean isFirst = TextUtils.equals("1", clientProfileDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
+            if (!isFirst) isFirst = Utils.isUserFirstVisitForm(baseEntityId);
 
-        String methodExitKey = Utils.getMapValue(METHOD_EXIT, baseEntityId, Integer.parseInt(nextContactNo));
-        String methodName = Utils.getMethodName(methodExitKey);
+            String methodExitKey = Utils.getMapValue(METHOD_EXIT, baseEntityId, Integer.parseInt(nextContactNo));
+            String methodName = Utils.getMethodName(methodExitKey);
 
-        String nextContactVisitDate = Utils.getMethodScheduleDate(methodName, isFirst);
-        ClientDetail clientDetail = getClientDetails(baseEntityId, nextContactVisitDate, getNextContact(clientProfileDetail));
+            String nextContactVisitDate = Utils.getMethodScheduleDate(methodName, isFirst);
+            ClientDetail clientDetail = getClientDetails(baseEntityId, nextContactVisitDate, getNextContact(clientProfileDetail));
 
-        PatientRepository.updateContactVisitDetails(clientDetail, true);
-        PatientRepository.updateNextContactDate(nextContactVisitDate, baseEntityId);
+            // update patient repo
+            PatientRepository.updateContactVisitDetails(clientDetail, true);
+            PatientRepository.updateNextContactDate(nextContactVisitDate, baseEntityId);
+
+        } catch (Exception e) {
+            Timber.e(e);
+        }
         return clientProfileDetail;
     }
 
@@ -110,10 +118,6 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
         String nextContactRaw = details.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
         int nextContact = nextContactRaw == null ? 1 : Integer.parseInt(nextContactRaw);
         return ++nextContact;
-    }
-
-    public int getGestationAge(Map<String, String> details) {
-        return details.containsKey(DBConstantsUtils.KeyUtils.EDD) && details.get(DBConstantsUtils.KeyUtils.EDD) != null ? Utils.getGestationAgeFromEDDate(details.get(DBConstantsUtils.KeyUtils.EDD)) : 4;
     }
 
     private ClientDetail getClientDetails(String baseEntityId, String nextContactVisitDate, Integer nextContact) {
