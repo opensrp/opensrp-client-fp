@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobCreator;
 
+import org.smartregister.fp.common.job.ArchivedPostSterilizationJob;
 import org.smartregister.job.ExtendedSyncServiceJob;
 import org.smartregister.job.ImageUploadServiceJob;
 import org.smartregister.job.PullUniqueIdsServiceJob;
@@ -38,6 +39,8 @@ public class FPJobCreator implements JobCreator {
                 return new ViewConfigurationsServiceJob();
             case SyncSettingsServiceJob.TAG:
                 return new SyncSettingsServiceJob();
+            case ArchivedPostSterilizationJob.TAG:
+                return new ArchivedPostSterilizationJob();
             default:
                 Timber.d("Looks like you tried to create a job " + tag + " that is not declared in the Anc Job Creator");
                 return null;

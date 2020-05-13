@@ -1159,7 +1159,14 @@
                             "rules-file": "fp-visit-relevance-rules.yml"
                         }
                     }
-                }
+                },
+                "constraints": [
+                    {
+                        "type": "date",
+                        "ex": "lessThanEqualTo(., step1:visit_date)",
+                        "err": "date must be less than or equal to visit date"
+                    }
+                ]
             },
             {
                 "key": "implant_date",
@@ -1178,7 +1185,14 @@
                             "rules-file": "fp-visit-relevance-rules.yml"
                         }
                     }
-                }
+                },
+                "constraints": [
+                    {
+                        "type": "date",
+                        "ex": "lessThanEqualTo(., step1:visit_date)",
+                        "err": "date must be less than or equal to visit date"
+                    }
+                ]
             },
             {
                 "key": "last_injection_date",
@@ -1199,7 +1213,14 @@
                             "rules-file": "fp-visit-relevance-rules.yml"
                         }
                     }
-                }
+                },
+                "constraints": [
+                    {
+                        "type": "date",
+                        "ex": "lessThanEqualTo(., step1:visit_date)",
+                        "err": "date must be less than or equal to visit date"
+                    }
+                ]
             },
             {
                 "key": "sterilization_date",
@@ -1218,7 +1239,14 @@
                             "rules-file": "fp-visit-relevance-rules.yml"
                         }
                     }
-                }
+                },
+                "constraints": [
+                    {
+                        "type": "date",
+                        "ex": "lessThanEqualTo(., step1:visit_date)",
+                        "err": "date must be less than or equal to visit date"
+                    }
+                ]
             },
             {
                 "key": "reason_no_method",
@@ -1775,6 +1803,14 @@
                 "label_info_text": "The number of pregnancies, current and past, regardless of pregnancy outcome.",
                 "label_text_style": "normal",
                 "hint": "Number of pregnancies",
+                "v_numeric": {
+                    "value": "true",
+                    "err": ""
+                },
+                "v_min": {
+                    "value": "0",
+                    "err": ""
+                },
                 "relevance": {
                     "rules-engine": {
                         "ex-rules": {
@@ -1797,6 +1833,7 @@
                 "hint": "Number of births",
                 "label_info_text": "Including both live and stillbirths.",
                 "label_text_style": "normal",
+                "min_value": "0",
                 "relevance": {
                     "rules-engine": {
                         "ex-rules": {
@@ -1806,7 +1843,22 @@
                 },
                 "v_required": {
                     "value": "true",
-                    "err": "Field required"
+                    "err": "Field must be less than or equal to number of pregnancies"
+                },
+                "v_numeric": {
+                    "value": "true",
+                    "err": ""
+                },
+                "v_min": {
+                    "value": "0",
+                    "err": ""
+                },
+                "calculation": {
+                    "rules-engine": {
+                        "ex-rules": {
+                            "rules-file": "fp-visit-calculations-rules.yml"
+                        }
+                    }
                 }
             },
             {
@@ -1851,6 +1903,8 @@
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
                 "hint": "Date of delivery",
+                "min_date": "today-168d",
+                "max_date": "today",
                 "relevance": {
                     "rules-engine": {
                         "ex-rules": {
@@ -4053,7 +4107,7 @@
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "text": "Pregnancy cannot be ruled out. Perform a pregnancy test.",
-                "toaster_type": "problem",
+                "toaster_type": "warning",
                 "relevance": {
                     "rules-engine": {
                         "ex-rules": {
@@ -4242,7 +4296,7 @@
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "text": "Please obtain informed consent before proceeding with the method provision.",
-                "toaster_type": "problem",
+                "toaster_type": "warning",
                 "relevance": {
                     "rules-engine": {
                         "ex-rules": {
@@ -4311,7 +4365,8 @@
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "text": "Pelvic/genital examination needed",
-                "label_info_text": "A pelvic/genital examination is Class A: Essential and mandatory in all circumstances for safe and effective use of the contraceptive method.",
+                "toaster_info_text": "A pelvic/genital examination is Class A: Essential and mandatory in all circumstances for safe and effective use of the contraceptive method.",
+                "toaster_info_title": "Pelvic/genital examination needed",
                 "label_text_style": "normal",
                 "toaster_type": "info",
                 "relevance": {
@@ -4329,7 +4384,8 @@
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "text": "Blood pressure screening needed",
-                "label_info_text": "A blood pressure screening is Class A: Essential and mandatory in all circumstances for safe and effective use of the contraceptive method.",
+                "toaster_info_text": "A blood pressure screening is Class A: Essential and mandatory in all circumstances for safe and effective use of the contraceptive method.",
+                "toaster_info_title": "Blood pressure screening needed",
                 "label_text_style": "normal",
                 "toaster_type": "info",
                 "relevance": {
@@ -4347,7 +4403,8 @@
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "text": "STI risk assessment: medical history and physical examination needed",
-                "label_info_text": "A STI risk assessment: medical history and physical examination is Class A: Essential and mandatory in all circumstances for safe and effective use of the contraceptive method.",
+                "toaster_info_text": "A STI risk assessment: medical history and physical examination is Class A: Essential and mandatory in all circumstances for safe and effective use of the contraceptive method.",
+                "toaster_info_title": "STI risk assessment: medical history and physical examination needed",
                 "label_text_style": "normal",
                 "toaster_type": "info",
                 "relevance": {
@@ -4365,7 +4422,8 @@
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "text": "STI/HIV screening: laboratory tests needed",
-                "label_info_text": "A STI/HIV screening: laboratory tests is Class B: The examination or test contributes substantially to safe and effective use, but implementation may be considered within the public health and/or service context. The risk of not performing the examination or test should be balanced against the benefits of making the contraceptive method available, meaning they contributes substantially to safe and effective use.",
+                "toaster_info_text": "A STI/HIV screening: laboratory tests is Class B: The examination or test contributes substantially to safe and effective use, but implementation may be considered within the public health and/or service context. The risk of not performing the examination or test should be balanced against the benefits of making the contraceptive method available, meaning they contributes substantially to safe and effective use.",
+                "toaster_info_title": "STI/HIV screening: laboratory tests needed",
                 "label_text_style": "normal",
                 "toaster_type": "info",
                 "relevance": {
@@ -4383,7 +4441,8 @@
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "text": "Haemoglobin test needed",
-                "label_info_text": "A haemoglobin test is Class B: The examination or test contributes substantially to safe and effective use, but implementation may be considered within the public health and/or service context. The risk of not performing the examination or test should be balanced against the benefits of making the contraceptive method available, meaning they contributes substantially to safe and effective use.",
+                "toaster_info_text": "A haemoglobin test is Class B: The examination or test contributes substantially to safe and effective use, but implementation may be considered within the public health and/or service context. The risk of not performing the examination or test should be balanced against the benefits of making the contraceptive method available, meaning they contributes substantially to safe and effective use.",
+                "toaster_info_title": "Haemoglobin test needed",
                 "label_text_style": "normal",
                 "toaster_type": "info",
                 "relevance": {
@@ -4401,7 +4460,8 @@
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "text": "Blood pressure screening needed",
-                "label_info_text": "In healthy women, no examinations or tests are essential or mandatory before initiating this method. However, there is special consideration for blood pressure screening; it is desirable to have blood pressure measurements taken before initiation of this method. It is important to note that in settings where blood pressure measurements are unavailable, women should not be denied use of this method simply because their blood pressure cannot be measured.",
+                "toaster_info_text": "In healthy women, no examinations or tests are essential or mandatory before initiating this method. However, there is special consideration for blood pressure screening; it is desirable to have blood pressure measurements taken before initiation of this method. It is important to note that in settings where blood pressure measurements are unavailable, women should not be denied use of this method simply because their blood pressure cannot be measured.",
+                "toaster_info_title": "Blood pressure screening needed",
                 "label_text_style": "normal",
                 "toaster_type": "info",
                 "relevance": {
@@ -6065,7 +6125,7 @@
             },
             {
                 "key": "referral_reason",
-                "type": "native_radio",
+                "type": "check_box",
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
@@ -6235,7 +6295,6 @@
                 "openmrs_entity": "",
                 "openmrs_entity_id": "",
                 "openmrs_entity_parent": "",
-                "edit_type": "name",
                 "hint": "Referral notes",
                 "relevance": {
                     "rules-engine": {

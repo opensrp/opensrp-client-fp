@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.smartregister.commonregistry.CommonFtsObject;
 import org.smartregister.fp.common.domain.ClientDetail;
 import org.smartregister.fp.common.library.FPLibrary;
+import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.Utils;
 import org.smartregister.repository.BaseRepository;
@@ -183,4 +184,20 @@ public class PatientRepository extends BaseRepository {
                 new String[]{baseEntityId});
     }
 
+    public static void doArchive(String baseEntityId) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBConstantsUtils.KeyUtils.ARCHIVED, ConstantsUtils.YES);
+
+        // main table
+        getMasterRepository().getWritableDatabase().update(
+                getRegisterQueryProvider().getDemographicTable(),
+                contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
+                new String[]{baseEntityId});
+
+        // search table
+        getMasterRepository().getWritableDatabase().update(
+                CommonFtsObject.searchTableName(getRegisterQueryProvider().getDemographicTable()),
+                contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
+                new String[]{baseEntityId});
+    }
 }
