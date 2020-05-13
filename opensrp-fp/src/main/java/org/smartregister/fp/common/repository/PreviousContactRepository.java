@@ -387,7 +387,7 @@ public class PreviousContactRepository extends BaseRepository {
             }
         }
 
-        return previousContactFacts;
+        return null;
     }
 
     /**

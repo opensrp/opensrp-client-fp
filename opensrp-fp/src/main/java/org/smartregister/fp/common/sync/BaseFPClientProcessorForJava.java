@@ -45,23 +45,20 @@ import java.util.Map;
 
 import timber.log.Timber;
 
-/**
- * Created by ndegwamartin on 15/03/2018.
- */
-
-public class BaseAncClientProcessorForJava extends ClientProcessorForJava implements MiniClientProcessorForJava {
+public class BaseFPClientProcessorForJava extends ClientProcessorForJava implements MiniClientProcessorForJava {
     private HashSet<String> eventTypes = new HashSet<>();
+    private static BaseFPClientProcessorForJava instance;
 
-    public BaseAncClientProcessorForJava(Context context) {
+    public BaseFPClientProcessorForJava(Context context) {
         super(context);
     }
 
-    public static BaseAncClientProcessorForJava getInstance(Context context) {
+    public static BaseFPClientProcessorForJava getInstance(Context context) {
         if (instance == null) {
-            instance = new BaseAncClientProcessorForJava(context);
+            instance = new BaseFPClientProcessorForJava(context);
         }
 
-        return (BaseAncClientProcessorForJava) instance;
+        return instance;
     }
 
     @Override
@@ -214,8 +211,8 @@ public class BaseAncClientProcessorForJava extends ClientProcessorForJava implem
     @NotNull
     private String getContact(Event event) {
         String contactNo = "";
-        if (!TextUtils.isEmpty(event.getDetails().get(ConstantsUtils.SCHEDULE))) {
-            String[] contacts = event.getDetails().get(ConstantsUtils.SCHEDULE).split(" ");
+        if (!TextUtils.isEmpty(event.getDetails().get(ConstantsUtils.CONTACT))) {
+            String[] contacts = event.getDetails().get(ConstantsUtils.CONTACT).split(" ");
             if (contacts.length >= 2) {
                 int nextContact = Integer.parseInt(contacts[1]);
                 if (nextContact > 0) {
@@ -287,7 +284,7 @@ public class BaseAncClientProcessorForJava extends ClientProcessorForJava implem
                     processEvent(event, client, clientClassification);
                 }
                 break;
-            case ConstantsUtils.EventTypeUtils.SCHEDULE_VISIT:
+            case ConstantsUtils.EventTypeUtils.CONTACT_VISIT:
                 processVisit(event);
                 break;
             default:
@@ -337,7 +334,7 @@ public class BaseAncClientProcessorForJava extends ClientProcessorForJava implem
             eventTypes.add(ConstantsUtils.EventTypeUtils.REGISTRATION);
             eventTypes.add(ConstantsUtils.EventTypeUtils.UPDATE_REGISTRATION);
             eventTypes.add(ConstantsUtils.EventTypeUtils.QUICK_CHECK);
-            eventTypes.add(ConstantsUtils.EventTypeUtils.SCHEDULE_VISIT);
+            eventTypes.add(ConstantsUtils.EventTypeUtils.CONTACT_VISIT);
             eventTypes.add(ConstantsUtils.EventTypeUtils.CLOSE);
             eventTypes.add(ConstantsUtils.EventTypeUtils.SITE_CHARACTERISTICS);
         }

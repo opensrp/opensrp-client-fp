@@ -14,7 +14,7 @@ import org.smartregister.commonregistry.AllCommonsRepository;
 import org.smartregister.domain.UniqueId;
 import org.smartregister.fp.common.event.PatientRemovedEvent;
 import org.smartregister.fp.common.library.FPLibrary;
-import org.smartregister.fp.common.sync.BaseAncClientProcessorForJava;
+import org.smartregister.fp.common.sync.BaseFPClientProcessorForJava;
 import org.smartregister.fp.common.util.AppExecutors;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
@@ -255,7 +255,7 @@ public class RegisterInteractor implements RegisterContract.Interactor {
         return clientProcessorForJava;
     }
 
-    public void setClientProcessorForJava(BaseAncClientProcessorForJava clientProcessorForJava) {
+    public void setClientProcessorForJava(BaseFPClientProcessorForJava clientProcessorForJava) {
         this.clientProcessorForJava = clientProcessorForJava;
     }
 

@@ -96,7 +96,6 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
 
             String nextContactVisitDate = Utils.getMethodScheduleDate(methodName, isFirst);
             ClientDetail clientDetail = getClientDetails(baseEntityId, nextContactVisitDate, getNextContact(clientProfileDetail));
-
             // update patient repo
             PatientRepository.updateContactVisitDetails(clientDetail, true);
             PatientRepository.updateNextContactDate(nextContactVisitDate, baseEntityId);
@@ -137,7 +136,6 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
     }
 
 
-
     private String getCurrentContactState(String baseEntityId) throws JSONException {
         List<PreviousContact> previousContactList = getPreviousContactRepository().getPreviousContacts(baseEntityId, null);
         JSONObject stateObject = null;
@@ -151,8 +149,6 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
 
         return stateObject != null ? stateObject.toString() : null;
     }
-
-
 
 
     protected PreviousContactRepository getPreviousContactRepository() {

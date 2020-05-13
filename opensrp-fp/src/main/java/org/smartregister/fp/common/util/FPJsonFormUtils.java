@@ -739,26 +739,20 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         return "";
     }
 
-    public static Pair<Event, Event> createContactVisitEvent(Map<String, String> womanDetails) {
+    public static Pair<Event, Event> createContactVisitEvent(Map<String, String> clientDetail) {
 
         try {
-            String contactNo = womanDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
-            String contactStartDate = womanDetails.get(DBConstantsUtils.KeyUtils.VISIT_START_DATE);
-            String baseEntityId = womanDetails.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID);
+            String contactNo = clientDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
+            String contactStartDate = clientDetail.get(DBConstantsUtils.KeyUtils.VISIT_DATE);
+            String baseEntityId = clientDetail.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID);
 
             Event contactVisitEvent = (Event) new Event().withBaseEntityId(baseEntityId).withEventDate(new Date())
-                    .withEventType(ConstantsUtils.EventTypeUtils.SCHEDULE_VISIT).withEntityType(DBConstantsUtils.CONTACT_ENTITY_TYPE)
+                    .withEventType(ConstantsUtils.EventTypeUtils.CONTACT_VISIT).withEntityType(DBConstantsUtils.CONTACT_ENTITY_TYPE)
                     .withFormSubmissionId(FPJsonFormUtils.generateRandomUUIDString())
                     .withDateCreated(getContactStartDate(contactStartDate));
 
-            String currentContactNo;
-            if (womanDetails.get(ConstantsUtils.REFERRAL) == null) {
-                currentContactNo = ConstantsUtils.SCHEDULE + " " + contactNo;
-            } else {
-                currentContactNo = ConstantsUtils.SCHEDULE + " " + womanDetails.get(ConstantsUtils.REFERRAL);
-            }
-            contactVisitEvent.addDetails(ConstantsUtils.SCHEDULE, currentContactNo);
-            contactVisitEvent.addDetails(ConstantsUtils.OPEN_TEST_TASKS, String.valueOf(getOpenTasks(baseEntityId)));
+            String currentContactNo = clientDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
+            contactVisitEvent.addDetails(ConstantsUtils.CONTACT, currentContactNo);
 
             tagSyncMetadata(FPLibrary.getInstance().getContext().userService().getAllSharedPreferences(), contactVisitEvent);
 
@@ -770,13 +764,12 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
 
             JSONObject attributes = clientForm.getJSONObject(ConstantsUtils.JsonFormKeyUtils.ATTRIBUTES);
             attributes.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, contactNo);
-            attributes.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE, womanDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE));
+            attributes.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE, clientDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE));
             attributes.put(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE,
-                    womanDetails.get(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE));
-            attributes.put(DBConstantsUtils.KeyUtils.CONTACT_STATUS, womanDetails.get(DBConstantsUtils.KeyUtils.CONTACT_STATUS));
-            attributes.put(DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT, womanDetails.get(DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT));
-            attributes.put(DBConstantsUtils.KeyUtils.RED_FLAG_COUNT, womanDetails.get(DBConstantsUtils.KeyUtils.RED_FLAG_COUNT));
-            attributes.put(DBConstantsUtils.KeyUtils.EDD, womanDetails.get(DBConstantsUtils.KeyUtils.EDD));
+                    clientDetail.get(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE));
+            attributes.put(DBConstantsUtils.KeyUtils.CONTACT_STATUS, clientDetail.get(DBConstantsUtils.KeyUtils.CONTACT_STATUS));
+            attributes.put(DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT, clientDetail.get(DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT));
+            attributes.put(DBConstantsUtils.KeyUtils.RED_FLAG_COUNT, clientDetail.get(DBConstantsUtils.KeyUtils.RED_FLAG_COUNT));
             clientForm.put(ConstantsUtils.JsonFormKeyUtils.ATTRIBUTES, attributes);
 
             FormTag formTag = getFormTag(FPLibrary.getInstance().getContext().allSharedPreferences());
