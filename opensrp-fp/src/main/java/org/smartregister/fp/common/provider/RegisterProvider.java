@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
-import org.smartregister.commonregistry.CommonPersonObject;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.commonregistry.CommonRepository;
 import org.smartregister.cursoradapter.RecyclerViewProvider;
@@ -20,6 +20,7 @@ import org.smartregister.fp.common.domain.ButtonAlertStatus;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.Utils;
+import org.smartregister.fp.features.home.schedules.SchedulesEnum;
 import org.smartregister.fp.features.home.view.HomeRegisterFragment;
 import org.smartregister.view.contract.SmartRegisterClient;
 import org.smartregister.view.contract.SmartRegisterClients;
@@ -32,9 +33,9 @@ import org.smartregister.view.viewholder.OnClickFormLauncher;
 import java.text.MessageFormat;
 import java.util.Set;
 
-/**
- * Created by keyman on 26/06/2018.
- */
+import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.DD_MM_YYYY;
+import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.YYYY_MM_DD;
+
 
 public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.RegisterViewHolder> {
     private final LayoutInflater inflater;
@@ -44,7 +45,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
     private View.OnClickListener paginationClickListener;
 
     private Context context;
-    private CommonRepository commonRepository;
 
     public RegisterProvider(Context context, CommonRepository commonRepository, Set visibleColumns,
                             View.OnClickListener onClickListener, View.OnClickListener paginationClickListener) {
@@ -56,7 +56,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         this.paginationClickListener = paginationClickListener;
 
         this.context = context;
-        this.commonRepository = commonRepository;
     }
 
     @Override
@@ -65,8 +64,9 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         if (visibleColumns.isEmpty()) {
             populatePatientColumn(pc, client, viewHolder);
             populateIdentifierColumn(pc, viewHolder);
-            populateAlertButton(pc, viewHolder);
+            populateAlertButtonAndMethodExit(pc, viewHolder);
             populateMethodExitColumn(pc, viewHolder);
+
         }
     }
 
@@ -154,31 +154,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
 
         View patient = viewHolder.patientColumn;
         attachPatientOnclickListener(patient, client);
-
-
-        View dueButton = viewHolder.followupBtn;
-        attachAlertButtonOnclickListener(dueButton, client);
-
-        /*
-        String redFlagCountRaw = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.RED_FLAG_COUNT, false);
-        String yellowFlagCountRaw = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT, false);
-
-        int redFlagCount = !TextUtils.isEmpty(redFlagCountRaw) ? Integer.valueOf(redFlagCountRaw) : 0;
-        int yellowFlagCount = !TextUtils.isEmpty(yellowFlagCountRaw) ? Integer.valueOf(yellowFlagCountRaw) : 0;
-        int totalFlagCount = yellowFlagCount + redFlagCount;
-
-        TextView riskLayout = viewHolder.risk;
-
-        if (totalFlagCount > 0) {
-            riskLayout.setCompoundDrawablesWithIntrinsicBounds(
-                    redFlagCount > 0 ? R.drawable.ic_red_flag : R.drawable.ic_yellow_flag, 0, 0, 0);
-            riskLayout.setText(String.valueOf(totalFlagCount));
-            riskLayout.setVisibility(View.VISIBLE);
-
-            attachRiskLayoutOnclickListener(riskLayout, client);
-        } else {
-            riskLayout.setVisibility(View.GONE);
-        }*/
     }
 
     private void populateIdentifierColumn(CommonPersonObjectClient pc, RegisterViewHolder viewHolder) {
@@ -186,21 +161,38 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         fillValue(viewHolder.ancId, String.format(context.getString(R.string.anc_id_text), fpId));
     }
 
-    private void populateAlertButton(CommonPersonObjectClient pc, RegisterViewHolder viewHolder) {
-        if (commonRepository != null) {
-            CommonPersonObject commonPersonObject = commonRepository.findByBaseEntityId(pc.entityId());
-            if (commonPersonObject != null) {
-                ButtonAlertStatus buttonAlertStatus = Utils.getButtonAlertStatus(pc.getColumnmaps(), context, false);
-                Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus);
+    private void populateAlertButtonAndMethodExit(CommonPersonObjectClient pc, RegisterViewHolder viewHolder) {
 
-            } else {
-                viewHolder.followupBtn.setVisibility(View.GONE);
+        String baseEntityId = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, false);
+        String nextContact = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.NEXT_CONTACT, false);
+        String nextContactDate = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE, false);
+
+        if (!baseEntityId.isEmpty() && nextContact != null && !nextContact.isEmpty()) {
+            // user visit exists
+            String methodExitKey = Utils.getMapValue(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, baseEntityId, Integer.parseInt(nextContact));
+            String methodName = Utils.getMethodName(methodExitKey);
+            if (methodName != null && !methodName.isEmpty()) {
+                // populate method exit
+                viewHolder.methodExitTv.setText(methodName);
+                // check non trigger events
+                if (Utils.checkNonTriggerEvents(methodName)) {
+                    //  populate alert status
+                    for (SchedulesEnum schedulesEnum : SchedulesEnum.values()) {
+                        if (schedulesEnum.getScheduleModel().getTriggerEventTag().equals(methodName)) {
+                            String triggerDate = Utils.getMapValue(schedulesEnum.getScheduleModel().getTriggerDateTag(), baseEntityId, Integer.parseInt(nextContact));
+                            triggerDate = Utils.formatDateToPattern(triggerDate, DD_MM_YYYY, YYYY_MM_DD);
+                            ButtonAlertStatus buttonAlertStatus = Utils.getButtonFollowupStatus(triggerDate, schedulesEnum.getScheduleModel(), baseEntityId, nextContactDate);
+                            if (StringUtils.isNotEmpty(nextContactDate))
+                                Utils.processFollowupVisitButton(context, viewHolder.followupBtn, buttonAlertStatus, baseEntityId, pc.getColumnmaps());
+                            break;
+                        }
+                    }
+                }
             }
         }
-
-//     attachSyncOnclickListener(viewHolder.sync, pc);
     }
 
+    //     attachSyncOnclickListener(viewHolder.sync, pc);
     public static void fillValue(TextView v, String value) {
         if (v != null) v.setText(value);
 
@@ -210,12 +202,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         view.setOnClickListener(onClickListener);
         view.setTag(client);
         view.setTag(R.id.VIEW_ID, HomeRegisterFragment.CLICK_VIEW_NORMAL);
-    }
-
-    private void attachAlertButtonOnclickListener(View view, SmartRegisterClient client) {
-        view.setOnClickListener(onClickListener);
-        view.setTag(client);
-        view.setTag(R.id.VIEW_ID, HomeRegisterFragment.CLICK_VIEW_ALERT_STATUS);
     }
 
     private void attachRiskLayoutOnclickListener(View view, SmartRegisterClient client) {

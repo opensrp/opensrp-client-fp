@@ -1,0 +1,15 @@
+---
+name: after_eight
+description: after eight weeks
+priority: 1
+condition: "scheduleRule.isFirst"
+actions:
+  - "scheduleRule.nextContactVisitDate = scheduleRule.calculateNextContactVisitDate(true)"
+---
+name: after_six
+description: after six weeks
+priority: 2
+condition: "!scheduleRule.isFirst"
+actions:
+  - "scheduleRule.nextContactVisitDate = scheduleRule.calculateNextContactVisitDate(false)"
+---

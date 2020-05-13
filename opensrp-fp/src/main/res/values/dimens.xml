@@ -154,4 +154,10 @@
     <dimen name="profile_overview_label_margin_top">24dp</dimen>
     <dimen name="profile_overview_text_margin_start">12dp</dimen>
     <dimen name="profile_overview_label_margin_start">24dp</dimen>
+    //
+    <dimen name="profile_visit_button_padding_start">32dp</dimen>
+    <dimen name="profile_visit_button_padding_end">32dp</dimen>
+    <dimen name="profile_visit_button_padding_top">12dp</dimen>
+    <dimen name="profile_visit_button_padding_bottom">12dp</dimen>
+    <dimen name="profile_visit_button_radius">21dp</dimen>
 </resources>

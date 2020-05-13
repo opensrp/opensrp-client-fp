@@ -5,9 +5,6 @@ import org.smartregister.fp.common.util.ConstantsUtils;
 
 //All date formats ISO 8601 yyyy-mm-dd
 
-/**
- * Created by ndegwamartin on 09/11/2018.
- */
 public class AlertRule {
 
     public static final String RULE_KEY = "alertRule";

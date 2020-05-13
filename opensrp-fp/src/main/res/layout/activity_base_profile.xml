@@ -156,12 +156,12 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/collapsing_toolbar_appbarlayout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constrainedHeight="true"
+            app:layout_constraintTop_toBottomOf="@+id/collapsing_toolbar_appbarlayout"
             app:layout_constraintVertical_chainStyle="packed">
 
             <androidx.viewpager.widget.ViewPager
@@ -178,23 +178,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="@string/start_visit"
-        style="@style/CustomFontTextViewStyle.ClientList.Medium"
-        android:textSize="16sp"
         android:gravity="center"
-        android:textColor="@color/btn_start_visit"
-        android:background="@drawable/btn_start_visit_bg"
+        android:paddingStart="@dimen/profile_visit_button_padding_start"
+        android:paddingTop="@dimen/profile_visit_button_padding_top"
+        android:paddingEnd="@dimen/profile_visit_button_padding_end"
+        android:paddingBottom="@dimen/profile_visit_button_padding_bottom"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        tools:text="@string/followup_button_dummy_text" />
 
-    <include
-        android:id="@+id/status_button"
-        layout="@layout/footer_due_button"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

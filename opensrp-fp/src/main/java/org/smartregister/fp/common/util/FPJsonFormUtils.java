@@ -739,37 +739,30 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         return "";
     }
 
-    public static Pair<Event, Event> createContactVisitEvent(List<String> formSubmissionIDs,
-                                                             Map<String, String> womanDetails) {
-        if (formSubmissionIDs.size() < 1 && womanDetails.get(ConstantsUtils.REFERRAL) == null) {
-            return null;
-        }
+    public static Pair<Event, Event> createContactVisitEvent(Map<String, String> womanDetails) {
 
         try {
-
             String contactNo = womanDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
             String contactStartDate = womanDetails.get(DBConstantsUtils.KeyUtils.VISIT_START_DATE);
             String baseEntityId = womanDetails.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID);
 
             Event contactVisitEvent = (Event) new Event().withBaseEntityId(baseEntityId).withEventDate(new Date())
-                    .withEventType(ConstantsUtils.EventTypeUtils.CONTACT_VISIT).withEntityType(DBConstantsUtils.CONTACT_ENTITY_TYPE)
+                    .withEventType(ConstantsUtils.EventTypeUtils.SCHEDULE_VISIT).withEntityType(DBConstantsUtils.CONTACT_ENTITY_TYPE)
                     .withFormSubmissionId(FPJsonFormUtils.generateRandomUUIDString())
                     .withDateCreated(getContactStartDate(contactStartDate));
 
             String currentContactNo;
             if (womanDetails.get(ConstantsUtils.REFERRAL) == null) {
-                currentContactNo = ConstantsUtils.CONTACT + " " + contactNo;
+                currentContactNo = ConstantsUtils.SCHEDULE + " " + contactNo;
             } else {
-                currentContactNo = ConstantsUtils.CONTACT + " " + womanDetails.get(ConstantsUtils.REFERRAL);
+                currentContactNo = ConstantsUtils.SCHEDULE + " " + womanDetails.get(ConstantsUtils.REFERRAL);
             }
-            contactVisitEvent.addDetails(ConstantsUtils.CONTACT, currentContactNo);
-            contactVisitEvent.addDetails(ConstantsUtils.FORM_SUBMISSION_IDS, formSubmissionIDs.toString());
+            contactVisitEvent.addDetails(ConstantsUtils.SCHEDULE, currentContactNo);
             contactVisitEvent.addDetails(ConstantsUtils.OPEN_TEST_TASKS, String.valueOf(getOpenTasks(baseEntityId)));
 
             tagSyncMetadata(FPLibrary.getInstance().getContext().userService().getAllSharedPreferences(), contactVisitEvent);
 
             PatientRepository.updateContactVisitStartDate(baseEntityId, null);//reset contact visit date
-
 
             //Update client
             EventClientRepository db = FPLibrary.getInstance().getEventClientRepository();

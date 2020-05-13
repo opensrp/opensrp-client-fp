@@ -1,9 +1,5 @@
 package org.smartregister.fp.common.util;
 
-/**
- * Created by ndegwamartin on 14/03/2018.
- */
-
 public abstract class ConstantsUtils {
     public static final String SQLITE_DATE_TIME_FORMAT = "yyyy-MM-dd";
     public static final String CONTACT_DATE_FORMAT = "dd/MM/yyyy";
@@ -40,7 +36,7 @@ public abstract class ConstantsUtils {
     public static final String DOB = "dob";
     public static final String PHONE_NUMBER = "phoneNumber";
     public static final String ALT_CONTACT_NAME = "altContactName";
-    public static final String CONTACT = "Contact";
+    public static final String SCHEDULE = "Schedule";
     public static final String CURRENT_OPENSRP_ID = "current_opensrp_id";
     public static final String FORM_SUBMISSION_IDS = "form_submission_ids";
     public static final String REFERRAL = "referral";
@@ -107,7 +103,7 @@ public abstract class ConstantsUtils {
         public static final String QUICK_CHECK = "Quick Check";
         public static final String CLOSE = "Close FP Record";
         public static final String SITE_CHARACTERISTICS = "Site Characteristics";
-        public static final String CONTACT_VISIT = "Contact Visit";
+        public static final String SCHEDULE_VISIT = "Schedule Visit";
     }
 
     public static class JsonFormUtils {
@@ -141,6 +137,8 @@ public abstract class ConstantsUtils {
         public static final String CLIENT_ID = "client_id";
         public static final String STEP1 = "step1";
         public static final String FIELDS = "fields";
+        public static final String STILL_ON_METHOD = "still_on_method";
+        public static final String FP_ID = "client_id";
         public static final String STEP7 = "step7";
         public static final String METHOD_EXIT = "method_exit";
         public static final String IUD_INSERTION_DATE = "iud_insertion_date";
@@ -161,6 +159,52 @@ public abstract class ConstantsUtils {
         public static final String CONTACT = "contact";
         public static final String JSON = "json";
     }
+
+    public static class SchedulesTriggerEventsUtils {
+        public static final String COPPER_BEARING_INTRAUTERINE_DEVICES = "Copper-bearing intrauterine devices (Cu-IUDs)";
+        public static final String LEVONORGESTREL_IUD = "Levonorgestrel IUD (LNG-IUD)";
+        public static final String DMPA_IM = "DMPA-IM (DMPA, administered intramuscularly)";
+        public static final String DMPA_SC = "DMPA-SC (DMPA, administered subcutaneously)";
+        public static final String NET_EN_NORETHISTERONE_ENANTHATE = "NET-EN norethisterone enanthate";
+        public static final String PROGESTOGEN_ONLY_PILLS = "Progestogen-only pills (POP)";
+        public static final String COMBINED_ORAL_CONTRACEPTIVES = "Combined oral contraceptives (COCs)";
+        public static final String COMBINED_CONTRACEPTIVE_PATCH = "Combined contraceptive patch";
+        public static final String COMBINED_CONTRACEPTIVE_VAGINAL_RING = "Combined contraceptive vaginal ring (CVR)";
+        public static final String PROGESTERONE_RELEASING_VAGINAL_RING = "Progesterone-releasing vaginal ring (PVR)";
+        public static final String MALE_STERILIZATION = "Male sterilization";
+        public static final String FEMALE_STERILIZATION = "Female sterilization";
+    }
+
+    public static class SchedulesNonTriggerEventsUtils {
+        public static final String ETONOGESTREL_ETG_ONE_RO = "Etonogestrel (ETG) one-rod";
+        public static final String LEVONORGESTREL_LNG_TWO_RO = "Levonorgestrel (LNG) two-rod";
+        public static final String LACTATIONAL_AMENORRHEA_METHOD_LAM = "Lactational amenorrhea method (LAM)";
+        public static final String MALE_CONDOM = "Male Condoms";
+        public static final String FEMALE_CONDOM = "Female Condoms";
+        public static final String EMERGENCY_CONTRACEPTIVE_PILLS_ECPS = "Emergency contraceptive pills (ECPs)";
+        public static final String FERTILITY_AWARENESS_BASED_METHODS_FAB = "Fertility awareness-based methods (FAB)";
+        public static final String WITHDRAWAL = "Withdrawal";
+    }
+
+    public static class SchedulesTriggerDatesUtils {
+        public static final String STERILIZATION_DATE = "sterilization_date";
+        public static final String VISIT_DATE = "visit_date";
+        public static final String LAST_INJECTION_DATE = "last_injection_date";
+        public static final String IUD_INSERTION_DATE = "iud_insertion_date";
+    }
+
+    public static class ScheduleUtils {
+        public static final String ONCE_OFF = "once_off";
+        public static final String RECURRING = "recurring";
+    }
+
+    public static class ProfileDateStatusUtils {
+        public static final int BOTH_DATE_EQUAL = 0;
+        public static final int FIRST_DATE_IS_GREATER = -1;
+        public static final int SECOND_DATE_IS_GREATER = 1;
+        public static final int ANY_NULL_DATE = -2;
+    }
+
 
     public static class PrefKeyUtils {
         public static final String SITE_CHARACTERISTICS = "site_characteristics";
@@ -219,9 +263,16 @@ public abstract class ConstantsUtils {
 
     }
 
+    public static class DateFormatPatternUtils {
+        public static final String DD_MM_YYYY = "dd-MM-yyyy";
+        public static final String FOLLOWUP_VISIT_BUTTON_FORMAT = "dd MMM yyyy";
+        public static final String YYYY_MM_DD = "yyyy-MM-dd";
+    }
+
     public static class RulesFileUtils {
-        public static final String CONTACT_RULES = "contact-rules.yml";
+        public static final String VISIT_SCHEDULE_RULES = "visit-schedule-rules.yml";
         public static final String ALERT_RULES = "alert-rules.yml";
+        public static final String FP_ALERT_RULES = "fp-alert-rules.yml";
 
     }
 

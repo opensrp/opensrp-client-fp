@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -20,20 +19,15 @@ import org.robolectric.RuntimeEnvironment;
 import org.smartregister.fp.activity.BaseUnitTest;
 import org.smartregister.fp.common.helper.FPRulesEngineHelper;
 import org.smartregister.fp.common.rule.AlertRule;
-import org.smartregister.fp.common.rule.ContactRule;
 import org.smartregister.fp.common.util.ConstantsUtils;
 
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by ndegwamartin on 09/11/2018.
- */
+
 public class FPRulesEngineHelperTest extends BaseUnitTest {
 
     private static final String ALERT_RULE_FIELD_TODAY_DATE = "todayDate";
@@ -162,96 +156,6 @@ public class FPRulesEngineHelperTest extends BaseUnitTest {
         assertEquals(ConstantsUtils.AlertStatusUtils.EXPIRED, buttonAlertStatus);
     }
 
-    @Test
-    public void testGetContactVisitScheduleInvokesInferentialRulesEngineProcessInferentialRulesWithCorrectParams() {
-
-        ContactRule contactRule = new ContactRule(20, true, DUMMY_BASE_ENTITY_ID);
-
-        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
-        List<Integer> scheduleWeeksList = fpRulesEngineHelperSpy
-                .getContactVisitSchedule(contactRule, ConstantsUtils.RulesFileUtils.CONTACT_RULES);
-
-        Assert.assertNotNull(scheduleWeeksList);
-
-        Mockito.verify(fpRulesEngineHelperSpy)
-                .processInferentialRules(ArgumentMatchers.any(Rules.class), ArgumentMatchers.any(Facts.class));
-
-    }
-
-    @Test
-    public void testGetContactVisitScheduleGeneratesCorrectScheduleAt4Weeks() {
-
-        ContactRule contactRule = new ContactRule(4, true, DUMMY_BASE_ENTITY_ID);
-
-        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
-        List<Integer> scheduleWeeksList = fpRulesEngineHelperSpy
-                .getContactVisitSchedule(contactRule, ConstantsUtils.RulesFileUtils.CONTACT_RULES);
-
-        Assert.assertNotNull(scheduleWeeksList);
-
-        assertEquals(Arrays.asList(12, 20, 26, 30, 34, 36, 38, 40, 41), scheduleWeeksList);
-
-    }
-
-    @Test
-    public void testGetContactVisitScheduleGeneratesCorrectScheduleAt12Weeks() {
-
-        ContactRule contactRule = new ContactRule(12, true, DUMMY_BASE_ENTITY_ID);
-
-        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
-        List<Integer> scheduleWeeksList = fpRulesEngineHelperSpy
-                .getContactVisitSchedule(contactRule, ConstantsUtils.RulesFileUtils.CONTACT_RULES);
-
-        Assert.assertNotNull(scheduleWeeksList);
-
-        assertEquals(Arrays.asList(20, 26, 30, 34, 36, 38, 40, 41), scheduleWeeksList);
-
-    }
-
-    @Test
-    public void testGetContactVisitScheduleGeneratesCorrectScheduleAt20Weeks() {
-
-        ContactRule contactRule = new ContactRule(20, true, DUMMY_BASE_ENTITY_ID);
-
-        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
-        List<Integer> scheduleWeeksList = fpRulesEngineHelperSpy
-                .getContactVisitSchedule(contactRule, ConstantsUtils.RulesFileUtils.CONTACT_RULES);
-
-        Assert.assertNotNull(scheduleWeeksList);
-
-        assertEquals(Arrays.asList(26, 30, 34, 36, 38, 40, 41), scheduleWeeksList);
-
-    }
-
-    @Test
-    public void testGetContactVisitScheduleGeneratesCorrectScheduleAt28Weeks() {
-
-        ContactRule contactRule = new ContactRule(28, true, DUMMY_BASE_ENTITY_ID);
-
-        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
-        List<Integer> scheduleWeeksList = fpRulesEngineHelperSpy
-                .getContactVisitSchedule(contactRule, ConstantsUtils.RulesFileUtils.CONTACT_RULES);
-
-        Assert.assertNotNull(scheduleWeeksList);
-
-        assertEquals(Arrays.asList(32, 34, 36, 38, 40, 41), scheduleWeeksList);
-
-    }
-
-    @Test
-    public void testGetContactVisitScheduleGeneratesCorrectScheduleAt40Weeks() {
-
-        ContactRule contactRule = new ContactRule(40, true, DUMMY_BASE_ENTITY_ID);
-
-        FPRulesEngineHelper fpRulesEngineHelperSpy = Mockito.spy(fpRulesEngineHelper);
-        List<Integer> scheduleWeeksList = fpRulesEngineHelperSpy
-                .getContactVisitSchedule(contactRule, ConstantsUtils.RulesFileUtils.CONTACT_RULES);
-
-        Assert.assertNotNull(scheduleWeeksList);
-
-        assertEquals(Arrays.asList(40, 41), scheduleWeeksList);
-
-    }
 
     @Test
     public void testStripGaNumber() {

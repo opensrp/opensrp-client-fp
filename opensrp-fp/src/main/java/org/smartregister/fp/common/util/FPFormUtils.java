@@ -47,6 +47,7 @@ public class FPFormUtils extends FormUtils {
         return result;
     }
 
+
     public static String extractItemValue(String type, JSONArray valueItemJSONArray) throws JSONException {
         String result = "";
         if (StringUtils.isNoneBlank(type)) {
