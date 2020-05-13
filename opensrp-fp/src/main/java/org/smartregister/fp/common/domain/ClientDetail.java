@@ -1,9 +1,6 @@
 package org.smartregister.fp.common.domain;
 
-/**
- * Created by ndegwamartin on 14/01/2019.
- */
-public class WomanDetail {
+public class ClientDetail {
     private Integer nextContact;
 
     private String baseEntityId;

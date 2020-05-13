@@ -144,4 +144,37 @@
         <item name="android:lineSpacingMultiplier">1.23</item>
     </style>
 
+    <style name="visitNormalButton">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textColor">@color/spanish_grey</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:text">@string/followup_date</item>
+        <item name="android:lineSpacingMultiplier">1.23</item>
+    </style>
+
+    <style name="btnStartVisitDueStyle">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textColor">@color/text_color_scooter</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:lineSpacingMultiplier">1.23</item>
+    </style>
+
+    <style name="btnStartVisitOriginalDueStyle">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:lineSpacingMultiplier">1.23</item>
+    </style>
+
+    <style name="btnStartVisitStyle">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textColor">@color/text_color_scooter</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:lineSpacingMultiplier">1.23</item>
+    </style>
+
+
 </resources>

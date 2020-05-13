@@ -214,8 +214,8 @@ public class BaseAncClientProcessorForJava extends ClientProcessorForJava implem
     @NotNull
     private String getContact(Event event) {
         String contactNo = "";
-        if (!TextUtils.isEmpty(event.getDetails().get(ConstantsUtils.CONTACT))) {
-            String[] contacts = event.getDetails().get(ConstantsUtils.CONTACT).split(" ");
+        if (!TextUtils.isEmpty(event.getDetails().get(ConstantsUtils.SCHEDULE))) {
+            String[] contacts = event.getDetails().get(ConstantsUtils.SCHEDULE).split(" ");
             if (contacts.length >= 2) {
                 int nextContact = Integer.parseInt(contacts[1]);
                 if (nextContact > 0) {
@@ -287,7 +287,7 @@ public class BaseAncClientProcessorForJava extends ClientProcessorForJava implem
                     processEvent(event, client, clientClassification);
                 }
                 break;
-            case ConstantsUtils.EventTypeUtils.CONTACT_VISIT:
+            case ConstantsUtils.EventTypeUtils.SCHEDULE_VISIT:
                 processVisit(event);
                 break;
             default:
@@ -337,7 +337,7 @@ public class BaseAncClientProcessorForJava extends ClientProcessorForJava implem
             eventTypes.add(ConstantsUtils.EventTypeUtils.REGISTRATION);
             eventTypes.add(ConstantsUtils.EventTypeUtils.UPDATE_REGISTRATION);
             eventTypes.add(ConstantsUtils.EventTypeUtils.QUICK_CHECK);
-            eventTypes.add(ConstantsUtils.EventTypeUtils.CONTACT_VISIT);
+            eventTypes.add(ConstantsUtils.EventTypeUtils.SCHEDULE_VISIT);
             eventTypes.add(ConstantsUtils.EventTypeUtils.CLOSE);
             eventTypes.add(ConstantsUtils.EventTypeUtils.SITE_CHARACTERISTICS);
         }
