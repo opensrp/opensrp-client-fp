@@ -11,9 +11,11 @@ import net.sqlcipher.database.SQLiteDatabase;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jeasy.rules.api.Facts;
+import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.model.PreviousContactsSummaryModel;
 import org.smartregister.fp.common.util.ConstantsUtils;
+import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.FPFormUtils;
 import org.smartregister.fp.common.util.Utils;
 import org.smartregister.repository.BaseRepository;
@@ -467,6 +469,37 @@ public class PreviousContactRepository extends BaseRepository {
                     historyMap.put("base_entity_id", cursor.getString(cursor.getColumnIndex("base_entity_id")));
                     historyMap.put("visit_date", cursor.getString(cursor.getColumnIndex("visit_date")));
                     historyMap.put("method_exit", cursor.getString(cursor.getColumnIndex("method_exit")));
+                    data.add(historyMap);
+                }
+            }
+        }
+        catch (Exception ex) {
+            Timber.e(ex);
+        }
+
+        return data;
+    }
+
+    public List<HashMap<String, String>> getLatestSterilizeContacts() {
+        List<HashMap<String, String>> data = new ArrayList<>();
+
+        try {
+
+            String query = "SELECT pc." + DBConstantsUtils.KeyUtils.ID_LOWER_CASE + ", MAX(pc." + ConstantsUtils.CONTACT_NO + ") as " + ConstantsUtils.CONTACT_NO + ", pc." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + ", " +
+                    "(SELECT ipc." + ConstantsUtils.KeyUtils.VALUE + " FROM " + TABLE_NAME + " AS ipc WHERE ipc." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = pc." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " AND ipc." + ConstantsUtils.KeyUtils.KEY + " = '" + ConstantsUtils.JsonFormFieldUtils.STERILIZATION_DATE + "') AS " + ConstantsUtils.JsonFormFieldUtils.STERILIZATION_DATE + " " +
+                    "FROM " + TABLE_NAME + " AS pc " +
+                    "LEFT JOIN " + FPLibrary.getInstance().getRegisterQueryProvider().getDemographicTable() + " AS ec ON ec." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = pc." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " " +
+                    "WHERE pc." + ConstantsUtils.KeyUtils.KEY + " = '" + ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT + "' AND (pc." + ConstantsUtils.KeyUtils.VALUE + " = '" + ConstantsUtils.JsonFormFieldUtils.MALE_STERILIZATION + "' OR pc." + ConstantsUtils.KeyUtils.VALUE + " = '" + ConstantsUtils.JsonFormFieldUtils.FEMALE_STERILIZATION + "') AND ec." + DBConstantsUtils.KeyUtils.ARCHIVED + " IS NULL " +
+                    "GROUP BY pc." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID;
+            Timber.d(query);
+            Cursor cursor = getReadableDatabase().rawQuery(query, null);
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    HashMap<String, String> historyMap = new HashMap<>();
+                    historyMap.put(DBConstantsUtils.KeyUtils.ID_LOWER_CASE, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.ID_LOWER_CASE)));
+                    historyMap.put(ConstantsUtils.CONTACT_NO, cursor.getString(cursor.getColumnIndex(ConstantsUtils.CONTACT_NO)));
+                    historyMap.put(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID)));
+                    historyMap.put(ConstantsUtils.JsonFormFieldUtils.STERILIZATION_DATE, cursor.getString(cursor.getColumnIndex(ConstantsUtils.JsonFormFieldUtils.STERILIZATION_DATE)));
                     data.add(historyMap);
                 }
             }
