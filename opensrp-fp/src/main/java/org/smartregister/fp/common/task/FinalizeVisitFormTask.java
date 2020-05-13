@@ -8,13 +8,12 @@ import android.text.TextUtils;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.rules.RuleConstant;
 
-import org.joda.time.LocalDate;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.fp.R;
+import org.smartregister.fp.common.domain.ClientDetail;
 import org.smartregister.fp.common.domain.Contact;
-import org.smartregister.fp.common.domain.WomanDetail;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.repository.PreviousContactRepository;
@@ -31,6 +30,7 @@ import java.util.Map;
 
 import timber.log.Timber;
 
+import static org.smartregister.fp.common.util.ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT;
 import static org.smartregister.fp.common.util.Utils.isCheckboxValueEmpty;
 
 public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String, String>> {
@@ -66,28 +66,39 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
     @Override
     protected HashMap<String, String> doInBackground(Void... voids) {
 
+        // add record to partial contact table
         contact.setJsonForm(fpFormUtils.addFormDetails(jsonCurrentState));
         contact.setContactNumber(contactNo);
         FPFormUtils.persistPartial(baseEntityId, contact);
 
-        HashMap<String, String> clientProfileDetail = PatientRepository.getClientProfileDetails(baseEntityId);
-        if (clientProfileDetail == null) return null;
-
+        // add record to previous contact table
         try {
-            JSONObject formObject = new JSONObject(jsonCurrentState);
             processFormFieldKeyValues(baseEntityId, new JSONObject(contact.getJsonForm()), String.valueOf(contactNo));
-
-            int nextContact = getNextContact(clientProfileDetail);
-            LocalDate nextContactVisitDate = Utils.getNextContactVisitDate(formObject);
-            String formattedDate = nextContactVisitDate == null ? null : nextContactVisitDate.toString();
-            WomanDetail patientDetail = getWomanDetail(baseEntityId, formattedDate, nextContact);
-            PatientRepository.updateContactVisitDetails(patientDetail, true);
-            PatientRepository.updateNextContactDate(formattedDate, baseEntityId);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Timber.e(ex);
         }
 
+        HashMap<String, String> clientProfileDetail = PatientRepository.getClientProfileDetails(baseEntityId);
+        try {
+            if (clientProfileDetail == null) return null;
+
+            String nextContactNo = clientProfileDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
+            boolean isFirst = TextUtils.equals("1", clientProfileDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
+            if (!isFirst) isFirst = Utils.isUserFirstVisitForm(baseEntityId);
+
+            String methodExitKey = Utils.getMapValue(METHOD_EXIT, baseEntityId, Integer.parseInt(nextContactNo));
+            String methodName = Utils.getMethodName(methodExitKey);
+
+            String nextContactVisitDate = Utils.getMethodScheduleDate(methodName, isFirst);
+            ClientDetail clientDetail = getClientDetails(baseEntityId, nextContactVisitDate, getNextContact(clientProfileDetail));
+
+            // update patient repo
+            PatientRepository.updateContactVisitDetails(clientDetail, true);
+            PatientRepository.updateNextContactDate(nextContactVisitDate, baseEntityId);
+
+        } catch (Exception e) {
+            Timber.e(e);
+        }
         return clientProfileDetail;
     }
 
@@ -109,18 +120,14 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
         return ++nextContact;
     }
 
-    public int getGestationAge(Map<String, String> details) {
-        return details.containsKey(DBConstantsUtils.KeyUtils.EDD) && details.get(DBConstantsUtils.KeyUtils.EDD) != null ? Utils.getGestationAgeFromEDDate(details.get(DBConstantsUtils.KeyUtils.EDD)) : 4;
-    }
-
-    private WomanDetail getWomanDetail(String baseEntityId, String nextContactVisitDate, Integer nextContact) {
-        WomanDetail womanDetail = new WomanDetail();
-        womanDetail.setBaseEntityId(baseEntityId);
-        womanDetail.setNextContact(nextContact);
-        womanDetail.setNextContactDate(nextContactVisitDate);
-        womanDetail.setContactStatus(ConstantsUtils.AlertStatusUtils.TODAY);
-        womanDetail.setPreviousContactStatus(ConstantsUtils.AlertStatusUtils.TODAY);
-        return womanDetail;
+    private ClientDetail getClientDetails(String baseEntityId, String nextContactVisitDate, Integer nextContact) {
+        ClientDetail clientDetail = new ClientDetail();
+        clientDetail.setBaseEntityId(baseEntityId);
+        clientDetail.setNextContact(nextContact);
+        clientDetail.setNextContactDate(nextContactVisitDate);
+        clientDetail.setContactStatus(ConstantsUtils.AlertStatusUtils.TODAY);
+        clientDetail.setPreviousContactStatus(ConstantsUtils.AlertStatusUtils.TODAY);
+        return clientDetail;
     }
 
     private void processFormFieldKeyValues(String baseEntityId, JSONObject object, String contactNo) throws Exception {

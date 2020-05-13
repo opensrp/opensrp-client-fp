@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -46,9 +45,10 @@ import java.util.HashMap;
 
 import timber.log.Timber;
 
-/**
- * Created by ndegwamartin on 10/07/2018.
- */
+import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.DD_MM_YYYY;
+import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.FOLLOWUP_VISIT_BUTTON_FORMAT;
+import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.YYYY_MM_DD;
+
 public class ProfileActivity extends BaseProfileActivity implements ProfileContract.View {
     private TextView nameView;
     private TextView ageView;
@@ -57,7 +57,6 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     private ImageView imageView;
     private String phoneNumber;
     private HashMap<String, String> detailMap;
-    private String buttonAlertStatus;
     private Button dueButton;
     private TextView taskTabCount;
     private String contactNo;
@@ -105,16 +104,21 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         imageView = findViewById(R.id.imageview_profile);
         dueButton = findViewById(R.id.profile_overview_due_button);
         btnStartFPVisit = findViewById(R.id.btn_start_visit);
-        btnStartFPVisit.setOnClickListener(this);
         updateTasksTabTitle();
+        updateBtnStartFPVisit();
+    }
+
+    private void updateBtnStartFPVisit() {
+        String nextContactDate = detailMap.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE);
+        String todayDate = Utils.getTodaysDate();
+        int compareTwoDatesResult = Utils.compareTwoDates(Utils.formatDateToPattern(todayDate, YYYY_MM_DD, DD_MM_YYYY), Utils.formatDateToPattern(nextContactDate, YYYY_MM_DD, DD_MM_YYYY));
+        String formattedNextContactDate = Utils.formatDateToPattern(nextContactDate, YYYY_MM_DD, FOLLOWUP_VISIT_BUTTON_FORMAT);
+        Utils.updateBtnStartVisit(compareTwoDatesResult, btnStartFPVisit, formattedNextContactDate, this, detailMap);
     }
 
     private void getButtonAlertStatus() {
         detailMap = (HashMap<String, String>) getIntent().getSerializableExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP);
         contactNo = String.valueOf(Utils.getTodayContact(detailMap.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
-        buttonAlertStatus = Utils.processContactDoneToday(detailMap.get(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE),
-                ConstantsUtils.AlertStatusUtils.ACTIVE.equals(detailMap.get(DBConstantsUtils.KeyUtils.CONTACT_STATUS)) ?
-                        ConstantsUtils.AlertStatusUtils.IN_PROGRESS : "");
     }
 
     protected void updateTasksTabTitle() {
@@ -145,8 +149,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
             public void onPageSelected(int position) {
                 if (position == 1 && clientHistoryFragment.hasRecords()) {
                     getBtnStartFPVisit().setVisibility(View.GONE);
-                }
-                else {
+                } else {
                     getBtnStartFPVisit().setVisibility(View.VISIBLE);
                 }
             }
@@ -160,29 +163,9 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
     }
 
     @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.profile_overview_due_button) {
-            String baseEntityId = getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID);
-
-            if (StringUtils.isNotBlank(baseEntityId)) {
-                Utils.proceedToContact(baseEntityId, detailMap, getActivity());
-            }
-
-        } else if (view.getId() == R.id.btn_start_visit) {
-            continueToContact();
-        } else {
-            super.onClick(view);
-        }
-    }
-
-    @Override
     protected void fetchProfileData() {
         String baseEntityId = getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID);
         ((ProfilePresenter) presenter).fetchProfileData(baseEntityId);
-    }
-
-    private Activity getActivity() {
-        return this;
     }
 
     @Override
@@ -236,21 +219,11 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         } else if (itemId == R.id.menu_btn_call) {
             launchPhoneDialer(phoneNumber);
         } else if (itemId == R.id.menu_btn_start_visit) {
-            continueToContact();
+            Utils.continueToContact(detailMap, this);
         } else if (itemId == R.id.menu_btn_close_fp_record) {
             FPJsonFormUtils.launchFPCloseForm(ProfileActivity.this);
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void continueToContact() {
-        if (!buttonAlertStatus.equals(ConstantsUtils.AlertStatusUtils.TODAY)) {
-            String baseEntityId = detailMap.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID);
-
-            if (StringUtils.isNotBlank(baseEntityId)) {
-                Utils.proceedToContact(baseEntityId, detailMap, ProfileActivity.this);
-            }
-        }
     }
 
     @Override
@@ -271,12 +244,6 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         AllSharedPreferences allSharedPreferences = FPLibrary.getInstance().getContext().allSharedPreferences();
         if (requestCode == FPJsonFormUtils.REQUEST_CODE_GET_JSON && resultCode == Activity.RESULT_OK) {
             ((ProfilePresenter) presenter).processFormDetailsSave(data, allSharedPreferences);
-        } else {
-            Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(ConstantsUtils.ANDROID_SWITCHER + R.id.viewpager + ":" + viewPager.getCurrentItem()); //This might be dirty we maybe can find a better way to do it.
-            if (currentFragment instanceof ProfileTasksFragment) {
-                // FIXME check this method characteristics
-                //currentFragment.onActivityResult(requestCode, resultCode, data);
-            }
         }
     }
 

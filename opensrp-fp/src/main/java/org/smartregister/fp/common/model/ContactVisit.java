@@ -12,7 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.clientandeventmodel.Event;
-import org.smartregister.fp.common.domain.WomanDetail;
+import org.smartregister.fp.common.domain.ClientDetail;
 import org.smartregister.fp.common.domain.YamlConfig;
 import org.smartregister.fp.common.domain.YamlConfigItem;
 import org.smartregister.fp.common.library.FPLibrary;
@@ -49,7 +49,7 @@ public class ContactVisit {
     private List<PartialContact> partialContactList;
     private Facts facts;
     private List<String> formSubmissionIDs;
-    private WomanDetail womanDetail;
+    private ClientDetail clientDetail;
     private Map<String, Integer> attentionFlagCountMap = new HashMap<>();
     private List<String> parsableFormsList =
             Arrays.asList(ConstantsUtils.JsonFormUtils.FP_START_VISIT, ConstantsUtils.JsonFormUtils.ANC_PROFILE,
@@ -78,8 +78,8 @@ public class ContactVisit {
         return formSubmissionIDs;
     }
 
-    public WomanDetail getWomanDetail() {
-        return womanDetail;
+    public ClientDetail getClientDetail() {
+        return clientDetail;
     }
 
     public ContactVisit invoke() throws Exception {
@@ -89,8 +89,8 @@ public class ContactVisit {
         //getCurrentClientsTasks(baseEntityId);
         updateEventAndRequiredStepsField(baseEntityId, partialContactRepository, partialContactList, facts, formSubmissionIDs);
 
-        womanDetail = getWomanDetail(baseEntityId, nextContactVisitDate, nextContact);
-        processAttentionFlags(womanDetail, facts);
+        clientDetail = getWomanDetail(baseEntityId, nextContactVisitDate, nextContact);
+        processAttentionFlags(clientDetail, facts);
 
         if (referral != null) {
             int yellowFlagCount = 0;
@@ -103,14 +103,14 @@ public class ContactVisit {
                 redFlagCount = Integer.valueOf(details.get(DBConstantsUtils.KeyUtils.RED_FLAG_COUNT));
             }
 
-            womanDetail.setReferral(true);
-            womanDetail.setRedFlagCount(redFlagCount);
-            womanDetail.setYellowFlagCount(yellowFlagCount);
-            womanDetail.setContactStatus(details.get(DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS));
-            womanDetail.setPreviousContactStatus(details.get(DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS));
-            womanDetail.setLastContactRecordDate(details.get(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE));
+            clientDetail.setReferral(true);
+            clientDetail.setRedFlagCount(redFlagCount);
+            clientDetail.setYellowFlagCount(yellowFlagCount);
+            clientDetail.setContactStatus(details.get(DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS));
+            clientDetail.setPreviousContactStatus(details.get(DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS));
+            clientDetail.setLastContactRecordDate(details.get(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE));
         }
-        PatientRepository.updateContactVisitDetails(womanDetail, true);
+        PatientRepository.updateContactVisitDetails(clientDetail, true);
         return this;
     }
 
@@ -169,17 +169,17 @@ public class ContactVisit {
         }
     }
 
-    private WomanDetail getWomanDetail(String baseEntityId, String nextContactVisitDate, Integer nextContact) {
-        WomanDetail womanDetail = new WomanDetail();
-        womanDetail.setBaseEntityId(baseEntityId);
-        womanDetail.setNextContact(nextContact);
-        womanDetail.setNextContactDate(nextContactVisitDate);
-        womanDetail.setContactStatus(ConstantsUtils.AlertStatusUtils.TODAY);
-        womanDetail.setPreviousContactStatus(ConstantsUtils.AlertStatusUtils.TODAY);
-        return womanDetail;
+    private ClientDetail getWomanDetail(String baseEntityId, String nextContactVisitDate, Integer nextContact) {
+        ClientDetail clientDetail = new ClientDetail();
+        clientDetail.setBaseEntityId(baseEntityId);
+        clientDetail.setNextContact(nextContact);
+        clientDetail.setNextContactDate(nextContactVisitDate);
+        clientDetail.setContactStatus(ConstantsUtils.AlertStatusUtils.TODAY);
+        clientDetail.setPreviousContactStatus(ConstantsUtils.AlertStatusUtils.TODAY);
+        return clientDetail;
     }
 
-    private void processAttentionFlags(WomanDetail patientDetail, Facts facts) throws IOException {
+    private void processAttentionFlags(ClientDetail patientDetail, Facts facts) throws IOException {
         Iterable<Object> ruleObjects = FPLibrary.getInstance().readYaml(FilePathUtils.FileUtils.ATTENTION_FLAGS);
 
         for (Object ruleObject : ruleObjects) {
