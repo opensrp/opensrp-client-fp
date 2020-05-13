@@ -29,7 +29,7 @@ public class ArchivedPostSterilizationJob extends BaseJob {
         try {
             int count = 0;
             LocalDate todayDate = LocalDate.now();
-            DateTimeFormatter pattern = DateTimeFormat.forPattern("dd-MM-yyyy");
+            DateTimeFormatter pattern = DateTimeFormat.forPattern(ConstantsUtils.VISIT_DATE_FORMAT);
             for (HashMap<String, String> map : data) {
                 String baseEntityId = map.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID);
                 LocalDate sterilizeDate = LocalDate.parse(map.get(ConstantsUtils.JsonFormFieldUtils.STERILIZATION_DATE), pattern).plusMonths(6);
