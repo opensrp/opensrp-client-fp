@@ -26,8 +26,8 @@ script:
 - ls -la
 - travis_wait ./gradlew clean --stacktrace
 - travis_wait ./gradlew jacocoTestReport --stacktrace
-- travis_wait ./gradlew jacocoFullReport --stacktrace
-- travis_wait ./gradlew coveralls --stacktrace
+- travis_wait ./gradlew jacocoFullReport --debug --stacktrace
+- travis_wait ./gradlew coveralls -- debug --stacktrace
 - travis_wait ./gradlew javadoc
 notifications:
   slack:
