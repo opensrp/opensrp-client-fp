@@ -7,6 +7,7 @@ package org.smartregister.fp.common.util;
 public abstract class ConstantsUtils {
     public static final String SQLITE_DATE_TIME_FORMAT = "yyyy-MM-dd";
     public static final String CONTACT_DATE_FORMAT = "dd/MM/yyyy";
+    public static final String VISIT_DATE_FORMAT = "dd-MM-yyyy";
     public static final String CONTACT_SUMMARY_DATE_FORMAT = "dd MMMM yyyy";
     public static final String VIEW_CONFIGURATION_PREFIX = "ViewConfiguration_";
     public static final String FORM = "form";
@@ -139,6 +140,12 @@ public abstract class ConstantsUtils {
         public static final String CLIENT_ID = "client_id";
         public static final String STEP1 = "step1";
         public static final String FIELDS = "fields";
+        public static final String STEP7 = "step7";
+        public static final String METHOD_EXIT = "method_exit";
+        public static final String IUD_INSERTION_DATE = "iud_insertion_date";
+        public static final String LAST_INJECTION_DATE = "last_injection_date";
+        public static final String VISIT_DATE = "visit_date";
+        public static final String STERILIZATION_DATE = "sterilization_date";
     }
 
     public static class JsonFormFieldUtils {
@@ -247,5 +254,20 @@ public abstract class ConstantsUtils {
     public static final class FormState {
         public static final String READ_ONLY = "read_only";
         public static final String EDITABLE = "editable";
+    }
+
+    public static final class MethodKeyUtil {
+        public static final String CU_IUD = "cu_iud";
+        public static final String LNG_IUD = "lng_iud";
+        public static final String DMPA_IM = "dmpa_im";
+        public static final String DMPA_SC = "dmpa_sc";
+        public static final String NET_EN = "net_en";
+        public static final String POP = "pop";
+        public static final String COC = "coc";
+        public static final String PATCH = "patch";
+        public static final String CVR = "cvr";
+        public static final String PVR = "pvr";
+        public static final String MALE_STERILIZATION = "male_sterilization";
+        public static final String FEMALE_STERILIZATION = "female_sterilization";
     }
 }

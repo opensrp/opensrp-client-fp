@@ -243,7 +243,6 @@ public class Utils extends org.smartregister.util.Utils {
     public static void proceedToContact(String baseEntityId, HashMap<String, String> personObjectClient, Context context) {
         try {
 
-            personObjectClient.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER));
             String nextContact = personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
             personObjectClient.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, nextContact == null ? "1" : nextContact);
 
@@ -379,7 +378,6 @@ public class Utils extends org.smartregister.util.Utils {
                 globals.put(ConstantsUtils.PREVIOUS_CONTACT_NO, contactNo > 1 ? String.valueOf(contactNo - 1) : "0");
                 globals.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE).toLowerCase());
                 globals.put(DBConstantsUtils.KeyUtils.GENDER, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER).toLowerCase());
-                globals.put(DBConstantsUtils.KeyUtils.REFERRAL, personObjectClient.get(DBConstantsUtils.KeyUtils.REFERRAL).toLowerCase());
                 globals.put(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, methodExit == null ? "0" : methodExit);
 
 
@@ -1119,5 +1117,62 @@ public class Utils extends org.smartregister.util.Utils {
             }
         }
         context.startActivity(intent);
+    }
+
+    public static LocalDate getNextContactVisitDate(JSONObject jsonObject) {
+        String methodExit = getJsonFieldValue(jsonObject, ConstantsUtils.JsonFormKeyUtils.STEP7, ConstantsUtils.JsonFormKeyUtils.METHOD_EXIT);
+
+        DateTimeFormatter pattern = DateTimeFormat.forPattern((ConstantsUtils.VISIT_DATE_FORMAT));
+        LocalDate nextContactDate = null;
+        switch (methodExit) {
+            case ConstantsUtils.MethodKeyUtil.CU_IUD:
+            case ConstantsUtils.MethodKeyUtil.LNG_IUD:
+                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject, ConstantsUtils.JsonFormKeyUtils.STEP7, ConstantsUtils.JsonFormKeyUtils.IUD_INSERTION_DATE), pattern);
+                break;
+
+            case ConstantsUtils.MethodKeyUtil.DMPA_IM:
+            case ConstantsUtils.MethodKeyUtil.DMPA_SC:
+            case ConstantsUtils.MethodKeyUtil.NET_EN:
+                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject,ConstantsUtils.JsonFormKeyUtils.STEP7, ConstantsUtils.JsonFormKeyUtils.LAST_INJECTION_DATE), pattern);
+                break;
+
+            case ConstantsUtils.MethodKeyUtil.POP:
+            case ConstantsUtils.MethodKeyUtil.COC:
+            case ConstantsUtils.MethodKeyUtil.PATCH:
+            case ConstantsUtils.MethodKeyUtil.CVR:
+            case ConstantsUtils.MethodKeyUtil.PVR:
+                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject,ConstantsUtils.JsonFormKeyUtils.STEP1, ConstantsUtils.JsonFormKeyUtils.VISIT_DATE), pattern);
+                break;
+
+            case ConstantsUtils.MethodKeyUtil.MALE_STERILIZATION:
+            case ConstantsUtils.MethodKeyUtil.FEMALE_STERILIZATION:
+                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject, ConstantsUtils.JsonFormKeyUtils.STEP7, ConstantsUtils.JsonFormKeyUtils.STERILIZATION_DATE), pattern);
+                break;
+
+            default:
+                break;
+        }
+
+        return nextContactDate;
+    }
+
+    private static String getJsonFieldValue(JSONObject jsonObject, String stepKey, String fieldKey) {
+        String value = "";
+
+        try {
+            JSONArray jsonArray = jsonObject.getJSONObject(stepKey).getJSONArray(ConstantsUtils.JsonFormKeyUtils.FIELDS);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject obj = jsonArray.getJSONObject(i);
+                if (obj.getString(ConstantsUtils.KeyUtils.KEY).equals(fieldKey)) {
+                    value = obj.optString(ConstantsUtils.KeyUtils.VALUE, "");
+                    break;
+                }
+            }
+        }
+        catch (JSONException ex) {
+            Timber.e(ex);
+        }
+
+        return value;
     }
 }
