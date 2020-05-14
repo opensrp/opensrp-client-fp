@@ -52,7 +52,7 @@ public class RegisterFragmentModel implements RegisterFragmentContract.Model {
     @Override
     public String countSelect(String tableName, String mainCondition) {
         SmartRegisterQueryBuilder countQueryBuilder = new SmartRegisterQueryBuilder();
-        countQueryBuilder.SelectInitiateMainTableCounts(tableName);
+        countQueryBuilder.selectInitiateMainTableCounts(tableName);
         return countQueryBuilder.mainCondition(mainCondition);
     }
 
@@ -78,7 +78,7 @@ public class RegisterFragmentModel implements RegisterFragmentContract.Model {
                         tableName + "." + DBConstantsUtils.KeyUtils.CONTACT_STATUS, tableName + "." + DBConstantsUtils.KeyUtils.PREVIOUS_CONTACT_STATUS,
                         tableName + "." + DBConstantsUtils.KeyUtils.NEXT_CONTACT, tableName + "." + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE,
                         tableName + "." + DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE, tableName + "." + DBConstantsUtils.KeyUtils.VISIT_START_DATE};
-        queryBuilder.SelectInitiateMainTable(tableName, columns);
+        queryBuilder.selectInitiateMainTable(tableName, columns);
         /*queryBuilder.customJoin(" join " + getRegisterQueryProvider().getDetailsTable()
                 + " on " + getRegisterQueryProvider().getDemographicTable() + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + "= " + getRegisterQueryProvider().getDetailsTable() + "." + DBConstantsUtils.KeyUtils.BASE_ENTITY_ID); */
         return queryBuilder.mainCondition(mainCondition);

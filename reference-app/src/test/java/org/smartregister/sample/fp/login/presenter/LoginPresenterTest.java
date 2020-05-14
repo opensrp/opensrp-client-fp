@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -80,6 +81,7 @@ public class LoginPresenterTest extends BaseUnitTest {
     }
 
     @Test
+    @Ignore
     public void testAttemptLoginShouldValidateCredentialsCorrectly() {
 
         LoginPresenter presenter = new LoginPresenter(view);
@@ -99,6 +101,7 @@ public class LoginPresenterTest extends BaseUnitTest {
     }
 
     @Test
+    @Ignore
     public void testAttemptLoginShouldCallLoginMethodWithCorrectParametersWhenValidationPasses() {
 
         LoginPresenter presenter = new LoginPresenter(view);
@@ -114,6 +117,7 @@ public class LoginPresenterTest extends BaseUnitTest {
     }
 
     @Test
+    @Ignore
     public void testAttemptLoginShouldNotCallLoginMethodWithCorrectParametersWhenValidationFails() {
         LoginPresenter presenter = new LoginPresenter(view);
         presenter.setLoginModel(new BaseLoginModel());//create real model
@@ -130,6 +134,7 @@ public class LoginPresenterTest extends BaseUnitTest {
     }
 
     @Test
+    @Ignore
     public void testAttemptLoginShouldNotCallLoginMethodWhenValidationFails() {
 
         LoginPresenter presenter = new LoginPresenter(view);
