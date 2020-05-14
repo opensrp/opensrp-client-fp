@@ -90,7 +90,7 @@ public class RegisterFragmentPresenterTest extends BaseUnitTest {
 
     private String countSelect(String tableName, String mainCondition) {
         SmartRegisterQueryBuilder countQueryBuilder = new SmartRegisterQueryBuilder();
-        countQueryBuilder.SelectInitiateMainTableCounts(tableName);
+        countQueryBuilder.selectInitiateMainTableCounts(tableName);
         return countQueryBuilder.mainCondition(mainCondition);
     }
 
@@ -105,7 +105,7 @@ public class RegisterFragmentPresenterTest extends BaseUnitTest {
                 tableName + "." + DBConstantsUtils.KeyUtils.FP_ID,
                 tableName + "." + DBConstantsUtils.KeyUtils.DOB,
                 tableName + "." + DBConstantsUtils.KeyUtils.DATE_REMOVED};
-        queryBUilder.SelectInitiateMainTable(tableName, columns);
+        queryBUilder.selectInitiateMainTable(tableName, columns);
         return queryBUilder.mainCondition(mainCondition);
     }
 

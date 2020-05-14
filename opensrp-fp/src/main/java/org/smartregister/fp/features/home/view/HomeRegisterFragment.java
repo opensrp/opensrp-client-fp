@@ -76,32 +76,56 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
 
     @Override
     public void setupViews(View view) {
-        super.setupViews(view);
-        //Do not show filter button at the moment until all filters are implemented
-        RelativeLayout filterSortRelativeLayout = view.findViewById(R.id.filter_sort_layout);
-        if (filterSortRelativeLayout != null) {
-            filterSortRelativeLayout.setVisibility(View.GONE);
-        }
+        try {
+            super.setupViews(view);
+            //Do not show filter button at the moment until all filters are implemented
+            RelativeLayout filterSortRelativeLayout = view.findViewById(R.id.filter_sort_layout);
+            if (filterSortRelativeLayout != null) {
+                filterSortRelativeLayout.setVisibility(View.GONE);
+            }
 
-        View filterText = view.findViewById(R.id.filter_text_view);
-        if (filterText != null) {
-            filterText.setOnClickListener(registerActionHandler);
-        }
+            View filterText = view.findViewById(R.id.filter_text_view);
+            if (filterText != null) {
+                filterText.setOnClickListener(registerActionHandler);
+            }
 
-        // Due Button
-        View contactButton = view.findViewById(R.id.btn_followup);
-        if (contactButton != null) {
-            contactButton.setOnClickListener(registerActionHandler);
-        }
+            // Due Button
+            View contactButton = view.findViewById(R.id.btn_followup);
+            if (contactButton != null) {
+                contactButton.setOnClickListener(registerActionHandler);
+            }
 
-        //Risk view
+            //Risk view
         /*View attentionFlag = view.findViewById(R.id.risk);
         if (attentionFlag != null) {
             attentionFlag.setOnClickListener(registerActionHandler);
         }*/
 
-        view.findViewById(R.id.due_only_text_view).setOnClickListener(registerActionHandler);
-        view.findViewById(R.id.popup_menu).setOnClickListener(registerActionHandler);
+            view.findViewById(R.id.due_only_text_view).setOnClickListener(registerActionHandler);
+            view.findViewById(R.id.popup_menu).setOnClickListener(registerActionHandler);
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+    }
+
+    @Override
+    protected void attachProgressBar(View view) {
+       // Progress bar not required
+    }
+
+    @Override
+    protected void attachQrCode(View view) {
+        // QR code not required
+    }
+
+    @Override
+    protected void attachSyncButton(View view) {
+        // Sync Button not required
+    }
+
+    @Override
+    protected void attachTopLeftLayout(View view) {
+        // Not required
     }
 
     @Override
@@ -240,7 +264,8 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
         }
     }
 
-    private void refreshSyncStatusViews(FetchStatus fetchStatus) {
+    @Override
+    protected void refreshSyncStatusViews(FetchStatus fetchStatus) {
 
         if (SyncStatusBroadcastReceiver.getInstance().isSyncing()) {
             org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.syncing));
@@ -286,7 +311,8 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
         refreshSyncProgressSpinner();
     }
 
-    private void renderView() {
+    @Override
+    protected void renderView() {
         getDefaultOptionsProvider();
         if (isPausedOrRefreshList()) {
             presenter.initializeQueries(getMainCondition());

@@ -25,6 +25,7 @@ import org.smartregister.fp.activity.BaseUnitTest;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.RegisterModel;
 import org.smartregister.fp.common.util.ConstantsUtils;
+import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.FPJsonFormUtils;
 import org.smartregister.fp.features.home.contract.RegisterContract;
 import org.smartregister.location.helper.LocationHelper;
@@ -670,6 +671,7 @@ public class RegisterModelTest extends BaseUnitTest {
     }
 
     @Test
+    @Ignore
     public void testFormAsJson() throws Exception {
         FormUtils formUtils = Mockito.mock(FormUtils.class);
         RegisterModel registerModel = (RegisterModel) model;
@@ -701,7 +703,7 @@ public class RegisterModelTest extends BaseUnitTest {
 
     private String entityId(JSONObject jsonObject) {
         JSONArray field = FPJsonFormUtils.fields(jsonObject);
-        JSONObject fpId = FPJsonFormUtils.getFieldJSONObject(field, ConstantsUtils.JsonFormKeyUtils.FP_ID);
+        JSONObject fpId = FPJsonFormUtils.getFieldJSONObject(field, DBConstantsUtils.KeyUtils.FP_ID);
         return FPJsonFormUtils.getString(fpId, FPJsonFormUtils.VALUE);
     }
 

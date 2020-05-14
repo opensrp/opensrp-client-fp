@@ -1,1 +1,4 @@
 /build
+/google-services.json
+/release/
+/jacoco.exec

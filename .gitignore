@@ -7,3 +7,6 @@
 /captures
 .externalNativeBuild
 .cxx
+opensrp-fp/jacoco.exec
+reference-app/jacoco.exec
+jacoco.exec
