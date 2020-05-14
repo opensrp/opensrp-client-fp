@@ -147,7 +147,6 @@ public class PatientRepositoryTest {
         Assert.assertEquals("red", result.get(DBConstantsUtils.KeyUtils.CONTACT_STATUS));
     }
 
-
     @Test
     public void testUpdateContactVisitStartDateShouldPassCorrectArgsToUpdateDb() {
         ReflectionHelpers.setStaticField(DrishtiApplication.class, "mInstance", drishtiApplication);

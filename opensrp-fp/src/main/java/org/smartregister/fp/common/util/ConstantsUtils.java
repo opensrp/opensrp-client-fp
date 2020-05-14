@@ -243,7 +243,6 @@ public abstract class ConstantsUtils {
         public static final String CONTACT_SCHEDULE = "contact_schedule";
         public static final String ATTENTION_FLAG_FACTS = "attention_flag_facts";
         public static final String PREVIOUS_CONTACTS = "previous_contacts";
-        public static final String OPEN_TEST_TASKS = "open_test_tasks";
     }
 
     public static final class AlertStatusUtils {

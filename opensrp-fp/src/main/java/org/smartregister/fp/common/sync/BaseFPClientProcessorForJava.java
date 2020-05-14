@@ -10,13 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.gson.reflect.TypeToken;
-import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.smartregister.commonregistry.AllCommonsRepository;
 import org.smartregister.domain.db.Client;
 import org.smartregister.domain.db.Event;
@@ -27,11 +23,8 @@ import org.smartregister.domain.jsonmapping.Table;
 import org.smartregister.fp.common.helper.ECSyncHelper;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.PreviousContact;
-import org.smartregister.fp.common.model.Task;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
-import org.smartregister.fp.common.util.FPJsonFormUtils;
-import org.smartregister.fp.features.home.repository.ContactTasksRepository;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.repository.DetailsRepository;
 import org.smartregister.sync.ClientProcessorForJava;
@@ -87,8 +80,6 @@ public class BaseFPClientProcessorForJava extends ClientProcessorForJava impleme
                         event.getDetails().get(ConstantsUtils.DetailsKeyUtils.ATTENTION_FLAG_FACTS),
                         Calendar.getInstance().getTimeInMillis());
         processPreviousContacts(event);
-        processContactTasks(event);
-
     }
 
     private boolean unSync(ECSyncHelper ecSyncHelper, DetailsRepository detailsRepository, List<Table> bindObjects,
@@ -183,26 +174,6 @@ public class BaseFPClientProcessorForJava extends ClientProcessorForJava impleme
         }
     }
 
-    private void processContactTasks(Event event) {
-        try {
-            String openTasks = event.getDetails().get(ConstantsUtils.DetailsKeyUtils.OPEN_TEST_TASKS);
-            if (StringUtils.isNotBlank(openTasks)) {
-                JSONArray openTasksArray = new JSONArray(openTasks);
-                String contactNo = getContact(event);
-
-                for (int i = 0; i < openTasksArray.length(); i++) {
-                    JSONObject tasks = new JSONObject(openTasksArray.getString(i));
-                    String key = tasks.optString(JsonFormConstants.KEY);
-
-                    Task task = getTask(tasks, key, event.getBaseEntityId());
-                    getContactTasksRepository().saveOrUpdateTasks(task);
-                }
-            }
-        } catch (JSONException e) {
-            Timber.e(e, " --> processContactTasks");
-        }
-    }
-
     public Map<String, String> getPreviousContactMap(String previousContactsRaw) {
         return FPLibrary.getInstance().getGsonInstance().fromJson(previousContactsRaw, new TypeToken<Map<String, String>>() {
         }.getType());
@@ -223,22 +194,6 @@ public class BaseFPClientProcessorForJava extends ClientProcessorForJava impleme
             }
         }
         return contactNo;
-    }
-
-    @NotNull
-    private Task getTask(JSONObject field, String key, String baseEntityId) {
-        Task task = new Task();
-        task.setBaseEntityId(baseEntityId);
-        task.setKey(key);
-        task.setValue(String.valueOf(field));
-        task.setUpdated(false);
-        task.setComplete(FPJsonFormUtils.checkIfTaskIsComplete(field));
-        task.setCreatedAt(Calendar.getInstance().getTimeInMillis());
-        return task;
-    }
-
-    public ContactTasksRepository getContactTasksRepository() {
-        return FPLibrary.getInstance().getContactTasksRepository();
     }
 
     @Override
