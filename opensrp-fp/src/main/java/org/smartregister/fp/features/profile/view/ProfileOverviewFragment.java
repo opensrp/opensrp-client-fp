@@ -62,7 +62,6 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
                 baseEntityId = getActivity().getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID);
                 if (clientDetails != null) {
                     List<HashMap<String, String>> data = FPLibrary.getInstance().getPreviousContactRepository().getVisitHistory(baseEntityId);
-//                    contactNo = Utils.getTodayContact(clientDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
                     if (data.size() > 0 && StringUtils.isNotEmpty(data.get(data.size() - 1).get("contact_no")))
                         contactNo = Integer.parseInt(data.get(data.size() - 1).get("contact_no"));
                 }

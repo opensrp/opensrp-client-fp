@@ -147,17 +147,6 @@ public class PatientRepositoryTest {
         Assert.assertEquals("red", result.get(DBConstantsUtils.KeyUtils.CONTACT_STATUS));
     }
 
-    @Test
-    public void testUpdateEDDDateShouldPassCorrectArgsToUpdateDb() {
-        ReflectionHelpers.setStaticField(DrishtiApplication.class, "mInstance", drishtiApplication);
-        PowerMockito.when(drishtiApplication.getRepository()).thenReturn(repository);
-        PowerMockito.when(repository.getWritableDatabase()).thenReturn(sqLiteDatabase);
-        PatientRepository.updateEDDDate("123-23", null);
-        Mockito.verify(sqLiteDatabase).update(Mockito.eq("ec_mother_details"), (ContentValues) updateEDDDateArgumentCaptor.capture(),
-                (String) updateEDDDateArgumentCaptor.capture(), (String[]) updateEDDDateArgumentCaptor.capture());
-        ContentValues result = (ContentValues) updateEDDDateArgumentCaptor.getAllValues().get(0);
-        Assert.assertNull(result.get(DBConstantsUtils.KeyUtils.EDD));
-    }
 
     @Test
     public void testUpdateContactVisitStartDateShouldPassCorrectArgsToUpdateDb() {

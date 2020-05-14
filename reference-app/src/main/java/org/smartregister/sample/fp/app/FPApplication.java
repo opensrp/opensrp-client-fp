@@ -169,9 +169,4 @@ public class FPApplication extends DrishtiApplication implements TimeChangedBroa
         context.userService().logoutSession();
     }
 
-    /*@NonNull
-    @Override
-    public ClientProcessorForJava getClientProcessor() {
-        return BaseFPClientProcessorForJava.getInstance(this);
-    }*/
 }
