@@ -84,7 +84,7 @@ public class FPApplication extends DrishtiApplication implements TimeChangedBroa
     private static String[] getFtsSearchFields(String tableName) {
         if (tableName.equals(DBConstantsUtils.DEMOGRAPHIC_TABLE_NAME)) {
             return new String[]{DBConstantsUtils.KeyUtils.FIRST_NAME, DBConstantsUtils.KeyUtils.LAST_NAME, DBConstantsUtils.KeyUtils.FP_ID, DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE, DBConstantsUtils.KeyUtils.ARCHIVED};
-        }  else {
+        } else {
             return null;
         }
     }
@@ -93,7 +93,7 @@ public class FPApplication extends DrishtiApplication implements TimeChangedBroa
         if (tableName.equals(DBConstantsUtils.DEMOGRAPHIC_TABLE_NAME)) {
             return new String[]{DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, DBConstantsUtils.KeyUtils.FIRST_NAME, DBConstantsUtils.KeyUtils.LAST_NAME,
                     DBConstantsUtils.KeyUtils.LAST_INTERACTED_WITH, DBConstantsUtils.KeyUtils.DATE_REMOVED, DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE, DBConstantsUtils.KeyUtils.ARCHIVED};
-        }else {
+        } else {
             return null;
         }
     }
@@ -168,4 +168,5 @@ public class FPApplication extends DrishtiApplication implements TimeChangedBroa
         startActivity(intent);
         context.userService().logoutSession();
     }
+
 }

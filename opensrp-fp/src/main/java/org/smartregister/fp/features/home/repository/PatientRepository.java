@@ -149,19 +149,6 @@ public class PatientRepository extends BaseRepository {
         updateLastInteractedWith(patientDetail.getBaseEntityId());
     }
 
-    public static void updateEDDDate(String baseEntityId, String edd) {
-
-        ContentValues contentValues = new ContentValues();
-        if (edd != null) {
-            contentValues.put(DBConstantsUtils.KeyUtils.EDD, edd);
-        } else {
-            contentValues.putNull(DBConstantsUtils.KeyUtils.EDD);
-        }
-        getMasterRepository().getWritableDatabase()
-                .update(getRegisterQueryProvider().getDemographicTable(), contentValues, DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?",
-                        new String[]{baseEntityId});
-    }
-
     public static void updateContactVisitStartDate(String baseEntityId, String contactVisitStartDate) {
 
         ContentValues contentValues = new ContentValues();

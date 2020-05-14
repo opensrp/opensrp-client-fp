@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.DatabaseUtils;
 import android.os.AsyncTask;
 import android.text.TextUtils;
+import android.util.Pair;
 
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.rules.RuleConstant;
@@ -12,6 +13,7 @@ import com.vijay.jsonwizard.rules.RuleConstant;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.domain.ClientDetail;
 import org.smartregister.fp.common.domain.Contact;
@@ -21,12 +23,15 @@ import org.smartregister.fp.common.repository.PreviousContactRepository;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.FPFormUtils;
+import org.smartregister.fp.common.util.FPJsonFormUtils;
 import org.smartregister.fp.common.util.Utils;
 import org.smartregister.fp.features.home.repository.PatientRepository;
+import org.smartregister.util.JsonFormUtils;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import timber.log.Timber;
@@ -92,11 +97,17 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
 
             String nextContactVisitDate = Utils.getMethodScheduleDate(methodName, isFirst);
             ClientDetail clientDetail = getClientDetails(baseEntityId, nextContactVisitDate, getNextContact(clientProfileDetail));
-
             // update patient repo
             PatientRepository.updateContactVisitDetails(clientDetail, true);
             PatientRepository.updateNextContactDate(nextContactVisitDate, baseEntityId);
 
+            // create event
+            Pair<Event, Event> eventPair = FPJsonFormUtils.createContactVisitEvent(clientProfileDetail);
+            if (eventPair != null) {
+                createEvent(baseEntityId, eventPair);
+                JSONObject updateClientEventJson = new JSONObject(JsonFormUtils.gson.toJson(eventPair.second));
+                FPLibrary.getInstance().getEcSyncHelper().addEvent(baseEntityId, updateClientEventJson);
+            }
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -114,6 +125,36 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
         }
     }
 
+    private void createEvent(String baseEntityId, Pair<Event, Event> eventPair)
+            throws JSONException {
+        Event event = eventPair.first;
+        String currentContactState = getCurrentContactState(baseEntityId);
+        if (currentContactState != null) {
+            event.addDetails(ConstantsUtils.DetailsKeyUtils.PREVIOUS_CONTACTS, currentContactState);
+        }
+        JSONObject eventJson = new JSONObject(JsonFormUtils.gson.toJson(event));
+        FPLibrary.getInstance().getEcSyncHelper().addEvent(baseEntityId, eventJson);
+    }
+
+
+    private String getCurrentContactState(String baseEntityId) throws JSONException {
+        List<PreviousContact> previousContactList = getPreviousContactRepository().getPreviousContacts(baseEntityId, null);
+        JSONObject stateObject = null;
+        if (previousContactList != null) {
+            stateObject = new JSONObject();
+
+            for (PreviousContact previousContact : previousContactList) {
+                stateObject.put(previousContact.getKey(), previousContact.getValue());
+            }
+        }
+
+        return stateObject != null ? stateObject.toString() : null;
+    }
+
+
+    protected PreviousContactRepository getPreviousContactRepository() {
+        return FPLibrary.getInstance().getPreviousContactRepository();
+    }
 
     private int getNextContact(Map<String, String> details) {
         String nextContactRaw = details.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);

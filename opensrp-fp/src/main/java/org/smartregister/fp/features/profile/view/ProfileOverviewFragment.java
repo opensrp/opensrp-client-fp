@@ -7,17 +7,19 @@ import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 
+import com.google.common.collect.Lists;
+
+import org.apache.commons.lang3.StringUtils;
+import org.jeasy.rules.api.Facts;
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.ClientProfileModel;
-import org.smartregister.fp.common.model.PartialContact;
 import org.smartregister.fp.common.util.ConstantsUtils;
-import org.smartregister.fp.common.util.DBConstantsUtils;
-import org.smartregister.fp.common.util.Utils;
 import org.smartregister.fp.databinding.FragmentProfileOverviewBinding;
 import org.smartregister.view.fragment.BaseProfileFragment;
 
 import java.util.HashMap;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -57,21 +59,25 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
             if (getActivity() != null && getActivity().getIntent() != null) {
                 HashMap<String, String> clientDetails =
                         (HashMap<String, String>) getActivity().getIntent().getSerializableExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP);
-                if (clientDetails != null) {
-                    contactNo = Utils.getTodayContact(clientDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
-                }
                 baseEntityId = getActivity().getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID);
+                if (clientDetails != null) {
+                    List<HashMap<String, String>> data = FPLibrary.getInstance().getPreviousContactRepository().getVisitHistory(baseEntityId);
+                    if (data.size() > 0 && StringUtils.isNotEmpty(data.get(data.size() - 1).get("contact_no")))
+                        contactNo = Integer.parseInt(data.get(data.size() - 1).get("contact_no"));
+                }
             } else {
                 Timber.d("getIntent or getActivity might be null");
             }
 
-            PartialContact partialContact = FPLibrary.getInstance().getPartialContactRepository().getPartialContact(
-                    new PartialContact(FORM_TYPE, baseEntityId, contactNo));
+            Facts facts = FPLibrary.getInstance().getPreviousContactRepository().getProfileOverviewDetails(baseEntityId, String.valueOf(contactNo), Lists.newArrayList(METHOD_CHOSEN, METHOD_EXIT, METHOD_EXIT_START_DATE, REFERRAL, REASON_NO_METHOD_EXIT));
 
-            if (partialContact != null && partialContact.getFormJsonDraft() != null) {
-                ClientProfileModel clientProfileModel = Utils.getClientProfileValuesFromJson(partialContact.getFormJsonDraft());
-                showClientProfileOverviewUi();
-                clientProfileModel.setMethodAtExit(Utils.getMethodName(clientProfileModel.getMethodAtExit()));
+            if (facts != null) {
+                ClientProfileModel clientProfileModel = new ClientProfileModel();
+                clientProfileModel.setMethodAtExit(facts.get(METHOD_EXIT));
+                clientProfileModel.setReasonForNoMethodAtExit(facts.get(REASON_NO_METHOD_EXIT));
+                clientProfileModel.setMethodStartDate(facts.get(METHOD_EXIT_START_DATE));
+                clientProfileModel.setReferred(facts.get(REFERRAL));
+                clientProfileModel.setChosenMethod(facts.get(METHOD_CHOSEN));
                 populateUi(clientProfileModel);
             } else showNoDataRecordedUi();
         } catch (Exception e) {
@@ -90,6 +96,7 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
     }
 
     private void populateUi(ClientProfileModel clientProfileModel) {
+        showClientProfileOverviewUi();
         fragmentProfileBinding.setClientProfileModel(clientProfileModel);
     }
 
