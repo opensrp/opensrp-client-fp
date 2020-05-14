@@ -15,18 +15,6 @@
         android:layout_centerVertical="true">
 
         <ImageView
-            android:id="@+id/scanQrCode"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="3dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:gravity="center"
-            android:visibility="gone"
-            android:src="@drawable/ic_icon_qr_code" />
-
-        <ImageView
             android:id="@+id/left_menu"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
