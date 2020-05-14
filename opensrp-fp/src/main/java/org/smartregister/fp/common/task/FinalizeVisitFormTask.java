@@ -2,6 +2,7 @@ package org.smartregister.fp.common.task;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.database.DatabaseUtils;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Pair;
@@ -220,7 +221,7 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
                             sql.append(previousContact.getContactNo()).append(",");
                             sql.append("'").append(previousContact.getBaseEntityId()).append("'").append(",");
                             sql.append("'").append(previousContact.getKey()).append("'").append(",");
-                            sql.append("'").append(previousContact.getValue()).append("'").append(",");
+                            sql.append(DatabaseUtils.sqlEscapeString(previousContact.getValue())).append(",");
                             sql.append("'").append(previousContact.getVisitDate()).append("'");
                             sql.append(")");
 
