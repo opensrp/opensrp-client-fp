@@ -15,6 +15,7 @@ import org.smartregister.fp.R;
 import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.model.ClientProfileModel;
 import org.smartregister.fp.common.util.ConstantsUtils;
+import org.smartregister.fp.common.util.Utils;
 import org.smartregister.fp.databinding.FragmentProfileOverviewBinding;
 import org.smartregister.view.fragment.BaseProfileFragment;
 
@@ -22,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import timber.log.Timber;
+
+import static org.smartregister.fp.common.repository.PreviousContactRepository.CONTACT_NO;
 
 public class ProfileOverviewFragment extends BaseProfileFragment {
     public static final String METHOD_CHOSEN = "method_chosen";
@@ -62,8 +65,8 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
                 baseEntityId = getActivity().getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID);
                 if (clientDetails != null) {
                     List<HashMap<String, String>> data = FPLibrary.getInstance().getPreviousContactRepository().getVisitHistory(baseEntityId);
-                    if (data.size() > 0 && StringUtils.isNotEmpty(data.get(data.size() - 1).get("contact_no")))
-                        contactNo = Integer.parseInt(data.get(data.size() - 1).get("contact_no"));
+                    if (data.size() > 0 && StringUtils.isNotEmpty(data.get(data.size() - 1).get(CONTACT_NO)))
+                        contactNo = Integer.parseInt(data.get(data.size() - 1).get(CONTACT_NO));
                 }
             } else {
                 Timber.d("getIntent or getActivity might be null");
@@ -73,11 +76,11 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
 
             if (facts != null) {
                 ClientProfileModel clientProfileModel = new ClientProfileModel();
-                clientProfileModel.setMethodAtExit(facts.get(METHOD_EXIT));
+                clientProfileModel.setMethodAtExit(Utils.formatMethodName(facts.get(METHOD_EXIT)));
                 clientProfileModel.setReasonForNoMethodAtExit(facts.get(REASON_NO_METHOD_EXIT));
                 clientProfileModel.setMethodStartDate(facts.get(METHOD_EXIT_START_DATE));
                 clientProfileModel.setReferred(facts.get(REFERRAL));
-                clientProfileModel.setChosenMethod(facts.get(METHOD_CHOSEN));
+                clientProfileModel.setChosenMethod(Utils.formatMethodName(facts.get(METHOD_CHOSEN)));
                 populateUi(clientProfileModel);
             } else showNoDataRecordedUi();
         } catch (Exception e) {

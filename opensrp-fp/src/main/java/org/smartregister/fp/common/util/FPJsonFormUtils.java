@@ -751,8 +751,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
                     .withFormSubmissionId(FPJsonFormUtils.generateRandomUUIDString())
                     .withDateCreated(getContactStartDate(contactStartDate));
 
-            String currentContactNo = clientDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
-            contactVisitEvent.addDetails(ConstantsUtils.CONTACT, currentContactNo);
+            contactVisitEvent.addDetails(ConstantsUtils.CONTACT, getPreviousContact(contactNo));
 
             tagSyncMetadata(FPLibrary.getInstance().getContext().userService().getAllSharedPreferences(), contactVisitEvent);
 
@@ -786,6 +785,11 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
             return null;
         }
 
+    }
+
+    private static String getPreviousContact(String contactNo) {
+        int nextContact = contactNo == null ? 1 : Integer.parseInt(contactNo);
+        return String.valueOf(--nextContact);
     }
 
     private static Date getContactStartDate(String contactStartDate) {

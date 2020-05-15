@@ -110,7 +110,7 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
 
     @Override
     protected void attachProgressBar(View view) {
-       // Progress bar not required
+        // Progress bar not required
     }
 
     @Override
@@ -132,7 +132,7 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
     protected String getMainCondition() {
         String condition = DBQueryHelper.getHomePatientRegisterCondition();
         if (enableDueFilter) {
-            condition +=  " AND (" + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE + " != '' AND date('now') > strftime('%Y-%m-%d', " + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE + "))";
+            condition += " AND (" + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE + " != '' AND date('now') > strftime('%Y-%m-%d', " + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE + "))";
         }
         return condition;
     }
@@ -269,20 +269,18 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
 
         if (SyncStatusBroadcastReceiver.getInstance().isSyncing()) {
             org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.syncing));
-            Timber.i( getString(org.smartregister.R.string.syncing));
+            Timber.i(getString(org.smartregister.R.string.syncing));
         } else {
             if (fetchStatus != null) {
 
                 if (fetchStatus.equals(FetchStatus.fetchedFailed)) {
-                    if(fetchStatus.displayValue().equals(ResponseErrorStatus.malformed_url.name())) {
+                    if (fetchStatus.displayValue().equals(ResponseErrorStatus.malformed_url.name())) {
                         org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_failed_malformed_url));
-                        Timber.i( getString(org.smartregister.R.string.sync_failed_malformed_url));
-                    }
-                    else if (fetchStatus.displayValue().equals(ResponseErrorStatus.timeout.name())) {
+                        Timber.i(getString(org.smartregister.R.string.sync_failed_malformed_url));
+                    } else if (fetchStatus.displayValue().equals(ResponseErrorStatus.timeout.name())) {
                         org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_failed_timeout_error));
                         Timber.i(getString(org.smartregister.R.string.sync_failed_timeout_error));
-                    }
-                    else {
+                    } else {
                         org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_failed));
                         Timber.i(getString(org.smartregister.R.string.sync_failed));
                     }
@@ -294,15 +292,14 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
                     renderView();
 
                     org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
-                    Timber.i( getString(org.smartregister.R.string.sync_complete));
+                    Timber.i(getString(org.smartregister.R.string.sync_complete));
 
                 } else if (fetchStatus.equals(FetchStatus.noConnection)) {
 
                     org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_failed_no_internet));
-                    Timber.i( getString(org.smartregister.R.string.sync_failed_no_internet));
+                    Timber.i(getString(org.smartregister.R.string.sync_failed_no_internet));
                 }
-            }
-            else{
+            } else {
                 Timber.i("Fetch Status NULL");
             }
 

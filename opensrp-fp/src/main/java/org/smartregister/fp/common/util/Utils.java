@@ -634,74 +634,6 @@ public class Utils extends org.smartregister.util.Utils {
         return "";
     }
 
-    public static void processButtonAlertStatus(Context context, Button dueButton, ButtonAlertStatus buttonAlertStatus) {
-        Utils.processButtonAlertStatus(context, dueButton, null, buttonAlertStatus);
-    }
-
-    public static void processButtonAlertStatus(Context context, Button dueButton, TextView contactTextView,
-                                                ButtonAlertStatus buttonAlertStatus) {
-        if (dueButton != null) {
-            dueButton.setVisibility(View.VISIBLE);
-            dueButton.setText(buttonAlertStatus.buttonText);
-            dueButton.setTag(R.id.GESTATION_AGE, buttonAlertStatus.gestationAge);
-
-            if (buttonAlertStatus.buttonAlertStatus != null) {
-                switch (buttonAlertStatus.buttonAlertStatus) {
-                    case ConstantsUtils.AlertStatusUtils.IN_PROGRESS:
-                        dueButton.setBackgroundColor(context.getResources().getColor(R.color.progress_orange));
-                        dueButton.setTextColor(context.getResources().getColor(R.color.white));
-                        break;
-                    case ConstantsUtils.AlertStatusUtils.DUE:
-                        dueButton.setBackground(context.getResources().getDrawable(R.drawable.contact_due));
-                        dueButton.setTextColor(context.getResources().getColor(R.color.vaccine_blue_bg_st));
-                        break;
-                    case ConstantsUtils.AlertStatusUtils.OVERDUE:
-                        dueButton.setBackgroundColor(context.getResources().getColor(R.color.vaccine_red_bg_st));
-                        dueButton.setTextColor(context.getResources().getColor(R.color.white));
-                        break;
-                    case ConstantsUtils.AlertStatusUtils.NOT_DUE:
-                        dueButton.setBackground(context.getResources().getDrawable(R.drawable.contact_not_due));
-                        dueButton.setTextColor(context.getResources().getColor(R.color.dark_grey));
-                        break;
-                    case ConstantsUtils.AlertStatusUtils.DELIVERY_DUE:
-                        dueButton.setBackground(context.getResources().getDrawable(R.drawable.contact_due));
-                        dueButton.setTextColor(context.getResources().getColor(R.color.vaccine_blue_bg_st));
-                        dueButton.setText(context.getString(R.string.due_delivery));
-                        break;
-                    case ConstantsUtils.AlertStatusUtils.EXPIRED:
-                        dueButton.setBackgroundColor(context.getResources().getColor(R.color.vaccine_red_bg_st));
-                        dueButton.setTextColor(context.getResources().getColor(R.color.white));
-                        dueButton.setText(context.getString(R.string.due_delivery));
-                        break;
-                    case ConstantsUtils.AlertStatusUtils.TODAY:
-                        if (contactTextView != null) {
-                            contactTextView.setText(String.format(context.getString(R.string.contact_recorded_today),
-                                    Utils.getTodayContact(String.valueOf(buttonAlertStatus.nextContact))));
-                            contactTextView.setPadding(2, 2, 2, 2);
-                        }
-                        dueButton.setBackground(context.getResources().getDrawable(R.drawable.contact_disabled));
-                        dueButton.setBackground(context.getResources().getDrawable(R.drawable.contact_disabled));
-                        dueButton.setTextColor(context.getResources().getColor(R.color.dark_grey));
-                        dueButton.setText(String.format(context.getString(R.string.contact_recorded_today_no_break),
-                                Utils.getTodayContact(String.valueOf(buttonAlertStatus.nextContact))));
-                        break;
-                    default:
-                        dueButton.setBackground(context.getResources().getDrawable(R.drawable.contact_due));
-                        dueButton.setTextColor(context.getResources().getColor(R.color.vaccine_blue_bg_st));
-                        break;
-                }
-
-                if (contactTextView != null) {
-                    contactTextView.setVisibility(View.GONE);
-                    if (ConstantsUtils.AlertStatusUtils.TODAY.equals(buttonAlertStatus.buttonAlertStatus)) {
-                        dueButton.setVisibility(View.GONE);
-                        contactTextView.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
-        }
-    }
-
     public static void processFollowupVisitButton(Context context, Button followUpBtn, ButtonAlertStatus buttonAlertStatus, String baseEntityId, Map<String, String> pc) {
         if (followUpBtn != null) {
             followUpBtn.setVisibility(View.VISIBLE);
@@ -1169,6 +1101,9 @@ public class Utils extends org.smartregister.util.Utils {
 
     public static String getMethodName(String key) {
         return METHODS.containsKey(key) ? METHODS.get(key) : "";
+    }
+    public static String formatMethodName(String key) {
+        return METHODS.containsKey(key) ? METHODS.get(key) : key;
     }
 
     public static void openMECWheelApp(Context context) {

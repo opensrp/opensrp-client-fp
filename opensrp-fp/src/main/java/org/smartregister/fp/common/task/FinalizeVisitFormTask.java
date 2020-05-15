@@ -44,6 +44,7 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
     private final Context context;
     private final String baseEntityId;
     private final int contactNo;
+    private final int nextContactNo;
     private final Contact contact;
     private final String jsonCurrentState;
     private final FPFormUtils fpFormUtils;
@@ -53,6 +54,7 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
         this.context = context;
         this.baseEntityId = baseEntityId;
         this.contactNo = contactNo;
+        this.nextContactNo = contactNo + 1;
         this.contact = contact;
         this.jsonCurrentState = jsonCurrentState;
         fpFormUtils = new FPFormUtils();
@@ -84,35 +86,40 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
             Timber.e(ex);
         }
 
-        HashMap<String, String> clientProfileDetail = PatientRepository.getClientProfileDetails(baseEntityId);
+        HashMap<String, String> clientDetailMap = PatientRepository.getClientProfileDetails(baseEntityId);
         try {
-            if (clientProfileDetail == null) return null;
+            if (clientDetailMap == null) return null;
 
-            String nextContactNo = clientProfileDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
-            boolean isFirst = TextUtils.equals("1", clientProfileDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
+            boolean isFirst = TextUtils.equals("1", String.valueOf(contactNo));
             if (!isFirst) isFirst = Utils.isUserFirstVisitForm(baseEntityId);
 
-            String methodExitKey = Utils.getMapValue(METHOD_EXIT, baseEntityId, Integer.parseInt(nextContactNo));
+            String methodExitKey = Utils.getMapValue(METHOD_EXIT, baseEntityId, contactNo);
             String methodName = Utils.getMethodName(methodExitKey);
 
             String nextContactVisitDate = Utils.getMethodScheduleDate(methodName, isFirst);
-            ClientDetail clientDetail = getClientDetails(baseEntityId, nextContactVisitDate, getNextContact(clientProfileDetail));
+            ClientDetail clientDetail = getClientDetails(baseEntityId, nextContactVisitDate, nextContactNo);
             // update patient repo
             PatientRepository.updateContactVisitDetails(clientDetail, true);
             PatientRepository.updateNextContactDate(nextContactVisitDate, baseEntityId);
-
+            updateNextContactDate(clientDetailMap, clientDetail);
             // create event
-            Pair<Event, Event> eventPair = FPJsonFormUtils.createContactVisitEvent(clientProfileDetail);
+            Pair<Event, Event> eventPair = FPJsonFormUtils.createContactVisitEvent(clientDetailMap);
             if (eventPair != null) {
-                createEvent(baseEntityId, eventPair);
+                createEvent(baseEntityId, eventPair.first);
                 JSONObject updateClientEventJson = new JSONObject(JsonFormUtils.gson.toJson(eventPair.second));
                 FPLibrary.getInstance().getEcSyncHelper().addEvent(baseEntityId, updateClientEventJson);
             }
         } catch (Exception e) {
             Timber.e(e);
         }
-        return clientProfileDetail;
+        return clientDetailMap;
     }
+
+    private void updateNextContactDate(Map<String, String> details, ClientDetail clientDetail) {
+        details.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE, clientDetail.getNextContactDate());
+        details.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, clientDetail.getNextContact().toString());
+    }
+
 
     @Override
     protected void onPostExecute(HashMap<String, String> result) {
@@ -125,9 +132,8 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
         }
     }
 
-    private void createEvent(String baseEntityId, Pair<Event, Event> eventPair)
+    private void createEvent(String baseEntityId, Event event)
             throws JSONException {
-        Event event = eventPair.first;
         String currentContactState = getCurrentContactState(baseEntityId);
         if (currentContactState != null) {
             event.addDetails(ConstantsUtils.DetailsKeyUtils.PREVIOUS_CONTACTS, currentContactState);
@@ -138,7 +144,7 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
 
 
     private String getCurrentContactState(String baseEntityId) throws JSONException {
-        List<PreviousContact> previousContactList = getPreviousContactRepository().getPreviousContacts(baseEntityId, null);
+        List<PreviousContact> previousContactList = getPreviousContactRepository().getPreviousContacts(baseEntityId, String.valueOf(contactNo), null);
         JSONObject stateObject = null;
         if (previousContactList != null) {
             stateObject = new JSONObject();

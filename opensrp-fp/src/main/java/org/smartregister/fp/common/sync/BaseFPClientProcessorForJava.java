@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
 import org.smartregister.commonregistry.AllCommonsRepository;
 import org.smartregister.domain.db.Client;
 import org.smartregister.domain.db.Event;
@@ -65,7 +64,6 @@ public class BaseFPClientProcessorForJava extends ClientProcessorForJava impleme
             for (EventClient eventClient : eventClients) {
                 processEventClient(eventClient, unsyncEvents, clientClassification);
             }
-
             // Unsync events that are should not be in this device
             if (!unsyncEvents.isEmpty()) {
                 unSync(unsyncEvents);
@@ -106,56 +104,6 @@ public class BaseFPClientProcessorForJava extends ClientProcessorForJava impleme
         return false;
     }
 
-    /*
-            private Integer parseInt(String string) {
-                try {
-                    return Integer.valueOf(string);
-                } catch (NumberFormatException e) {
-                    Log.e(TAG, e.toString(), e);
-                }
-                return null;
-            }
-
-            private ContentValues processCaseModel(EventClient eventClient, Table table) {
-                try {
-                    List<Column> columns = table.columns;
-                    ContentValues contentValues = new ContentValues();
-
-                    for (Column column : columns) {
-                        processCaseModel(eventClient.getEvent(), eventClient.getClient(), column, contentValues);
-                    }
-
-                    return contentValues;
-                } catch (Exception e) {
-                    Log.e(TAG, e.toString(), e);
-                }
-                return null;
-            }
-
-            private Date getDate(String eventDateStr) {
-                Date date = null;
-                if (StringUtils.isNotBlank(eventDateStr)) {
-                    try {
-                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ");
-                        date = dateFormat.parse(eventDateStr);
-                    } catch (ParseException e) {
-                        try {
-                            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-                            date = dateFormat.parse(eventDateStr);
-                        } catch (ParseException pe) {
-                            try {
-                                date = DateUtil.parseDate(eventDateStr);
-                            } catch (ParseException pee) {
-                                Log.e(TAG, pee.toString(), pee);
-                            }
-                        }
-                    }
-                }
-                return date;
-            }
-
-        */
-
     public DetailsRepository getDetailsRepository() {
         return FPLibrary.getInstance().getDetailsRepository();
     }
@@ -166,10 +114,10 @@ public class BaseFPClientProcessorForJava extends ClientProcessorForJava impleme
         Map<String, String> previousContactMap = getPreviousContactMap(previousContactsRaw);
 
         if (previousContactMap != null) {
-            String contactNo = getContact(event);
+            int contactNo = getContact(event);
             for (Map.Entry<String, String> entry : previousContactMap.entrySet()) {
                 FPLibrary.getInstance().getPreviousContactRepository().savePreviousContact(
-                        new PreviousContact(event.getBaseEntityId(), entry.getKey(), entry.getValue(), contactNo));
+                        new PreviousContact(event.getBaseEntityId(), entry.getKey(), entry.getValue(), String.valueOf(contactNo)));
             }
         }
     }
@@ -179,18 +127,15 @@ public class BaseFPClientProcessorForJava extends ClientProcessorForJava impleme
         }.getType());
     }
 
-    @NotNull
-    private String getContact(Event event) {
-        String contactNo = "";
+    private int getContact(Event event) {
+        int contactNo = 0;
         if (!TextUtils.isEmpty(event.getDetails().get(ConstantsUtils.CONTACT))) {
-            String[] contacts = event.getDetails().get(ConstantsUtils.CONTACT).split(" ");
-            if (contacts.length >= 2) {
-                int nextContact = Integer.parseInt(contacts[1]);
-                if (nextContact > 0) {
-                    contactNo = String.valueOf(nextContact - 1);
-                } else {
-                    contactNo = String.valueOf(nextContact + 1);
+            String contact = event.getDetails().get(ConstantsUtils.CONTACT);
+            try {
+                if (contact != null) {
+                    contactNo = Integer.parseInt(contact);
                 }
+            } catch (NumberFormatException ignore) {
             }
         }
         return contactNo;

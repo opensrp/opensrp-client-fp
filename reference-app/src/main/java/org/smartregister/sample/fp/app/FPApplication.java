@@ -2,6 +2,8 @@ package org.smartregister.sample.fp.app;
 
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+
 import com.evernote.android.job.JobManager;
 
 import org.smartregister.Context;
@@ -10,6 +12,7 @@ import org.smartregister.commonregistry.CommonFtsObject;
 import org.smartregister.configurableviews.ConfigurableViewsLibrary;
 import org.smartregister.fp.FPEventBusIndex;
 import org.smartregister.fp.common.library.FPLibrary;
+import org.smartregister.fp.common.sync.BaseFPClientProcessorForJava;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.Utils;
 import org.smartregister.location.helper.LocationHelper;
@@ -20,6 +23,7 @@ import org.smartregister.sample.fp.R;
 import org.smartregister.sample.fp.job.FPJobCreator;
 import org.smartregister.sample.fp.login.ui.LoginActivity;
 import org.smartregister.sample.fp.repository.FPRepository;
+import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.DrishtiSyncScheduler;
 import org.smartregister.view.activity.DrishtiApplication;
 import org.smartregister.view.receiver.TimeChangedBroadcastReceiver;
@@ -169,4 +173,9 @@ public class FPApplication extends DrishtiApplication implements TimeChangedBroa
         context.userService().logoutSession();
     }
 
+    @NonNull
+    @Override
+    public ClientProcessorForJava getClientProcessor() {
+        return BaseFPClientProcessorForJava.getInstance(this);
+    }
 }

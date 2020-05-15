@@ -131,9 +131,10 @@ public class PreviousContactRepository extends BaseRepository {
 
     /**
      * @param baseEntityId is the Base entity Id No to filter by
+     * @param contactNo
      * @param keysList     an optional list of keys to query null otherwise to get all keys for that base entity id
      */
-    public List<PreviousContact> getPreviousContacts(String baseEntityId, List<String> keysList) {
+    public List<PreviousContact> getPreviousContacts(String baseEntityId, String contactNo, List<String> keysList) {
         String orderBy = ID + " DESC ";
         Cursor mCursor = null;
         String selection = "";
@@ -147,8 +148,8 @@ public class PreviousContactRepository extends BaseRepository {
                     selection = BASE_ENTITY_ID + " = ? " + BaseRepository.COLLATE_NOCASE + " AND " + KEY + " IN (?) " + BaseRepository.COLLATE_NOCASE;
                     selectionArgs = new String[]{baseEntityId, FPFormUtils.getListValuesAsString(keysList)};
                 } else {
-                    selection = BASE_ENTITY_ID + " = ? " + BaseRepository.COLLATE_NOCASE;
-                    selectionArgs = new String[]{baseEntityId};
+                    selection = BASE_ENTITY_ID + " = ? AND " + CONTACT_NO + " = ? " + BaseRepository.COLLATE_NOCASE;
+                    selectionArgs = new String[]{baseEntityId, contactNo};
                 }
             }
 
@@ -346,8 +347,6 @@ public class PreviousContactRepository extends BaseRepository {
         return previousContactFacts;
     }
 
-    private String[] profileOverviewProjectionArgs = new String[]{ID, CONTACT_NO, KEY, VALUE, BASE_ENTITY_ID, CREATED_AT};
-
     public Facts getProfileOverviewDetails(String baseEntityId, String contactNo, List<String> keys) {
         Cursor mCursor = null;
         String selection = "";
@@ -449,7 +448,7 @@ public class PreviousContactRepository extends BaseRepository {
         return schedule;
     }
 
-    public List<HashMap<String, String>> getVisitHistory(@NonNull  String baseEntityId) {
+    public List<HashMap<String, String>> getVisitHistory(@NonNull String baseEntityId) {
         List<HashMap<String, String>> data = new ArrayList<>();
 
         try {
@@ -472,8 +471,7 @@ public class PreviousContactRepository extends BaseRepository {
                     data.add(historyMap);
                 }
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Timber.e(ex);
         }
 
@@ -503,8 +501,7 @@ public class PreviousContactRepository extends BaseRepository {
                     data.add(historyMap);
                 }
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Timber.e(ex);
         }
 
