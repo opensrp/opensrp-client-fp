@@ -1102,7 +1102,7 @@ public class Utils extends org.smartregister.util.Utils {
     public static String getMethodName(String key) {
         return METHODS.containsKey(key) ? METHODS.get(key) : "";
     }
-    public static String formatMethodName(String key) {
+    public static String getFormattedMethodName(String key) {
         return METHODS.containsKey(key) ? METHODS.get(key) : key;
     }
 

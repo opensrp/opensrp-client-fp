@@ -76,11 +76,11 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
 
             if (facts != null) {
                 ClientProfileModel clientProfileModel = new ClientProfileModel();
-                clientProfileModel.setMethodAtExit(Utils.formatMethodName(facts.get(METHOD_EXIT)));
+                clientProfileModel.setMethodAtExit(Utils.getFormattedMethodName(facts.get(METHOD_EXIT)));
                 clientProfileModel.setReasonForNoMethodAtExit(facts.get(REASON_NO_METHOD_EXIT));
                 clientProfileModel.setMethodStartDate(facts.get(METHOD_EXIT_START_DATE));
                 clientProfileModel.setReferred(facts.get(REFERRAL));
-                clientProfileModel.setChosenMethod(Utils.formatMethodName(facts.get(METHOD_CHOSEN)));
+                clientProfileModel.setChosenMethod(Utils.getFormattedMethodName(facts.get(METHOD_CHOSEN)));
                 populateUi(clientProfileModel);
             } else showNoDataRecordedUi();
         } catch (Exception e) {
