@@ -1,8 +1,6 @@
 package org.smartregister.fp.common.presenter;
 
 
-import android.util.Log;
-
 import org.smartregister.domain.ServerSetting;
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.contact.SiteCharacteristicsContract;

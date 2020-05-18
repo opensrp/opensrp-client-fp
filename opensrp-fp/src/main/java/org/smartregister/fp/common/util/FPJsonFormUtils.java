@@ -32,7 +32,6 @@ import org.json.JSONObject;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.clientandeventmodel.FormEntityConstants;
-import org.smartregister.domain.Photo;
 import org.smartregister.domain.ProfileImage;
 import org.smartregister.domain.form.FormLocation;
 import org.smartregister.domain.tag.FormTag;
@@ -51,7 +50,6 @@ import org.smartregister.repository.EventClientRepository;
 import org.smartregister.repository.ImageRepository;
 import org.smartregister.util.AssetHandler;
 import org.smartregister.util.FormUtils;
-import org.smartregister.util.ImageUtils;
 import org.smartregister.view.LocationPickerView;
 import org.smartregister.view.activity.DrishtiApplication;
 
@@ -528,16 +526,6 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
             if (dob != null) {
                 jsonObject.put(FPJsonFormUtils.VALUE, DATE_FORMAT.format(dob));
             }
-        }
-    }
-
-    private static void getPhotoFieldValue(Map<String, String> womanClient, JSONObject jsonObject) throws JSONException {
-        Photo photo = ImageUtils.profilePhotoByClientID(womanClient.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID),
-                Utils.getProfileImageResourceIdentifier());
-
-        if (photo != null && StringUtils.isNotBlank(photo.getFilePath())) {
-            jsonObject.put(FPJsonFormUtils.VALUE, photo.getFilePath());
-
         }
     }
 
