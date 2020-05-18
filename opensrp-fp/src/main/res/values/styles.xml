@@ -170,7 +170,7 @@
 
     <style name="btnStartVisitStyle">
         <item name="android:fontFamily">@font/roboto_regular</item>
-        <item name="android:textColor">@color/text_color_scooter</item>
+        <item name="android:textColor">@color/spanish_grey</item>
         <item name="android:textSize">13sp</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:lineSpacingMultiplier">1.23</item>
