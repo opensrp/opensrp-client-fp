@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
-import org.smartregister.commonregistry.CommonRepository;
 import org.smartregister.cursoradapter.RecyclerViewProvider;
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.domain.ButtonAlertStatus;
@@ -46,7 +45,7 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
 
     private Context context;
 
-    public RegisterProvider(Context context, CommonRepository commonRepository, Set visibleColumns,
+    public RegisterProvider(Context context, Set visibleColumns,
                             View.OnClickListener onClickListener, View.OnClickListener paginationClickListener) {
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -192,7 +191,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         }
     }
 
-    //     attachSyncOnclickListener(viewHolder.sync, pc);
     public static void fillValue(TextView v, String value) {
         if (v != null) v.setText(value);
 
@@ -204,18 +202,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         view.setTag(R.id.VIEW_ID, HomeRegisterFragment.CLICK_VIEW_NORMAL);
     }
 
-    private void attachRiskLayoutOnclickListener(View view, SmartRegisterClient client) {
-        view.setOnClickListener(onClickListener);
-        view.setTag(client);
-        view.setTag(R.id.VIEW_ID, HomeRegisterFragment.CLICK_VIEW_ATTENTION_FLAG);
-    }
-
-    private void attachSyncOnclickListener(View view, SmartRegisterClient client) {
-        view.setOnClickListener(onClickListener);
-        view.setTag(client);
-        view.setTag(R.id.VIEW_ID, HomeRegisterFragment.CLICK_VIEW_SYNC);
-    }
-
     ////////////////////////////////////////////////////////////////
     // Inner classes
     ////////////////////////////////////////////////////////////////
@@ -223,7 +209,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
     public static class RegisterViewHolder extends RecyclerView.ViewHolder {
         private TextView patientName;
         private TextView ancId;
-        private TextView risk;
         private Button sync;
         private View patientColumn;
         private Button followupBtn;

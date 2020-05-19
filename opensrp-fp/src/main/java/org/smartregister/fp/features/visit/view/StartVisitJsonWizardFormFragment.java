@@ -24,7 +24,6 @@ import androidx.appcompat.app.ActionBar;
 
 import com.vijay.jsonwizard.activities.JsonFormActivity;
 import com.vijay.jsonwizard.fragments.JsonWizardFormFragment;
-import com.vijay.jsonwizard.interactors.JsonFormInteractor;
 import com.vijay.jsonwizard.task.NextProgressDialogTask;
 
 import org.smartregister.fp.R;

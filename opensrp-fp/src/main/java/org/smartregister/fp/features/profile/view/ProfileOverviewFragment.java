@@ -54,6 +54,7 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
 
     @Override
     protected void onCreation() {
+        // this method is useful for objection creation
     }
 
     @Override

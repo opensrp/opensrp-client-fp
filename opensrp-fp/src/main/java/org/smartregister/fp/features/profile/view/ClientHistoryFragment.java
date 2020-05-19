@@ -76,7 +76,7 @@ public class ClientHistoryFragment extends BaseProfileFragment implements Client
         Utils.proceedToContact(baseEntityId, details, getActivity());
     }
 
-    static ClientHistoryFragment newInstance(Bundle bundle) {
+    public static ClientHistoryFragment newInstance(Bundle bundle) {
         Bundle bundles = bundle;
         ClientHistoryFragment fragment = new ClientHistoryFragment();
         if (bundles == null) {

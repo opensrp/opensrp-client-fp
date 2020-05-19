@@ -267,22 +267,6 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
         bottomNavigationView.setSelectedItemId(itemId);
     }
 
-    /**
-     * Forces the Home register activity to open the the Advanced search fragment after the barcode activity is closed (as
-     * long as it was opened from the advanced search page)
-     */
-    private void switchToAdvancedSearchFromBarcode() {
-        if (isAdvancedSearch) {
-            switchToFragment(BaseRegisterActivity.ADVANCED_SEARCH_POSITION);
-            setSelectedBottomBarMenuItem(org.smartregister.R.id.action_search);
-            setAdvancedFragmentSearchTerm(advancedSearchQrText);
-            setFormData(advancedSearchFormData);
-            advancedSearchQrText = "";
-            isAdvancedSearch = false;
-            advancedSearchFormData = new HashMap<>();
-        }
-    }
-
     public boolean isLibrary() {
         return isLibrary;
     }
