@@ -1,6 +1,5 @@
 package org.smartregister.fp.common.model;
 
-import android.util.Log;
 import android.util.Pair;
 
 import org.json.JSONObject;
