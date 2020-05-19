@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.3'
+        classpath 'com.android.tools.build:gradle:3.5.3'
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.3'
         classpath 'com.google.gms:google-services:4.3.3'
     }
@@ -143,7 +143,7 @@ dependencies {
         exclude group: 'org.yaml', module: 'snakeyaml'
         exclude group: 'io.ona.rdt-capture', module: 'lib'
     }
-    implementation('org.smartregister:opensrp-client-core:1.11.1-SNAPSHOT@aar') {
+    implementation('org.smartregister:opensrp-client-core:1.10.9002-TEST-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'com.android.support', module: 'recyclerview-v7'
         exclude group: 'com.android.support', module: 'appcompat-v7'

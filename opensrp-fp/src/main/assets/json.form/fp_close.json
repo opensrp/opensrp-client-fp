@@ -140,7 +140,7 @@
         "hint": "Other",
         "v_required": {
           "value": "false",
-          "err": null
+          "err": ""
         },
         "relevance": {
           "step1:record_close_reason": {

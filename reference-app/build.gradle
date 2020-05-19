@@ -219,7 +219,7 @@ dependencies {
     // Add the Firebase Crashlytics SDK.
     implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
 
-    implementation('org.smartregister:opensrp-client-core:1.11.1-SNAPSHOT@aar') {
+    implementation('org.smartregister:opensrp-client-core:1.10.9002-TEST-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'com.github.bmelnychuk', module: 'atv'
         exclude group: 'com.google.guava', module: 'guava'

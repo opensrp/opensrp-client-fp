@@ -131,7 +131,7 @@
         ],
         "v_required": {
           "value": "false",
-          "err": null
+          "err": ""
         }
       },
       {
@@ -159,7 +159,7 @@
         ],
         "v_required": {
           "value": "false",
-          "err": null
+          "err": ""
         },
         "relevance": {
           "step1:referral": {
@@ -217,7 +217,7 @@
         "label_text_style": "normal",
         "v_required": {
           "value": "false",
-          "err": null
+          "err": ""
         },
         "value": ""
       },
@@ -421,7 +421,7 @@
         ],
         "v_required": {
           "value": "true",
-          "err": null
+          "err": ""
         },
         "relevance": {
           "step1:gender": {
@@ -437,7 +437,7 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "method_gender_type",
         "type": "hidden",
-        "value": "0",
+        "value": "",
         "calculation": {
           "rules-engine": {
             "ex-rules": {
@@ -506,7 +506,7 @@
         ],
         "v_required": {
           "value": "false",
-          "err": null
+          "err": ""
         }
       },
       {
@@ -533,7 +533,7 @@
         "hint": "Client address",
         "v_required": {
           "value": "false",
-          "err": null
+          "err": ""
         },
         "value": ""
       },
@@ -547,7 +547,7 @@
         "hint": "Telephone number",
         "v_required": {
           "value": "false",
-          "err": null
+          "err": ""
         },
         "value": ""
       },
@@ -576,7 +576,7 @@
         ],
         "v_required": {
           "value": "false",
-          "err": null
+          "err": ""
         }
       },
       {
@@ -604,7 +604,7 @@
         ],
         "v_required": {
           "value": "false",
-          "err": null
+          "err": ""
         },
         "relevance": {
           "step1:comm_consent": {
