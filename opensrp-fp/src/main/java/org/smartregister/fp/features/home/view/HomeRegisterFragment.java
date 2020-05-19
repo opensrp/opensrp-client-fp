@@ -215,7 +215,7 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
     @Override
     public void initializeAdapter(Set<org.smartregister.configurableviews.model.View> visibleColumns) {
         RegisterProvider registerProvider =
-                new RegisterProvider(getActivity(), commonRepository(), visibleColumns, registerActionHandler,
+                new RegisterProvider(getActivity(), visibleColumns, registerActionHandler,
                         paginationViewHandler);
         clientAdapter = new RecyclerViewPaginatedAdapter(null, registerProvider, context().commonrepository(this.tablename));
         clientAdapter.setCurrentlimit(20);

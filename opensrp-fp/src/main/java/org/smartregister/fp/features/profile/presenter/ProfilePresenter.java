@@ -30,7 +30,7 @@ public class ProfilePresenter implements ProfileContract.Presenter, RegisterCont
 
     public ProfilePresenter(ProfileContract.View profileView) {
         mProfileView = new WeakReference<>(profileView);
-        mProfileInteractor = new ProfileInteractor(this);
+        mProfileInteractor = new ProfileInteractor();
         mRegisterInteractor = new RegisterInteractor();
     }
 

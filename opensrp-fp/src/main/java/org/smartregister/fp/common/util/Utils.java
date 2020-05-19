@@ -21,7 +21,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.gson.reflect.TypeToken;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.domain.ExpansionPanelValuesModel;
 import com.vijay.jsonwizard.rules.RuleConstant;
@@ -72,12 +71,10 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import timber.log.Timber;
 
@@ -269,7 +266,7 @@ public class Utils extends org.smartregister.util.Utils {
             startVisit.setBackIcon(R.drawable.ic_clear);
             startVisit.setWizard(true);
             //quickCheck.setHideSaveLabel(true);
-            HashMap<String, String> globals = loadGlobalConfig(context, personObjectClient, baseEntityId, Integer.valueOf(personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)), ConstantsUtils.JsonFormUtils.FP_START_VISIT);
+            HashMap<String, String> globals = loadGlobalConfig(personObjectClient, baseEntityId, Integer.valueOf(personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
             startVisit.setGlobals(globals);
 
 
@@ -340,61 +337,21 @@ public class Utils extends org.smartregister.util.Utils {
 
 
     @SuppressWarnings("ConstantConditions")
-    public static HashMap<String, String> loadGlobalConfig(Context context, HashMap<String, String> personObjectClient, String baseEntityId, int contactNo, String formName) {
+    public static HashMap<String, String> loadGlobalConfig(HashMap<String, String> personObjectClient, String baseEntityId, int contactNo) {
         HashMap<String, String> globals = new HashMap<>();
-        Set<String> defaultValueFields = new HashSet<>();
-        JSONObject mainJson;
+
         try {
-            mainJson = FPJsonFormUtils.readJsonFromAsset(context.getApplicationContext(), "json.form/" + formName);
-            if (mainJson.has(ConstantsUtils.DEFAULT_VALUES)) {
-                JSONArray defaultValuesArray = mainJson.getJSONArray(ConstantsUtils.DEFAULT_VALUES);
-                defaultValueFields.addAll(getListValues(defaultValuesArray));
-            }
+            String methodExit = getMapValue(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, baseEntityId, contactNo);
 
-            Map<String, List<String>> formGlobalKeys = new HashMap<>();
-            Set<String> globalKeys = new HashSet<>();
-            loadContactGlobalsConfig(formGlobalKeys, globalKeys, context);
+            //Inject some form defaults from client details
+            globals.put(ConstantsUtils.KeyUtils.CONTACT_NO, String.valueOf(contactNo));
+            globals.put(ConstantsUtils.PREVIOUS_CONTACT_NO, contactNo > 1 ? String.valueOf(contactNo - 1) : "0");
+            globals.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE).toLowerCase());
+            globals.put(DBConstantsUtils.KeyUtils.GENDER, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER).toLowerCase());
+            globals.put(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, methodExit == null ? "0" : methodExit);
 
-            Map<String, String> formGlobalValues = new HashMap<>();
-            if (contactNo > 1) {
-                for (String item : defaultValueFields) {
-                    if (globalKeys.contains(item)) {
-                        formGlobalValues.put(item, getMapValue(item, baseEntityId, contactNo));
-                    }
-                }
-            }
-
-            List<String> contactGlobals = formGlobalKeys.get(formName);
-
-            if (contactGlobals != null) {
-
-                for (String contactGlobal : contactGlobals) {
-                    if (formGlobalValues.containsKey(contactGlobal)) {
-                        String some = globals.get(contactGlobal);
-
-                        if (some == null || !some.equals(formGlobalValues.get(contactGlobal))) {
-                            globals.put(contactGlobal, formGlobalValues.get(contactGlobal));
-                        }
-
-                    } else {
-                        globals.put(contactGlobal, "");
-                    }
-                }
-
-                String methodExit = Utils.getMapValue(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, baseEntityId, contactNo);
-
-                //Inject some form defaults from client details
-                globals.put(ConstantsUtils.KeyUtils.CONTACT_NO, String.valueOf(contactNo));
-                globals.put(ConstantsUtils.PREVIOUS_CONTACT_NO, contactNo > 1 ? String.valueOf(contactNo - 1) : "0");
-                globals.put(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE, personObjectClient.get(DBConstantsUtils.KeyUtils.METHOD_GENDER_TYPE).toLowerCase());
-                globals.put(DBConstantsUtils.KeyUtils.GENDER, personObjectClient.get(DBConstantsUtils.KeyUtils.GENDER).toLowerCase());
-                globals.put(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT, methodExit == null ? "0" : methodExit);
-
-
-                String lastContactDate = personObjectClient.get(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE);
-                globals.put(ConstantsUtils.KeyUtils.LAST_CONTACT_DATE, !TextUtils.isEmpty(lastContactDate) ? Utils.reverseHyphenSeperatedValues(lastContactDate, "-") : "");
-
-            }
+            String lastContactDate = personObjectClient.get(DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE);
+            globals.put(ConstantsUtils.KeyUtils.LAST_CONTACT_DATE, !TextUtils.isEmpty(lastContactDate) ? Utils.reverseHyphenSeperatedValues(lastContactDate, "-") : "");
 
         } catch (Exception e) {
             Timber.e(e, "Error reading json from asset file ");
@@ -415,30 +372,10 @@ public class Utils extends org.smartregister.util.Utils {
         return previousContact != null ? previousContact.getValue() : null;
     }
 
-    public static void loadContactGlobalsConfig(Map<String, List<String>> formGlobalKeys, Set<String> globalKeys, Context context) throws IOException {
-        Iterable<Object> contactGlobals = readYaml(FilePathUtils.FileUtils.VISIT_GLOBALS, new Yaml(), context);
-
-        for (Object ruleObject : contactGlobals) {
-            Map<String, Object> map = ((Map<String, Object>) ruleObject);
-            formGlobalKeys.put(map.get(ConstantsUtils.FORM).toString(), (List<String>) map.get(JsonFormConstants.FIELDS));
-            globalKeys.addAll((List<String>) map.get(JsonFormConstants.FIELDS));
-        }
-    }
-
     public static Iterable<Object> readYaml(String filename, Yaml yaml, Context context) throws IOException {
         InputStreamReader inputStreamReader =
                 new InputStreamReader(context.getApplicationContext().getAssets().open((FilePathUtils.FolderUtils.CONFIG_FOLDER_PATH + filename)));
         return yaml.loadAll(inputStreamReader);
-    }
-
-    public static List<String> getListValues(JSONArray jsonArray) {
-        if (jsonArray != null) {
-            return FPLibrary.getInstance().getGsonInstance()
-                    .fromJson(jsonArray.toString(), new TypeToken<List<String>>() {
-                    }.getType());
-        } else {
-            return new ArrayList<>();
-        }
     }
 
     /**
@@ -728,6 +665,7 @@ public class Utils extends org.smartregister.util.Utils {
                     case ConstantsUtils.AlertStatusUtils.EXPIRED:
                         followUpBtn.setVisibility(View.GONE);
                         break;
+                    default: break;
                 }
             }
         }
