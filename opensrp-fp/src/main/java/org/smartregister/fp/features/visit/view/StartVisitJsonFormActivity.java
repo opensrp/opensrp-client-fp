@@ -105,7 +105,6 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
                 setmJSONObject(new JSONObject());
                 throw new JSONException("Form encounter_type not set");
             }
-
             //populate them global values
             if (getmJSONObject().has(JsonFormConstants.JSON_FORM_KEY.GLOBAL)) {
                 globalValues = new Gson().fromJson(getmJSONObject().getJSONObject(JsonFormConstants.JSON_FORM_KEY.GLOBAL).toString(),
