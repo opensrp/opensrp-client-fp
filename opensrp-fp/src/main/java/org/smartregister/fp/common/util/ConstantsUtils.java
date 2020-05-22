@@ -296,11 +296,6 @@ public abstract class ConstantsUtils {
         public static final String TRUE = "true";
     }
 
-    public static class AttentionFlagUtils {
-        public static final String RED = "red_attention_flag";
-        public static final String YELLOW = "yellow_attention_flag";
-    }
-
     public static class ClientUtils {
         public static final String FP_ID = "client_id";
     }

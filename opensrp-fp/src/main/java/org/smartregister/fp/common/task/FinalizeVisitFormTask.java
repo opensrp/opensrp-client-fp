@@ -162,12 +162,6 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
         return FPLibrary.getInstance().getPreviousContactRepository();
     }
 
-    private int getNextContact(Map<String, String> details) {
-        String nextContactRaw = details.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
-        int nextContact = nextContactRaw == null ? 1 : Integer.parseInt(nextContactRaw);
-        return ++nextContact;
-    }
-
     private ClientDetail getClientDetails(String baseEntityId, String nextContactVisitDate, Integer nextContact) {
         ClientDetail clientDetail = new ClientDetail();
         clientDetail.setBaseEntityId(baseEntityId);

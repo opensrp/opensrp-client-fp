@@ -7,10 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -26,7 +23,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 import org.smartregister.AllConstants;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
-import org.smartregister.configurableviews.ConfigurableViewsLibrary;
 import org.smartregister.configurableviews.model.Field;
 import org.smartregister.domain.FetchStatus;
 import org.smartregister.fp.R;
@@ -316,24 +312,6 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
             }
         }
 
-    }
-
-    @Override
-    public void showLanguageDialog(final List<String> displayValues) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1,
-                displayValues.toArray(new String[displayValues.size()])) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                TextView view = (TextView) super.getView(position, convertView, parent);
-                ConfigurableViewsLibrary.getInstance();
-                view.setTextColor(ConfigurableViewsLibrary.getContext().getColorResource(R.color.customAppThemeBlue));
-
-                return view;
-            }
-        };
-
-        AlertDialog languageDialog = createLanguageDialog(adapter, displayValues);
-        languageDialog.show();
     }
 
     public AlertDialog createLanguageDialog(ArrayAdapter<String> adapter, final List<String> displayValues) {

@@ -56,11 +56,11 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
     public static final String CLICK_VIEW_NORMAL = "click_view_normal";
     public static final String CLICK_VIEW_ALERT_STATUS = "click_view_alert_status";
     public static final String CLICK_VIEW_SYNC = "click_view_sync";
-    public static final String CLICK_VIEW_ATTENTION_FLAG = "click_view_attention_flag";
     private boolean enableDueFilter;
     private PopupMenu popupMenu;
     private Map<String, Locale> locales = new HashMap<>();
     private String[] languages;
+    private int currentLanguageIndex = 1;
 
     @Override
     protected void initializePresenter() {
@@ -100,12 +100,6 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
             if (contactButton != null) {
                 contactButton.setOnClickListener(registerActionHandler);
             }
-
-            //Risk view
-        /*View attentionFlag = view.findViewById(R.id.risk);
-        if (attentionFlag != null) {
-            attentionFlag.setOnClickListener(registerActionHandler);
-        }*/
 
             view.findViewById(R.id.due_only_text_view).setOnClickListener(registerActionHandler);
             view.findViewById(R.id.popup_menu).setOnClickListener(registerActionHandler);
@@ -210,8 +204,6 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
         super.onCreation();
         registerLanguageSwitcher();
     }
-
-    private int currentLanguageIndex = 1;
 
     private void languageSwitcherDialog() {
         if (getActivity() != null) {

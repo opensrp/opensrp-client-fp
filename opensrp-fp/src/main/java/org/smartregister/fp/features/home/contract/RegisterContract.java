@@ -6,7 +6,6 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.json.JSONObject;
 import org.smartregister.clientandeventmodel.Client;
 import org.smartregister.clientandeventmodel.Event;
-import org.smartregister.fp.common.domain.AttentionFlag;
 import org.smartregister.view.LocationPickerView;
 import org.smartregister.view.contract.BaseRegisterContract;
 
@@ -18,8 +17,6 @@ import java.util.List;
 public interface RegisterContract {
 
     interface View extends BaseRegisterContract.View {
-
-        void showLanguageDialog(List<String> displayValues);
 
     }
 
