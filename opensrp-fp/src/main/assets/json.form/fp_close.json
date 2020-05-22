@@ -47,7 +47,7 @@
     "encounter_location": ""
   },
   "step1": {
-    "title": "Close FP Record",
+    "title": "{{fp_close.step1.title}}",
     "fields": [
       {
         "key": "record_close_date",
@@ -55,11 +55,11 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "date_picker",
-        "hint": "Record closure date",
+        "hint": "{{fp_close.step1.record_close_date.hint}}",
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Please specify the record closure date"
+          "err": "{{fp_close.step1.record_close_date.v_required.err}}"
         },
         "value": ""
       },
@@ -69,63 +69,63 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "label_info_text": "Give the reason for closing the client's record.",
+        "label_info_text": "{{fp_close.step1.record_close_reason.label_info_text}}",
         "label_text_style": "normal",
-        "label": "Reason",
+        "label": "{{fp_close.step1.record_close_reason.label}}",
         "options": [
           {
             "key": "no_followup_needed",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Method requires no additional follow-up"
+            "text": "{{fp_close.step1.record_close_reason.options.no_followup_needed.text}}"
           },
           {
             "key": "no_need_want_fp",
-              "openmrs_entity_parent": "",
+            "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Client no longer needs/wants family planning services"
+            "text": "{{fp_close.step1.record_close_reason.options.no_need_want_fp.text}}"
           },
           {
             "key": "lost_to_followup",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Lost to follow-up"
+            "text": "{{fp_close.step1.record_close_reason.options.lost_to_followup.text}}"
           },
           {
             "key": "moved_away",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Moved away"
+            "text": "{{fp_close.step1.record_close_reason.options.moved_away.text}}"
           },
           {
             "key": "wrong_entry",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Wrong entry"
+            "text": "{{fp_close.step1.record_close_reason.options.wrong_entry.text}}"
           },
           {
             "key": "client_died",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Client died"
+            "text": "{{fp_close.step1.record_close_reason.options.client_died.text}}"
           },
           {
             "key": "other",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Other"
+            "text": "{{fp_close.step1.record_close_reason.options.other.text}}"
           }
         ],
         "v_required": {
           "value": "true",
-          "err": "Please specify the reason for closing the client's record"
+          "err": "{{fp_close.step1.record_close_reason.v_required.err}}"
         }
       },
       {
@@ -134,13 +134,13 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "label_info_text": "Give the other reason for closing the client's record.",
+        "label_info_text": "Give the other reason for closing the client\u0027s record.",
         "label_text_style": "normal",
         "edit_type": "name",
-        "hint": "Other",
+        "hint": "{{fp_close.step1.record_close_reason_other.hint}}",
         "v_required": {
           "value": "false",
-          "err": ""
+          "err": "{{fp_close.step1.record_close_reason_other.v_required.err}}"
         },
         "relevance": {
           "step1:record_close_reason": {
@@ -156,11 +156,11 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "type": "date_picker",
-        "hint": "Date of death",
+        "hint": "{{fp_close.step1.death_date.hint}}",
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Please specify the date of death"
+          "err": "{{fp_close.step1.death_date.v_required.err}}"
         },
         "value": "",
         "relevance": {
@@ -172,5 +172,6 @@
         "is_visible": false
       }
     ]
-  }
+  },
+  "properties_file_name": "fp_close"
 }

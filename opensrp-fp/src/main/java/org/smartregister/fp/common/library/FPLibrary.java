@@ -25,6 +25,7 @@ import org.smartregister.fp.common.helper.FPRulesEngineHelper;
 import org.smartregister.fp.common.repository.PreviousContactRepository;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.FilePathUtils;
+import org.smartregister.fp.common.util.Utils;
 import org.smartregister.fp.features.home.repository.ContactTasksRepository;
 import org.smartregister.fp.features.home.repository.PartialContactRepository;
 import org.smartregister.fp.features.home.repository.RegisterQueryProvider;
@@ -40,6 +41,7 @@ import org.yaml.snakeyaml.constructor.Constructor;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Locale;
 
 import id.zelory.compressor.Compressor;
 import timber.log.Timber;
@@ -310,5 +312,12 @@ public class FPLibrary {
     @NonNull
     public ActivityConfiguration getActivityConfiguration() {
         return activityConfiguration;
+    }
+
+    public void notifyAppContextChange() {
+        if (getApplicationContext() != null) {
+            Locale current = getApplicationContext().getResources().getConfiguration().locale;
+            Utils.saveLanguage(current.getLanguage());
+        }
     }
 }

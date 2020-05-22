@@ -68,4 +68,5 @@ public class FPSyncConfiguration extends SyncConfiguration {
     public String getTopAllowedLocationLevel() {
         return null;
     }
+
 }

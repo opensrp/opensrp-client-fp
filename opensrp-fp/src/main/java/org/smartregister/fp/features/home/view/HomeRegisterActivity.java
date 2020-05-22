@@ -5,13 +5,11 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,7 +30,6 @@ import org.smartregister.configurableviews.ConfigurableViewsLibrary;
 import org.smartregister.configurableviews.model.Field;
 import org.smartregister.domain.FetchStatus;
 import org.smartregister.fp.R;
-import org.smartregister.fp.common.domain.AttentionFlag;
 import org.smartregister.fp.common.domain.Contact;
 import org.smartregister.fp.common.event.PatientRemovedEvent;
 import org.smartregister.fp.common.event.ShowProgressDialogEvent;
@@ -57,16 +54,12 @@ import java.util.List;
 
 import timber.log.Timber;
 
-/**
- * Created by keyman on 26/06/2018.
- */
+import static com.vijay.jsonwizard.constants.JsonFormConstants.PERFORM_FORM_TRANSLATION;
 
 public class HomeRegisterActivity extends BaseRegisterActivity implements RegisterContract.View {
     private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
 
     private AlertDialog recordBirthAlertDialog;
-    private AlertDialog attentionFlagAlertDialog;
-    private View attentionFlagDialogView;
     private boolean isAdvancedSearch = false;
     private boolean isLibrary = false;
     private String advancedSearchQrText = "";
@@ -76,7 +69,6 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         recordBirthAlertDialog = createAlertDialog();
-        createAttentionFlagsAlertDialog();
     }
 
     @Override
@@ -93,7 +85,7 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
             bottomNavigationView.getMenu().removeItem(R.id.action_search);
             bottomNavigationView.getMenu().removeItem(R.id.action_library);
 
-            BottomNavigationListener bottomNavigationListener = new BottomNavigationListener(this){
+            BottomNavigationListener bottomNavigationListener = new BottomNavigationListener(this) {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     if (item.getItemId() == R.string.action_mec_wheel) {
@@ -106,7 +98,9 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
                                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + pkgName));
                             }
                         }
-                        startActivity(intent);
+                        if (intent.resolveActivity(getPackageManager()) != null) {
+                            startActivity(intent);
+                        }
                         return false;
                     } else {
                         return super.onNavigationItemSelected(item);
@@ -171,7 +165,8 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
     public void startFormActivity(JSONObject form) {
         Intent intent = new Intent(this, JsonWizardFormActivity.class);
         intent.putExtra(ConstantsUtils.JsonFormExtraUtils.JSON, form.toString());
-        intent.putExtra("form", getFormMetadata());
+        intent.putExtra(ConstantsUtils.JsonFormExtraUtils.FORM, getFormMetadata());
+        intent.putExtra(PERFORM_FORM_TRANSLATION, true);
         startActivityForResult(intent, FPJsonFormUtils.REQUEST_CODE_GET_JSON);
     }
 
@@ -307,18 +302,6 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
         return alertDialog;
     }
 
-    @NonNull
-    protected void createAttentionFlagsAlertDialog() {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-
-        attentionFlagDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_attention_flag, null);
-        dialogBuilder.setView(attentionFlagDialogView);
-
-        attentionFlagDialogView.findViewById(R.id.closeButton).setOnClickListener(view -> attentionFlagAlertDialog.dismiss());
-        attentionFlagAlertDialog = dialogBuilder.create();
-        setAttentionFlagAlertDialog(attentionFlagAlertDialog);
-    }
-
     public void updateSortAndFilter(List<Field> filterList, Field sortField) {
         ((HomeRegisterFragment) mBaseFragment).updateSortAndFilter(filterList, sortField);
         switchToBaseFragment();
@@ -363,48 +346,6 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
         });
 
         return builder.create();
-    }
-
-    @Override
-    public void showAttentionFlagsDialog(List<AttentionFlag> attentionFlags) {
-        ViewGroup redFlagsContainer = attentionFlagDialogView.findViewById(R.id.red_flags_container);
-        ViewGroup yellowFlagsContainer = attentionFlagDialogView.findViewById(R.id.yellow_flags_container);
-
-        redFlagsContainer.removeAllViews();
-        yellowFlagsContainer.removeAllViews();
-
-        int yellowFlagCount = 0;
-        int redFlagCount = 0;
-
-        for (AttentionFlag flag : attentionFlags) {
-            if (flag.isRedFlag()) {
-                LinearLayout redRow = (LinearLayout) LayoutInflater.from(this)
-                        .inflate(R.layout.alert_dialog_attention_flag_row_red, redFlagsContainer, false);
-                ((TextView) redRow.getChildAt(1)).setText(flag.getTitle());
-                redFlagsContainer.addView(redRow);
-                redFlagCount += 1;
-            } else {
-
-                LinearLayout yellowRow = (LinearLayout) LayoutInflater.from(this)
-                        .inflate(R.layout.alert_dialog_attention_flag_row_yellow, yellowFlagsContainer, false);
-                ((TextView) yellowRow.getChildAt(1)).setText(flag.getTitle());
-                yellowFlagsContainer.addView(yellowRow);
-                yellowFlagCount += 1;
-            }
-        }
-
-        ((View) redFlagsContainer.getParent()).setVisibility(redFlagCount > 0 ? View.VISIBLE : View.GONE);
-        ((View) yellowFlagsContainer.getParent()).setVisibility(yellowFlagCount > 0 ? View.VISIBLE : View.GONE);
-
-        getAttentionFlagAlertDialog().show();
-    }
-
-    public AlertDialog getAttentionFlagAlertDialog() {
-        return attentionFlagAlertDialog;
-    }
-
-    public void setAttentionFlagAlertDialog(AlertDialog attentionFlagAlertDialog) {
-        this.attentionFlagAlertDialog = attentionFlagAlertDialog;
     }
 
     @Override

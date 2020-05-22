@@ -33,9 +33,6 @@ import timber.log.Timber;
 import static org.smartregister.util.Log.logError;
 import static org.smartregister.util.Log.logInfo;
 
-/**
- * Created by ndegwamartin on 21/06/2018.
- */
 public class FPApplication extends DrishtiApplication implements TimeChangedBroadcastReceiver.OnTimeChangedListener {
     private static CommonFtsObject commonFtsObject;
     private String password;
@@ -164,12 +161,17 @@ public class FPApplication extends DrishtiApplication implements TimeChangedBroa
     }
 
     @Override
+    protected void attachBaseContext(android.content.Context base) {
+        super.attachBaseContext(base);
+    }
+
+    @Override
     public void logoutCurrentUser() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.addCategory(Intent.CATEGORY_HOME);
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addCategory(Intent.CATEGORY_HOME);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        getApplicationContext().startActivity(intent);
         context.userService().logoutSession();
     }
 

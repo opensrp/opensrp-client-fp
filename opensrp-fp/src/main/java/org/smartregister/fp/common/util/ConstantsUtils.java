@@ -157,6 +157,7 @@ public abstract class ConstantsUtils {
     public static class JsonFormExtraUtils {
         public static final String CONTACT = "contact";
         public static final String JSON = "json";
+        public static final String FORM = "form";
     }
 
     public static class SchedulesTriggerEventsUtils {

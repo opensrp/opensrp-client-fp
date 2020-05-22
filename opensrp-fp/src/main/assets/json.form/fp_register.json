@@ -52,7 +52,7 @@
     }
   },
   "step1": {
-    "title": "Client Registration",
+    "title": "{{fp_register.step1.title}}",
     "fields": [
       {
         "key": "first_name",
@@ -61,14 +61,14 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "first_name",
         "edit_type": "name",
-        "hint": "Client first name",
+        "hint": "{{fp_register.step1.first_name.hint}}",
         "v_required": {
           "value": "true",
-          "err": "Please enter the first name"
+          "err": "{{fp_register.step1.first_name.v_required.err}}"
         },
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid first name"
+          "err": "{{fp_register.step1.first_name.v_regex.err}}"
         },
         "value": ""
       },
@@ -79,14 +79,14 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "last_name",
         "edit_type": "name",
-        "hint": "Client last name",
+        "hint": "{{fp_register.step1.last_name.hint}}",
         "v_required": {
           "value": "true",
-          "err": "Please enter the last name"
+          "err": "{{fp_register.step1.last_name.v_required.err}}"
         },
         "v_regex": {
           "value": "[A-Za-z\\s\\.\\-]*",
-          "err": "Please enter a valid last name"
+          "err": "{{fp_register.step1.last_name.v_regex.err}}"
         },
         "value": ""
       },
@@ -96,11 +96,11 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "registration_date",
         "type": "date_picker",
-        "hint": "Registration date",
+        "hint": "{{fp_register.step1.registration_date.hint}}",
         "max_date": "today",
         "v_required": {
           "value": true,
-          "err": "Please specify the registration date"
+          "err": "{{fp_register.step1.registration_date.v_required.err}}"
         },
         "value": ""
       },
@@ -110,8 +110,8 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "referral",
-        "label": "Referral",
-        "label_info_text": "Whether or not the client is an incoming referral.",
+        "label": "{{fp_register.step1.referral.label}}",
+        "label_info_text": "{{fp_register.step1.referral.label_info_text}}",
         "label_text_style": "normal",
         "options": [
           {
@@ -119,19 +119,19 @@
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Yes"
+            "text": "{{fp_register.step1.referral.options.yes.text}}"
           },
           {
             "key": "no",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "No"
+            "text": "{{fp_register.step1.referral.options.no.text}}"
           }
         ],
         "v_required": {
           "value": "false",
-          "err": ""
+          "err": "{{fp_register.step1.referral.v_required.err}}"
         }
       },
       {
@@ -140,26 +140,26 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "referred_by",
-        "label": "Referred by",
+        "label": "{{fp_register.step1.referred_by.label}}",
         "options": [
           {
             "key": "community",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Community"
+            "text": "{{fp_register.step1.referred_by.options.community.text}}"
           },
           {
             "key": "facility",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Facility"
+            "text": "{{fp_register.step1.referred_by.options.facility.text}}"
           }
         ],
         "v_required": {
           "value": "false",
-          "err": ""
+          "err": "{{fp_register.step1.referred_by.v_required.err}}"
         },
         "relevance": {
           "step1:referral": {
@@ -175,16 +175,16 @@
         "openmrs_entity_id": "client_id",
         "type": "barcode",
         "barcode_type": "qrcode",
-        "hint": "FP ID",
+        "hint": "{{fp_register.step1.client_id.hint}}",
         "value": "0",
-        "scanButtonText": "Scan QR Code",
+        "scanButtonText": "{{fp_register.step1.client_id.scanButtonText}}",
         "v_numeric": {
           "value": "true",
-          "err": "This needs to be a number"
+          "err": "{{fp_register.step1.client_id.v_numeric.err}}"
         },
         "v_required": {
           "value": "true",
-          "err": "This field is required"
+          "err": "{{fp_register.step1.client_id.v_required.err}}"
         }
       },
       {
@@ -193,7 +193,7 @@
         "openmrs_entity": "person_identifier",
         "openmrs_entity_id": "client_id_note",
         "type": "toaster_notes",
-        "text": "Unique identification: {client_id}",
+        "text": "{{fp_register.step1.client_id_note.text}}",
         "toaster_type": "info",
         "text_color": "#1199F9",
         "calculation": {
@@ -211,13 +211,13 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "universal_id",
         "edit_type": "name",
-        "hint": "Universal ID",
-        "label": "Universal ID",
-        "label_info_text": "The client's universal ID, if used in the country.",
+        "hint": "{{fp_register.step1.universal_id.hint}}",
+        "label": "{{fp_register.step1.universal_id.label}}",
+        "label_info_text": "The client\u0027s universal ID, if used in the country.",
         "label_text_style": "normal",
         "v_required": {
           "value": "false",
-          "err": ""
+          "err": "{{fp_register.step1.universal_id.v_required.err}}"
         },
         "value": ""
       },
@@ -259,16 +259,16 @@
         "openmrs_entity": "person",
         "openmrs_entity_id": "birthdate",
         "type": "date_picker",
-        "hint": "Date of birth (DOB)",
+        "hint": "{{fp_register.step1.dob_entered.hint}}",
         "expanded": false,
         "min_date": "today-49y",
         "max_date": "today-10y",
         "duration": {
-          "label": "Age"
+          "label": "{{fp_register.step1.dob_entered.duration.label}}"
         },
         "v_required": {
           "value": "true",
-          "err": "Please enter the date of birth"
+          "err": "{{fp_register.step1.dob_entered.v_required.err}}"
         },
         "relevance": {
           "step1:dob_unknown": {
@@ -295,7 +295,7 @@
         "options": [
           {
             "key": "dob_unknown",
-            "text": "Date of birth unknown",
+            "text": "{{fp_register.step1.dob_unknown.options.dob_unknown.text}}",
             "text_size": "18px",
             "value": "false",
             "openmrs_entity_parent": "",
@@ -310,18 +310,18 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "age_entered",
         "type": "edit_text",
-        "hint": "Estimated age",
+        "hint": "{{fp_register.step1.age_entered.hint}}",
         "v_numeric": {
           "value": "true",
-          "err": "Age must be a number"
+          "err": "{{fp_register.step1.age_entered.v_numeric.err}}"
         },
         "v_min": {
           "value": "10",
-          "err": "Age must be equal to or greater than 10"
+          "err": "{{fp_register.step1.age_entered.v_min.err}}"
         },
         "v_max": {
           "value": "49",
-          "err": "Age must be equal or less than 49"
+          "err": "{{fp_register.step1.age_entered.v_max.err}}"
         },
         "relevance": {
           "step1:dob_unknown": {
@@ -336,7 +336,7 @@
         },
         "v_required": {
           "value": "true",
-          "err": "Please enter age"
+          "err": "{{fp_register.step1.age_entered.v_required.err}}"
         },
         "step": "step1",
         "is-rule-check": true,
@@ -365,33 +365,33 @@
         "openmrs_entity_parent": "NA",
         "openmrs_entity": "person",
         "openmrs_entity_id": "gender",
-        "label": "Gender",
+        "label": "{{fp_register.step1.gender.label}}",
         "options": [
           {
             "key": "female",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Female"
+            "text": "{{fp_register.step1.gender.options.female.text}}"
           },
           {
             "key": "male",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Male"
+            "text": "{{fp_register.step1.gender.options.male.text}}"
           },
           {
             "key": "other",
             "openmrs_entity": "",
             "openmrs_entity_id": "NA",
             "openmrs_entity_parent": "",
-            "text": "Other"
+            "text": "{{fp_register.step1.gender.options.other.text}}"
           }
         ],
         "v_required": {
           "value": "true",
-          "err": "Please select gender"
+          "err": "{{fp_register.step1.gender.v_required.err}}"
         },
         "is-rule-check": false,
         "value": ""
@@ -402,26 +402,26 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "biological_sex",
-        "label": "Biological sex",
+        "label": "{{fp_register.step1.biological_sex.label}}",
         "options": [
           {
             "key": "female",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Female"
+            "text": "{{fp_register.step1.biological_sex.options.female.text}}"
           },
           {
             "key": "male",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Male"
+            "text": "{{fp_register.step1.biological_sex.options.male.text}}"
           }
         ],
         "v_required": {
           "value": "true",
-          "err": ""
+          "err": "{{fp_register.step1.biological_sex.v_required.err}}"
         },
         "relevance": {
           "step1:gender": {
@@ -452,61 +452,61 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "marital_status",
-        "label": "Marital status",
+        "label": "{{fp_register.step1.marital_status.label}}",
         "options": [
           {
             "key": "unmarried",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Unmarried"
+            "text": "{{fp_register.step1.marital_status.options.unmarried.text}}"
           },
           {
             "key": "never_married",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Never married"
+            "text": "{{fp_register.step1.marital_status.options.never_married.text}}"
           },
           {
             "key": "married",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Married"
+            "text": "{{fp_register.step1.marital_status.options.married.text}}"
           },
           {
             "key": "polygamous",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Polygamous"
+            "text": "{{fp_register.step1.marital_status.options.polygamous.text}}"
           },
           {
             "key": "divorced",
             "openmrs_entity_parent": "NA",
             "openmrs_entity": "Concept - Divorced",
             "openmrs_entity_id": "1058AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-            "text": "Divorced"
+            "text": "{{fp_register.step1.marital_status.options.divorced.text}}"
           },
           {
             "key": "widowed",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Widowed"
+            "text": "{{fp_register.step1.marital_status.options.widowed.text}}"
           },
           {
             "key": "unknown",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Unknown"
+            "text": "{{fp_register.step1.marital_status.options.unknown.text}}"
           }
         ],
         "v_required": {
           "value": "false",
-          "err": ""
+          "err": "{{fp_register.step1.marital_status.v_required.err}}"
         }
       },
       {
@@ -516,10 +516,10 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "admin_area",
         "edit_type": "name",
-        "hint": "Administrative area",
+        "hint": "{{fp_register.step1.admin_area.hint}}",
         "v_required": {
           "value": "true",
-          "err": "Please enter administrative area"
+          "err": "{{fp_register.step1.admin_area.v_required.err}}"
         },
         "value": ""
       },
@@ -530,10 +530,10 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "client_address",
         "edit_type": "name",
-        "hint": "Client address",
+        "hint": "{{fp_register.step1.client_address.hint}}",
         "v_required": {
           "value": "false",
-          "err": ""
+          "err": "{{fp_register.step1.client_address.v_required.err}}"
         },
         "value": ""
       },
@@ -544,10 +544,10 @@
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "tel_number",
         "edit_type": "number",
-        "hint": "Telephone number",
+        "hint": "{{fp_register.step1.tel_number.hint}}",
         "v_required": {
           "value": "false",
-          "err": ""
+          "err": "{{fp_register.step1.tel_number.v_required.err}}"
         },
         "value": ""
       },
@@ -557,26 +557,26 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "comm_consent",
-        "label": "Communication consent",
+        "label": "{{fp_register.step1.comm_consent.label}}",
         "options": [
           {
             "key": "yes",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Yes"
+            "text": "{{fp_register.step1.comm_consent.options.yes.text}}"
           },
           {
             "key": "no",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "No"
+            "text": "{{fp_register.step1.comm_consent.options.no.text}}"
           }
         ],
         "v_required": {
           "value": "false",
-          "err": ""
+          "err": "{{fp_register.step1.comm_consent.v_required.err}}"
         }
       },
       {
@@ -585,26 +585,26 @@
         "openmrs_entity_parent": "NA",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "reminder_message",
-        "label": "Reminder messages",
+        "label": "{{fp_register.step1.reminder_message.label}}",
         "options": [
           {
             "key": "yes",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "Yes"
+            "text": "{{fp_register.step1.reminder_message.options.yes.text}}"
           },
           {
             "key": "no",
             "openmrs_entity_parent": "",
             "openmrs_entity": "",
             "openmrs_entity_id": "",
-            "text": "No"
+            "text": "{{fp_register.step1.reminder_message.options.no.text}}"
           }
         ],
         "v_required": {
           "value": "false",
-          "err": ""
+          "err": "{{fp_register.step1.reminder_message.v_required.err}}"
         },
         "relevance": {
           "step1:comm_consent": {
@@ -676,5 +676,6 @@
   "details": {
     "appVersionName": "1.7.28-SNAPSHOT",
     "formVersion": ""
-  }
+  },
+  "properties_file_name": "fp_register"
 }

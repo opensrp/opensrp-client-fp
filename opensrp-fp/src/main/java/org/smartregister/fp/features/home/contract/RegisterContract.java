@@ -21,8 +21,6 @@ public interface RegisterContract {
 
         void showLanguageDialog(List<String> displayValues);
 
-        void showAttentionFlagsDialog(List<AttentionFlag> attentionFlags);
-
     }
 
     interface Presenter extends BaseRegisterContract.Presenter {

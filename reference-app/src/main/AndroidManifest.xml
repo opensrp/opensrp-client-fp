@@ -40,27 +40,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/FPAppTheme.NoActionBar" />
-
-        <activity
-            android:name="org.smartregister.fp.common.view.SiteCharacteristicsActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/FPAppTheme.NoActionBar" />
-
-        <activity
-            android:name="org.smartregister.fp.common.view.SiteCharacteristicsEnterActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/FPAppTheme.NoActionBar" />
-
-        <activity
-            android:name="org.smartregister.fp.common.view.SiteCharacteristicsExitActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/FPAppTheme.NoActionBar" />
-
+        
         <activity
             android:label="@string/return_to_clients"
             android:name="org.smartregister.fp.features.profile.view.ProfileActivity"

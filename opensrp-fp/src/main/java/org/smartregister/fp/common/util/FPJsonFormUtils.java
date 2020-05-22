@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.common.reflect.TypeToken;
-import com.vijay.jsonwizard.activities.JsonFormActivity;
 import com.vijay.jsonwizard.activities.JsonWizardFormActivity;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.domain.Form;
@@ -65,13 +64,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import timber.log.Timber;
+
+import static com.vijay.jsonwizard.constants.JsonFormConstants.PERFORM_FORM_TRANSLATION;
 
 /**
  * Created by keyman on 27/06/2018.
@@ -80,7 +80,6 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
     public static final String METADATA = "metadata";
     public static final String ENCOUNTER_TYPE = "encounter_type";
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
-    public static final SimpleDateFormat EDD_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     public static final String READ_ONLY = "read_only";
     public static final int REQUEST_CODE_GET_JSON = 3432;
     private static final String TAG = FPJsonFormUtils.class.getCanonicalName();
@@ -529,17 +528,6 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         }
     }
 
-    private static void formatEdd(Map<String, String> womanClient, JSONObject jsonObject, String eddDate)
-            throws JSONException {
-        String eddString = womanClient.get(eddDate);
-        if (StringUtils.isNotBlank(eddString)) {
-            Date edd = Utils.dobStringToDate(eddString);
-            if (edd != null) {
-                jsonObject.put(FPJsonFormUtils.VALUE, EDD_DATE_FORMAT.format(edd));
-            }
-        }
-    }
-
     public static void startFormForEdit(Activity context, int jsonFormActivityRequestCode, String metaData) {
         Intent intent = new Intent(context, JsonWizardFormActivity.class);
         intent.putExtra(ConstantsUtils.IntentKeyUtils.JSON, metaData);
@@ -643,6 +631,8 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
     public static void launchFPCloseForm(Activity activity) {
         try {
             Intent intent = new Intent(activity, JsonWizardFormActivity.class);
+            intent.putExtra(PERFORM_FORM_TRANSLATION,true);
+            intent.putExtra("no_parms", false);
             intent.putExtra("form", getFormMetadata(activity));
             JSONObject form = FormUtils.getInstance(activity).getFormJson(ConstantsUtils.JsonFormUtils.FP_CLOSE);
             if (form != null) {
@@ -654,77 +644,6 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         } catch (Exception e) {
             Timber.e(e, "JsonFormUtils --> launchFPCloseForm");
         }
-    }
-
-    public static void launchSiteCharacteristicsForm(Activity activity) {
-        try {
-            Intent intent = new Intent(activity, JsonFormActivity.class);
-            JSONObject form = FormUtils.getInstance(activity).getFormJson(ConstantsUtils.JsonFormUtils.ANC_SITE_CHARACTERISTICS);
-            if (form != null) {
-                form.put(ConstantsUtils.JsonFormKeyUtils.ENTITY_ID,
-                        activity.getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID));
-                intent.putExtra(ConstantsUtils.IntentKeyUtils.JSON, form.toString());
-                activity.startActivityForResult(intent, FPJsonFormUtils.REQUEST_CODE_GET_JSON);
-            }
-        } catch (Exception e) {
-            Timber.e(e, "JsonFormUtils --> launchSiteCharacteristicsForm");
-        }
-    }
-
-    public static Map<String, String> processSiteCharacteristics(String jsonString) {
-        try {
-            Triple<Boolean, JSONObject, JSONArray> registrationFormParams = validateParameters(jsonString);
-            if (!registrationFormParams.getLeft()) {
-                return null;
-            }
-
-            Map<String, String> settings = new HashMap<>();
-            JSONArray fields =
-                    registrationFormParams.getMiddle().getJSONObject(FPJsonFormUtils.STEP1).getJSONArray(FPJsonFormUtils.FIELDS);
-
-            for (int i = 0; i < fields.length(); i++) {
-                if (!"label".equals(fields.getJSONObject(i).getString(ConstantsUtils.KeyUtils.TYPE))) {
-                    settings.put(fields.getJSONObject(i).getString(ConstantsUtils.KeyUtils.KEY),
-                            StringUtils.isBlank(fields.getJSONObject(i).getString(ConstantsUtils.KeyUtils.VALUE)) ? "0" :
-                                    fields.getJSONObject(i).getString(ConstantsUtils.KeyUtils.VALUE));
-                }
-
-            }
-
-            return settings;
-        } catch (Exception e) {
-            Timber.e(e, "JsonFormUtils --> processSiteCharacteristics");
-            return null;
-        }
-    }
-
-    public static String getAutoPopulatedSiteCharacteristicsEditFormString(Context context,
-                                                                           Map<String, String> characteristics) {
-        try {
-            JSONObject form = FormUtils.getInstance(context).getFormJson(ConstantsUtils.JsonFormUtils.ANC_SITE_CHARACTERISTICS);
-            Timber.d("Form is " + form.toString());
-            if (form != null) {
-                form.put(FPJsonFormUtils.ENCOUNTER_TYPE, ConstantsUtils.EventTypeUtils.SITE_CHARACTERISTICS);
-
-                JSONObject stepOne = form.getJSONObject(FPJsonFormUtils.STEP1);
-                JSONArray jsonArray = stepOne.getJSONArray(FPJsonFormUtils.FIELDS);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    if (characteristics.containsKey(jsonObject.getString(FPJsonFormUtils.KEY))) {
-                        jsonObject.put(FPJsonFormUtils.READ_ONLY, false);
-                        jsonObject.put(FPJsonFormUtils.VALUE,
-                                "true".equals(characteristics.get(jsonObject.getString(FPJsonFormUtils.KEY))) ? "1" : "0");
-                    }
-
-                }
-
-                return form.toString();
-            }
-        } catch (Exception e) {
-            Timber.e(e, "JsonFormUtils --> getAutoPopulatedSiteCharacteristicsEditFormString");
-        }
-
-        return "";
     }
 
     public static Pair<Event, Event> createContactVisitEvent(Map<String, String> clientDetail) {

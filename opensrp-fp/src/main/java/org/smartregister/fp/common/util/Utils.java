@@ -9,10 +9,8 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
@@ -143,20 +141,13 @@ public class Utils extends org.smartregister.util.Utils {
 
     public static void saveLanguage(String language) {
         Utils.getAllSharedPreferences().saveLanguagePreference(language);
-        setLocale(new Locale(language));
     }
 
     public static void setLocale(Locale locale) {
         Resources resources = FPLibrary.getInstance().getApplicationContext().getResources();
         Configuration configuration = resources.getConfiguration();
-        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            configuration.setLocale(locale);
-            FPLibrary.getInstance().getApplicationContext().createConfigurationContext(configuration);
-        } else {
-            configuration.locale = locale;
-            resources.updateConfiguration(configuration, displayMetrics);
-        }
+        configuration.setLocale(locale);
+        FPLibrary.getInstance().getApplicationContext().createConfigurationContext(configuration);
     }
 
     public static String getLanguage() {
@@ -304,6 +295,7 @@ public class Utils extends org.smartregister.util.Utils {
             intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, partialContactRequest.getType());
             intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, partialContactRequest.getContactNo());
             intent.putExtra(ConstantsUtils.IntentKeyUtils.GLOBAL, globals);
+//            intent.putExtra(JsonFormConstants.PERFORM_FORM_TRANSLATION, true);
             Activity activity = (Activity) context;
             activity.startActivityForResult(intent, FPJsonFormUtils.REQUEST_CODE_GET_JSON);
 
@@ -416,38 +408,6 @@ public class Utils extends org.smartregister.util.Utils {
         return false;
     }
 
-    /**
-     * This finalizes the form and redirects you to the contact summary page for more confirmation of the data added
-     *
-     * @param context {@link Activity}
-     * @author martinndegwa
-     */
-    /*public static void finalizeForm(Activity context, HashMap<String, String> womanDetails, boolean isRefferal) {
-        try {
-
-            Intent contactSummaryFinishIntent = new Intent(context, ContactSummaryFinishActivity.class);
-            contactSummaryFinishIntent
-                    .putExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID, womanDetails.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID));
-            contactSummaryFinishIntent.putExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP, womanDetails);
-            contactSummaryFinishIntent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO,
-                    Integer.valueOf(womanDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
-            if (isRefferal) {
-                int contactNo = Integer.parseInt(womanDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
-                if (contactNo < 0) {
-                    contactSummaryFinishIntent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, Integer.valueOf(contactNo));
-                } else {
-                    contactSummaryFinishIntent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, Integer.valueOf("-" + contactNo));
-                }
-            } else {
-                contactSummaryFinishIntent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO,
-                        Integer.valueOf(womanDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
-            }
-            context.startActivity(contactSummaryFinishIntent);
-        } catch (Exception e) {
-            Timber.e(e);
-        }
-
-    }*/
     public static String fillTemplate(String stringValue, Facts facts) {
         String stringValueResult = stringValue;
         while (stringValueResult.contains("{")) {
@@ -597,7 +557,8 @@ public class Utils extends org.smartregister.util.Utils {
                     case ConstantsUtils.AlertStatusUtils.EXPIRED:
                         followUpBtn.setVisibility(View.GONE);
                         break;
-                    default: break;
+                    default:
+                        break;
                 }
             }
         }
@@ -1040,6 +1001,7 @@ public class Utils extends org.smartregister.util.Utils {
     public static String getMethodName(String key) {
         return METHODS.containsKey(key) ? METHODS.get(key) : "";
     }
+
     public static String getFormattedMethodName(String key) {
         return METHODS.containsKey(key) ? METHODS.get(key) : key;
     }
@@ -1095,7 +1057,7 @@ public class Utils extends org.smartregister.util.Utils {
             case ConstantsUtils.MethodKeyUtil.DMPA_IM:
             case ConstantsUtils.MethodKeyUtil.DMPA_SC:
             case ConstantsUtils.MethodKeyUtil.NET_EN:
-                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject,ConstantsUtils.JsonFormKeyUtils.STEP7, ConstantsUtils.JsonFormKeyUtils.LAST_INJECTION_DATE), pattern);
+                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject, ConstantsUtils.JsonFormKeyUtils.STEP7, ConstantsUtils.JsonFormKeyUtils.LAST_INJECTION_DATE), pattern);
                 break;
 
             case ConstantsUtils.MethodKeyUtil.POP:
@@ -1103,7 +1065,7 @@ public class Utils extends org.smartregister.util.Utils {
             case ConstantsUtils.MethodKeyUtil.PATCH:
             case ConstantsUtils.MethodKeyUtil.CVR:
             case ConstantsUtils.MethodKeyUtil.PVR:
-                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject,ConstantsUtils.JsonFormKeyUtils.STEP1, ConstantsUtils.JsonFormKeyUtils.VISIT_DATE), pattern);
+                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject, ConstantsUtils.JsonFormKeyUtils.STEP1, ConstantsUtils.JsonFormKeyUtils.VISIT_DATE), pattern);
                 break;
 
             case ConstantsUtils.MethodKeyUtil.MALE_STERILIZATION:
@@ -1130,8 +1092,7 @@ public class Utils extends org.smartregister.util.Utils {
                     break;
                 }
             }
-        }
-        catch (JSONException ex) {
+        } catch (JSONException ex) {
             Timber.e(ex);
         }
 
