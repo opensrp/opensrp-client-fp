@@ -51,6 +51,7 @@ import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.model.Task;
 import org.smartregister.fp.common.rule.FPAlertRule;
 import org.smartregister.fp.features.home.repository.ContactTasksRepository;
+import org.smartregister.fp.features.home.repository.PatientRepository;
 import org.smartregister.fp.features.home.schedules.SchedulesEnum;
 import org.smartregister.fp.features.home.schedules.model.ScheduleModel;
 import org.smartregister.fp.features.home.view.HomeRegisterActivity;
@@ -240,6 +241,8 @@ public class Utils extends org.smartregister.util.Utils {
      */
     public static void proceedToContact(String baseEntityId, HashMap<String, String> personObjectClient, Context context) {
         try {
+
+            personObjectClient = PatientRepository.getClientProfileDetails(baseEntityId);
 
             String nextContact = personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
             personObjectClient.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, nextContact == null ? "1" : nextContact);
