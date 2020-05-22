@@ -866,25 +866,6 @@ public class Utils extends org.smartregister.util.Utils {
     }
 
     /**
-     * Creates the new updated tasks with the the new values
-     *
-     * @param taskValue {@link JSONObject}
-     * @param task      {@link Task}
-     * @return task {@link Task}
-     */
-    public static Task createTask(JSONObject taskValue, Task task) {
-        Task newTask = new Task();
-        newTask.setId(task.getId());
-        newTask.setBaseEntityId(task.getBaseEntityId());
-        newTask.setKey(task.getKey());
-        newTask.setValue(String.valueOf(taskValue));
-        newTask.setUpdated(true);
-        newTask.setComplete(FPJsonFormUtils.checkIfTaskIsComplete(taskValue));
-        newTask.setCreatedAt(Calendar.getInstance().getTimeInMillis());
-        return newTask;
-    }
-
-    /**
      * Removes the task values & sets it to empty.
      *
      * @param taskValue {@link JSONObject}
