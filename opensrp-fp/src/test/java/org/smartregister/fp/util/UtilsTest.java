@@ -1,5 +1,8 @@
 package org.smartregister.fp.util;
 
+import android.view.View;
+import android.widget.Button;
+
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
 import org.joda.time.DateTime;
@@ -21,7 +24,9 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.smartregister.Context;
 import org.smartregister.CoreLibrary;
+import org.smartregister.fp.R;
 import org.smartregister.fp.activity.BaseUnitTest;
+import org.smartregister.fp.common.domain.ButtonAlertStatus;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.Utils;
 import org.smartregister.repository.AllSharedPreferences;
@@ -37,6 +42,7 @@ import timber.log.Timber;
 import static org.smartregister.fp.common.util.Utils.getKeyByValue;
 import static org.smartregister.fp.common.util.Utils.hasPendingRequiredFields;
 import static org.smartregister.fp.common.util.Utils.isEmptyMap;
+import static org.smartregister.fp.common.util.Utils.processFollowupVisitButton;
 import static org.smartregister.fp.common.util.Utils.reverseHyphenSeperatedValues;
 
 
@@ -348,5 +354,54 @@ public class UtilsTest extends BaseUnitTest {
         } catch (Exception e) {
             Timber.e(e, " --> testGetDisplayTemplate");
         }
+    }
+
+    @Test
+    public void testAllProcessFollowupVisitButton() {
+        android.content.Context context = RuntimeEnvironment.application.getApplicationContext();
+        Button button = new Button(context);
+        ButtonAlertStatus buttonAlertStatus = new ButtonAlertStatus();
+        //Default button alert configuration
+        buttonAlertStatus.nextContactDate = "26 MAY 2020";
+
+        //Process  status not due
+        buttonAlertStatus.buttonAlertStatus = ConstantsUtils.AlertStatusUtils.NOT_DUE;
+        processFollowupVisitButton(context, button, buttonAlertStatus, null, null);
+        Assert.assertTrue(assertFollowUpButtonStatus(context, button, ConstantsUtils.AlertStatusUtils.NOT_DUE, buttonAlertStatus));
+        //Process  status  due
+        buttonAlertStatus.buttonAlertStatus = ConstantsUtils.AlertStatusUtils.DUE;
+        processFollowupVisitButton(context, button, buttonAlertStatus, null, null);
+        Assert.assertTrue(assertFollowUpButtonStatus(context, button, ConstantsUtils.AlertStatusUtils.DUE, buttonAlertStatus));
+        //Process  status overdue
+        buttonAlertStatus.buttonAlertStatus = ConstantsUtils.AlertStatusUtils.OVERDUE;
+        processFollowupVisitButton(context, button, buttonAlertStatus, null, null);
+        Assert.assertTrue(assertFollowUpButtonStatus(context, button, ConstantsUtils.AlertStatusUtils.OVERDUE, buttonAlertStatus));
+        //Process  status  expired
+        buttonAlertStatus.buttonAlertStatus = ConstantsUtils.AlertStatusUtils.EXPIRED;
+        processFollowupVisitButton(context, button, buttonAlertStatus, null, null);
+        Assert.assertTrue(assertFollowUpButtonStatus(context, button, ConstantsUtils.AlertStatusUtils.EXPIRED, buttonAlertStatus));
+    }
+
+    private boolean assertFollowUpButtonStatus(android.content.Context context, Button button, String status, ButtonAlertStatus buttonAlertStatus) {
+        boolean result;
+        switch (status) {
+            case ConstantsUtils.AlertStatusUtils.NOT_DUE:
+                result = (button.getVisibility() == (View.VISIBLE)) &&
+                        button.getText().toString().equals(context.getString(R.string.followup_date, buttonAlertStatus.nextContactDate));
+                break;
+            case ConstantsUtils.AlertStatusUtils.DUE:
+                result = (button.getVisibility() == (View.VISIBLE)) &&
+                        button.getText().toString().equals(context.getResources().getString(R.string.followup_due));
+                break;
+            case ConstantsUtils.AlertStatusUtils.OVERDUE:
+                result = (button.getVisibility() == (View.VISIBLE)) &&
+                        button.getText().toString().equals(context.getResources().getString(R.string.followup_overdue));
+                break;
+            case ConstantsUtils.AlertStatusUtils.EXPIRED:
+            default:
+                result = (button.getVisibility() == (View.GONE));
+                break;
+        }
+        return result;
     }
 }
