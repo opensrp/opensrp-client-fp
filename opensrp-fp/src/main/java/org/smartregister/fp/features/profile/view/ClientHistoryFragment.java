@@ -54,8 +54,7 @@ public class ClientHistoryFragment extends BaseProfileFragment implements Client
     }
 
     private void populateTheData(List<HashMap<String, String>> data) {
-
-        if (! data.isEmpty()) {
+        if (!data.isEmpty()) {
             noHealthRecord.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));

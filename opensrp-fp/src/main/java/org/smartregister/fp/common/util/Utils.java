@@ -9,10 +9,8 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
@@ -47,7 +45,6 @@ import org.smartregister.fp.common.domain.ButtonAlertStatus;
 import org.smartregister.fp.common.domain.Contact;
 import org.smartregister.fp.common.event.BaseEvent;
 import org.smartregister.fp.common.library.FPLibrary;
-import org.smartregister.fp.common.model.ClientProfileModel;
 import org.smartregister.fp.common.model.PartialContact;
 import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.model.Task;
@@ -88,11 +85,6 @@ import static org.smartregister.fp.common.util.ConstantsUtils.ProfileDateStatusU
 import static org.smartregister.fp.common.util.ConstantsUtils.RulesFileUtils.FP_ALERT_RULES;
 import static org.smartregister.fp.common.util.ConstantsUtils.ScheduleUtils.ONCE_OFF;
 import static org.smartregister.fp.common.util.ConstantsUtils.ScheduleUtils.RECURRING;
-import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.METHOD_CHOSEN;
-import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.METHOD_EXIT;
-import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.METHOD_EXIT_START_DATE;
-import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.REASON_NO_METHOD_EXIT;
-import static org.smartregister.fp.features.profile.view.ProfileOverviewFragment.REFERRAL;
 
 /**
  * Created by ndegwamartin on 14/03/2018.
@@ -144,20 +136,13 @@ public class Utils extends org.smartregister.util.Utils {
 
     public static void saveLanguage(String language) {
         Utils.getAllSharedPreferences().saveLanguagePreference(language);
-        setLocale(new Locale(language));
     }
 
     public static void setLocale(Locale locale) {
         Resources resources = FPLibrary.getInstance().getApplicationContext().getResources();
         Configuration configuration = resources.getConfiguration();
-        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            configuration.setLocale(locale);
-            FPLibrary.getInstance().getApplicationContext().createConfigurationContext(configuration);
-        } else {
-            configuration.locale = locale;
-            resources.updateConfiguration(configuration, displayMetrics);
-        }
+        configuration.setLocale(locale);
+        FPLibrary.getInstance().getApplicationContext().createConfigurationContext(configuration);
     }
 
     public static String getLanguage() {
@@ -307,6 +292,7 @@ public class Utils extends org.smartregister.util.Utils {
             intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, partialContactRequest.getType());
             intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, partialContactRequest.getContactNo());
             intent.putExtra(ConstantsUtils.IntentKeyUtils.GLOBAL, globals);
+//            intent.putExtra(JsonFormConstants.PERFORM_FORM_TRANSLATION, true);
             Activity activity = (Activity) context;
             activity.startActivityForResult(intent, FPJsonFormUtils.REQUEST_CODE_GET_JSON);
 
@@ -419,38 +405,6 @@ public class Utils extends org.smartregister.util.Utils {
         return false;
     }
 
-    /**
-     * This finalizes the form and redirects you to the contact summary page for more confirmation of the data added
-     *
-     * @param context {@link Activity}
-     * @author martinndegwa
-     */
-    /*public static void finalizeForm(Activity context, HashMap<String, String> womanDetails, boolean isRefferal) {
-        try {
-
-            Intent contactSummaryFinishIntent = new Intent(context, ContactSummaryFinishActivity.class);
-            contactSummaryFinishIntent
-                    .putExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID, womanDetails.get(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID));
-            contactSummaryFinishIntent.putExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP, womanDetails);
-            contactSummaryFinishIntent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO,
-                    Integer.valueOf(womanDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
-            if (isRefferal) {
-                int contactNo = Integer.parseInt(womanDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT));
-                if (contactNo < 0) {
-                    contactSummaryFinishIntent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, Integer.valueOf(contactNo));
-                } else {
-                    contactSummaryFinishIntent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, Integer.valueOf("-" + contactNo));
-                }
-            } else {
-                contactSummaryFinishIntent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO,
-                        Integer.valueOf(womanDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
-            }
-            context.startActivity(contactSummaryFinishIntent);
-        } catch (Exception e) {
-            Timber.e(e);
-        }
-
-    }*/
     public static String fillTemplate(String stringValue, Facts facts) {
         String stringValueResult = stringValue;
         while (stringValueResult.contains("{")) {
@@ -574,74 +528,6 @@ public class Utils extends org.smartregister.util.Utils {
         return "";
     }
 
-    public static void processButtonAlertStatus(Context context, Button dueButton, ButtonAlertStatus buttonAlertStatus) {
-        Utils.processButtonAlertStatus(context, dueButton, null, buttonAlertStatus);
-    }
-
-    public static void processButtonAlertStatus(Context context, Button dueButton, TextView contactTextView,
-                                                ButtonAlertStatus buttonAlertStatus) {
-        if (dueButton != null) {
-            dueButton.setVisibility(View.VISIBLE);
-            dueButton.setText(buttonAlertStatus.buttonText);
-            dueButton.setTag(R.id.GESTATION_AGE, buttonAlertStatus.gestationAge);
-
-            if (buttonAlertStatus.buttonAlertStatus != null) {
-                switch (buttonAlertStatus.buttonAlertStatus) {
-                    case ConstantsUtils.AlertStatusUtils.IN_PROGRESS:
-                        dueButton.setBackgroundColor(context.getResources().getColor(R.color.progress_orange));
-                        dueButton.setTextColor(context.getResources().getColor(R.color.white));
-                        break;
-                    case ConstantsUtils.AlertStatusUtils.DUE:
-                        dueButton.setBackground(context.getResources().getDrawable(R.drawable.contact_due));
-                        dueButton.setTextColor(context.getResources().getColor(R.color.vaccine_blue_bg_st));
-                        break;
-                    case ConstantsUtils.AlertStatusUtils.OVERDUE:
-                        dueButton.setBackgroundColor(context.getResources().getColor(R.color.vaccine_red_bg_st));
-                        dueButton.setTextColor(context.getResources().getColor(R.color.white));
-                        break;
-                    case ConstantsUtils.AlertStatusUtils.NOT_DUE:
-                        dueButton.setBackground(context.getResources().getDrawable(R.drawable.contact_not_due));
-                        dueButton.setTextColor(context.getResources().getColor(R.color.dark_grey));
-                        break;
-                    case ConstantsUtils.AlertStatusUtils.DELIVERY_DUE:
-                        dueButton.setBackground(context.getResources().getDrawable(R.drawable.contact_due));
-                        dueButton.setTextColor(context.getResources().getColor(R.color.vaccine_blue_bg_st));
-                        dueButton.setText(context.getString(R.string.due_delivery));
-                        break;
-                    case ConstantsUtils.AlertStatusUtils.EXPIRED:
-                        dueButton.setBackgroundColor(context.getResources().getColor(R.color.vaccine_red_bg_st));
-                        dueButton.setTextColor(context.getResources().getColor(R.color.white));
-                        dueButton.setText(context.getString(R.string.due_delivery));
-                        break;
-                    case ConstantsUtils.AlertStatusUtils.TODAY:
-                        if (contactTextView != null) {
-                            contactTextView.setText(String.format(context.getString(R.string.contact_recorded_today),
-                                    Utils.getTodayContact(String.valueOf(buttonAlertStatus.nextContact))));
-                            contactTextView.setPadding(2, 2, 2, 2);
-                        }
-                        dueButton.setBackground(context.getResources().getDrawable(R.drawable.contact_disabled));
-                        dueButton.setBackground(context.getResources().getDrawable(R.drawable.contact_disabled));
-                        dueButton.setTextColor(context.getResources().getColor(R.color.dark_grey));
-                        dueButton.setText(String.format(context.getString(R.string.contact_recorded_today_no_break),
-                                Utils.getTodayContact(String.valueOf(buttonAlertStatus.nextContact))));
-                        break;
-                    default:
-                        dueButton.setBackground(context.getResources().getDrawable(R.drawable.contact_due));
-                        dueButton.setTextColor(context.getResources().getColor(R.color.vaccine_blue_bg_st));
-                        break;
-                }
-
-                if (contactTextView != null) {
-                    contactTextView.setVisibility(View.GONE);
-                    if (ConstantsUtils.AlertStatusUtils.TODAY.equals(buttonAlertStatus.buttonAlertStatus)) {
-                        dueButton.setVisibility(View.GONE);
-                        contactTextView.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
-        }
-    }
-
     public static void processFollowupVisitButton(Context context, Button followUpBtn, ButtonAlertStatus buttonAlertStatus, String baseEntityId, Map<String, String> pc) {
         if (followUpBtn != null) {
             followUpBtn.setVisibility(View.VISIBLE);
@@ -668,7 +554,8 @@ public class Utils extends org.smartregister.util.Utils {
                     case ConstantsUtils.AlertStatusUtils.EXPIRED:
                         followUpBtn.setVisibility(View.GONE);
                         break;
-                    default: break;
+                    default:
+                        break;
                 }
             }
         }
@@ -749,46 +636,6 @@ public class Utils extends org.smartregister.util.Utils {
         }
 
         return false;
-    }
-
-    public static ClientProfileModel getClientProfileValuesFromJson(String formJsonDraft) throws JSONException {
-        ClientProfileModel clientProfileModel = new ClientProfileModel();
-        JSONObject jsonObject = new JSONObject(formJsonDraft);
-        JSONArray step6 = jsonObject.getJSONObject("step6").getJSONArray("fields");
-        JSONArray step7 = jsonObject.getJSONObject("step7").getJSONArray("fields");
-
-        for (int i = 0; i < step6.length(); i++) {
-            if (step6.getJSONObject(i).has("key") && step6.getJSONObject(i).has("value")) {
-                if (step6.getJSONObject(i).get("key").equals(METHOD_CHOSEN)) {
-                    clientProfileModel.setChosenMethod(step6.getJSONObject(i).get("value").toString());
-                } else if (step6.getJSONObject(i).get("key").equals(REFERRAL)) {
-                    clientProfileModel.setReferred(step6.getJSONObject(i).get("value").toString());
-                }
-                if (clientProfileModel.getReferred() != null && clientProfileModel.getChosenMethod() != null)
-                    break;
-            }
-        }
-
-        for (int i = 0; i < step7.length(); i++) {
-            if (step7.getJSONObject(i).has("key") && step7.getJSONObject(i).has("value")) {
-                if (step7.getJSONObject(i).get("key").equals(METHOD_EXIT)) {
-                    clientProfileModel.setMethodAtExit(step7.getJSONObject(i).get("value").toString());
-                } else if (step7.getJSONObject(i).get("key").equals(METHOD_EXIT_START_DATE)) {
-                    clientProfileModel.setMethodStartDate(step7.getJSONObject(i).get("value").toString());
-                } else if (step7.getJSONObject(i).get("key").equals(REASON_NO_METHOD_EXIT)) {
-                    clientProfileModel.setReasonForNoMethodAtExit(step7.getJSONObject(i).get("value").toString());
-                }
-                if (clientProfileModel.getMethodAtExit() != null &&
-                        clientProfileModel.getMethodStartDate() != null &&
-                        clientProfileModel.getReasonForNoMethodAtExit() != null)
-                    break;
-            }
-        }
-        return clientProfileModel;
-    }
-
-    public static Integer calculateTotalNoOfDays(Integer days, Integer weeks, Integer years) {
-        return (years * 365) + (weeks * 7) + days;
     }
 
     public static boolean checkNonTriggerEvents(String methodName) {
@@ -976,25 +823,6 @@ public class Utils extends org.smartregister.util.Utils {
     }
 
     /**
-     * Creates the new updated tasks with the the new values
-     *
-     * @param taskValue {@link JSONObject}
-     * @param task      {@link Task}
-     * @return task {@link Task}
-     */
-    public static Task createTask(JSONObject taskValue, Task task) {
-        Task newTask = new Task();
-        newTask.setId(task.getId());
-        newTask.setBaseEntityId(task.getBaseEntityId());
-        newTask.setKey(task.getKey());
-        newTask.setValue(String.valueOf(taskValue));
-        newTask.setUpdated(true);
-        newTask.setComplete(FPJsonFormUtils.checkIfTaskIsComplete(taskValue));
-        newTask.setCreatedAt(Calendar.getInstance().getTimeInMillis());
-        return newTask;
-    }
-
-    /**
      * Removes the task values & sets it to empty.
      *
      * @param taskValue {@link JSONObject}
@@ -1112,6 +940,10 @@ public class Utils extends org.smartregister.util.Utils {
         return METHODS.containsKey(key) ? METHODS.get(key) : "";
     }
 
+    public static String getFormattedMethodName(String key) {
+        return METHODS.containsKey(key) ? METHODS.get(key) : key;
+    }
+
     public static void openMECWheelApp(Context context) {
         String pkgName = "com.who.mecwheel";
         Intent intent = context.getPackageManager().getLaunchIntentForPackage(pkgName);
@@ -1163,7 +995,7 @@ public class Utils extends org.smartregister.util.Utils {
             case ConstantsUtils.MethodKeyUtil.DMPA_IM:
             case ConstantsUtils.MethodKeyUtil.DMPA_SC:
             case ConstantsUtils.MethodKeyUtil.NET_EN:
-                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject,ConstantsUtils.JsonFormKeyUtils.STEP7, ConstantsUtils.JsonFormKeyUtils.LAST_INJECTION_DATE), pattern);
+                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject, ConstantsUtils.JsonFormKeyUtils.STEP7, ConstantsUtils.JsonFormKeyUtils.LAST_INJECTION_DATE), pattern);
                 break;
 
             case ConstantsUtils.MethodKeyUtil.POP:
@@ -1171,7 +1003,7 @@ public class Utils extends org.smartregister.util.Utils {
             case ConstantsUtils.MethodKeyUtil.PATCH:
             case ConstantsUtils.MethodKeyUtil.CVR:
             case ConstantsUtils.MethodKeyUtil.PVR:
-                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject,ConstantsUtils.JsonFormKeyUtils.STEP1, ConstantsUtils.JsonFormKeyUtils.VISIT_DATE), pattern);
+                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject, ConstantsUtils.JsonFormKeyUtils.STEP1, ConstantsUtils.JsonFormKeyUtils.VISIT_DATE), pattern);
                 break;
 
             case ConstantsUtils.MethodKeyUtil.MALE_STERILIZATION:
@@ -1198,8 +1030,7 @@ public class Utils extends org.smartregister.util.Utils {
                     break;
                 }
             }
-        }
-        catch (JSONException ex) {
+        } catch (JSONException ex) {
             Timber.e(ex);
         }
 

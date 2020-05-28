@@ -444,4 +444,9 @@
     <string name="followup_due">FOLLOWUP\nDUE</string>
     <string name="followup_overdue">followup\nOverdue</string>
     <string name="followup_button_dummy_text">Follow up due 20 dec 2019</string>
+    <string name="change_language_menu_text">Change language…</string>
+    <string name="change_language_text">Change language</string>
+    <string name="english_language">English</string>
+    <string name="french_language">French</string>
+    <string name="urdu_language">Urdu</string>
 </resources>

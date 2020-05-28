@@ -150,7 +150,7 @@ public class PatientRepositoryTest {
         ContentValues result = (ContentValues) updateWomanAlertStatusArgumentCaptor.getAllValues().get(0);
         Assert.assertEquals("red", result.get(DBConstantsUtils.KeyUtils.CONTACT_STATUS));
     }
-    
+
     @Test
     @Ignore
     public void testUpdateContactVisitStartDateShouldPassCorrectArgsToUpdateDb() {

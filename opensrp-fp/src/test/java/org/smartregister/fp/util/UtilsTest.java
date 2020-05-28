@@ -2,7 +2,6 @@ package org.smartregister.fp.util;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
@@ -41,10 +40,9 @@ import edu.emory.mathcs.backport.java.util.Collections;
 import timber.log.Timber;
 
 import static org.smartregister.fp.common.util.Utils.getKeyByValue;
-import static org.smartregister.fp.common.util.Utils.getTodayContact;
 import static org.smartregister.fp.common.util.Utils.hasPendingRequiredFields;
 import static org.smartregister.fp.common.util.Utils.isEmptyMap;
-import static org.smartregister.fp.common.util.Utils.processButtonAlertStatus;
+import static org.smartregister.fp.common.util.Utils.processFollowupVisitButton;
 import static org.smartregister.fp.common.util.Utils.reverseHyphenSeperatedValues;
 
 
@@ -281,75 +279,6 @@ public class UtilsTest extends BaseUnitTest {
     }
 
     @Test
-    public void testAllProcessButtonAlertStatus() {
-        android.content.Context context = RuntimeEnvironment.application.getApplicationContext();
-        Button button = new Button(context);
-        TextView textView = new TextView(context);
-        ButtonAlertStatus buttonAlertStatus = new ButtonAlertStatus();
-        //Default button alert configuration
-        buttonAlertStatus.nextContact = 2;
-        buttonAlertStatus.gestationAge = 14;
-        buttonAlertStatus.buttonText = "Awesome People";
-
-        //Process alert status in_progress
-        buttonAlertStatus.buttonAlertStatus = ConstantsUtils.AlertStatusUtils.IN_PROGRESS;
-        processButtonAlertStatus(context, button, textView, buttonAlertStatus);
-        Assert.assertTrue(assertAlertButtonStatus(context, button, textView, ConstantsUtils.AlertStatusUtils.IN_PROGRESS, buttonAlertStatus));
-        //Process alert status  due
-        buttonAlertStatus.buttonAlertStatus = ConstantsUtils.AlertStatusUtils.DUE;
-        processButtonAlertStatus(context, button, textView, buttonAlertStatus);
-        Assert.assertTrue(assertAlertButtonStatus(context, button, textView, ConstantsUtils.AlertStatusUtils.DUE, buttonAlertStatus));
-        //Process alert status overdue
-        buttonAlertStatus.buttonAlertStatus = ConstantsUtils.AlertStatusUtils.OVERDUE;
-        processButtonAlertStatus(context, button, textView, buttonAlertStatus);
-        Assert.assertTrue(assertAlertButtonStatus(context, button, textView, ConstantsUtils.AlertStatusUtils.OVERDUE, buttonAlertStatus));
-        //Process alert status  not_due
-        buttonAlertStatus.buttonAlertStatus = ConstantsUtils.AlertStatusUtils.NOT_DUE;
-        processButtonAlertStatus(context, button, textView, buttonAlertStatus);
-        Assert.assertTrue(assertAlertButtonStatus(context, button, textView, ConstantsUtils.AlertStatusUtils.NOT_DUE, buttonAlertStatus));
-        //Process alert status delivery_due
-        buttonAlertStatus.buttonAlertStatus = ConstantsUtils.AlertStatusUtils.DELIVERY_DUE;
-        processButtonAlertStatus(context, button, textView, buttonAlertStatus);
-        Assert.assertTrue(assertAlertButtonStatus(context, button, textView, ConstantsUtils.AlertStatusUtils.DELIVERY_DUE, buttonAlertStatus));
-        //Process alert status  expired
-        buttonAlertStatus.buttonAlertStatus = ConstantsUtils.AlertStatusUtils.EXPIRED;
-        processButtonAlertStatus(context, button, textView, buttonAlertStatus);
-        Assert.assertTrue(assertAlertButtonStatus(context, button, textView, ConstantsUtils.AlertStatusUtils.EXPIRED, buttonAlertStatus));
-        //Process alert status  today
-        buttonAlertStatus.buttonAlertStatus = ConstantsUtils.AlertStatusUtils.TODAY;
-        processButtonAlertStatus(context, button, textView, buttonAlertStatus);
-        Assert.assertTrue(assertAlertButtonStatus(context, button, textView, ConstantsUtils.AlertStatusUtils.TODAY, buttonAlertStatus));
-    }
-
-    private boolean assertAlertButtonStatus(android.content.Context context, Button button,
-                                            TextView textView, String status, ButtonAlertStatus buttonAlertStatus) {
-        boolean result;
-        switch (status) {
-            case ConstantsUtils.AlertStatusUtils.DELIVERY_DUE:
-                result = (textView.getVisibility() == (View.GONE)) &&
-                        button.getText() == (context.getString(R.string.due_delivery));
-                break;
-            case ConstantsUtils.AlertStatusUtils.EXPIRED:
-                result = (textView.getVisibility() == (View.GONE)) &&
-                        button.getText() == (context.getString(R.string.due_delivery));
-                break;
-            case ConstantsUtils.AlertStatusUtils.TODAY:
-                result = (textView.getVisibility() == (View.VISIBLE)) && (button.getVisibility() == (View.GONE)) &&
-                        textView.getText().equals(String.format(context.getString(R.string.contact_recorded_today), getTodayContact(String.valueOf(buttonAlertStatus.nextContact)))) &&
-                        button.getText().equals(String.format(context.getString(R.string.contact_recorded_today_no_break), getTodayContact(String.valueOf(buttonAlertStatus.nextContact))));
-                break;
-            case ConstantsUtils.AlertStatusUtils.IN_PROGRESS:
-            case ConstantsUtils.AlertStatusUtils.DUE:
-            case ConstantsUtils.AlertStatusUtils.NOT_DUE:
-            case ConstantsUtils.AlertStatusUtils.OVERDUE:
-            default:
-                result = (textView.getVisibility() == (View.GONE));
-                break;
-        }
-        return result;
-    }
-
-    @Test
     public void testGetGestationAgeFromEDDateWhenDateisZero() {
         int gestAge = Utils.getGestationAgeFromEDDate("0");
         Assert.assertEquals(0, gestAge);
@@ -425,5 +354,54 @@ public class UtilsTest extends BaseUnitTest {
         } catch (Exception e) {
             Timber.e(e, " --> testGetDisplayTemplate");
         }
+    }
+
+    @Test
+    public void testAllProcessFollowupVisitButton() {
+        android.content.Context context = RuntimeEnvironment.application.getApplicationContext();
+        Button button = new Button(context);
+        ButtonAlertStatus buttonAlertStatus = new ButtonAlertStatus();
+        //Default button alert configuration
+        buttonAlertStatus.nextContactDate = "26 MAY 2020";
+
+        //Process  status not due
+        buttonAlertStatus.buttonAlertStatus = ConstantsUtils.AlertStatusUtils.NOT_DUE;
+        processFollowupVisitButton(context, button, buttonAlertStatus, null, null);
+        Assert.assertTrue(assertFollowUpButtonStatus(context, button, ConstantsUtils.AlertStatusUtils.NOT_DUE, buttonAlertStatus));
+        //Process  status  due
+        buttonAlertStatus.buttonAlertStatus = ConstantsUtils.AlertStatusUtils.DUE;
+        processFollowupVisitButton(context, button, buttonAlertStatus, null, null);
+        Assert.assertTrue(assertFollowUpButtonStatus(context, button, ConstantsUtils.AlertStatusUtils.DUE, buttonAlertStatus));
+        //Process  status overdue
+        buttonAlertStatus.buttonAlertStatus = ConstantsUtils.AlertStatusUtils.OVERDUE;
+        processFollowupVisitButton(context, button, buttonAlertStatus, null, null);
+        Assert.assertTrue(assertFollowUpButtonStatus(context, button, ConstantsUtils.AlertStatusUtils.OVERDUE, buttonAlertStatus));
+        //Process  status  expired
+        buttonAlertStatus.buttonAlertStatus = ConstantsUtils.AlertStatusUtils.EXPIRED;
+        processFollowupVisitButton(context, button, buttonAlertStatus, null, null);
+        Assert.assertTrue(assertFollowUpButtonStatus(context, button, ConstantsUtils.AlertStatusUtils.EXPIRED, buttonAlertStatus));
+    }
+
+    private boolean assertFollowUpButtonStatus(android.content.Context context, Button button, String status, ButtonAlertStatus buttonAlertStatus) {
+        boolean result;
+        switch (status) {
+            case ConstantsUtils.AlertStatusUtils.NOT_DUE:
+                result = (button.getVisibility() == (View.VISIBLE)) &&
+                        button.getText().toString().equals(context.getString(R.string.followup_date, buttonAlertStatus.nextContactDate));
+                break;
+            case ConstantsUtils.AlertStatusUtils.DUE:
+                result = (button.getVisibility() == (View.VISIBLE)) &&
+                        button.getText().toString().equals(context.getResources().getString(R.string.followup_due));
+                break;
+            case ConstantsUtils.AlertStatusUtils.OVERDUE:
+                result = (button.getVisibility() == (View.VISIBLE)) &&
+                        button.getText().toString().equals(context.getResources().getString(R.string.followup_overdue));
+                break;
+            case ConstantsUtils.AlertStatusUtils.EXPIRED:
+            default:
+                result = (button.getVisibility() == (View.GONE));
+                break;
+        }
+        return result;
     }
 }

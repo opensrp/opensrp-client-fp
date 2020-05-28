@@ -105,13 +105,12 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
                 setmJSONObject(new JSONObject());
                 throw new JSONException("Form encounter_type not set");
             }
-
             //populate them global values
             if (getmJSONObject().has(JsonFormConstants.JSON_FORM_KEY.GLOBAL)) {
                 globalValues = new Gson().fromJson(getmJSONObject().getJSONObject(JsonFormConstants.JSON_FORM_KEY.GLOBAL).toString(),
-                        new TypeToken<HashMap<String, String>>(){}.getType());
-            }
-            else {
+                        new TypeToken<HashMap<String, String>>() {
+                        }.getType());
+            } else {
                 globalValues = new HashMap<>();
             }
 
@@ -138,8 +137,7 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
             view.setOnClickListener(v -> {
                 Utils.openMECWheelApp(StartVisitJsonFormActivity.this);
             });
-        }
-        else if ("still_on_method_heading".equals(key)) {
+        } else if ("still_on_method_heading".equals(key)) {
             String methodExit = globals.get(ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT);
             if (!methodExit.equals("0") && !methodExit.equals("no_method")) {
                 CustomTextView tvLabel = (CustomTextView) view;
@@ -293,8 +291,7 @@ public class StartVisitJsonFormActivity extends JsonFormActivity {
     public void onBackPressed() {
         if (ConstantsUtils.FormState.READ_ONLY.equals(clientDetails.get(ConstantsUtils.FORM_STATE))) {
             powerFinish();
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }

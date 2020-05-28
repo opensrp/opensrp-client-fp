@@ -23,7 +23,6 @@ import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.configurableviews.model.Field;
 import org.smartregister.domain.FetchStatus;
 import org.smartregister.fp.R;
-import org.smartregister.fp.common.domain.AttentionFlag;
 import org.smartregister.fp.common.event.PatientRemovedEvent;
 import org.smartregister.fp.common.event.ShowProgressDialogEvent;
 import org.smartregister.fp.common.util.ConstantsUtils;
@@ -33,7 +32,6 @@ import org.smartregister.fp.features.home.presenter.RegisterPresenter;
 import org.smartregister.fp.features.home.view.HomeRegisterActivity;
 import org.smartregister.fp.features.home.view.HomeRegisterFragment;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,9 +53,6 @@ public class HomeRegisterActivityTest extends BaseActivityUnitTest {
     private List<Field> filterList;
     @Mock
     private Field sortField;
-
-    @Mock
-    private AlertDialog attentionFlagsAlertDialog;
 
     @Mock
     private AlertDialog recordBirthAlertDialog;
@@ -176,17 +171,6 @@ public class HomeRegisterActivityTest extends BaseActivityUnitTest {
         baseHomeRegisterActivitySpy.showRecordBirthPopUp(client);
         Mockito.verify(recordBirthAlertDialog, Mockito.times(1)).setMessage(ArgumentMatchers.contains("25/12/2018"));
         Mockito.verify(recordBirthAlertDialog).show();
-    }
-
-    public void testShowAttentionFlagsAlertDialogPopUpInvokesMethodsOnAttentionFlagsAlertDialogsCorrectly() {
-        HomeRegisterActivity baseHomeRegisterActivitySpy = Mockito.spy(baseHomeRegisterActivity);
-        Whitebox.setInternalState(baseHomeRegisterActivitySpy, "attentionFlagAlertDialog", attentionFlagsAlertDialog);
-
-        List<AttentionFlag> testAttentionFlags = Arrays.asList(new AttentionFlag("Red Flag 1", true), new AttentionFlag("Red Flag 2",
-                true), new AttentionFlag("Yellow Flag 1", false), new AttentionFlag("Yellow Flag 2", false));
-
-        baseHomeRegisterActivitySpy.showAttentionFlagsDialog(testAttentionFlags);
-        Mockito.verify(attentionFlagsAlertDialog).show();
     }
 
     @Test

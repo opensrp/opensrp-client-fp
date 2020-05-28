@@ -34,6 +34,7 @@ import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.FPJsonFormUtils;
 import org.smartregister.fp.common.util.Utils;
 import org.smartregister.fp.common.view.CopyToClipboardDialog;
+import org.smartregister.fp.features.home.repository.PatientRepository;
 import org.smartregister.fp.features.profile.adapter.ProfileViewPagerAdapter;
 import org.smartregister.fp.features.profile.contract.ProfileContract;
 import org.smartregister.fp.features.profile.presenter.ProfilePresenter;
@@ -76,6 +77,7 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         ((ProfilePresenter) presenter).refreshProfileView(baseEntityId);
         registerEventBus();
         getTasksCount(baseEntityId);
+        updateBtnStartFPVisit(baseEntityId);
     }
 
     protected void registerEventBus() {
@@ -105,12 +107,11 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
         dueButton = findViewById(R.id.profile_overview_due_button);
         btnStartFPVisit = findViewById(R.id.btn_start_visit);
         updateTasksTabTitle();
-        updateBtnStartFPVisit();
     }
 
-    private void updateBtnStartFPVisit() {
-        String nextContactDate = detailMap.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE);
+    private void updateBtnStartFPVisit(String baseEntityId) {
         String todayDate = Utils.getTodaysDate();
+        String nextContactDate = PatientRepository.getClientProfileDetails(baseEntityId).get(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE);
         int compareTwoDatesResult = Utils.compareTwoDates(Utils.formatDateToPattern(todayDate, YYYY_MM_DD, DD_MM_YYYY), Utils.formatDateToPattern(nextContactDate, YYYY_MM_DD, DD_MM_YYYY));
         String formattedNextContactDate = Utils.formatDateToPattern(nextContactDate, YYYY_MM_DD, FOLLOWUP_VISIT_BUTTON_FORMAT);
         Utils.updateBtnStartVisit(compareTwoDatesResult, btnStartFPVisit, formattedNextContactDate, this, detailMap);

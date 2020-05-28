@@ -6,6 +6,10 @@
         android:title="@string/sync" />
 
     <item
+        android:id="@+id/btn_change_language"
+        android:title="@string/change_language_menu_text" />
+
+    <item
         android:id="@+id/btn_logout"
         android:title="@string/logout_text" />
 

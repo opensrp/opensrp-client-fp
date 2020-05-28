@@ -2,6 +2,8 @@ package org.smartregister.sample.fp.app;
 
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+
 import com.evernote.android.job.JobManager;
 
 import org.smartregister.Context;
@@ -10,6 +12,7 @@ import org.smartregister.commonregistry.CommonFtsObject;
 import org.smartregister.configurableviews.ConfigurableViewsLibrary;
 import org.smartregister.fp.FPEventBusIndex;
 import org.smartregister.fp.common.library.FPLibrary;
+import org.smartregister.fp.common.sync.BaseFPClientProcessorForJava;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.Utils;
 import org.smartregister.location.helper.LocationHelper;
@@ -20,6 +23,7 @@ import org.smartregister.sample.fp.R;
 import org.smartregister.sample.fp.job.FPJobCreator;
 import org.smartregister.sample.fp.login.ui.LoginActivity;
 import org.smartregister.sample.fp.repository.FPRepository;
+import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.DrishtiSyncScheduler;
 import org.smartregister.view.activity.DrishtiApplication;
 import org.smartregister.view.receiver.TimeChangedBroadcastReceiver;
@@ -29,9 +33,6 @@ import timber.log.Timber;
 import static org.smartregister.util.Log.logError;
 import static org.smartregister.util.Log.logInfo;
 
-/**
- * Created by ndegwamartin on 21/06/2018.
- */
 public class FPApplication extends DrishtiApplication implements TimeChangedBroadcastReceiver.OnTimeChangedListener {
     private static CommonFtsObject commonFtsObject;
     private String password;
@@ -160,13 +161,23 @@ public class FPApplication extends DrishtiApplication implements TimeChangedBroa
     }
 
     @Override
+    protected void attachBaseContext(android.content.Context base) {
+        super.attachBaseContext(base);
+    }
+
+    @Override
     public void logoutCurrentUser() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.addCategory(Intent.CATEGORY_HOME);
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addCategory(Intent.CATEGORY_HOME);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        getApplicationContext().startActivity(intent);
         context.userService().logoutSession();
     }
 
+    @NonNull
+    @Override
+    public ClientProcessorForJava getClientProcessor() {
+        return BaseFPClientProcessorForJava.getInstance(this);
+    }
 }

@@ -1,6 +1,7 @@
 package org.smartregister.fp.features.home.view;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
@@ -23,8 +25,8 @@ import org.smartregister.fp.common.cursor.AdvancedMatrixCursor;
 import org.smartregister.fp.common.event.SyncEvent;
 import org.smartregister.fp.common.fragment.NoMatchDialogFragment;
 import org.smartregister.fp.common.helper.DBQueryHelper;
+import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.fp.common.provider.RegisterProvider;
-import org.smartregister.fp.common.task.AttentionFlagsTask;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.Utils;
@@ -33,6 +35,7 @@ import org.smartregister.fp.features.home.presenter.RegisterFragmentPresenter;
 import org.smartregister.job.SyncServiceJob;
 import org.smartregister.job.SyncSettingsServiceJob;
 import org.smartregister.receiver.SyncStatusBroadcastReceiver;
+import org.smartregister.util.LangUtils;
 import org.smartregister.view.activity.BaseRegisterActivity;
 import org.smartregister.view.activity.DrishtiApplication;
 import org.smartregister.view.fragment.BaseRegisterFragment;
@@ -42,6 +45,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -51,10 +56,11 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
     public static final String CLICK_VIEW_NORMAL = "click_view_normal";
     public static final String CLICK_VIEW_ALERT_STATUS = "click_view_alert_status";
     public static final String CLICK_VIEW_SYNC = "click_view_sync";
-    public static final String CLICK_VIEW_ATTENTION_FLAG = "click_view_attention_flag";
     private boolean enableDueFilter;
-
     private PopupMenu popupMenu;
+    private Map<String, Locale> locales = new HashMap<>();
+    private String[] languages;
+    private int currentLanguageIndex = 1;
 
     @Override
     protected void initializePresenter() {
@@ -95,12 +101,6 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
                 contactButton.setOnClickListener(registerActionHandler);
             }
 
-            //Risk view
-        /*View attentionFlag = view.findViewById(R.id.risk);
-        if (attentionFlag != null) {
-            attentionFlag.setOnClickListener(registerActionHandler);
-        }*/
-
             view.findViewById(R.id.due_only_text_view).setOnClickListener(registerActionHandler);
             view.findViewById(R.id.popup_menu).setOnClickListener(registerActionHandler);
         } catch (Exception e) {
@@ -110,7 +110,7 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
 
     @Override
     protected void attachProgressBar(View view) {
-       // Progress bar not required
+        // Progress bar not required
     }
 
     @Override
@@ -132,7 +132,7 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
     protected String getMainCondition() {
         String condition = DBQueryHelper.getHomePatientRegisterCondition();
         if (enableDueFilter) {
-            condition +=  " AND (" + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE + " != '' AND date('now') > strftime('%Y-%m-%d', " + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE + "))";
+            condition += " AND (" + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE + " != '' AND date('now') > strftime('%Y-%m-%d', " + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE + "))";
         }
         return condition;
     }
@@ -168,8 +168,6 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
                     Utils.proceedToContact(baseEntityId, (HashMap<String, String>) pc.getColumnmaps(), getActivity());
                 }
             }
-        } else if (view.getTag() != null && view.getTag(R.id.VIEW_ID) == CLICK_VIEW_ATTENTION_FLAG) {
-            new AttentionFlagsTask(baseHomeRegisterActivity, pc).execute();
         } else if (view.getId() == R.id.filter_text_view) {
             baseHomeRegisterActivity.switchToFragment(BaseRegisterActivity.SORT_FILTER_POSITION);
         } else if (view.getId() == R.id.due_only_text_view) {
@@ -178,7 +176,6 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
             tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, enableDueFilter ? R.drawable.ic_due_filter_on : R.drawable.ic_due_filter_off, 0);
             filter(getSearchView().getText().toString(), "", getMainCondition(), false);
         } else if (view.getId() == R.id.popup_menu) {
-
             if (popupMenu == null) {
                 popupMenu = new PopupMenu(getActivity(), view);
                 popupMenu.getMenuInflater().inflate(R.menu.home_main_menu, popupMenu.getMenu());
@@ -190,6 +187,8 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
                         SyncSettingsServiceJob.scheduleJobImmediately(SyncSettingsServiceJob.TAG);
                     } else if (item.getItemId() == R.id.btn_logout) {
                         DrishtiApplication.getInstance().logoutCurrentUser();
+                    } else if (item.getItemId() == R.id.btn_change_language) {
+                        languageSwitcherDialog();
                     }
 
                     return true;
@@ -198,6 +197,71 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
 
             popupMenu.show();
         }
+    }
+
+    @Override
+    protected void onCreation() {
+        super.onCreation();
+        registerLanguageSwitcher();
+    }
+
+    private void languageSwitcherDialog() {
+        if (getActivity() != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(getActivity().getResources().getString(R.string.change_language_text));
+            builder.setSingleChoiceItems(languages, currentLanguageIndex, (dialog, position) -> {
+                String selectedLanguage = languages[position];
+                saveLanguage(selectedLanguage);
+                reloadClass();
+                FPLibrary.getInstance().notifyAppContextChange();
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+    }
+
+    private void saveLanguage(String selectedLanguage) {
+        if (getActivity() != null && StringUtils.isNotBlank(selectedLanguage)) {
+            Locale selectedLanguageLocale = locales.get(selectedLanguage);
+            if (selectedLanguageLocale != null) {
+                LangUtils.saveLanguage(getActivity().getApplication(), selectedLanguageLocale.getLanguage());
+            } else {
+                Timber.i("Language could not be set");
+            }
+        }
+    }
+
+    private void reloadClass() {
+        if (getActivity() != null) {
+            Intent intent = getActivity().getIntent();
+            getActivity().finish();
+            getActivity().startActivity(intent);
+        }
+    }
+
+    private void registerLanguageSwitcher() {
+        if (getActivity() != null) {
+            addLanguages();
+
+            languages = new String[locales.size()];
+            Locale current = getActivity().getResources().getConfiguration().locale;
+            int x = 0;
+            for (Map.Entry<String, Locale> language : locales.entrySet()) {
+                languages[x] = language.getKey(); //Update the languages strings array with the languages to be displayed on the alert dialog
+
+                if (current.getLanguage().equals(language.getValue().getLanguage())) {
+                    currentLanguageIndex = x;
+                }
+                x++;
+            }
+        }
+    }
+
+    private void addLanguages() {
+        locales.put(getString(R.string.english_language), Locale.ENGLISH);
+        locales.put(getString(R.string.french_language), Locale.FRENCH);
+        locales.put(getString(R.string.urdu_language), new Locale("ur"));
     }
 
     @Override
@@ -269,20 +333,18 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
 
         if (SyncStatusBroadcastReceiver.getInstance().isSyncing()) {
             org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.syncing));
-            Timber.i( getString(org.smartregister.R.string.syncing));
+            Timber.i(getString(org.smartregister.R.string.syncing));
         } else {
             if (fetchStatus != null) {
 
                 if (fetchStatus.equals(FetchStatus.fetchedFailed)) {
-                    if(fetchStatus.displayValue().equals(ResponseErrorStatus.malformed_url.name())) {
+                    if (fetchStatus.displayValue().equals(ResponseErrorStatus.malformed_url.name())) {
                         org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_failed_malformed_url));
-                        Timber.i( getString(org.smartregister.R.string.sync_failed_malformed_url));
-                    }
-                    else if (fetchStatus.displayValue().equals(ResponseErrorStatus.timeout.name())) {
+                        Timber.i(getString(org.smartregister.R.string.sync_failed_malformed_url));
+                    } else if (fetchStatus.displayValue().equals(ResponseErrorStatus.timeout.name())) {
                         org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_failed_timeout_error));
                         Timber.i(getString(org.smartregister.R.string.sync_failed_timeout_error));
-                    }
-                    else {
+                    } else {
                         org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_failed));
                         Timber.i(getString(org.smartregister.R.string.sync_failed));
                     }
@@ -294,15 +356,14 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
                     renderView();
 
                     org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_complete));
-                    Timber.i( getString(org.smartregister.R.string.sync_complete));
+                    Timber.i(getString(org.smartregister.R.string.sync_complete));
 
                 } else if (fetchStatus.equals(FetchStatus.noConnection)) {
 
                     org.smartregister.util.Utils.showShortToast(getActivity(), getString(org.smartregister.R.string.sync_failed_no_internet));
-                    Timber.i( getString(org.smartregister.R.string.sync_failed_no_internet));
+                    Timber.i(getString(org.smartregister.R.string.sync_failed_no_internet));
                 }
-            }
-            else{
+            } else {
                 Timber.i("Fetch Status NULL");
             }
 
