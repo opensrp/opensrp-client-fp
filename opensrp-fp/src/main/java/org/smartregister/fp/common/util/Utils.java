@@ -292,7 +292,7 @@ public class Utils extends org.smartregister.util.Utils {
             intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, partialContactRequest.getType());
             intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, partialContactRequest.getContactNo());
             intent.putExtra(ConstantsUtils.IntentKeyUtils.GLOBAL, globals);
-//            intent.putExtra(JsonFormConstants.PERFORM_FORM_TRANSLATION, true);
+            intent.putExtra(JsonFormConstants.PERFORM_FORM_TRANSLATION, true);
             Activity activity = (Activity) context;
             activity.startActivityForResult(intent, FPJsonFormUtils.REQUEST_CODE_GET_JSON);
 
