@@ -257,7 +257,6 @@ public class Utils extends org.smartregister.util.Utils {
             HashMap<String, String> globals = loadGlobalConfig(personObjectClient, baseEntityId, Integer.valueOf(personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
             startVisit.setGlobals(globals);
 
-
             //partial contact exists?
             PartialContact partialContactRequest = new PartialContact();
             partialContactRequest.setBaseEntityId(baseEntityId);
