@@ -39,6 +39,8 @@ import java.util.Map;
 import edu.emory.mathcs.backport.java.util.Collections;
 import timber.log.Timber;
 
+import static org.junit.Assert.assertEquals;
+import static org.smartregister.fp.common.util.Utils.compareTwoDates;
 import static org.smartregister.fp.common.util.Utils.getKeyByValue;
 import static org.smartregister.fp.common.util.Utils.hasPendingRequiredFields;
 import static org.smartregister.fp.common.util.Utils.isEmptyMap;
@@ -404,4 +406,26 @@ public class UtilsTest extends BaseUnitTest {
         }
         return result;
     }
+
+
+    @Test
+    public void testCompareDateWhenFirstDateIsLower() {
+        assertEquals(compareTwoDates("31-05-2018", "31-05-2019"), -1);
+    }
+
+    @Test
+    public void testCompareDateWhenBothDatesAreEqual() {
+        assertEquals(compareTwoDates("31-05-2019", "31-05-2019"), 0);
+    }
+
+    @Test
+    public void testCompareDateWhenFirstDateIsHigher() {
+        assertEquals(compareTwoDates("31-05-2019", "31-05-2018"), 1);
+    }
+
+    @Test
+    public void testCompareDateWhenAnyDateIsNullOrEmpty() {
+        assertEquals(compareTwoDates("", "31-05-2019"), -2);
+    }
+
 }
