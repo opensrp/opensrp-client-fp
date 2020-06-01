@@ -41,6 +41,7 @@ import timber.log.Timber;
 
 import static org.junit.Assert.assertEquals;
 import static org.smartregister.fp.common.util.Utils.compareTwoDates;
+import static org.smartregister.fp.common.util.Utils.formatDateToPattern;
 import static org.smartregister.fp.common.util.Utils.getKeyByValue;
 import static org.smartregister.fp.common.util.Utils.hasPendingRequiredFields;
 import static org.smartregister.fp.common.util.Utils.isEmptyMap;
@@ -356,6 +357,16 @@ public class UtilsTest extends BaseUnitTest {
         } catch (Exception e) {
             Timber.e(e, " --> testGetDisplayTemplate");
         }
+    }
+
+
+    @Test
+    public void testFormatDateToPattern() {
+        String date = "5/29/2020";
+        String inputFormat = "dd/MM/yyyy";
+        String outputFormat = "dd MMM yyyy";
+        String formattedDate = formatDateToPattern(date, inputFormat, outputFormat);
+        assertEquals("05 May 2022", formattedDate);
     }
 
     @Test
