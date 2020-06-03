@@ -43,7 +43,6 @@ import static org.junit.Assert.assertEquals;
 import static org.smartregister.fp.common.util.Utils.compareTwoDates;
 import static org.smartregister.fp.common.util.Utils.formatDateToPattern;
 import static org.smartregister.fp.common.util.Utils.getKeyByValue;
-import static org.smartregister.fp.common.util.Utils.getMethodScheduleDate;
 import static org.smartregister.fp.common.util.Utils.hasPendingRequiredFields;
 import static org.smartregister.fp.common.util.Utils.isEmptyMap;
 import static org.smartregister.fp.common.util.Utils.processFollowupVisitButton;
@@ -358,15 +357,6 @@ public class UtilsTest extends BaseUnitTest {
         } catch (Exception e) {
             Timber.e(e, " --> testGetDisplayTemplate");
         }
-    }
-
-    @Test
-    public void testGetMethodScheduleDate() {
-        boolean isFirst = true;
-        String methodName = ConstantsUtils.SchedulesTriggerEventsUtils.COMBINED_CONTRACEPTIVE_PATCH;
-        String result = getMethodScheduleDate(methodName, isFirst);
-        // add the expected date into current date
-        assertEquals("2020-08-24", result);
     }
 
     @Test
