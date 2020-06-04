@@ -39,6 +39,9 @@ import java.util.Map;
 import edu.emory.mathcs.backport.java.util.Collections;
 import timber.log.Timber;
 
+import static org.junit.Assert.assertEquals;
+import static org.smartregister.fp.common.util.Utils.compareTwoDates;
+import static org.smartregister.fp.common.util.Utils.formatDateToPattern;
 import static org.smartregister.fp.common.util.Utils.getKeyByValue;
 import static org.smartregister.fp.common.util.Utils.hasPendingRequiredFields;
 import static org.smartregister.fp.common.util.Utils.isEmptyMap;
@@ -357,6 +360,15 @@ public class UtilsTest extends BaseUnitTest {
     }
 
     @Test
+    public void testFormatDateToPattern() {
+        String date = "5/29/2020";
+        String inputFormat = "dd/MM/yyyy";
+        String outputFormat = "dd MMM yyyy";
+        String formattedDate = formatDateToPattern(date, inputFormat, outputFormat);
+        assertEquals("05 May 2022", formattedDate);
+    }
+
+    @Test
     public void testAllProcessFollowupVisitButton() {
         android.content.Context context = RuntimeEnvironment.application.getApplicationContext();
         Button button = new Button(context);
@@ -404,4 +416,26 @@ public class UtilsTest extends BaseUnitTest {
         }
         return result;
     }
+
+
+    @Test
+    public void testCompareDateWhenFirstDateIsLower() {
+        assertEquals(compareTwoDates("31-05-2018", "31-05-2019"), -1);
+    }
+
+    @Test
+    public void testCompareDateWhenBothDatesAreEqual() {
+        assertEquals(compareTwoDates("31-05-2019", "31-05-2019"), 0);
+    }
+
+    @Test
+    public void testCompareDateWhenFirstDateIsHigher() {
+        assertEquals(compareTwoDates("31-05-2019", "31-05-2018"), 1);
+    }
+
+    @Test
+    public void testCompareDateWhenAnyDateIsNullOrEmpty() {
+        assertEquals(compareTwoDates("", "31-05-2019"), -2);
+    }
+
 }

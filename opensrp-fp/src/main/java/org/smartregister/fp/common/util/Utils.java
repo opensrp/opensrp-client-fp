@@ -1,7 +1,6 @@
 package org.smartregister.fp.common.util;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,7 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.vijay.jsonwizard.constants.JsonFormConstants;
-import com.vijay.jsonwizard.domain.ExpansionPanelValuesModel;
 import com.vijay.jsonwizard.rules.RuleConstant;
 import com.vijay.jsonwizard.utils.FormUtils;
 
@@ -257,7 +255,6 @@ public class Utils extends org.smartregister.util.Utils {
             HashMap<String, String> globals = loadGlobalConfig(personObjectClient, baseEntityId, Integer.valueOf(personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
             startVisit.setGlobals(globals);
 
-
             //partial contact exists?
             PartialContact partialContactRequest = new PartialContact();
             partialContactRequest.setBaseEntityId(baseEntityId);
@@ -292,7 +289,7 @@ public class Utils extends org.smartregister.util.Utils {
             intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, partialContactRequest.getType());
             intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, partialContactRequest.getContactNo());
             intent.putExtra(ConstantsUtils.IntentKeyUtils.GLOBAL, globals);
-//            intent.putExtra(JsonFormConstants.PERFORM_FORM_TRANSLATION, true);
+            intent.putExtra(JsonFormConstants.PERFORM_FORM_TRANSLATION, true);
             Activity activity = (Activity) context;
             activity.startActivityForResult(intent, FPJsonFormUtils.REQUEST_CODE_GET_JSON);
 
@@ -805,127 +802,6 @@ public class Utils extends org.smartregister.util.Utils {
         return FPLibrary.getInstance().getContactTasksRepository();
     }
 
-    /**
-     * Displays the extra info on the expansion panel widget.
-     *
-     * @param view {@link View}
-     */
-    public static void infoAlertDialog(View view) {
-        Context context = ((Context) view.getTag(R.id.accordion_context));
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(context, R.style.AppThemeAlertDialog);
-        builderSingle.setTitle((String) view.getTag(R.id.accordion_info_title));
-        builderSingle.setMessage((String) view.getTag(R.id.accordion_info_text));
-        builderSingle.setIcon(com.vijay.jsonwizard.R.drawable.dialog_info_filled);
-        builderSingle.setNegativeButton(context.getResources().getString(R.string.ok),
-                (dialog, which) -> dialog.dismiss());
-
-        builderSingle.show();
-    }
-
-    /**
-     * Removes the task values & sets it to empty.
-     *
-     * @param taskValue {@link JSONObject}
-     * @return task {@link JSONObject}
-     */
-    public static JSONObject removeTestResults(JSONObject taskValue) {
-        JSONObject task = new JSONObject();
-        if (taskValue != null && taskValue.has(JsonFormConstants.VALUE)) {
-            taskValue.remove(JsonFormConstants.VALUE);
-            task = taskValue;
-        }
-        return task;
-    }
-
-    /**
-     * Returns the expansion panel values which were selected from the forms.
-     *
-     * @param taskValue {@link JSONObject}
-     * @param taskKey   {@link String}
-     * @return values {@link JSONArray}
-     */
-    public static JSONArray getExpansionPanelValues(JSONObject taskValue, String taskKey) {
-        JSONArray values = new JSONArray();
-        if (taskValue != null && StringUtils.isNotBlank(taskKey)) {
-            JSONArray taskValueArray = new JSONArray();
-            taskValueArray.put(taskValue);
-            values = new FPFormUtils().loadExpansionPanelValues(taskValueArray, taskKey);
-        }
-
-        return values;
-    }
-
-
-    /**
-     * Returns a map of the expansion panel values
-     *
-     * @param secondaryValues {@link JSONArray}
-     * @return expansionPanelValuesMap = {@link Map}
-     */
-    public static Map<String, ExpansionPanelValuesModel> getSecondaryValues(JSONArray secondaryValues) {
-        Map<String, ExpansionPanelValuesModel> stringExpansionPanelValuesModelMap = new HashMap<>();
-        if (secondaryValues != null && secondaryValues.length() > 0) {
-            stringExpansionPanelValuesModelMap = new FPFormUtils().createSecondaryValuesMap(secondaryValues);
-        }
-        return stringExpansionPanelValuesModelMap;
-    }
-
-    /**
-     * Loads the sub forms using the name on the accordion.  It returns the sub form fields
-     *
-     * @param taskValue {@link JSONObject}
-     * @param context   {@link Context}
-     * @return fields  {@link JSONArray}
-     */
-    public static JSONArray loadSubFormFields(JSONObject taskValue, Context context) {
-        JSONArray fields = new JSONArray();
-        try {
-            if (taskValue != null && taskValue.has(JsonFormConstants.CONTENT_FORM)) {
-                String subFormName = taskValue.getString(JsonFormConstants.CONTENT_FORM);
-                JSONObject subForm = FPFormUtils.getSubFormJson(subFormName, "", context);
-                if (subForm.has(JsonFormConstants.CONTENT_FORM)) {
-                    fields = subForm.getJSONArray(JsonFormConstants.CONTENT_FORM);
-                }
-            }
-        } catch (JSONException e) {
-            Timber.e(e, " --> loadSubFormFields");
-        } catch (Exception e) {
-            Timber.e(e, " --> loadSubFormFields");
-        }
-        return fields;
-    }
-
-
-    /**
-     * Get the form title for the accordion text
-     *
-     * @param taskValue {@link JSONObject}
-     * @return title {@link String}
-     */
-    public static String getFormTitle(JSONObject taskValue) {
-        String title = "";
-        if (taskValue != null && taskValue.has(JsonFormConstants.TEXT)) {
-            title = taskValue.optString(JsonFormConstants.TEXT);
-        }
-        return title;
-    }
-
-    /**
-     * Updates the form step1 title to match the test header
-     *
-     * @param form  {@link JSONObject}
-     * @param title {@link String}
-     */
-    public static void updateFormTitle(JSONObject form, String title) {
-        try {
-            if (form != null && StringUtils.isNotBlank(title) && form.has(JsonFormConstants.STEP1)) {
-                JSONObject stepOne = form.getJSONObject(JsonFormConstants.STEP1);
-                stepOne.put(JsonFormConstants.STEP_TITLE, title);
-            }
-        } catch (JSONException e) {
-            Timber.e(e, " --> updateFormTitle");
-        }
-    }
 
     public static boolean isCheckboxValueEmpty(JSONObject fieldObject) throws JSONException {
         if (!fieldObject.has(JsonFormConstants.VALUE)) {
@@ -979,61 +855,5 @@ public class Utils extends org.smartregister.util.Utils {
             }
         }
         return -2;
-    }
-
-    public static LocalDate getNextContactVisitDate(JSONObject jsonObject) {
-        String methodExit = getJsonFieldValue(jsonObject, ConstantsUtils.JsonFormKeyUtils.STEP7, ConstantsUtils.JsonFormKeyUtils.METHOD_EXIT);
-
-        DateTimeFormatter pattern = DateTimeFormat.forPattern((ConstantsUtils.VISIT_DATE_FORMAT));
-        LocalDate nextContactDate = null;
-        switch (methodExit) {
-            case ConstantsUtils.MethodKeyUtil.CU_IUD:
-            case ConstantsUtils.MethodKeyUtil.LNG_IUD:
-                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject, ConstantsUtils.JsonFormKeyUtils.STEP7, ConstantsUtils.JsonFormKeyUtils.IUD_INSERTION_DATE), pattern);
-                break;
-
-            case ConstantsUtils.MethodKeyUtil.DMPA_IM:
-            case ConstantsUtils.MethodKeyUtil.DMPA_SC:
-            case ConstantsUtils.MethodKeyUtil.NET_EN:
-                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject, ConstantsUtils.JsonFormKeyUtils.STEP7, ConstantsUtils.JsonFormKeyUtils.LAST_INJECTION_DATE), pattern);
-                break;
-
-            case ConstantsUtils.MethodKeyUtil.POP:
-            case ConstantsUtils.MethodKeyUtil.COC:
-            case ConstantsUtils.MethodKeyUtil.PATCH:
-            case ConstantsUtils.MethodKeyUtil.CVR:
-            case ConstantsUtils.MethodKeyUtil.PVR:
-                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject, ConstantsUtils.JsonFormKeyUtils.STEP1, ConstantsUtils.JsonFormKeyUtils.VISIT_DATE), pattern);
-                break;
-
-            case ConstantsUtils.MethodKeyUtil.MALE_STERILIZATION:
-            case ConstantsUtils.MethodKeyUtil.FEMALE_STERILIZATION:
-                nextContactDate = LocalDate.parse(getJsonFieldValue(jsonObject, ConstantsUtils.JsonFormKeyUtils.STEP7, ConstantsUtils.JsonFormKeyUtils.STERILIZATION_DATE), pattern);
-                break;
-
-            default:
-                break;
-        }
-
-        return nextContactDate;
-    }
-
-    private static String getJsonFieldValue(JSONObject jsonObject, String stepKey, String fieldKey) {
-        String value = "";
-
-        try {
-            JSONArray jsonArray = jsonObject.getJSONObject(stepKey).getJSONArray(ConstantsUtils.JsonFormKeyUtils.FIELDS);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject obj = jsonArray.getJSONObject(i);
-                if (obj.getString(ConstantsUtils.KeyUtils.KEY).equals(fieldKey)) {
-                    value = obj.optString(ConstantsUtils.KeyUtils.VALUE, "");
-                    break;
-                }
-            }
-        } catch (JSONException ex) {
-            Timber.e(ex);
-        }
-
-        return value;
     }
 }
