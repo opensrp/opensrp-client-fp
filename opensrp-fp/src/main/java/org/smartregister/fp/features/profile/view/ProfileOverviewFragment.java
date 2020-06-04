@@ -37,7 +37,7 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
     private String baseEntityId;
     private int contactNo;
 
-    static ProfileOverviewFragment newInstance(Bundle bundle) {
+    public static ProfileOverviewFragment newInstance(Bundle bundle) {
         Bundle bundles = bundle;
         ProfileOverviewFragment fragment = new ProfileOverviewFragment();
         if (bundles == null) {
