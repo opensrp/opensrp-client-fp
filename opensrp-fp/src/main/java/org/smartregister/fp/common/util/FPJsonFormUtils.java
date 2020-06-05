@@ -532,7 +532,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         Intent intent = new Intent(context, JsonWizardFormActivity.class);
         intent.putExtra(ConstantsUtils.IntentKeyUtils.JSON, metaData);
         intent.putExtra("form", getFormMetadata(context));
-        intent.putExtra(JsonFormConstants.PERFORM_FORM_TRANSLATION, true);
+        intent.putExtra(PERFORM_FORM_TRANSLATION, true);
         context.startActivityForResult(intent, jsonFormActivityRequestCode);
     }
 
