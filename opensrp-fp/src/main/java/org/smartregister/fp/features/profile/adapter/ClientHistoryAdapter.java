@@ -3,13 +3,13 @@ package org.smartregister.fp.features.profile.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.smartregister.fp.R;
 import org.smartregister.fp.common.util.Utils;
-import org.smartregister.view.customcontrols.CustomFontTextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -69,8 +69,8 @@ public class ClientHistoryAdapter extends RecyclerView.Adapter<ClientHistoryAdap
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         private View container;
-        private CustomFontTextView visitData;
-        private CustomFontTextView methodExit;
+        private TextView visitData;
+        private TextView methodExit;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

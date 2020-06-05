@@ -20,6 +20,7 @@ import org.robolectric.Robolectric;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.android.controller.ActivityController;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
+import org.smartregister.configurableviews.ConfigurableViewsLibrary;
 import org.smartregister.configurableviews.model.Field;
 import org.smartregister.domain.FetchStatus;
 import org.smartregister.fp.R;
@@ -35,10 +36,6 @@ import org.smartregister.fp.features.home.view.HomeRegisterFragment;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-/**
- * Created by ndegwamartin on 24/07/2018.
- */
 
 public class HomeRegisterActivityTest extends BaseActivityUnitTest {
 
@@ -66,6 +63,7 @@ public class HomeRegisterActivityTest extends BaseActivityUnitTest {
         super.setUp();
         controller = Robolectric.buildActivity(HomeRegisterActivity.class).create().start();
         baseHomeRegisterActivity = controller.get();
+        ConfigurableViewsLibrary.init(context);
     }
 
     @Override
@@ -95,13 +93,11 @@ public class HomeRegisterActivityTest extends BaseActivityUnitTest {
         Assert.assertTrue(fragment instanceof HomeRegisterFragment);
     }
 
-    /*@Test
+    @Test
     public void testGetOtherFragmentsShouldReturnCorrectInstances() {
         Fragment[] fragments = baseHomeRegisterActivity.getOtherFragments();
         Assert.assertNotNull(fragments);
         Assert.assertEquals(0, fragments.length);
-        //Assert.assertTrue(fragments[0] instanceof AdvancedSearchFragment);
-        //Assert.assertTrue(fragments[1] instanceof SortFilterFragment);
     }
 
     @Test
@@ -110,7 +106,7 @@ public class HomeRegisterActivityTest extends BaseActivityUnitTest {
         Assert.assertNotNull(presenter);
         baseHomeRegisterActivity.initializePresenter();
         Assert.assertNotNull(presenter);
-    }*/
+    }
 
     @Test
     public void testGetViewIdentifiersReturnsCorrectIdentifierValues() {
@@ -181,10 +177,6 @@ public class HomeRegisterActivityTest extends BaseActivityUnitTest {
         Whitebox.setInternalState(baseHomeRegisterActivitySpy, "presenter", registerPresenter);
 
         baseHomeRegisterActivitySpy.startFormActivity(TEST_STRING, TEST_STRING, TEST_STRING);
-        /* LocationPickerView locationPickerView = null;
-        Mockito.verify(registerPresenter).startForm(ArgumentMatchers.eq(TEST_STRING), ArgumentMatchers.eq(TEST_STRING),
-                ArgumentMatchers.eq(TEST_STRING), ArgumentMatchers.eq(locationPickerView));*/
-        // Todo Use thhe location picker functionality is added on the me page
         Mockito.verify(registerPresenter).startForm(TEST_STRING, TEST_STRING,
                 TEST_STRING, (String) null);
     }
@@ -222,18 +214,4 @@ public class HomeRegisterActivityTest extends BaseActivityUnitTest {
         Mockito.verify(spyActivity).onBackPressed();
     }
 
-    /*@Test
-    public void testSwitchToAdvancedSearchFromBarcode() {
-        HomeRegisterActivity baseHomeRegisterActivitySpy = Mockito.spy(baseHomeRegisterActivity);
-        Whitebox.setInternalState(baseHomeRegisterActivitySpy, "isAdvancedSearch", true);
-        try {
-            Whitebox.invokeMethod(baseHomeRegisterActivitySpy, HomeRegisterActivity.class, "switchToAdvancedSearchFromBarcode");
-        } catch (Exception e) {
-            Timber.e(e, "BaseHomeRegisterActivityTest --> testSwitchToAdvancedSearchFromBarcode");
-        }
-
-        Assert.assertEquals(Whitebox.getInternalState(baseHomeRegisterActivitySpy, "advancedSearchQrText"), "");
-        Assert.assertFalse(Whitebox.getInternalState(baseHomeRegisterActivitySpy, "isAdvancedSearch"));
-        Assert.assertEquals(Whitebox.getInternalState(baseHomeRegisterActivitySpy, "advancedSearchFormData"), new HashMap<>());
-    }*/
 }

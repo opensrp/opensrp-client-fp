@@ -19,17 +19,17 @@ import org.smartregister.fp.activity.BaseActivityUnitTest;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.features.profile.presenter.ProfilePresenter;
-import org.smartregister.fp.features.profile.view.ClientHistoryFragment;
 import org.smartregister.fp.features.profile.view.ProfileActivity;
+import org.smartregister.fp.features.profile.view.ProfileOverviewFragment;
 
 import java.util.HashMap;
 
 import static org.robolectric.shadows.ShadowInstrumentation.getInstrumentation;
 
-public class ClientHistoryFragmentTest extends BaseActivityUnitTest {
+public class ProfileOverviewFragmentTest extends BaseActivityUnitTest {
     private ProfileActivity profileActivity;
     private ActivityController<ProfileActivity> controller;
-    private ClientHistoryFragment clientHistoryFragment;
+    private ProfileOverviewFragment profileOverviewFragment;
     private ProfileActivity spyActivity;
 
 
@@ -64,9 +64,9 @@ public class ClientHistoryFragmentTest extends BaseActivityUnitTest {
 
         spyActivity = Mockito.spy(profileActivity);
         Whitebox.setInternalState(profileActivity, "presenter", presenter);
-        clientHistoryFragment = ClientHistoryFragment.newInstance(spyActivity.getIntent().getExtras());
-        startFragment(clientHistoryFragment);
-        Assert.assertNotNull(clientHistoryFragment);
+        profileOverviewFragment = ProfileOverviewFragment.newInstance(spyActivity.getIntent().getExtras());
+        startFragment(profileOverviewFragment);
+        Assert.assertNotNull(profileOverviewFragment);
     }
 
 
@@ -83,9 +83,9 @@ public class ClientHistoryFragmentTest extends BaseActivityUnitTest {
 
         spyActivity = Mockito.spy(profileActivity);
         Whitebox.setInternalState(profileActivity, "presenter", presenter);
-        clientHistoryFragment = ClientHistoryFragment.newInstance(null);
-        startFragment(clientHistoryFragment);
-        Assert.assertNotNull(clientHistoryFragment);
+        profileOverviewFragment = ProfileOverviewFragment.newInstance(null);
+        startFragment(profileOverviewFragment);
+        Assert.assertNotNull(profileOverviewFragment);
     }
 
     private void startFragment(Fragment fragment) {
