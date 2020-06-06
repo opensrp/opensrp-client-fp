@@ -111,10 +111,13 @@ public class ProfileActivity extends BaseProfileActivity implements ProfileContr
 
     private void updateBtnStartFPVisit(String baseEntityId) {
         String todayDate = Utils.getTodaysDate();
-        String nextContactDate = PatientRepository.getClientProfileDetails(baseEntityId).get(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE);
-        int compareTwoDatesResult = Utils.compareTwoDates(Utils.formatDateToPattern(todayDate, YYYY_MM_DD, DD_MM_YYYY), Utils.formatDateToPattern(nextContactDate, YYYY_MM_DD, DD_MM_YYYY));
-        String formattedNextContactDate = Utils.formatDateToPattern(nextContactDate, YYYY_MM_DD, FOLLOWUP_VISIT_BUTTON_FORMAT);
-        Utils.updateBtnStartVisit(compareTwoDatesResult, btnStartFPVisit, formattedNextContactDate, this, detailMap);
+        HashMap<String, String> clientProfileDetails = PatientRepository.getClientProfileDetails(baseEntityId);
+        if (clientProfileDetails != null) {
+            String nextContactDate = clientProfileDetails.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE);
+            int compareTwoDatesResult = Utils.compareTwoDates(Utils.formatDateToPattern(todayDate, YYYY_MM_DD, DD_MM_YYYY), Utils.formatDateToPattern(nextContactDate, YYYY_MM_DD, DD_MM_YYYY));
+            String formattedNextContactDate = Utils.formatDateToPattern(nextContactDate, YYYY_MM_DD, FOLLOWUP_VISIT_BUTTON_FORMAT);
+            Utils.updateBtnStartVisit(compareTwoDatesResult, btnStartFPVisit, formattedNextContactDate, this, detailMap);
+        }
     }
 
     private void getButtonAlertStatus() {

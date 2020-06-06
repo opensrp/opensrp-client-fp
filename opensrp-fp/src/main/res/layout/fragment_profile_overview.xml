@@ -53,7 +53,7 @@
                 android:text="@string/method_at_exit"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_label_chosen_method" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_chosen_method" />
 
 
             <TextView
@@ -66,7 +66,7 @@
                 android:text="@string/method_start_date"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_label_method_at_exit" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_method_at_exit" />
 
 
             <TextView
@@ -100,8 +100,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/profile_overview_text_margin_start"
-                android:gravity="end"
+                android:layout_marginEnd="@dimen/profile_overview_text_margin_end"
                 android:text="@{clientProfileModel.chosenMethod}"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/tv_label_chosen_method"
                 tools:text="@string/chosen_method" />
@@ -113,8 +114,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/profile_overview_text_margin_start"
-                android:gravity="end"
+                android:layout_marginEnd="@dimen/profile_overview_text_margin_end"
                 android:text="@{clientProfileModel.methodAtExit}"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/tv_label_method_at_exit"
                 tools:text="@string/method_at_exit" />
@@ -126,8 +128,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/profile_overview_text_margin_start"
-                android:gravity="end"
+                android:layout_marginEnd="@dimen/profile_overview_text_margin_end"
                 android:text="@{clientProfileModel.methodStartDate}"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/tv_label_method_start_date"
                 tools:text="@string/method_start_date" />
@@ -139,8 +142,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/profile_overview_text_margin_start"
-                android:gravity="end"
+                android:layout_marginEnd="@dimen/profile_overview_text_margin_end"
                 android:text="@{clientProfileModel.referred}"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/tv_label_referred"
                 tools:text="@string/referred" />
@@ -151,9 +155,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/profile_overview_text_margin_start"
-                android:gravity="end"
+                android:layout_marginEnd="@dimen/profile_overview_text_margin_end"
                 android:text="@{clientProfileModel.reasonForNoMethodAtExit}"
                 android:visibility="@{clientProfileModel.reasonForNoMethodAtExit != null ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/tv_label_reason_for_no_method_at_exit"
                 tools:text="@string/reason_for_no_method_at_exit" />

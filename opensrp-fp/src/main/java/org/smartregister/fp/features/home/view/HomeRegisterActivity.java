@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -312,18 +311,6 @@ public class HomeRegisterActivity extends BaseRegisterActivity implements Regist
             }
         }
 
-    }
-
-    public AlertDialog createLanguageDialog(ArrayAdapter<String> adapter, final List<String> displayValues) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(this.getString(R.string.select_language));
-        builder.setSingleChoiceItems(adapter, 0, (dialog, which) -> {
-            String selectedItem = displayValues.get(which);
-            ((RegisterContract.Presenter) presenter).saveLanguage(selectedItem);
-            dialog.dismiss();
-        });
-
-        return builder.create();
     }
 
     @Override

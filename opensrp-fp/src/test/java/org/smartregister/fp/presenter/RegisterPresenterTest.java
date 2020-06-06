@@ -23,10 +23,6 @@ import org.smartregister.view.LocationPickerView;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * Created by keymanc on 11/07/2018.
- */
 public class RegisterPresenterTest extends BaseUnitTest {
     @Mock
     private RegisterContract.View view;
@@ -103,7 +99,7 @@ public class RegisterPresenterTest extends BaseUnitTest {
 
     @Test
     public void testStartFormWithNoLocation() throws Exception {
-        String formName = "anc_registration";
+        String formName = "fp_register";
         String entityId = "1";
         String metadata = "metadata";
         LocationPickerView locationPickerView = null;
@@ -127,7 +123,7 @@ public class RegisterPresenterTest extends BaseUnitTest {
 
         LocationPickerView locationPickerView = Mockito.mock(LocationPickerView.class);
 
-        String formName = "anc_registration";
+        String formName = "fp_register";
         String entityId = "";
         String metadata = "metadata";
         String locationName = "Location Name";
@@ -154,7 +150,7 @@ public class RegisterPresenterTest extends BaseUnitTest {
         LocationPickerView locationPickerView = Mockito.mock(LocationPickerView.class);
         JSONObject form = Mockito.mock(JSONObject.class);
 
-        String formName = "anc_registration";
+        String formName = "fp_register";
         String entityId = "1";
         String metadata = "metadata";
         String locationName = "Location Name";
@@ -215,7 +211,7 @@ public class RegisterPresenterTest extends BaseUnitTest {
 
         JSONObject form = Mockito.mock(JSONObject.class);
 
-        String formName = "anc_registration";
+        String formName = "fp_register";
         String entityId = "123";
         String metadata = "metadata";
         String currentLocationId = "Location Id";
