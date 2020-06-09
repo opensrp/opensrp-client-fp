@@ -134,6 +134,7 @@ public abstract class ConstantsUtils {
         public static final String AGE_ENTERED = "age_entered";
         //
         public static final String CLIENT_ID = "client_id";
+        public static final String ADOLESCENT_NOTE = "adolescent_note";
         public static final String STEP1 = "step1";
         public static final String FIELDS = "fields";
         public static final String STILL_ON_METHOD = "still_on_method";

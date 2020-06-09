@@ -60,6 +60,25 @@
     "next": "step2",
     "fields": [
       {
+        "key": "adolescent_note",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "type": "label",
+        "text": "{{fp_start_visit.step1.adolescent_note.text}}",
+        "label": "{{fp_start_visit.step1.adolescent_note.label}}",
+        "label_info_text": "{{fp_start_visit.step1.adolescent_note.label_info_text}}",
+        "label_text_style": "normal",
+        "toaster_type": "info",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "fp-visit-calculations-rules.yml"
+            }
+          }
+        }
+      },
+      {
         "key": "visit_date",
         "type": "date_picker",
         "openmrs_entity": "",

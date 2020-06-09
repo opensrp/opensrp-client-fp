@@ -95,6 +95,20 @@
           }
         },
         {
+          "column_name": "adolescent",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.adolescent"
+          }
+        },
+        {
+          "column_name": "age",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.age"
+          }
+        },
+        {
           "column_name": "dob_from_age",
           "type": "Client",
           "json_mapping": {

@@ -360,6 +360,40 @@
         "is-rule-check": true
       },
       {
+        "key": "age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "age",
+        "type": "hidden",
+        "value": "0",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "registration_calculation_rules.yml"
+            }
+          }
+        },
+        "step": "step1",
+        "is-rule-check": true
+      },
+      {
+        "key": "adolescent",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent",
+        "type": "hidden",
+        "value": "0",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "registration_calculation_rules.yml"
+            }
+          }
+        },
+        "step": "step1",
+        "is-rule-check": true
+      },
+      {
         "key": "gender",
         "type": "native_radio",
         "openmrs_entity_parent": "NA",

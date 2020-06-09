@@ -83,6 +83,7 @@ import static org.smartregister.fp.common.util.ConstantsUtils.ProfileDateStatusU
 import static org.smartregister.fp.common.util.ConstantsUtils.RulesFileUtils.FP_ALERT_RULES;
 import static org.smartregister.fp.common.util.ConstantsUtils.ScheduleUtils.ONCE_OFF;
 import static org.smartregister.fp.common.util.ConstantsUtils.ScheduleUtils.RECURRING;
+import static org.smartregister.fp.common.util.FPJsonFormUtils.getFieldJSONObject;
 
 /**
  * Created by ndegwamartin on 14/03/2018.
@@ -281,6 +282,19 @@ public class Utils extends org.smartregister.util.Utils {
                 makeTheFormReadOnly(modifiedForm, 1);
                 processedForm = modifiedForm.toString();
             }
+
+            String profileAdolescent = PatientRepository.getClientProfileAdolescent(baseEntityId);
+            if (profileAdolescent != null && profileAdolescent.equals("no")) {
+                JSONObject modifiedForm = new JSONObject(processedForm);
+                JSONArray fields = FPJsonFormUtils.fields(modifiedForm);
+                JSONObject adolescentNote = getFieldJSONObject(fields, ConstantsUtils.JsonFormKeyUtils.ADOLESCENT_NOTE);
+                if (adolescentNote != null) {
+                    adolescentNote.remove(FPJsonFormUtils.TYPE);
+                    adolescentNote.put(FPJsonFormUtils.TYPE, FPJsonFormUtils.HIDDEN);
+                }
+                processedForm = modifiedForm.toString();
+            }
+
 
             intent.putExtra(ConstantsUtils.JsonFormExtraUtils.JSON, processedForm);
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, startVisit);

@@ -82,6 +82,8 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
     public static final String READ_ONLY = "read_only";
     public static final int REQUEST_CODE_GET_JSON = 3432;
+    public static final String TYPE = "type";
+    public static final String HIDDEN = "hidden";
     private static final String TAG = FPJsonFormUtils.class.getCanonicalName();
 
     public static boolean isFieldRequired(JSONObject fieldObject) throws JSONException {
