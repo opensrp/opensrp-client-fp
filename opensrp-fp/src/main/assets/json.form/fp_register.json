@@ -67,7 +67,7 @@
           "err": "{{fp_register.step1.first_name.v_required.err}}"
         },
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
+          "value": "[^0-9]*",
           "err": "{{fp_register.step1.first_name.v_regex.err}}"
         },
         "value": ""
@@ -85,7 +85,7 @@
           "err": "{{fp_register.step1.last_name.v_required.err}}"
         },
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
+          "value": "[^0-9]*",
           "err": "{{fp_register.step1.last_name.v_regex.err}}"
         },
         "value": ""

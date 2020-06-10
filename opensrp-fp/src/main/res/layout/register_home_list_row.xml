@@ -111,12 +111,13 @@
                 android:layout_alignParentStart="true"
                 android:gravity="bottom"
                 android:padding="2dp"
-                tools:text="Levonorgestrel IUD (LNG-IUD)"
                 android:textColor="@color/dark_grey_text"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Levonorgestrel IUD (LNG-IUD)" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -152,23 +153,6 @@
                 android:textAllCaps="false"
                 android:visibility="gone"
                 tools:text="@string/followup_date" />
-
-            <Button
-                android:id="@+id/sync"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:background="@color/transparent"
-                android:elevation="8dp"
-                android:padding="@dimen/advanced_search_button_padding"
-                android:stateListAnimator="@drawable/button"
-                android:text="@string/sync"
-                android:textAllCaps="true"
-                android:textAppearance="?android:textAppearanceSmall"
-                android:textColor="@color/button_navy_blue"
-                android:textSize="@dimen/advanced_search_text_size"
-                android:visibility="gone" />
 
         </LinearLayout>
 

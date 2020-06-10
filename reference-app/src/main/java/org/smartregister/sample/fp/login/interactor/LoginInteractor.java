@@ -1,6 +1,8 @@
 package org.smartregister.sample.fp.login.interactor;
 
+import org.smartregister.domain.LoginResponse;
 import org.smartregister.fp.common.job.ArchivedPostSterilizationJob;
+import org.smartregister.fp.common.library.FPLibrary;
 import org.smartregister.job.ImageUploadServiceJob;
 import org.smartregister.job.PullUniqueIdsServiceJob;
 import org.smartregister.job.SyncServiceJob;
@@ -11,9 +13,6 @@ import org.smartregister.view.contract.BaseLoginContract;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by ndegwamartin on 26/06/2018.
- */
 public class LoginInteractor extends BaseLoginInteractor implements BaseLoginContract.Interactor {
     public LoginInteractor(BaseLoginContract.Presenter loginPresenter) {
         super(loginPresenter);
@@ -33,5 +32,16 @@ public class LoginInteractor extends BaseLoginInteractor implements BaseLoginCon
                 .scheduleJob(SyncSettingsServiceJob.TAG, TimeUnit.MINUTES.toMillis(BuildConfig.CLIENT_SETTINGS_SYNC_MINUTES),
                         getFlexValue(BuildConfig.CLIENT_SETTINGS_SYNC_MINUTES));
         ArchivedPostSterilizationJob.makeSchedule();
+    }
+
+    @Override
+    protected void scheduleJobsImmediately() {
+        super.scheduleJobsImmediately();
+    }
+
+    @Override
+    protected void processServerSettings(LoginResponse loginResponse) {
+        super.processServerSettings(loginResponse);
+        FPLibrary.getInstance().populateGlobalSettings();
     }
 }

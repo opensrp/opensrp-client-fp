@@ -132,7 +132,8 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
     protected String getMainCondition() {
         String condition = DBQueryHelper.getHomePatientRegisterCondition();
         if (enableDueFilter) {
-            condition += " AND (" + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE + " != '' AND date('now') > strftime('%Y-%m-%d', " + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE + "))";
+//            condition += " AND (" + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE + " != '' AND date('now') > strftime('%Y-%m-%d', " + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE + "))";
+            condition += " AND (" + DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE + " != '')";
         }
         return condition;
     }

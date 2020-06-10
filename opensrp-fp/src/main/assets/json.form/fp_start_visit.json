@@ -64,19 +64,11 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "",
         "openmrs_entity_parent": "",
-        "type": "label",
+        "type": "toaster_notes",
         "text": "{{fp_start_visit.step1.adolescent_note.text}}",
-        "label": "{{fp_start_visit.step1.adolescent_note.label}}",
-        "label_info_text": "{{fp_start_visit.step1.adolescent_note.label_info_text}}",
-        "label_text_style": "normal",
-        "toaster_type": "info",
-        "calculation": {
-          "rules-engine": {
-            "ex-rules": {
-              "rules-file": "fp-visit-calculations-rules.yml"
-            }
-          }
-        }
+        "toaster_info_text": "{{fp_start_visit.step1.adolescent_note.label_info_text}}",
+        "text_color": "#1199F9",
+        "toaster_type": "info"
       },
       {
         "key": "visit_date",
