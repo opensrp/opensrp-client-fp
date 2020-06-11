@@ -74,6 +74,7 @@ import java.util.Map;
 
 import timber.log.Timber;
 
+import static org.smartregister.fp.common.util.ConstantsUtils.CURRENT_CONTACT_NO;
 import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.FOLLOWUP_VISIT_BUTTON_FORMAT;
 import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.YYYY_MM_DD;
 import static org.smartregister.fp.common.util.ConstantsUtils.ProfileDateStatusUtils.ANY_NULL_DATE;
@@ -256,11 +257,15 @@ public class Utils extends org.smartregister.util.Utils {
             HashMap<String, String> globals = loadGlobalConfig(personObjectClient, baseEntityId, Integer.valueOf(personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
             startVisit.setGlobals(globals);
 
+
             //partial contact exists?
-            PartialContact partialContactRequest = new PartialContact();
-            partialContactRequest.setBaseEntityId(baseEntityId);
-            partialContactRequest.setContactNo(startVisit.getContactNumber());
-            partialContactRequest.setType(startVisit.getFormName());
+            PartialContact partialContactRequest = null;
+            if (personObjectClient.containsKey(CURRENT_CONTACT_NO)) {
+                partialContactRequest = new PartialContact();
+                partialContactRequest.setBaseEntityId(baseEntityId);
+                partialContactRequest.setContactNo(Integer.parseInt(personObjectClient.get(CURRENT_CONTACT_NO)));
+                partialContactRequest.setType(startVisit.getFormName());
+            }
 
             String locationId = FPLibrary.getInstance().getContext().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
 
@@ -298,10 +303,10 @@ public class Utils extends org.smartregister.util.Utils {
 
             intent.putExtra(ConstantsUtils.JsonFormExtraUtils.JSON, processedForm);
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, startVisit);
-            intent.putExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID, partialContactRequest.getBaseEntityId());
+            intent.putExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID, baseEntityId);
             intent.putExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP, personObjectClient);
-            intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, partialContactRequest.getType());
-            intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, partialContactRequest.getContactNo());
+            intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, startVisit.getFormName());
+            intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, startVisit.getContactNumber());
             intent.putExtra(ConstantsUtils.IntentKeyUtils.GLOBAL, globals);
             intent.putExtra(JsonFormConstants.PERFORM_FORM_TRANSLATION, true);
             Activity activity = (Activity) context;

@@ -65,6 +65,7 @@ public abstract class ConstantsUtils {
     public static final String DUE = "Due";
     public static final String ANDROID_SWITCHER = "android:switcher:";
     public static final String FORM_STATE = "form_state";
+    public static final String CURRENT_CONTACT_NO = "current_contact_no";
 
     public interface Properties {
         String CAN_SAVE_SITE_INITIAL_SETTING = "CAN_SAVE_INITIAL_SITE_SETTING";

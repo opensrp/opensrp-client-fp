@@ -22,6 +22,8 @@ import org.smartregister.view.fragment.BaseProfileFragment;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.smartregister.fp.common.util.ConstantsUtils.CONTACT_NO;
+
 @SuppressWarnings("ConstantConditions")
 public class ClientHistoryFragment extends BaseProfileFragment implements ClientHistoryAdapter.HistoryItemClickListener {
 
@@ -34,12 +36,14 @@ public class ClientHistoryFragment extends BaseProfileFragment implements Client
 
     }
 
+    private List<HashMap<String, String>> data;
+
     @Override
     protected void onResumption() {
         Bundle args = getArguments();
         if (args != null) {
             baseEntityId = args.getString(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, "");
-            List<HashMap<String, String>> data = FPLibrary.getInstance().getPreviousContactRepository().getVisitHistory(baseEntityId);
+            data = FPLibrary.getInstance().getPreviousContactRepository().getVisitHistory(baseEntityId);
             populateTheData(data);
         }
     }
@@ -73,6 +77,7 @@ public class ClientHistoryFragment extends BaseProfileFragment implements Client
         int contactNo = rawContactNo == null ? 1 : Integer.parseInt(rawContactNo) - 1;
         details.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, String.valueOf(contactNo));
         details.put(ConstantsUtils.FORM_STATE, ConstantsUtils.FormState.READ_ONLY);
+        details.put(ConstantsUtils.CURRENT_CONTACT_NO, item.get(CONTACT_NO));
         Utils.proceedToContact(baseEntityId, details, getActivity());
     }
 

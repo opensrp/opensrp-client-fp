@@ -438,6 +438,35 @@ public class PreviousContactRepository extends BaseRepository {
 
         return data;
     }
+    public List<HashMap<String, String>> getProfileOverview(@NonNull String baseEntityId) {
+        List<HashMap<String, String>> data = new ArrayList<>();
+
+        try {
+
+            String query = "SELECT DISTINCT pc._id, pc.contact_no, pc.base_entity_id, pc.`value` as visit_date, (" +
+                    "SELECT spc.value FROM previous_contact AS spc WHERE spc.contact_no = pc.contact_no AND spc.key = 'method_exit' AND spc.base_entity_id = '" + baseEntityId + "'" +
+                    ") as method_exit " +
+                    "FROM previous_contact AS pc " +
+                    "WHERE pc.base_entity_id='" + baseEntityId + "' AND pc.key = 'visit_date' " +
+                    "ORDER BY pc.`value` DESC LIMIT 1";
+            Cursor cursor = getReadableDatabase().rawQuery(query, null);
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    HashMap<String, String> historyMap = new HashMap<>();
+                    historyMap.put("_id", cursor.getString(cursor.getColumnIndex("_id")));
+                    historyMap.put("contact_no", cursor.getString(cursor.getColumnIndex("contact_no")));
+                    historyMap.put("base_entity_id", cursor.getString(cursor.getColumnIndex("base_entity_id")));
+                    historyMap.put("visit_date", cursor.getString(cursor.getColumnIndex("visit_date")));
+                    historyMap.put("method_exit", cursor.getString(cursor.getColumnIndex("method_exit")));
+                    data.add(historyMap);
+                }
+            }
+        } catch (Exception ex) {
+            Timber.e(ex);
+        }
+
+        return data;
+    }
 
     public List<HashMap<String, String>> getLatestSterilizeContacts() {
         List<HashMap<String, String>> data = new ArrayList<>();
