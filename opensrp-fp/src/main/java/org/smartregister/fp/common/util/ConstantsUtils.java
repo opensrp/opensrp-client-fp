@@ -103,6 +103,7 @@ public abstract class ConstantsUtils {
         public static final String CLOSE = "Close FP Record";
         public static final String SITE_CHARACTERISTICS = "Site Characteristics";
         public static final String CONTACT_VISIT = "Contact Visit";
+        public static final String VISIT_FORM_JSON = "Visit Form Json";
     }
 
     public static class JsonFormUtils {

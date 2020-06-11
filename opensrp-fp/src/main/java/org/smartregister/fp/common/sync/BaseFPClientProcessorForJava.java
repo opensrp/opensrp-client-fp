@@ -21,6 +21,7 @@ import org.smartregister.domain.jsonmapping.ClientField;
 import org.smartregister.domain.jsonmapping.Table;
 import org.smartregister.fp.common.helper.ECSyncHelper;
 import org.smartregister.fp.common.library.FPLibrary;
+import org.smartregister.fp.common.model.PartialContact;
 import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.DBConstantsUtils;
@@ -122,6 +123,10 @@ public class BaseFPClientProcessorForJava extends ClientProcessorForJava impleme
         }
     }
 
+    public PartialContact getPartialObject(String partialContactsRaw) {
+        return FPLibrary.getInstance().getGsonInstance().fromJson(partialContactsRaw, PartialContact.class);
+    }
+
     public Map<String, String> getPreviousContactMap(String previousContactsRaw) {
         return FPLibrary.getInstance().getGsonInstance().fromJson(previousContactsRaw, new TypeToken<Map<String, String>>() {
         }.getType());
@@ -187,8 +192,25 @@ public class BaseFPClientProcessorForJava extends ClientProcessorForJava impleme
             case ConstantsUtils.EventTypeUtils.CONTACT_VISIT:
                 processVisit(event);
                 break;
+            case ConstantsUtils.EventTypeUtils.VISIT_FORM_JSON:
+                processJsonVisitFrom(event);
+                break;
             default:
                 break;
+        }
+    }
+
+    private void processJsonVisitFrom(Event event) {
+        processPartialVisitForm(event);
+    }
+
+    private void processPartialVisitForm(Event event) {
+        //Previous contact state
+        String previousContactsRaw = event.getDetails().get(ConstantsUtils.DetailsKeyUtils.PREVIOUS_CONTACTS);
+        PartialContact partialContact = getPartialObject(previousContactsRaw);
+
+        if (partialContact != null) {
+            FPLibrary.getInstance().getPartialContactRepository().insertPartialContact(partialContact);
         }
     }
 

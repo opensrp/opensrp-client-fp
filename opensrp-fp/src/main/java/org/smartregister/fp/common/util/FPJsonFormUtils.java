@@ -649,7 +649,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         }
     }
 
-    public static Pair<Event, Event> createContactVisitEvent(Map<String, String> clientDetail) {
+    public static Triple<Event, Event,Event> createContactVisitEvent(Map<String, String> clientDetail) {
 
         try {
             String contactNo = clientDetail.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
@@ -661,9 +661,16 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
                     .withFormSubmissionId(FPJsonFormUtils.generateRandomUUIDString())
                     .withDateCreated(getContactStartDate(contactStartDate));
 
+            Event partialVisitEvent = (Event) new Event().withBaseEntityId(baseEntityId).withEventDate(new Date())
+                    .withEventType(ConstantsUtils.EventTypeUtils.VISIT_FORM_JSON).withEntityType(DBConstantsUtils.CONTACT_ENTITY_TYPE)
+                    .withFormSubmissionId(FPJsonFormUtils.generateRandomUUIDString())
+                    .withDateCreated(getContactStartDate(contactStartDate));
+
             contactVisitEvent.addDetails(ConstantsUtils.CONTACT, getPreviousContact(contactNo));
+            partialVisitEvent.addDetails(ConstantsUtils.CONTACT, getPreviousContact(contactNo));
 
             tagSyncMetadata(FPLibrary.getInstance().getContext().userService().getAllSharedPreferences(), contactVisitEvent);
+            tagSyncMetadata(FPLibrary.getInstance().getContext().userService().getAllSharedPreferences(), partialVisitEvent);
 
             PatientRepository.updateContactVisitStartDate(baseEntityId, null);//reset contact visit date
 
@@ -688,7 +695,7 @@ public class FPJsonFormUtils extends org.smartregister.util.JsonFormUtils {
             db.addorUpdateClient(baseEntityId, clientForm);
 
             Event updateClientEvent = createUpdateClientDetailsEvent(baseEntityId);
-            return Pair.create(contactVisitEvent, updateClientEvent);
+            return Triple.of(contactVisitEvent, updateClientEvent,partialVisitEvent);
 
         } catch (Exception e) {
             Timber.e(e, " --> createContactVisitEvent");

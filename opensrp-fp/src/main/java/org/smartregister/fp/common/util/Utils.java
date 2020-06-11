@@ -235,7 +235,7 @@ public class Utils extends org.smartregister.util.Utils {
     public static void proceedToContact(String baseEntityId, HashMap<String, String> personObjectClient, Context context) {
         try {
 
-            personObjectClient = PatientRepository.getClientProfileDetails(baseEntityId);
+//            personObjectClient = PatientRepository.getClientProfileDetails(baseEntityId);
 
             String nextContact = personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
             personObjectClient.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, nextContact == null ? "1" : nextContact);

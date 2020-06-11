@@ -160,8 +160,9 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         fillValue(viewHolder.ancId, String.format(context.getString(R.string.anc_id_text), fpId));
     }
 
-    private void populateAlertButtonAndMethodExit(CommonPersonObjectClient pc, RegisterViewHolder viewHolder) {
 
+    private void populateAlertButtonAndMethodExit(CommonPersonObjectClient pc, RegisterViewHolder viewHolder) {
+        hideFollowUpViews(viewHolder);
         String baseEntityId = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, false);
         String nextContact = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.NEXT_CONTACT, false);
         String nextContactDate = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE, false);
@@ -188,8 +189,8 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
                         }
                     }
                 }
-            } else hideFollowUpViews(viewHolder);
-        } else hideFollowUpViews(viewHolder);
+            }
+        }
     }
 
     private void hideFollowUpViews(RegisterViewHolder viewHolder) {

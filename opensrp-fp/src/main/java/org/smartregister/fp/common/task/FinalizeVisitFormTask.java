@@ -5,11 +5,11 @@ import android.content.Context;
 import android.database.DatabaseUtils;
 import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.util.Pair;
 
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 import com.vijay.jsonwizard.rules.RuleConstant;
 
+import org.apache.commons.lang3.tuple.Triple;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +18,7 @@ import org.smartregister.fp.R;
 import org.smartregister.fp.common.domain.ClientDetail;
 import org.smartregister.fp.common.domain.Contact;
 import org.smartregister.fp.common.library.FPLibrary;
+import org.smartregister.fp.common.model.PartialContact;
 import org.smartregister.fp.common.model.PreviousContact;
 import org.smartregister.fp.common.repository.PreviousContactRepository;
 import org.smartregister.fp.common.util.ConstantsUtils;
@@ -25,6 +26,7 @@ import org.smartregister.fp.common.util.DBConstantsUtils;
 import org.smartregister.fp.common.util.FPFormUtils;
 import org.smartregister.fp.common.util.FPJsonFormUtils;
 import org.smartregister.fp.common.util.Utils;
+import org.smartregister.fp.features.home.repository.PartialContactRepository;
 import org.smartregister.fp.features.home.repository.PatientRepository;
 import org.smartregister.util.JsonFormUtils;
 
@@ -38,6 +40,15 @@ import timber.log.Timber;
 
 import static org.smartregister.fp.common.util.ConstantsUtils.JsonFormFieldUtils.METHOD_EXIT;
 import static org.smartregister.fp.common.util.Utils.isCheckboxValueEmpty;
+import static org.smartregister.fp.features.home.repository.PartialContactRepository.BASE_ENTITY_ID;
+import static org.smartregister.fp.features.home.repository.PartialContactRepository.CONTACT_NO;
+import static org.smartregister.fp.features.home.repository.PartialContactRepository.CREATED_AT;
+import static org.smartregister.fp.features.home.repository.PartialContactRepository.FORM_JSON;
+import static org.smartregister.fp.features.home.repository.PartialContactRepository.FORM_JSON_DRAFT;
+import static org.smartregister.fp.features.home.repository.PartialContactRepository.ID;
+import static org.smartregister.fp.features.home.repository.PartialContactRepository.IS_FINALIZED;
+import static org.smartregister.fp.features.home.repository.PartialContactRepository.TYPE;
+import static org.smartregister.fp.features.home.repository.PartialContactRepository.UPDATED_AT_COLUMN;
 
 public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String, String>> {
 
@@ -103,10 +114,10 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
             PatientRepository.updateNextContactDate(nextContactVisitDate, baseEntityId);
             updateNextContactDate(clientDetailMap, clientDetail);
             // create event
-            Pair<Event, Event> eventPair = FPJsonFormUtils.createContactVisitEvent(clientDetailMap);
+            Triple<Event, Event, Event> eventPair = FPJsonFormUtils.createContactVisitEvent(clientDetailMap);
             if (eventPair != null) {
-                createEvent(baseEntityId, eventPair.first);
-                JSONObject updateClientEventJson = new JSONObject(JsonFormUtils.gson.toJson(eventPair.second));
+                createEvent(baseEntityId, eventPair.getLeft(), eventPair.getRight());
+                JSONObject updateClientEventJson = new JSONObject(JsonFormUtils.gson.toJson(eventPair.getMiddle()));
                 FPLibrary.getInstance().getEcSyncHelper().addEvent(baseEntityId, updateClientEventJson);
             }
         } catch (Exception e) {
@@ -132,14 +143,42 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
         }
     }
 
-    private void createEvent(String baseEntityId, Event event)
+    private void createEvent(String baseEntityId, Event eventPrevious, Event eventPartial)
             throws JSONException {
         String currentContactState = getCurrentContactState(baseEntityId);
+        String currentPartialState = getCurrentPartialState(baseEntityId);
         if (currentContactState != null) {
-            event.addDetails(ConstantsUtils.DetailsKeyUtils.PREVIOUS_CONTACTS, currentContactState);
+            eventPrevious.addDetails(ConstantsUtils.DetailsKeyUtils.PREVIOUS_CONTACTS, currentContactState);
         }
-        JSONObject eventJson = new JSONObject(JsonFormUtils.gson.toJson(event));
-        FPLibrary.getInstance().getEcSyncHelper().addEvent(baseEntityId, eventJson);
+        if (currentPartialState != null) {
+            eventPartial.addDetails(ConstantsUtils.DetailsKeyUtils.PREVIOUS_CONTACTS, currentPartialState);
+        }
+        JSONObject eventPreviousJson = new JSONObject(JsonFormUtils.gson.toJson(eventPrevious));
+        FPLibrary.getInstance().getEcSyncHelper().addEvent(baseEntityId, eventPreviousJson);
+
+        JSONObject eventPartialJson = new JSONObject(JsonFormUtils.gson.toJson(eventPartial));
+        FPLibrary.getInstance().getEcSyncHelper().addEvent(baseEntityId, eventPartialJson);
+    }
+
+    private String getCurrentPartialState(String baseEntityId) throws JSONException {
+        PartialContact partialContact = new PartialContact(baseEntityId, ConstantsUtils.JsonFormUtils.FP_START_VISIT, contactNo);
+        partialContact = getPartialContactRepository().getPartialContact(partialContact);
+        JSONObject stateObject = null;
+        if (partialContact != null) {
+            stateObject = new JSONObject();
+
+            stateObject.put(ID, partialContact.getId());
+            stateObject.put(TYPE, partialContact.getType());
+            stateObject.put(FORM_JSON, partialContact.getFormJson());
+            stateObject.put(CONTACT_NO, partialContact.getContactNo());
+            stateObject.put(FORM_JSON_DRAFT, partialContact.getFormJsonDraft());
+            stateObject.put(IS_FINALIZED, partialContact.getFinalized());
+            stateObject.put(BASE_ENTITY_ID, partialContact.getBaseEntityId());
+            stateObject.put(CREATED_AT, partialContact.getCreatedAt());
+            stateObject.put(UPDATED_AT_COLUMN, partialContact.getUpdatedAt());
+        }
+
+        return stateObject != null ? stateObject.toString() : null;
     }
 
 
@@ -160,6 +199,10 @@ public class FinalizeVisitFormTask extends AsyncTask<Void, Void, HashMap<String,
 
     protected PreviousContactRepository getPreviousContactRepository() {
         return FPLibrary.getInstance().getPreviousContactRepository();
+    }
+
+    protected PartialContactRepository getPartialContactRepository() {
+        return FPLibrary.getInstance().getPartialContactRepository();
     }
 
     private ClientDetail getClientDetails(String baseEntityId, String nextContactVisitDate, Integer nextContact) {

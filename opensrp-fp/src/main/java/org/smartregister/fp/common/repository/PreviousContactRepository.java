@@ -34,7 +34,6 @@ public class PreviousContactRepository extends BaseRepository {
     public static final String KEY = "key";
     public static final String VALUE = "value";
     public static final String CREATED_AT = "created_at";
-    public static final String GEST_AGE = "gest_age_openmrs";
     private static final String TAG = PreviousContactRepository.class.getCanonicalName();
     private static final String CREATE_TABLE_SQL = "CREATE TABLE " + TABLE_NAME + "("
             + ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
@@ -261,44 +260,6 @@ public class PreviousContactRepository extends BaseRepository {
         }
 
         return database.query(TABLE_NAME, projectionArgs, selection, selectionArgs, KEY, null, orderBy, null);
-    }
-
-    public Facts getAllTestResultsForIndividualTest(String baseEntityId, String indicator, String dateKey) {
-        String orderBy = ID + " DESC ";
-        String[] selectionArgs = null;
-        String selection = "";
-
-        Cursor mCursor = null;
-        Facts allTestResults = new Facts();
-        try {
-            SQLiteDatabase db = getWritableDatabase();
-            if (StringUtils.isNoneEmpty(baseEntityId) && StringUtils.isNoneEmpty(indicator)) {
-                selection = BASE_ENTITY_ID + " = ? And ( " + KEY + " = ? OR " + KEY + " = '" + GEST_AGE + "' OR " + KEY +
-                        " = ? )";
-                selectionArgs = new String[]{baseEntityId, indicator, dateKey};
-            }
-            mCursor = db.query(TABLE_NAME, projectionArgs, selection, selectionArgs, null, null, orderBy, null);
-
-            if (mCursor != null) {
-                while (mCursor.moveToNext()) {
-                    String factKey =
-                            mCursor.getString(mCursor.getColumnIndex(KEY)) + ":" + mCursor
-                                    .getString(mCursor.getColumnIndex(CONTACT_NO));
-
-                    allTestResults.put(factKey, mCursor.getString(mCursor.getColumnIndex(VALUE)));
-
-                }
-                return allTestResults;
-            }
-        } catch (Exception e) {
-            Log.e(TAG, e.toString(), e);
-        } finally {
-            if (mCursor != null) {
-                mCursor.close();
-            }
-        }
-
-        return allTestResults;
     }
 
     /**
