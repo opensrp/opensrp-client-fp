@@ -101,6 +101,7 @@ public class Utils extends org.smartregister.util.Utils {
     private static final String OTHER_SUFFIX = ", other]";
 
     private static final HashMap<String, String> METHODS;
+    private static final int MINIMUM_JOB_FLEX_VALUE = 5;
 
     static {
         ALLOWED_LEVELS = new ArrayList<>();
@@ -755,6 +756,18 @@ public class Utils extends org.smartregister.util.Utils {
             Utils.proceedToContact(baseEntityId, detailMap, context);
         }
     }
+
+    public static long getFlexValue(int value) {
+        int minutes = MINIMUM_JOB_FLEX_VALUE;
+
+        if (value > MINIMUM_JOB_FLEX_VALUE) {
+
+            minutes = (int) Math.ceil(value / 3);
+        }
+
+        return minutes < MINIMUM_JOB_FLEX_VALUE ? MINIMUM_JOB_FLEX_VALUE : minutes;
+    }
+
 
     /**
      * Loads yaml files that contain rules for the profile displays

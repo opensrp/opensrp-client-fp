@@ -11,8 +11,6 @@ import org.smartregister.login.interactor.BaseLoginInteractor;
 import org.smartregister.sample.fp.BuildConfig;
 import org.smartregister.view.contract.BaseLoginContract;
 
-import java.util.concurrent.TimeUnit;
-
 public class LoginInteractor extends BaseLoginInteractor implements BaseLoginContract.Interactor {
     public LoginInteractor(BaseLoginContract.Presenter loginPresenter) {
         super(loginPresenter);
@@ -20,16 +18,16 @@ public class LoginInteractor extends BaseLoginInteractor implements BaseLoginCon
 
     @Override
     protected void scheduleJobsPeriodically() {
-        SyncServiceJob.scheduleJob(SyncServiceJob.TAG, TimeUnit.MINUTES.toMillis(BuildConfig.DATA_SYNC_DURATION_MINUTES),
+        SyncServiceJob.scheduleJob(SyncServiceJob.TAG, (long) BuildConfig.DATA_SYNC_DURATION_MINUTES,
                 getFlexValue(BuildConfig.DATA_SYNC_DURATION_MINUTES));
         PullUniqueIdsServiceJob
-                .scheduleJob(PullUniqueIdsServiceJob.TAG, TimeUnit.MINUTES.toMillis(BuildConfig.PULL_UNIQUE_IDS_MINUTES),
+                .scheduleJob(PullUniqueIdsServiceJob.TAG, (long) BuildConfig.PULL_UNIQUE_IDS_MINUTES,
                         getFlexValue(BuildConfig.PULL_UNIQUE_IDS_MINUTES));
         ImageUploadServiceJob
-                .scheduleJob(ImageUploadServiceJob.TAG, TimeUnit.MINUTES.toMillis(BuildConfig.IMAGE_UPLOAD_MINUTES),
+                .scheduleJob(ImageUploadServiceJob.TAG, (long) BuildConfig.IMAGE_UPLOAD_MINUTES,
                         getFlexValue(BuildConfig.IMAGE_UPLOAD_MINUTES));
         SyncSettingsServiceJob
-                .scheduleJob(SyncSettingsServiceJob.TAG, TimeUnit.MINUTES.toMillis(BuildConfig.CLIENT_SETTINGS_SYNC_MINUTES),
+                .scheduleJob(SyncSettingsServiceJob.TAG, (long) BuildConfig.CLIENT_SETTINGS_SYNC_MINUTES,
                         getFlexValue(BuildConfig.CLIENT_SETTINGS_SYNC_MINUTES));
         ArchivedPostSterilizationJob.makeSchedule();
     }

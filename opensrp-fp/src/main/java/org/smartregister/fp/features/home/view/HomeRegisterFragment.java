@@ -41,6 +41,7 @@ import org.smartregister.view.activity.DrishtiApplication;
 import org.smartregister.view.fragment.BaseRegisterFragment;
 import org.smartregister.view.fragment.SecuredNativeSmartRegisterFragment;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -270,6 +271,7 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
         Utils.postEvent(new SyncEvent(fetchStatus));
     }
 
+
     @SuppressLint("NewApi")
     @Override
     public void showNotFoundPopup(String whoAncId) {
@@ -321,12 +323,20 @@ public class HomeRegisterFragment extends BaseRegisterFragment implements Regist
         }
     }
 
+    @SuppressLint("VisibleForTests")
     @Override
     public void onSyncComplete(FetchStatus fetchStatus) {
         refreshSyncStatusViews(fetchStatus);
+        Timber.d("Refresh Time is : %s", getDateTime());
         if (popupMenu != null) {
             popupMenu.getMenu().findItem(R.id.btn_sync).setTitle(String.format(getString(R.string.last_synced), new SimpleDateFormat("hh:mm a", Utils.getDefaultLocale()).format(new Date()), new SimpleDateFormat("MMM dd", Utils.getDefaultLocale()).format(new Date())));
         }
+    }
+
+    private String getDateTime() {
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 
     @Override
