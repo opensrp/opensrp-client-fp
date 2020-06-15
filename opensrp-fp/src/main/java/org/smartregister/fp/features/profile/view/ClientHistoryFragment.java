@@ -36,14 +36,13 @@ public class ClientHistoryFragment extends BaseProfileFragment implements Client
 
     }
 
-    private List<HashMap<String, String>> data;
 
     @Override
     protected void onResumption() {
         Bundle args = getArguments();
         if (args != null) {
             baseEntityId = args.getString(DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, "");
-            data = FPLibrary.getInstance().getPreviousContactRepository().getVisitHistory(baseEntityId);
+            List<HashMap<String, String>> data = FPLibrary.getInstance().getPreviousContactRepository().getVisitHistory(baseEntityId);
             populateTheData(data);
         }
     }
