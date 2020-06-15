@@ -24,6 +24,7 @@ import org.robolectric.Robolectric;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowApplication;
+import org.smartregister.fp.features.home.view.HomeRegisterActivity;
 import org.smartregister.sample.fp.R;
 import org.smartregister.sample.fp.base.BaseActivityUnitTest;
 import org.smartregister.sample.fp.custom.SettingsTestMenuItem;
@@ -74,6 +75,7 @@ public class LoginActivityTest extends BaseActivityUnitTest {
         EditText userNameEditText = Whitebox.getInternalState(loginActivity, "userNameEditText");
         Assert.assertNotNull(userNameEditText);
     }
+
     @Test
     public void testPasswordEditTextIsInitialized() {
 
@@ -109,7 +111,7 @@ public class LoginActivityTest extends BaseActivityUnitTest {
     }
 
 
-/*    @Test
+    @Test
     public void testGoToHomeRegisterWithRemoteTrue() {
 
         try {
@@ -118,7 +120,7 @@ public class LoginActivityTest extends BaseActivityUnitTest {
             e.printStackTrace();
         }
 
-        assertActivityStarted(loginActivity, new BaseHomeRegisterActivity());
+        assertActivityStarted(loginActivity, new HomeRegisterActivity());
     }
 
     @Test
@@ -130,8 +132,9 @@ public class LoginActivityTest extends BaseActivityUnitTest {
             e.printStackTrace();
         }
 
-        assertActivityStarted(loginActivity, new BaseHomeRegisterActivity());
-    }*/
+        assertActivityStarted(loginActivity, new HomeRegisterActivity());
+    }
+
 
     private void assertActivityStarted(Activity currActivity, Activity nextActivity) {
 
@@ -349,6 +352,7 @@ public class LoginActivityTest extends BaseActivityUnitTest {
         Assert.assertEquals(spyActivity, spyActivity.getActivityContext());
 
     }
+
 
     @Override
     protected Activity getActivity() {
