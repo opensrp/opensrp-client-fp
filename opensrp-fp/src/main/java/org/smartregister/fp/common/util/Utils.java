@@ -8,7 +8,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
@@ -173,19 +172,6 @@ public class Utils extends org.smartregister.util.Utils {
             }
         }
         return null;
-    }
-
-    public static void writePrefString(Context context, final String key, final String value) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(key, value);
-        editor.commit();
-    }
-
-    public static int convertDpToPx(Context context, int dp) {
-        Resources r = context.getResources();
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
-        return Math.round(px);
     }
 
     public static boolean isEmptyMap(Map map) {
