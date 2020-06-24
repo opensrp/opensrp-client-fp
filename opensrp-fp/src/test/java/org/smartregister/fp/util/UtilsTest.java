@@ -31,7 +31,6 @@ import org.smartregister.fp.common.util.ConstantsUtils;
 import org.smartregister.fp.common.util.Utils;
 import org.smartregister.repository.AllSharedPreferences;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -273,15 +272,6 @@ public class UtilsTest extends BaseUnitTest {
         Assert.assertEquals(4, result.size());
         Assert.assertEquals(list.get(1), result.get(1));
         Assert.assertEquals(list.get(3), result.get(3));
-    }
-
-    @Test
-    public void testIsEmptyCollection() {
-        boolean nullCollection = Utils.isEmptyCollection(null);
-        boolean emptyCollection = Utils.isEmptyCollection(new ArrayList());
-
-        Assert.assertTrue(nullCollection);
-        Assert.assertTrue(emptyCollection);
     }
 
     @Test
