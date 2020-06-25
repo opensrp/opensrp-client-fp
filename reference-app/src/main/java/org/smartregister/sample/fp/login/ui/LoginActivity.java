@@ -49,7 +49,7 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
         gotToHomeRegister(remote);
     }
 
-    private void scheduleJobsPeriodically() {
+    protected void scheduleJobsPeriodically() {
         SyncServiceJob.scheduleJob(SyncServiceJob.TAG, (long) BuildConfig.DATA_SYNC_DURATION_MINUTES,
                 getFlexValue(BuildConfig.DATA_SYNC_DURATION_MINUTES));
         PullUniqueIdsServiceJob

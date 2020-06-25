@@ -159,4 +159,22 @@ public class LoginInteractorTest extends BaseUnitTest {
         Mockito.verify(spyInteractor, Mockito.times(1)).loginWithLocalFlag(Mockito.any(WeakReference.class), Mockito.eq(false), Mockito.eq(DUMMY_USERNAME), Mockito.eq(DUMMY_PASSWORD));
 
     }
+
+    @Test
+    public void testScheduleJobsPeriodically(){
+        LoginPresenter presenter = new LoginPresenter(view);
+        LoginPresenter presenterSpy = Mockito.spy(presenter);
+
+        LoginInteractor interactor = new LoginInteractor(presenterSpy);
+        LoginInteractor spyInteractor = Mockito.spy(interactor);
+
+        try {
+            Whitebox.invokeMethod(spyInteractor, LoginInteractor.class, "scheduleJobsPeriodically");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        Mockito.verify(spyInteractor).scheduleJobsPeriodically();
+    }
 }

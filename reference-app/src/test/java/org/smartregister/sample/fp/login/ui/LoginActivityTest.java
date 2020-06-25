@@ -144,6 +144,20 @@ public class LoginActivityTest extends BaseActivityUnitTest {
     }
 
     @Test
+    public void testLocalLoginShouldScheduleTheJob(){
+
+        LoginActivity spyActivity = Mockito.spy(loginActivity);
+
+        try {
+            Whitebox.invokeMethod(spyActivity, LoginActivity.class, "goToHome", false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        Mockito.verify(spyActivity).scheduleJobsPeriodically();
+    }
+    @Test
     public void testOnCreateOptionsMenuShouldAddSettingsItem() {
 
         LoginActivity spyActivity = Mockito.spy(loginActivity);
