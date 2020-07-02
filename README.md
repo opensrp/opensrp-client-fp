@@ -1,10 +1,7 @@
-# opensrp-client-fp
-Reference Family Planning module
-
 [![Build Status](https://travis-ci.org/OpenSRP/opensrp-client-fp.svg?branch=master)](https://travis-ci.org/OpenSRP/opensrp-client-fp) [![Coverage Status](https://coveralls.io/repos/github/OpenSRP/opensrp-client-fp/badge.svg?branch=master)](https://coveralls.io/github/OpenSRP/opensrp-client-fp?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f60d6a508300416bb574d288c7ccdbbd)](https://app.codacy.com/gh/OpenSRP/opensrp-client-fp?utm_source=github.com&utm_medium=referral&utm_content=OpenSRP/opensrp-client-fp&utm_campaign=Badge_Grade_Dashboard)
 
-## opensrp-client-anc
+## Family Planning Module (opensrp-client-fp)
 One to two paragraph statement about what the project and what the product does.
 <screenshots maybe?> (Optional)
 
