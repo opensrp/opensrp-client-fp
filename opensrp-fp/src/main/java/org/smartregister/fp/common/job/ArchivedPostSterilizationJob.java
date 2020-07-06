@@ -40,8 +40,7 @@ public class ArchivedPostSterilizationJob extends BaseJob {
                 }
             }
             Timber.d("%s patient(s) successfully archived.", count);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Timber.e(ex);
         }
 
@@ -49,6 +48,6 @@ public class ArchivedPostSterilizationJob extends BaseJob {
     }
 
     public static void makeSchedule() {
-        ArchivedPostSterilizationJob.scheduleJob(ArchivedPostSterilizationJob.TAG, TimeUnit.DAYS.toMillis(1), TimeUnit.DAYS.toMillis(1));
+        ArchivedPostSterilizationJob.scheduleJob(ArchivedPostSterilizationJob.TAG, TimeUnit.DAYS.toMinutes(1), TimeUnit.DAYS.toMinutes(1));
     }
 }

@@ -67,7 +67,7 @@
           "err": "{{fp_register.step1.first_name.v_required.err}}"
         },
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
+          "value": "[^0-9]*",
           "err": "{{fp_register.step1.first_name.v_regex.err}}"
         },
         "value": ""
@@ -85,7 +85,7 @@
           "err": "{{fp_register.step1.last_name.v_required.err}}"
         },
         "v_regex": {
-          "value": "[A-Za-z\\s\\.\\-]*",
+          "value": "[^0-9]*",
           "err": "{{fp_register.step1.last_name.v_regex.err}}"
         },
         "value": ""
@@ -347,6 +347,40 @@
         "openmrs_entity_parent": "",
         "openmrs_entity": "person_attribute",
         "openmrs_entity_id": "age_from_dob",
+        "type": "hidden",
+        "value": "0",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "registration_calculation_rules.yml"
+            }
+          }
+        },
+        "step": "step1",
+        "is-rule-check": true
+      },
+      {
+        "key": "age",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "age",
+        "type": "hidden",
+        "value": "0",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "registration_calculation_rules.yml"
+            }
+          }
+        },
+        "step": "step1",
+        "is-rule-check": true
+      },
+      {
+        "key": "adolescent",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "person_attribute",
+        "openmrs_entity_id": "adolescent",
         "type": "hidden",
         "value": "0",
         "calculation": {

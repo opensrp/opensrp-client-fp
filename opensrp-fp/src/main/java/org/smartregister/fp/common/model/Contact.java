@@ -1,16 +1,24 @@
 package org.smartregister.fp.common.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by ndegwamartin on 09/01/2019.
  */
 public abstract class Contact {
 
+    @SerializedName("_id")
     private Long id;
+    @SerializedName("base_entity_id")
     private String baseEntityId;
+    @SerializedName("type")
     private String type;
     private String formJson;
+    @SerializedName("contact_no")
     private Integer contactNo;
+    @SerializedName("created_at")
     private Long createdAt;
+    @SerializedName("updated_at")
     private Long updatedAt;
 
     public Contact(String baseEntityId, String type, Integer contactNo) {

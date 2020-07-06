@@ -65,6 +65,7 @@ public abstract class ConstantsUtils {
     public static final String DUE = "Due";
     public static final String ANDROID_SWITCHER = "android:switcher:";
     public static final String FORM_STATE = "form_state";
+    public static final String CURRENT_CONTACT_NO = "current_contact_no";
 
     public interface Properties {
         String CAN_SAVE_SITE_INITIAL_SETTING = "CAN_SAVE_INITIAL_SITE_SETTING";
@@ -103,6 +104,7 @@ public abstract class ConstantsUtils {
         public static final String CLOSE = "Close FP Record";
         public static final String SITE_CHARACTERISTICS = "Site Characteristics";
         public static final String CONTACT_VISIT = "Contact Visit";
+        public static final String VISIT_FORM_JSON = "Visit Form Json";
     }
 
     public static class JsonFormUtils {
@@ -134,6 +136,7 @@ public abstract class ConstantsUtils {
         public static final String AGE_ENTERED = "age_entered";
         //
         public static final String CLIENT_ID = "client_id";
+        public static final String ADOLESCENT_NOTE = "adolescent_note";
         public static final String STEP1 = "step1";
         public static final String FIELDS = "fields";
         public static final String STILL_ON_METHOD = "still_on_method";

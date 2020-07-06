@@ -60,6 +60,17 @@
     "next": "step2",
     "fields": [
       {
+        "key": "adolescent_note",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_entity_parent": "",
+        "type": "toaster_notes",
+        "text": "{{fp_start_visit.step1.adolescent_note.text}}",
+        "toaster_info_text": "{{fp_start_visit.step1.adolescent_note.label_info_text}}",
+        "text_color": "#1199F9",
+        "toaster_type": "info"
+      },
+      {
         "key": "visit_date",
         "type": "date_picker",
         "openmrs_entity": "",

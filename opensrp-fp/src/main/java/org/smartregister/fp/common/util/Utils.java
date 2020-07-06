@@ -74,6 +74,7 @@ import java.util.Map;
 
 import timber.log.Timber;
 
+import static org.smartregister.fp.common.util.ConstantsUtils.CURRENT_CONTACT_NO;
 import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.FOLLOWUP_VISIT_BUTTON_FORMAT;
 import static org.smartregister.fp.common.util.ConstantsUtils.DateFormatPatternUtils.YYYY_MM_DD;
 import static org.smartregister.fp.common.util.ConstantsUtils.ProfileDateStatusUtils.ANY_NULL_DATE;
@@ -83,6 +84,7 @@ import static org.smartregister.fp.common.util.ConstantsUtils.ProfileDateStatusU
 import static org.smartregister.fp.common.util.ConstantsUtils.RulesFileUtils.FP_ALERT_RULES;
 import static org.smartregister.fp.common.util.ConstantsUtils.ScheduleUtils.ONCE_OFF;
 import static org.smartregister.fp.common.util.ConstantsUtils.ScheduleUtils.RECURRING;
+import static org.smartregister.fp.common.util.FPJsonFormUtils.getFieldJSONObject;
 
 /**
  * Created by ndegwamartin on 14/03/2018.
@@ -99,6 +101,7 @@ public class Utils extends org.smartregister.util.Utils {
     private static final String OTHER_SUFFIX = ", other]";
 
     private static final HashMap<String, String> METHODS;
+    private static final int MINIMUM_JOB_FLEX_VALUE = 5;
 
     static {
         ALLOWED_LEVELS = new ArrayList<>();
@@ -234,7 +237,7 @@ public class Utils extends org.smartregister.util.Utils {
     public static void proceedToContact(String baseEntityId, HashMap<String, String> personObjectClient, Context context) {
         try {
 
-            personObjectClient = PatientRepository.getClientProfileDetails(baseEntityId);
+//            personObjectClient = PatientRepository.getClientProfileDetails(baseEntityId);
 
             String nextContact = personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT);
             personObjectClient.put(DBConstantsUtils.KeyUtils.NEXT_CONTACT, nextContact == null ? "1" : nextContact);
@@ -255,11 +258,15 @@ public class Utils extends org.smartregister.util.Utils {
             HashMap<String, String> globals = loadGlobalConfig(personObjectClient, baseEntityId, Integer.valueOf(personObjectClient.get(DBConstantsUtils.KeyUtils.NEXT_CONTACT)));
             startVisit.setGlobals(globals);
 
+
             //partial contact exists?
-            PartialContact partialContactRequest = new PartialContact();
-            partialContactRequest.setBaseEntityId(baseEntityId);
-            partialContactRequest.setContactNo(startVisit.getContactNumber());
-            partialContactRequest.setType(startVisit.getFormName());
+            PartialContact partialContactRequest = null;
+            if (personObjectClient.containsKey(CURRENT_CONTACT_NO)) {
+                partialContactRequest = new PartialContact();
+                partialContactRequest.setBaseEntityId(baseEntityId);
+                partialContactRequest.setContactNo(Integer.parseInt(personObjectClient.get(CURRENT_CONTACT_NO)));
+                partialContactRequest.setType(startVisit.getFormName());
+            }
 
             String locationId = FPLibrary.getInstance().getContext().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
 
@@ -282,12 +289,25 @@ public class Utils extends org.smartregister.util.Utils {
                 processedForm = modifiedForm.toString();
             }
 
+            String profileAdolescent = PatientRepository.getClientProfileAdolescent(baseEntityId);
+            if (profileAdolescent != null && profileAdolescent.equals("no")) {
+                JSONObject modifiedForm = new JSONObject(processedForm);
+                JSONArray fields = FPJsonFormUtils.fields(modifiedForm);
+                JSONObject adolescentNote = getFieldJSONObject(fields, ConstantsUtils.JsonFormKeyUtils.ADOLESCENT_NOTE);
+                if (adolescentNote != null) {
+                    adolescentNote.remove(FPJsonFormUtils.TYPE);
+                    adolescentNote.put(FPJsonFormUtils.TYPE, FPJsonFormUtils.HIDDEN);
+                }
+                processedForm = modifiedForm.toString();
+            }
+
+
             intent.putExtra(ConstantsUtils.JsonFormExtraUtils.JSON, processedForm);
             intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, startVisit);
-            intent.putExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID, partialContactRequest.getBaseEntityId());
+            intent.putExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID, baseEntityId);
             intent.putExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP, personObjectClient);
-            intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, partialContactRequest.getType());
-            intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, partialContactRequest.getContactNo());
+            intent.putExtra(ConstantsUtils.IntentKeyUtils.FORM_NAME, startVisit.getFormName());
+            intent.putExtra(ConstantsUtils.IntentKeyUtils.CONTACT_NO, startVisit.getContactNumber());
             intent.putExtra(ConstantsUtils.IntentKeyUtils.GLOBAL, globals);
             intent.putExtra(JsonFormConstants.PERFORM_FORM_TRANSLATION, true);
             Activity activity = (Activity) context;
@@ -736,6 +756,18 @@ public class Utils extends org.smartregister.util.Utils {
             Utils.proceedToContact(baseEntityId, detailMap, context);
         }
     }
+
+    public static long getFlexValue(int value) {
+        int minutes = MINIMUM_JOB_FLEX_VALUE;
+
+        if (value > MINIMUM_JOB_FLEX_VALUE) {
+
+            minutes = (int) Math.ceil(value / 3);
+        }
+
+        return minutes < MINIMUM_JOB_FLEX_VALUE ? MINIMUM_JOB_FLEX_VALUE : minutes;
+    }
+
 
     /**
      * Loads yaml files that contain rules for the profile displays

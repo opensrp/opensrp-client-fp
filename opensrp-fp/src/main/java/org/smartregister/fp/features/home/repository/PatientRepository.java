@@ -39,7 +39,7 @@ public class PatientRepository extends BaseRepository {
                     DBConstantsUtils.KeyUtils.NEXT_CONTACT, DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE,
                     DBConstantsUtils.KeyUtils.VISIT_START_DATE, DBConstantsUtils.KeyUtils.RED_FLAG_COUNT,
                     DBConstantsUtils.KeyUtils.YELLOW_FLAG_COUNT, DBConstantsUtils.KeyUtils.LAST_CONTACT_RECORD_DATE,
-                    DBConstantsUtils.KeyUtils.EDD};
+                    DBConstantsUtils.KeyUtils.ADOLESCENT, DBConstantsUtils.KeyUtils.EDD};
 
     public static HashMap<String, String> getClientProfileDetails(String baseEntityId) {
         Cursor cursor = null;
@@ -95,6 +95,32 @@ public class PatientRepository extends BaseRepository {
             return detailsMap;
         } catch (Exception e) {
             Timber.e(e, "%s ==> getClientProfileDetails()", PatientRepository.class.getCanonicalName());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return null;
+    }
+
+    public static String getClientProfileAdolescent(String baseEntityId) {
+        Cursor cursor = null;
+
+        String adolescentStr = "";
+        try {
+            SQLiteDatabase db = getMasterRepository().getReadableDatabase();
+            String query =
+                    "SELECT " + StringUtils.join(projection, ",") + " FROM "
+                            + FPLibrary.getInstance().getRegisterQueryProvider().getDemographicTable()
+                            + " WHERE " +
+                            DBConstantsUtils.KeyUtils.BASE_ENTITY_ID + " = ?";
+            cursor = db.rawQuery(query, new String[]{baseEntityId});
+            if (cursor != null && cursor.moveToFirst()) {
+                adolescentStr = cursor.getString(cursor.getColumnIndex(DBConstantsUtils.KeyUtils.ADOLESCENT));
+            }
+            return adolescentStr;
+        } catch (Exception e) {
+            Timber.e(e, "%s ==> getClientProfileAdolescent()", PatientRepository.class.getCanonicalName());
         } finally {
             if (cursor != null) {
                 cursor.close();
