@@ -34,7 +34,6 @@ public class PreviousContactRepository extends BaseRepository {
     public static final String KEY = "key";
     public static final String VALUE = "value";
     public static final String CREATED_AT = "created_at";
-    public static final String GEST_AGE = "gest_age_openmrs";
     private static final String TAG = PreviousContactRepository.class.getCanonicalName();
     private static final String CREATE_TABLE_SQL = "CREATE TABLE " + TABLE_NAME + "("
             + ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
@@ -263,44 +262,6 @@ public class PreviousContactRepository extends BaseRepository {
         return database.query(TABLE_NAME, projectionArgs, selection, selectionArgs, KEY, null, orderBy, null);
     }
 
-    public Facts getAllTestResultsForIndividualTest(String baseEntityId, String indicator, String dateKey) {
-        String orderBy = ID + " DESC ";
-        String[] selectionArgs = null;
-        String selection = "";
-
-        Cursor mCursor = null;
-        Facts allTestResults = new Facts();
-        try {
-            SQLiteDatabase db = getWritableDatabase();
-            if (StringUtils.isNoneEmpty(baseEntityId) && StringUtils.isNoneEmpty(indicator)) {
-                selection = BASE_ENTITY_ID + " = ? And ( " + KEY + " = ? OR " + KEY + " = '" + GEST_AGE + "' OR " + KEY +
-                        " = ? )";
-                selectionArgs = new String[]{baseEntityId, indicator, dateKey};
-            }
-            mCursor = db.query(TABLE_NAME, projectionArgs, selection, selectionArgs, null, null, orderBy, null);
-
-            if (mCursor != null) {
-                while (mCursor.moveToNext()) {
-                    String factKey =
-                            mCursor.getString(mCursor.getColumnIndex(KEY)) + ":" + mCursor
-                                    .getString(mCursor.getColumnIndex(CONTACT_NO));
-
-                    allTestResults.put(factKey, mCursor.getString(mCursor.getColumnIndex(VALUE)));
-
-                }
-                return allTestResults;
-            }
-        } catch (Exception e) {
-            Log.e(TAG, e.toString(), e);
-        } finally {
-            if (mCursor != null) {
-                mCursor.close();
-            }
-        }
-
-        return allTestResults;
-    }
-
     /**
      * Gets the Immediate previous contact's facts. It checks for both referral and normal contacts hence the recursion.
      *
@@ -459,6 +420,35 @@ public class PreviousContactRepository extends BaseRepository {
                     "FROM previous_contact AS pc " +
                     "WHERE pc.base_entity_id='" + baseEntityId + "' AND pc.key = 'visit_date' " +
                     "ORDER BY pc.`value` DESC";
+            Cursor cursor = getReadableDatabase().rawQuery(query, null);
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    HashMap<String, String> historyMap = new HashMap<>();
+                    historyMap.put("_id", cursor.getString(cursor.getColumnIndex("_id")));
+                    historyMap.put("contact_no", cursor.getString(cursor.getColumnIndex("contact_no")));
+                    historyMap.put("base_entity_id", cursor.getString(cursor.getColumnIndex("base_entity_id")));
+                    historyMap.put("visit_date", cursor.getString(cursor.getColumnIndex("visit_date")));
+                    historyMap.put("method_exit", cursor.getString(cursor.getColumnIndex("method_exit")));
+                    data.add(historyMap);
+                }
+            }
+        } catch (Exception ex) {
+            Timber.e(ex);
+        }
+
+        return data;
+    }
+    public List<HashMap<String, String>> getProfileOverview(@NonNull String baseEntityId) {
+        List<HashMap<String, String>> data = new ArrayList<>();
+
+        try {
+
+            String query = "SELECT DISTINCT pc._id, pc.contact_no, pc.base_entity_id, pc.`value` as visit_date, (" +
+                    "SELECT spc.value FROM previous_contact AS spc WHERE spc.contact_no = pc.contact_no AND spc.key = 'method_exit' AND spc.base_entity_id = '" + baseEntityId + "'" +
+                    ") as method_exit " +
+                    "FROM previous_contact AS pc " +
+                    "WHERE pc.base_entity_id='" + baseEntityId + "' AND pc.key = 'visit_date' " +
+                    "ORDER BY pc.`value` DESC LIMIT 1";
             Cursor cursor = getReadableDatabase().rawQuery(query, null);
             if (cursor != null) {
                 while (cursor.moveToNext()) {

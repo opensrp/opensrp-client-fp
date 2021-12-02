@@ -160,8 +160,9 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
         fillValue(viewHolder.ancId, String.format(context.getString(R.string.anc_id_text), fpId));
     }
 
-    private void populateAlertButtonAndMethodExit(CommonPersonObjectClient pc, RegisterViewHolder viewHolder) {
 
+    private void populateAlertButtonAndMethodExit(CommonPersonObjectClient pc, RegisterViewHolder viewHolder) {
+        hideFollowUpViews(viewHolder);
         String baseEntityId = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.BASE_ENTITY_ID, false);
         String nextContact = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.NEXT_CONTACT, false);
         String nextContactDate = Utils.getValue(pc.getColumnmaps(), DBConstantsUtils.KeyUtils.NEXT_CONTACT_DATE, false);
@@ -172,6 +173,7 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
             String methodName = Utils.getMethodName(methodExitKey);
             if (methodName != null && !methodName.isEmpty()) {
                 // populate method exit
+                viewHolder.methodExitTv.setVisibility(View.VISIBLE);
                 viewHolder.methodExitTv.setText(methodName);
                 // check non trigger events
                 if (Utils.checkNonTriggerEvents(methodName)) {
@@ -189,6 +191,11 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
                 }
             }
         }
+    }
+
+    private void hideFollowUpViews(RegisterViewHolder viewHolder) {
+        viewHolder.methodExitTv.setVisibility(View.GONE);
+        viewHolder.followupBtn.setVisibility(View.GONE);
     }
 
     public static void fillValue(TextView v, String value) {
@@ -209,7 +216,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
     public static class RegisterViewHolder extends RecyclerView.ViewHolder {
         private TextView patientName;
         private TextView ancId;
-        private Button sync;
         private View patientColumn;
         private Button followupBtn;
         private CustomFontTextView methodExitTv;
@@ -218,7 +224,6 @@ public class RegisterProvider implements RecyclerViewProvider<RegisterProvider.R
             super(itemView);
             patientName = itemView.findViewById(R.id.patient_name);
             ancId = itemView.findViewById(R.id.fp_id);
-            sync = itemView.findViewById(R.id.sync);
             patientColumn = itemView.findViewById(R.id.patient_column);
             followupBtn = itemView.findViewById(R.id.btn_followup);
             methodExitTv = itemView.findViewById(R.id.tv_method_exit);

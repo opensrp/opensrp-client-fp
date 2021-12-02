@@ -85,6 +85,11 @@ public class PartialContactRepository extends BaseRepository {
         }
     }
 
+    public void insertPartialContact(PartialContact partialContact) {
+        if (partialContact == null) return;
+        getWritableDatabase().insert(TABLE_NAME, null, createValuesFor(partialContact));
+    }
+
     public PartialContact getPartialContact(PartialContact partialContact) {
         String selection = null;
         String[] selectionArgs = null;

@@ -62,5 +62,6 @@ public class DBConstantsUtils {
         public static final String VISIT_START_DATE = "visit_start_date";
         public static final String VISIT_DATE = "visit_date";
         public static final String ARCHIVED = "archived";
+        public static final String ADOLESCENT = "adolescent";
     }
 }

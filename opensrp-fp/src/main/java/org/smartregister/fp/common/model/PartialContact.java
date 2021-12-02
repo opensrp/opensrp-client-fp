@@ -1,13 +1,17 @@
 package org.smartregister.fp.common.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class PartialContact extends Contact {
 
+    @SerializedName("form_json_draft")
     private String formJsonDraft;
+    @SerializedName("is_finalized")
     private Boolean isFinalized;
     private int sortOrder;
 
     public PartialContact(String baseEntityId, String formType, int contactNo) {
-        super(formType, baseEntityId, contactNo);
+        super(baseEntityId,formType, contactNo);
     }
 
     public PartialContact() {

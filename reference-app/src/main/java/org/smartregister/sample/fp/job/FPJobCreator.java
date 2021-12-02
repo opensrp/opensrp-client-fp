@@ -17,9 +17,6 @@ import org.smartregister.sync.intent.SyncIntentService;
 
 import timber.log.Timber;
 
-/**
- * Created by ndegwamartin on 05/09/2018.
- */
 public class FPJobCreator implements JobCreator {
     @Nullable
     @Override
@@ -42,7 +39,7 @@ public class FPJobCreator implements JobCreator {
             case ArchivedPostSterilizationJob.TAG:
                 return new ArchivedPostSterilizationJob();
             default:
-                Timber.d("Looks like you tried to create a job " + tag + " that is not declared in the Anc Job Creator");
+                Timber.d("Looks like you tried to create a job " + tag + " that is not declared in the FP Job Creator");
                 return null;
         }
     }

@@ -65,7 +65,7 @@ public class ProfileOverviewFragment extends BaseProfileFragment {
                         (HashMap<String, String>) getActivity().getIntent().getSerializableExtra(ConstantsUtils.IntentKeyUtils.CLIENT_MAP);
                 baseEntityId = getActivity().getIntent().getStringExtra(ConstantsUtils.IntentKeyUtils.BASE_ENTITY_ID);
                 if (clientDetails != null) {
-                    List<HashMap<String, String>> data = FPLibrary.getInstance().getPreviousContactRepository().getVisitHistory(baseEntityId);
+                    List<HashMap<String, String>> data = FPLibrary.getInstance().getPreviousContactRepository().getProfileOverview(baseEntityId);
                     if (data.size() > 0 && StringUtils.isNotEmpty(data.get(data.size() - 1).get(CONTACT_NO)))
                         contactNo = Integer.parseInt(data.get(data.size() - 1).get(CONTACT_NO));
                 }

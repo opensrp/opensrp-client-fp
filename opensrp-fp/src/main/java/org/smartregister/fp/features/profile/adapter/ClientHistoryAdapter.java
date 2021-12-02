@@ -29,6 +29,7 @@ public class ClientHistoryAdapter extends RecyclerView.Adapter<ClientHistoryAdap
         this.itemClickListener = itemClickListener;
     }
 
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
